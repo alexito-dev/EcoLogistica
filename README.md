@@ -1,13 +1,15 @@
 <div align="center">
 
+<img src="assets/images/logo_ecologistica.png" alt="EcoLogística Huancayo Logo" width="280" />
+
 # EcoLogística Huancayo
 ### Plataforma de Optimización de Rutas Sostenibles de Última Milla
 
-[![Estado](https://img.shields.io/badge/Estado-Fase%20de%20Inicio-2ea44f?style=flat-square)](file:///d:/EcoLogistica/docs/01%20Inicio)
-[![Versión](https://img.shields.io/badge/Versión-v1.0.0--alpha-blue?style=flat-square)](file:///d:/EcoLogistica/README.md)
-[![Metodología](https://img.shields.io/badge/Metodología-Scrum%20%2B%20Git%20Flow-6f42c1?style=flat-square)](file:///d:/EcoLogistica/docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20V_1_0_0.md)
-[![Curso](https://img.shields.io/badge/Asignatura-Taller%20de%20Proyectos%202-0969da?style=flat-square)](file:///d:/EcoLogistica/README.md)
-[![Zona](https://img.shields.io/badge/Ubicación-Huancayo%2C%20Perú-d97706?style=flat-square)](file:///d:/EcoLogistica/README.md)
+[![Estado](https://img.shields.io/badge/Estado-Fase%20de%20Inicio-2ea44f?style=flat-square)](docs/01%20Inicio)
+[![Versión](https://img.shields.io/badge/Versión-v1.0.0--alpha-blue?style=flat-square)](README.md)
+[![Metodología](https://img.shields.io/badge/Metodología-Scrum%20%2B%20Git%20Flow-6f42c1?style=flat-square)](docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20.md)
+[![Curso](https://img.shields.io/badge/Asignatura-Taller%20de%20Proyectos%202-0969da?style=flat-square)](README.md)
+[![Zona](https://img.shields.io/badge/Ubicación-Huancayo%2C%20Perú-d97706?style=flat-square)](README.md)
 
 <p align="center">
   <b>Solución tecnológica para la gestión eficiente, económica y ecológica de flotas de distribución urbana en DistriRápido S.A.C.</b>
@@ -125,11 +127,11 @@ EcoLogistica/
 │
 ├── docs/                          # Documentación formal (Estándares PMI / Ágil)
 │   ├── 01 Inicio/                 # Fase de inicio y gobernanza
-│   │   ├── 01. Selección del enfoque del proyecto V_1_0_0.md
-│   │   ├── 02. Acta de constitución V_1_0_0.md
-│   │   ├── 03. Declaración de la visión V_1_0_0.md
-│   │   ├── 04. Registro de supuestos y restricciones V_1_0_0.md
-│   │   └── 05. Registro de interesados V_1_0_0.md
+│   │   ├── 01. Selección del enfoque del proyecto .md
+│   │   ├── 02. Acta de constitución.md
+│   │   ├── 03. Declaración de la visión V1_0_0.md
+│   │   ├── 04. Registro de supuestos y restricciones.md
+│   │   └── 05. Registro de interesados.md
 │   ├── 02 Planificación/          # Cronogramas, backlog y EDT/WBS
 │   ├── 03 Ejecución/              # Diseños técnicos y especificaciones
 │   ├── 04 Seguimiento y Control/  # Minutas de sprint y métricas QA
@@ -246,11 +248,11 @@ npm test
 ## 9. Navegación de Documentación
 
 Acceso directo a la documentación oficial del repositorio:
-- [01. Selección del enfoque del proyecto V_1_0_0](file:///d:/EcoLogistica/docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20V_1_0_0.md)
-- [02. Acta de constitución V_1_0_0](file:///d:/EcoLogistica/docs/01%20Inicio/02.%20Acta%20de%20constituci%C3%B3n%20V_1_0_0.md)
-- [03. Declaración de la visión V_1_0_0](file:///d:/EcoLogistica/docs/01%20Inicio/03.%20Declaraci%C3%B3n%20de%20la%20visi%C3%B3n%20V_1_0_0.md)
-- [04. Registro de supuestos y restricciones V_1_0_0](file:///d:/EcoLogistica/docs/01%20Inicio/04.%20Registro%20de%20supuestos%20y%20restricciones%20V_1_0_0.md)
-- [05. Registro de interesados V_1_0_0](file:///d:/EcoLogistica/docs/01%20Inicio/05.%20Registro%20de%20interesados%20V_1_0_0.md)
+- [01. Selección del enfoque del proyecto](docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20.md)
+- [02. Acta de constitución](docs/01%20Inicio/02.%20Acta%20de%20constituci%C3%B3n.md)
+- [03. Declaración de la visión](docs/01%20Inicio/03.%20Declaraci%C3%B3n%20de%20la%20visi%C3%B3n%20V1_0_0.md)
+- [04. Registro de supuestos y restricciones](docs/01%20Inicio/04.%20Registro%20de%20supuestos%20y%20restricciones.md)
+- [05. Registro de interesados](docs/01%20Inicio/05.%20Registro%20de%20interesados.md)
 
 ---
 
