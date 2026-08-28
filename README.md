@@ -1,60 +1,98 @@
+<div align="center">
+
 # EcoLogística Huancayo
+### Plataforma de Optimización de Rutas Sostenibles de Última Milla
 
-> **Optimizador de Rutas Sostenibles para DistriRápido S.A.C.**  
-> *Proyecto Académico – Taller de Proyectos 2 (Ingeniería de Sistemas e Informática)*
+[![Estado](https://img.shields.io/badge/Estado-Fase%20de%20Inicio-2ea44f?style=flat-square)](file:///d:/EcoLogistica/docs/01%20Inicio)
+[![Versión](https://img.shields.io/badge/Versión-v1.0.0--alpha-blue?style=flat-square)](file:///d:/EcoLogistica/README.md)
+[![Metodología](https://img.shields.io/badge/Metodología-Scrum%20%2B%20Git%20Flow-6f42c1?style=flat-square)](file:///d:/EcoLogistica/docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20V_1_0_0.md)
+[![Curso](https://img.shields.io/badge/Asignatura-Taller%20de%20Proyectos%202-0969da?style=flat-square)](file:///d:/EcoLogistica/README.md)
+[![Zona](https://img.shields.io/badge/Ubicación-Huancayo%2C%20Perú-d97706?style=flat-square)](file:///d:/EcoLogistica/README.md)
 
----
+<p align="center">
+  <b>Solución tecnológica para la gestión eficiente, económica y ecológica de flotas de distribución urbana en DistriRápido S.A.C.</b>
+</p>
 
-## Descripción
-**EcoLogística Lima** es una plataforma web desarrollada como Producto Mínimo Viable (PMV) orientada a la planificación, optimización y seguimiento de rutas de distribución de última milla. El sistema integra modelos matemáticos de optimización con restricciones de capacidad y ventanas horarias (**VRPTW** - *Vehicle Routing Problem with Time Windows*) incorporando criterios ambientales (**Green VRP**) para la minimización del consumo de combustible y la reducción activa de emisiones contaminantes de dióxido de carbono ($CO_2$).
-
----
-
-## Problemática
-La empresa **DistriRápido S.A.C.** enfrenta retos operativos críticos en sus operaciones logísticas urbanas:
-1. **Altos costos en combustible:** Generados por rutas ineficientes, traslapes de recorridos y congestión vehicular.
-2. **Incumplimiento de ventanas de entrega:** Dificultad para coordinar horarios pactados con clientes debido a la variabilidad del tráfico.
-3. **Impacto ambiental desmedido:** Falta de cuantificación, visibilidad y mitigación de la huella de carbono de la flota.
-4. **Baja capacidad de respuesta dinámica:** Ausencia de herramientas para re-enrutar vehículos en tiempo real ante cancelaciones o nuevos pedidos urgentes.
+</div>
 
 ---
 
-## Objetivo
-Desarrollar e implementar un Producto Mínimo Viable (PMV) de una plataforma web para optimizar las operaciones de última milla de DistriRápido S.A.C., reduciendo los tiempos de viaje, los costos operativos de combustible y las emisiones de $CO_2$, mediante algoritmos metaheurísticos, visualización cartográfica interactiva y tableros de control de sostenibilidad en un horizonte académico de 12 semanas.
+## 1. Ficha Técnica del Proyecto
+
+| Campo | Especificación |
+| :--- | :--- |
+| **Proyecto / Producto** | **EcoLogística Huancayo** (Optimizador VRPTW & Green VRP) |
+| **Empresa Patrocinadora** | **DistriRápido S.A.C.** |
+| **Asignatura Académica** | **Taller de Proyectos 2** (Ingeniería de Sistemas e Informática) |
+| **Docente Asesor** | **Ing. Gamarra Moreno, Job Daniel** |
+| **Periodo de Ejecución** | **17/08/2026 – 05/12/2026** (16 semanas / 4 Sprints) |
+| **Ámbito Geográfico** | **Huancayo Metropolitano** (Huancayo, El Tambo, Chilca) |
+| **Repositorio Oficial** | `https://github.com/alexito-dev/EcoLogistica.git` |
 
 ---
 
-## Funcionalidades principales
-- 📦 **Gestión de Pedidos:** Registro, carga masiva, priorización y configuración de ventanas horarias y pesos/volúmenes de entrega.
-- 🚚 **Gestión de Flota:** Catálogo de vehículos con capacidades de carga máxima, tipo de combustible y factor de rendimiento.
-- 👨‍✈️ **Gestión de Conductores:** Asignación de turnos, jornadas y disponibilidad horaria.
-- 🧬 **Optimización de Rutas (Metaheurística):** Resolución del problema VRPTW & Green VRP mediante algoritmos de optimización combinatoria multiobjetivo.
-- 🗺️ **Visualización de Rutas en Mapa:** Representación geográfica interactiva de trayectorias, secuencia de paradas y asignaciones por vehículo.
-- 📊 **Dashboard de Indicadores:** Panel en tiempo real con KPIs logísticos (distancia total, tasa de puntualidad, utilización de capacidad).
-- 🌿 **Reportes de Sostenibilidad:** Cuantificación y reportabilidad gráfica de emisiones de $CO_2$ generadas y ahorradas.
-- ⚡ **Re-optimización Dinámica:** Ajuste en caliente de secuencias de entrega ante imprevistos, incidencias de tráfico o pedidos cancelados.
-- 📉 **Cálculo de Emisiones de $CO_2$:** Modelo de emisión estandarizado según factores de consumo por tipo de motor y kilometraje.
+## 2. Descripción y Problemática
+
+### 2.1. Descripción
+**EcoLogística Huancayo** es una plataforma web desarrollada como Producto Mínimo Viable (PMV) enfocada en la planificación inteligente, secuenciación y seguimiento de rutas de distribución de última milla. 
+
+El núcleo del sistema integra modelos matemáticos de optimización combinatoria multiobjetivo (**VRPTW** - *Vehicle Routing Problem with Time Windows*) incorporando variables de sostenibilidad ambiental (**Green VRP**) para minimizar distancias, tiempos de traslado, consumo de combustible y la emisión de dióxido de carbono ($CO_2$) generada por el transporte en altitud (3,250 msnm).
+
+### 2.2. Problemática en DistriRápido S.A.C.
+La operativa logística en el valle del Mantaro presenta retos críticos que impactan en la rentabilidad y sostenibilidad de la empresa:
+1. **Sobrecostos de combustible:** Recorridos redundantes, cruces innecesarios de avenidas principales y desbalance de carga entre vehículos.
+2. **Incumplimiento de ventanas horarias:** Dificultad para garantizar entregas en horarios concertados ante variaciones de tráfico urbano.
+3. **Huella de carbono no mitigada:** Carencia de herramientas analíticas para cuantificar y reducir las emisiones de gases de efecto invernadero.
+4. **Baja capacidad de respuesta:** Falta de re-optimización dinámica en tiempo real ante cancelaciones o nuevos pedidos urgentes durante la jornada.
+
+### 2.3. Objetivo General
+Desarrollar e implementar un PMV web que optimice las rutas de distribución urbana de DistriRápido S.A.C. en Huancayo, reduciendo la distancia total recorrida en al menos un **15%**, aumentando la puntualidad por encima del **90%** y calculando la reducción efectiva de emisiones de $CO_2$ en un periodo de 16 semanas.
 
 ---
 
-## Integrantes
-- **Por completar**
+## 3. Capacidades y Módulos Funcionales
+
+```text
+┌────────────────────────────────────────────────────────────────────────┐
+│                      MÓDULOS DE ECOLogística HUANCAYO                  │
+├────────────────────────────────────────────────────────────────────────┤
+│  [1] Gestión de Pedidos     : Registro, geocodificación y ventanas.    │
+│  [2] Flota y Conductores    : Capacidades, combustible y turnos.       │
+│  [3] Motor Metaheurístico   : Resolución algorítmica VRPTW / Green VRP.│
+│  [4] Visor Cartográfico     : Mapa interactivo (Leaflet/OSM Huancayo). │
+│  [5] Dashboard Analítico    : KPIs logísticos y calculadora de CO₂.    │
+│  [6] Re-enrutamiento        : Ajuste dinámico de secuencias en ruta.   │
+└────────────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## Arquitectura
+## 4. Equipo de Trabajo y Responsabilidades
+
+| Integrante | Rol en el Proyecto | Responsabilidad Principal |
+| :--- | :--- | :--- |
+| **Zorrilla Apumayta, Alex Jesus** | **Project Manager / Líder** | Planificación, gestión del alcance, coordinación metodológica, control de entregables y gobernanza del proyecto. |
+| **Anco Porras Jhean, Pier Julio** | **Arquitecto / Backend** | Arquitectura del software, diseño y desarrollo de API RESTful, modelos de datos, persistencia en BD y servicios de negocio. |
+| **Hilario Talavera, Alexander Daniel** | **Optimización** | Modelado matemático, formulación y calibración del motor metaheurístico multiobjetivo (VRPTW & Green VRP). |
+| **Vera Zea, Jhoanna Hade** | **Frontend / UX** | Diseño de experiencia de usuario (UI/UX), desarrollo de vistas web responsivas, componentes de mapas interactivos y dashboards. |
+| **Isidro Casio, Jose Luis** | **QA / DevOps** | Aseguramiento de la calidad, diseño y ejecución de pruebas unitarias/integración, pipelines de CI/CD y gestión de ramas. |
+| **Gamarra Moreno, Job Daniel** | **Docente** | Asesoría técnica especializada, validación metodológica, evaluación de hitos académicos y supervisión general. |
+
+---
+
+## 5. Arquitectura del Sistema
 
 ```mermaid
 graph TD
     subgraph Cliente [Capa de Presentación - Frontend]
         UI[React / Vite + Vanilla CSS]
-        Map[Visor Cartográfico - Leaflet / OpenStreetMap]
-        Dash[Dashboard de Sostenibilidad e Indicadores]
+        Map[Visor Cartográfico - Leaflet / OSM Huancayo]
+        Dash[Dashboard de Indicadores & Sostenibilidad]
     end
 
-    subgraph Servidor [Capa de Lógica de Negocio - Backend]
+    subgraph Servidor [Capa de Negocio - Backend]
         API[API RESTful - Controladores & Servicios]
-        Auth[Módulo de Seguridad & Autenticación]
+        Auth[Módulo de Autenticación & Seguridad]
         Engine[Motor de Optimización Metaheurística VRPTW / Green VRP]
         CO2[Calculador de Emisiones de CO₂]
     end
@@ -74,65 +112,65 @@ graph TD
 
 ---
 
-## Estructura del repositorio
+## 6. Estructura del Repositorio
 
 ```text
 EcoLogistica/
 │
-├── .github/                       # Configuración de GitHub (Templates de PR e Issues)
+├── .github/                       # Plantillas de PRs e Issues
 │   ├── ISSUE_TEMPLATE/
 │   │   ├── bug_report.md
 │   │   └── feature_request.md
 │   └── pull_request_template.md
 │
-├── docs/                          # Documentación del proyecto (Estándar PMI / Ágil)
-│   ├── 01 Inicio/                 # Documentos oficiales de inicio y gobernanza
+├── docs/                          # Documentación formal (Estándares PMI / Ágil)
+│   ├── 01 Inicio/                 # Fase de inicio y gobernanza
 │   │   ├── 01. Selección del enfoque del proyecto V_1_0_0.md
 │   │   ├── 02. Acta de constitución V_1_0_0.md
 │   │   ├── 03. Declaración de la visión V_1_0_0.md
 │   │   ├── 04. Registro de supuestos y restricciones V_1_0_0.md
-│   │   ├── 05. Registro de interesados V_1_0_0.md
-│   │   └── 06. Estrategia de control de versiones V_1_0_0.md
-│   ├── 02 Planificación/          # Planes de gestión, cronogramas y EDT/WBS
-│   ├── 03 Ejecución/              # Diseños de arquitectura y especificaciones
-│   ├── 04 Seguimiento y Control/  # Minutas, métricas de avance y control de calidad
-│   ├── 05 Cierre/                 # Informes de entrega de PMV y lecciones aprendidas
-│   └── otros/                     # Material complementario y referencias técnicas
+│   │   └── 05. Registro de interesados V_1_0_0.md
+│   ├── 02 Planificación/          # Cronogramas, backlog y EDT/WBS
+│   ├── 03 Ejecución/              # Diseños técnicos y especificaciones
+│   ├── 04 Seguimiento y Control/  # Minutas de sprint y métricas QA
+│   ├── 05 Cierre/                 # Informes de entrega de PMV
+│   └── otros/                     # Material técnico de soporte
 │
-├── frontend/                      # Aplicación Web (Interfaz de usuario)
-│   ├── src/                       # Código fuente del cliente
-│   ├── tests/                     # Pruebas de interfaz y componentes
+├── frontend/                      # Aplicación cliente (Web UI)
+│   ├── src/                       # Componentes, vistas y servicios cliente
+│   ├── tests/                     # Pruebas de interfaz
 │   └── public/                    # Archivos estáticos
 │
 ├── backend/                       # Servidor API y Algoritmo de Optimización
-│   ├── src/                       # Lógica de negocio, rutas y servicios
-│   └── tests/                     # Pruebas unitarias e integración del optimizador
+│   ├── src/                       # Controladores, servicios y motor metaheurístico
+│   └── tests/                     # Pruebas unitarias e integración
 │
 ├── database/                      # Esquemas de Base de Datos y Datos Semilla
-│   ├── migrations/                # Scripts de migración de esquema
-│   └── seeds/                     # Datos iniciales para pruebas
+│   ├── migrations/                # Scripts DDL y control de migraciones
+│   └── seeds/                     # Datos iniciales para pruebas en Huancayo
 │
 ├── assets/                        # Recursos gráficos y multimedia
 │   ├── diagrams/                  # Diagramas de arquitectura y flujos
-│   ├── mockups/                   # Diseños de interfaz y prototipos
-│   └── images/                    # Capturas y recursos visuales
+│   ├── mockups/                   # Diseños de interfaz UI/UX
+│   └── images/                    # Capturas y recursos gráficos
 │
-├── .gitignore                     # Exclusión de binarios, dependencias y secretos
-├── .env.example                   # Plantilla de variables de entorno (sin secretos)
-└── README.md                      # Documentación principal del repositorio
+├── .gitignore                     # Reglas de exclusión de Git
+├── .env.example                   # Plantilla de variables de entorno
+└── README.md                      # Documento principal del repositorio
 ```
 
 ---
 
-## Estrategia Git Flow
-El proyecto adopta **Git Flow** como modelo oficial de control de versiones.
+## 7. Modelo de Ramas y Control de Versiones
+
+Se utiliza **Git Flow** como estándar de desarrollo colaborativo:
 
 ```mermaid
 gitGraph
     commit id: "Inicial"
     branch develop
     checkout develop
-    commit id: "Estructura Base"
+    commit id: "Base del Proyecto"
     branch feature/backend-pedidos
     checkout feature/backend-pedidos
     commit id: "CRUD Pedidos"
@@ -140,137 +178,82 @@ gitGraph
     merge feature/backend-pedidos id: "PR #1"
     branch release/v1.0.0
     checkout release/v1.0.0
-    commit id: "Freeze v1.0.0"
+    commit id: "Release Candidate"
     checkout main
     merge release/v1.0.0 id: "PMV Final" tag: "v1.0.0"
     checkout develop
     merge release/v1.0.0 id: "Sync Develop"
 ```
 
-### Ramas Principales
-- **`main`:** Código de producción, altamente estable y probado. Protegida contra escritura directa.
-- **`develop`:** Rama troncal de integración continua. Punto de convergencia de todas las características.
+### 7.1. Ramas Principales y de Soporte
+- `main`: Código productivo, estable y auditado.
+- `develop`: Rama troncal de integración continua.
+- `feature/*`: Desarrollo de módulos específicos (ej. `feature/optimizacion-rutas`, `feature/mapa-leaflet`).
+- `release/*`: Estabilización y congelamiento de versión previa a entrega.
+- `hotfix/*`: Correcciones críticas sobre `main`.
 
-### Ramas de Soporte
-- **`feature/*`:** Desarrollo de funcionalidades específicas. Bifurcan desde `develop` y se integran mediante Pull Request a `develop`.
-- **`release/*`:** Preparación y estabilización de versiones (`release/v1.0.0`). Se integran a `main` y `develop`.
-- **`hotfix/*`:** Corrección urgente de bugs críticos en producción. Bifurcan desde `main` y se integran a `main` y `develop`.
-
----
-
-## Convención de ramas
-Los nombres de las ramas deben seguir el estándar en minúsculas y separado por guiones:
-
-| Tipo | Formato / Ejemplos |
-| :--- | :--- |
-| **Funcionalidad** | `feature/frontend-login`, `feature/backend-pedidos`, `feature/optimizacion-rutas`, `feature/mapa-rutas`, `feature/reportes-sostenibilidad` |
-| **Versión** | `release/v1.0.0` |
-| **Corrección urgente** | `hotfix/fix-login`, `hotfix/fix-routing` |
-
-*(Prohibido el uso de nombres genéricos como `feature/test`, `feature/cambio`, `feature/prueba`).*
+### 7.2. Convención de Commits (Conventional Commits v1.0.0)
+- `feat:` Nuevas funcionalidades (`feat(pedidos): agregar validacion de ventanas horarias`).
+- `fix:` Corrección de errores (`fix(motor): ajustar calculo de penalizacion por demora`).
+- `docs:` Actualización de documentación (`docs(inicio): actualizar acta de constitucion`).
+- `test:` Pruebas unitarias o de integración (`test(backend): agregar pruebas del servicio de rutas`).
+- `refactor:` Mejoras en código sin alterar comportamiento (`refactor(api): modularizar controladores`).
+- `style:` Ajustes estéticos o de formato (`style(ui): optimizar paleta accesible en dashboard`).
+- `chore:` Tareas de mantenimiento o configuración (`chore(deps): actualizar dependencias`).
 
 ---
 
-## Convención de commits
-Se utiliza la especificación **Conventional Commits v1.0.0**:
+## 8. Guía de Instalación y Ejecución Local
 
-- `feat:` Nueva funcionalidad para el sistema (`feat(pedidos): agregar registro de pedidos`).
-- `fix:` Corrección de un fallo (`fix(rutas): corregir cálculo de distancia`).
-- `docs:` Modificaciones en documentación (`docs(inicio): actualizar acta de constitución`).
-- `test:` Pruebas unitarias o de integración (`test(rutas): agregar pruebas del optimizador`).
-- `refactor:` Reestructuración de código sin alterar comportamiento (`refactor(backend): separar servicios de optimización`).
-- `style:` Ajustes de formato o estilos visuales (`style(dashboard): ajustar colores de accesibilidad`).
-- `chore:` Mantenimiento, dependencias o configuración (`chore(git): actualizar gitignore`).
-
----
-
-## Instalación
-
-1. **Clonar el repositorio:**
-   ```bash
-   git clone https://github.com/alexito-dev/EcoLogistica.git
-   cd EcoLogistica
-   ```
-
-2. **Configurar variables de entorno:**
-   ```bash
-   cp .env.example .env
-   # Configurar valores locales en el archivo .env
-   ```
-
-3. **Instalación de dependencias:**
-   - *Backend:*
-     ```bash
-     cd backend
-     npm install # o pip install -r requirements.txt (según stack seleccionado)
-     ```
-   - *Frontend:*
-     ```bash
-     cd ../frontend
-     npm install
-     ```
-
----
-
-## Ejecución
-
-1. **Iniciar Base de Datos:**
-   ```bash
-   # Ejecutar migraciones y datos semilla
-   # (Los scripts específicos se definirán en la Iteración 1)
-   ```
-
-2. **Iniciar Backend:**
-   ```bash
-   cd backend
-   npm run dev
-   ```
-
-3. **Iniciar Frontend:**
-   ```bash
-   cd frontend
-   npm run dev
-   ```
-
----
-
-## Pruebas
-Las pruebas automatizadas se ejecutan de manera aislada por componente:
+### 8.1. Clonar el Repositorio
 ```bash
-# Pruebas de Backend y Algoritmo de Optimización
+git clone https://github.com/alexito-dev/EcoLogistica.git
+cd EcoLogistica
+```
+
+### 8.2. Variables de Entorno
+```bash
+cp .env.example .env
+# Configurar parámetros de base de datos y puertos en .env
+```
+
+### 8.3. Despliegue Local
+```bash
+# Iniciar Backend
+cd backend
+npm install
+npm run dev
+
+# Iniciar Frontend (en otra terminal)
+cd ../frontend
+npm install
+npm run dev
+```
+
+### 8.4. Pruebas Automatizadas
+```bash
+# Ejecutar pruebas de backend y algoritmos
 cd backend
 npm test
 
-# Pruebas de Frontend
+# Ejecutar pruebas de interfaz frontend
 cd ../frontend
 npm test
 ```
 
 ---
 
-## Versionado
-Se aplica **Semantic Versioning 2.0.0** (`vX.Y.Z`).
-- El PMV final del curso será etiquetado formalmente como **`v1.0.0`** sobre la rama `main`.
-- Versiones intermedias de iteración se manejarán con versiones preliminares en `develop` y ramas `release/`.
+## 9. Navegación de Documentación
+
+Acceso directo a la documentación oficial del repositorio:
+- [01. Selección del enfoque del proyecto V_1_0_0](file:///d:/EcoLogistica/docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20V_1_0_0.md)
+- [02. Acta de constitución V_1_0_0](file:///d:/EcoLogistica/docs/01%20Inicio/02.%20Acta%20de%20constituci%C3%B3n%20V_1_0_0.md)
+- [03. Declaración de la visión V_1_0_0](file:///d:/EcoLogistica/docs/01%20Inicio/03.%20Declaraci%C3%B3n%20de%20la%20visi%C3%B3n%20V_1_0_0.md)
+- [04. Registro de supuestos y restricciones V_1_0_0](file:///d:/EcoLogistica/docs/01%20Inicio/04.%20Registro%20de%20supuestos%20y%20restricciones%20V_1_0_0.md)
+- [05. Registro de interesados V_1_0_0](file:///d:/EcoLogistica/docs/01%20Inicio/05.%20Registro%20de%20interesados%20V_1_0_0.md)
 
 ---
 
-## Documentación
-La documentación del proyecto se encuentra organizada bajo la carpeta [`docs/`](file:///d:/EcoLogistica/docs):
-- [`docs/01 Inicio/`](file:///d:/EcoLogistica/docs/01%20Inicio)
-  - [`01. Selección del enfoque del proyecto V_1_0_0.md`](file:///d:/EcoLogistica/docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20V_1_0_0.md)
-  - [`02. Acta de constitución V_1_0_0.md`](file:///d:/EcoLogistica/docs/01%20Inicio/02.%20Acta%20de%20constituci%C3%B3n%20V_1_0_0.md)
-  - [`03. Declaración de la visión V_1_0_0.md`](file:///d:/EcoLogistica/docs/01%20Inicio/03.%20Declaraci%C3%B3n%20de%20la%20visi%C3%B3n%20V_1_0_0.md)
-  - [`04. Registro de supuestos y restricciones V_1_0_0.md`](file:///d:/EcoLogistica/docs/01%20Inicio/04.%20Registro%20de%20supuestos%20y%20restricciones%20V_1_0_0.md)
-  - [`05. Registro de interesados V_1_0_0.md`](file:///d:/EcoLogistica/docs/01%20Inicio/05.%20Registro%20de%20interesados%20V_1_0_0.md)
-  - [`06. Estrategia de control de versiones V_1_0_0.md`](file:///d:/EcoLogistica/docs/01%20Inicio/06.%20Estrategia%20de%20control%20de%20versiones%20V_1_0_0.md)
-- [`docs/02 Planificación/`](file:///d:/EcoLogistica/docs/02%20Planificaci%C3%B3n)
-- [`docs/03 Ejecución/`](file:///d:/EcoLogistica/docs/03%20Ejecuci%C3%B3n)
-- [`docs/04 Seguimiento y Control/`](file:///d:/EcoLogistica/docs/04%20Seguimiento%20y%20Control)
-- [`docs/05 Cierre/`](file:///d:/EcoLogistica/docs/05%20Cierre)
-
----
-
-## Estado del proyecto
-- 🟡 **Fase Actual:** Configuración Inicial de Repositorio, Gobernanza y Gestión de Inicio (Semana 1 / Iteración 1).
-- 🚀 **Próximo Paso:** Inicio formal de la **Iteración 1** (Requisitos detallados, diseño de arquitectura de datos y mockups de interfaz).
+<div align="center">
+  <sub>Escuela Profesional de Ingeniería de Sistemas e Informática · Taller de Proyectos 2 · 2026</sub>
+</div>
