@@ -7,7 +7,7 @@
 
 [![Estado](https://img.shields.io/badge/Estado-Fase%20de%20Inicio-2ea44f?style=flat-square)](docs/01%20Inicio)
 [![Versión](https://img.shields.io/badge/Versión-v1.0.0--alpha-blue?style=flat-square)](README.md)
-[![Metodología](https://img.shields.io/badge/Metodología-Scrum%20%2B%20Git%20Flow-6f42c1?style=flat-square)](docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20.md)
+[![Metodología](https://img.shields.io/badge/Metodología-Scrum%20%2B%20Git%20Flow-6f42c1?style=flat-square)](docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20V_1_0_0.md)
 [![Curso](https://img.shields.io/badge/Asignatura-Taller%20de%20Proyectos%202-0969da?style=flat-square)](README.md)
 [![Zona](https://img.shields.io/badge/Ubicación-Huancayo%2C%20Perú-d97706?style=flat-square)](README.md)
 
@@ -27,8 +27,8 @@
 | **Empresa Patrocinadora** | **DistriRápido S.A.C.** |
 | **Asignatura Académica** | **Taller de Proyectos 2** (Ingeniería de Sistemas e Informática) |
 | **Docente Asesor** | **Ing. Gamarra Moreno, Job Daniel** |
-| **Periodo de Ejecución** | **17/08/2026 – 05/12/2026** (16 semanas / 4 Sprints) |
-| **Ámbito Geográfico** | **Huancayo Metropolitano** (Huancayo, El Tambo, Chilca) |
+| **Periodo de Ejecución** | **24/08/2026 – 05/12/2026** (14 semanas de desarrollo + 1 de cierre / 4 iteraciones) |
+| **Ámbito Geográfico** | **Huancayo y Junín** (Huancayo Cercado, El Tambo, Chilca, Pilcomayo y San Agustín de Cajas) |
 | **Repositorio Oficial** | `https://github.com/alexito-dev/EcoLogistica.git` |
 
 ---
@@ -48,7 +48,7 @@ La operativa logística en el valle del Mantaro presenta retos críticos que imp
 4. **Baja capacidad de respuesta:** Falta de re-optimización dinámica en tiempo real ante cancelaciones o nuevos pedidos urgentes durante la jornada.
 
 ### 2.3. Objetivo General
-Desarrollar e implementar un PMV web que optimice las rutas de distribución urbana de DistriRápido S.A.C. en Huancayo, reduciendo la distancia total recorrida en al menos un **15%**, aumentando la puntualidad por encima del **90%** y calculando la reducción efectiva de emisiones de $CO_2$ en un periodo de 16 semanas.
+Desarrollar e implementar un PMV web que optimice las rutas de distribución urbana de DistriRápido S.A.C. en Huancayo, reduciendo la distancia total recorrida en al menos un **15%**, elevando la puntualidad al menos al **92%** y calculando la reducción efectiva de emisiones de $CO_2$ en 14 semanas de desarrollo y una semana de cierre.
 
 ---
 
@@ -248,11 +248,11 @@ npm test
 ## 9. Navegación de Documentación
 
 Acceso directo a la documentación oficial del repositorio:
-- [01. Selección del enfoque del proyecto](docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20.md)
-- [02. Acta de constitución](docs/01%20Inicio/02.%20Acta%20de%20constituci%C3%B3n.md)
-- [03. Declaración de la visión](docs/01%20Inicio/03.%20Declaraci%C3%B3n%20de%20la%20visi%C3%B3n.md)
-- [04. Registro de supuestos y restricciones](docs/01%20Inicio/04.%20Registro%20de%20supuestos%20y%20restricciones.md)
-- [05. Registro de interesados](docs/01%20Inicio/05.%20Registro%20de%20interesados.md)
+- [01. Selección del enfoque del proyecto](docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20V_1_0_0.md)
+- [02. Acta de constitución](docs/01%20Inicio/02.%20Acta%20de%20constituci%C3%B3n%20V_1_0_0.md)
+- [03. Declaración de la visión](docs/01%20Inicio/03.%20Declaraci%C3%B3n%20de%20la%20visi%C3%B3n%20V_1_0_0.md)
+- [04. Registro de supuestos y restricciones](docs/01%20Inicio/04.%20Registro%20de%20supuestos%20y%20restricciones%20V_1_0_0.md)
+- [05. Registro de interesados](docs/01%20Inicio/05.%20Registro%20de%20interesados%20V_1_0_0.md)
 
 ---
 
