@@ -129,7 +129,7 @@ EcoLogistica/
 │   ├── 01 Inicio/                 # Fase de inicio y gobernanza
 │   │   ├── 01. Selección del enfoque del proyecto .md
 │   │   ├── 02. Acta de constitución.md
-│   │   ├── 03. Declaración de la visión V1_0_0.md
+│   │   ├── 03. Declaración de la visión.md
 │   │   ├── 04. Registro de supuestos y restricciones.md
 │   │   └── 05. Registro de interesados.md
 │   ├── 02 Planificación/          # Cronogramas, backlog y EDT/WBS
@@ -250,7 +250,7 @@ npm test
 Acceso directo a la documentación oficial del repositorio:
 - [01. Selección del enfoque del proyecto](docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20.md)
 - [02. Acta de constitución](docs/01%20Inicio/02.%20Acta%20de%20constituci%C3%B3n.md)
-- [03. Declaración de la visión](docs/01%20Inicio/03.%20Declaraci%C3%B3n%20de%20la%20visi%C3%B3n%20V1_0_0.md)
+- [03. Declaración de la visión](docs/01%20Inicio/03.%20Declaraci%C3%B3n%20de%20la%20visi%C3%B3n.md)
 - [04. Registro de supuestos y restricciones](docs/01%20Inicio/04.%20Registro%20de%20supuestos%20y%20restricciones.md)
 - [05. Registro de interesados](docs/01%20Inicio/05.%20Registro%20de%20interesados.md)
 
