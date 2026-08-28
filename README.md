@@ -1,4 +1,4 @@
-# EcoLogística Lima
+# EcoLogística Huancayo
 
 > **Optimizador de Rutas Sostenibles para DistriRápido S.A.C.**  
 > *Proyecto Académico – Taller de Proyectos 2 (Ingeniería de Sistemas e Informática)*
