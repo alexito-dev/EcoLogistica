@@ -14,7 +14,7 @@
 
 ## 1. Método de transformación
 
-Se toma como línea base la documentación de requisitos de las semanas 2 y 3. Cada capacidad de negocio se convierte en una **Épica**; los resultados observables para un rol se expresan como **Historias de Usuario (US)**; y las condiciones de calidad, arquitectura, seguridad, datos y operación se expresan como **Enablers (EN)**. La trazabilidad evita convertir una decisión técnica en una promesa de usuario.
+Se toma como línea base la documentación de requisitos de las semanas 2 y 3. Cada capacidad de negocio se convierte en una **Épica**; los resultados observables para un rol se expresan como **Historias de Usuario (HU)**; y las condiciones de calidad, arquitectura, seguridad, datos y operación se expresan como **Enablers (EN)**. La trazabilidad evita convertir una decisión técnica en una promesa de usuario.
 
 ## 2. Mapa de épicas y backlog inicial
 
@@ -28,20 +28,25 @@ Se toma como línea base la documentación de requisitos de las semanas 2 y 3. C
 
 | Orden | ID | Tipo | Épica | Puntos | Elemento |
 |---:|---|---|---|---:|---|
-| 1 | US-001 | Story | EP-01 | 5 | Registrar pedido con dirección y ventana horaria |
-| 2 | US-002 | Story | EP-01 | 3 | Validar datos y geocodificar pedido |
-| 3 | US-003 | Story | EP-02 | 5 | Configurar vehículo y conductor |
-| 4 | US-004 | Story | EP-03 | 8 | Generar ruta optimizada sostenible |
-| 5 | EN-001 | Enabler | EP-03 | 5 | Medir latencia y calidad del optimizador |
-| 6 | US-005 | Story | EP-04 | 5 | Consultar ruta en mapa y estado de entregas |
-| 7 | US-006 | Story | EP-04 | 8 | Reoptimizar ante pedido urgente o incidencia |
-| 8 | EN-002 | Enabler | EP-04 | 5 | Implementar disponibilidad y recuperación |
-| 9 | US-007 | Story | EP-05 | 5 | Consultar KPI de costo, puntualidad y CO₂ |
-| 10 | EN-003 | Enabler | EP-05 | 3 | Proteger datos y registrar auditoría |
+| 1 | HU-001 | Story | EP-01 | 5 | Registrar pedido con dirección y ventana horaria |
+| 2 | HU-002 | Story | EP-01 | 3 | Validar datos y geocodificar pedido |
+| 3 | HU-008 | Story | EP-01 | 5 | Importar pedidos por plantilla |
+| 4 | HU-003 | Story | EP-02 | 5 | Configurar vehículo y conductor |
+| 5 | HU-009 | Story | EP-02 | 3 | Parametrizar restricciones vehiculares |
+| 6 | HU-004 | Story | EP-03 | 8 | Generar ruta optimizada sostenible |
+| 7 | EN-001 | Enabler | EP-03 | 5 | Medir latencia y calidad del optimizador |
+| 8 | HU-005 | Story | EP-04 | 5 | Consultar ruta en mapa y estado de entregas |
+| 9 | HU-006 | Story | EP-04 | 8 | Reoptimizar ante pedido urgente o incidencia |
+| 10 | HU-010 | Story | EP-04 | 5 | Reportar y consultar estados de entrega |
+| 11 | EN-002 | Enabler | EP-04 | 5 | Implementar disponibilidad y recuperación |
+| 12 | HU-007 | Story | EP-05 | 5 | Consultar KPI de costo, puntualidad y CO₂ |
+| 13 | HU-011 | Story | EP-05 | 5 | Comparar ruta optimizada contra línea base manual |
+| 14 | EN-003 | Enabler | EP-05 | 3 | Proteger datos y registrar auditoría |
+| 15 | EN-004 | Enabler | EP-05 | 8 | Hardening OWASP Top 10 |
 
 ## 3. Historias de usuario y criterios BDD
 
-### US-001 — Registrar pedido
+### HU-001 — Registrar pedido
 
 **Épica:** EP-01. **Prioridad:** Alta.
 
@@ -61,7 +66,7 @@ Cuando el despachador intenta guardar el pedido
 Entonces el sistema rechaza la operación e indica el campo que debe corregirse
 ```
 
-### US-002 — Geocodificar pedido
+### HU-002 — Geocodificar pedido
 
 **Épica:** EP-01. **Prioridad:** Alta.
 
@@ -79,7 +84,25 @@ Cuando finaliza la búsqueda automática
 Entonces el sistema solicita un punto manual y mantiene el pedido fuera de la ruta
 ```
 
-### US-003 — Configurar flota
+### HU-008 — Importar pedidos por plantilla
+
+**Épica:** EP-01. **Prioridad:** Media.
+
+Como **despachador**, quiero **importar varios pedidos a la vez desde una plantilla validada**, para **cargar el volumen diario de entregas sin registrarlas una por una**.
+
+```gherkin
+Escenario: Importar plantilla válida
+Dado que el despachador carga un archivo con la plantilla oficial de pedidos
+Cuando todas las filas cumplen el formato y los campos obligatorios
+Entonces el sistema crea un pedido por cada fila válida en estado Pendiente
+
+Escenario: Reportar filas rechazadas
+Dado un archivo de importación con filas incompletas o con formato inválido
+Cuando el sistema procesa el archivo
+Entonces registra cada fila rechazada con el motivo y conserva la carga de las filas válidas
+```
+
+### HU-003 — Configurar flota
 
 **Épica:** EP-02. **Prioridad:** Alta.
 
@@ -97,7 +120,25 @@ Cuando se ingresa una capacidad menor o igual a cero
 Entonces el sistema no guarda el registro y muestra una validación explícita
 ```
 
-### US-004 — Generar ruta sostenible
+### HU-009 — Parametrizar restricciones vehiculares
+
+**Épica:** EP-02. **Prioridad:** Media.
+
+Como **administrador de operaciones**, quiero **parametrizar las restricciones de placa, vía y horario vigentes en Huancayo**, para **evitar que el sistema asigne rutas que infrinjan la normativa vehicular local**.
+
+```gherkin
+Escenario: Registrar restricción de placa vigente
+Dado que el administrador define el día, la zona y el rango horario de la restricción
+Cuando guarda la configuración
+Entonces la regla queda activa y se aplica en la siguiente optimización
+
+Escenario: Excluir vehículo fuera de norma
+Dado un vehículo cuyo último dígito de placa está restringido en la zona y horario configurados
+Cuando el optimizador intenta asignarlo a una ruta dentro de esa ventana
+Entonces el sistema lo excluye de la asignación y registra el motivo
+```
+
+### HU-004 — Generar ruta sostenible
 
 **Épica:** EP-03. **Prioridad:** Alta.
 
@@ -131,7 +172,7 @@ Cuando el motor termina o es cancelado
 Entonces se registra la métrica, se informa al usuario y no se presenta la solución como óptima
 ```
 
-### US-005 — Consultar operación en mapa
+### HU-005 — Consultar operación en mapa
 
 **Épica:** EP-04. **Prioridad:** Alta.
 
@@ -147,7 +188,7 @@ Cuando el operador consulta la última ruta sincronizada
 Entonces el sistema muestra la marca de actualización y conserva la información disponible
 ```
 
-### US-006 — Re-enrutar incidencia
+### HU-006 — Re-enrutar incidencia
 
 **Épica:** EP-04. **Prioridad:** Media.
 
@@ -179,7 +220,25 @@ Cuando se recupera el servicio
 Entonces la última versión confirmada permanece intacta y la operación inconclusa queda registrada
 ```
 
-### US-007 — Consultar indicadores
+### HU-010 — Reportar y consultar estados de entrega
+
+**Épica:** EP-04. **Prioridad:** Alta.
+
+Como **conductor**, quiero **registrar el estado de cada entrega (En ruta, Entregado, Incidencia, Cancelado) desde el modo conductor**, para **que el planificador y la gerencia tengan visibilidad del avance real de la ruta**.
+
+```gherkin
+Escenario: Registrar entrega exitosa
+Dado que el conductor tiene una parada asignada en estado Pendiente o En ruta
+Cuando confirma la entrega desde el modo conductor
+Entonces el sistema actualiza el estado a Entregado con fecha, hora y ubicación disponible
+
+Escenario: Registrar incidencia
+Dado que el conductor no puede completar una entrega asignada
+Cuando selecciona el motivo de la incidencia y lo confirma
+Entonces el sistema marca la parada como Incidencia y notifica al planificador para su re-enrutamiento
+```
+
+### HU-007 — Consultar indicadores
 
 **Épica:** EP-05. **Prioridad:** Media.
 
@@ -193,6 +252,24 @@ Escenario: Sin datos del periodo
 Dado que no existen rutas para el filtro seleccionado
 Cuando el usuario consulta el dashboard
 Entonces el sistema muestra cero de forma diferenciada de un dato no disponible
+```
+
+### HU-011 — Comparar ruta optimizada contra línea base manual
+
+**Épica:** EP-05. **Prioridad:** Media.
+
+Como **gerencia**, quiero **comparar cada ruta optimizada contra la planificación manual histórica**, para **cuantificar el ahorro real en distancia, costo y CO₂ que genera el sistema**.
+
+```gherkin
+Escenario: Mostrar comparación de un periodo
+Dado que existen rutas optimizadas y su línea base manual registrada para un periodo
+Cuando la gerencia solicita el comparativo
+Entonces el sistema muestra la diferencia en distancia, costo y CO2 entre ambas planificaciones
+
+Escenario: Línea base no disponible
+Dado un periodo sin línea base manual registrada
+Cuando se solicita el comparativo
+Entonces el sistema indica que no hay línea base y no calcula una diferencia inexistente
 ```
 
 ### EN-003 — Seguridad y auditoría
@@ -211,6 +288,22 @@ Cuando exporta un registro
 Entonces el sistema registra usuario, fecha, filtro y resultado sin exponer credenciales
 ```
 
+### EN-004 — Hardening OWASP Top 10
+
+**Épica:** EP-05. **Prioridad:** Alta.
+
+```gherkin
+Escenario: Bloquear intento de inyección
+Dado un endpoint de la API que recibe parámetros de usuario
+Cuando se envía una carga con patrón de inyección SQL o script
+Entonces el sistema rechaza la solicitud, no ejecuta el payload y registra el intento
+
+Escenario: Cero vulnerabilidades críticas en el pipeline
+Dado el pipeline de CI/CD con análisis SAST/DAST configurado
+Cuando se ejecuta un despliegue a staging
+Entonces el reporte no muestra vulnerabilidades críticas del OWASP Top 10 pendientes de corrección
+```
+
 ## 4. Definition of Done global
 
-Una US o EN está Done cuando: (1) cumple todos sus criterios BDD; (2) tiene pruebas unitarias con cobertura mínima de 80% en el alcance modificado; (3) el análisis estático no reporta vulnerabilidades críticas; (4) un par técnico aprobó el Pull Request; (5) el despliegue automatizado es ejecutable en staging; (6) OpenAPI/Swagger y la documentación afectada están actualizadas; (7) no quedan errores de consola ni migraciones pendientes; y (8) la evidencia queda enlazada en Jira.
+Una HU o EN está Done cuando: (1) cumple todos sus criterios BDD; (2) tiene pruebas unitarias con cobertura mínima de 80% en el alcance modificado (RNF-007); (3) el análisis estático (SonarQube/CodeQL) no reporta vulnerabilidades críticas (RNF-002); (4) un par técnico aprobó el Pull Request; (5) el despliegue automatizado es ejecutable en staging y es reproducible en 10 minutos o menos desde la documentación (RNF-008); (6) OpenAPI/Swagger y la documentación afectada están actualizadas; (7) las vistas modificadas cumplen WCAG 2.1 AA y el payload inicial no supera 500 KB (RNF-006); (8) no quedan errores de consola ni migraciones pendientes; y (9) la evidencia queda enlazada en Jira.
