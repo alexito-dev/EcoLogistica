@@ -49,14 +49,12 @@
 | 16 | Story | HU-011 | — | Comparar ruta optimizada contra línea base manual | 5 | ⬜ |
 | 17 | Task | EN-003 | — | Protección de datos y auditoría | 3 | ⬜ |
 | 18 | Task | EN-004 | — | Hardening OWASP Top 10 | 8 | ⬜ |
-| 19 | Epic | EP-06 | ECO-6 | Re-enrutamiento dinámico | — | ✅ ⚠️ |
+| 19 | Epic | EP-06 | ECO-6 | Re-enrutamiento dinámico | — | ✅ |
 | 20 | Story | HU-006 | ECO-15 | Reenrutar ruta ante incidencia | 5 | ✅ |
 | 21 | Task | EN-002 | — | Disponibilidad y recuperación del servicio | 5 | ⬜ |
 | 22 | Epic | EP-07 | ECO-8 | Plataforma técnica y calidad | — | ✅ |
 | 23 | Task | EN-005 | ECO-16 | Configurar PostgreSQL y PostGIS | 5 | ✅ |
 | 24 | Task | EN-006 | ECO-17 | Configurar CI/CD, pruebas y documentación OpenAPI | 8 | ✅ |
-
-⚠️ **`ECO-7` es una épica duplicada** — se creó "EP-06 Re-enrutamiento dinámico" dos veces (`ECO-6` y `ECO-7`) por error. Falta eliminar una de las dos en Jira antes de tomar las capturas de evidencia.
 
 Los puntos usan Fibonacci (1, 2, 3, 5, 8, 13); los de los ítems marcados ✅ son los reales tomados de Jira, los de los ítems ⬜ son la estimación propuesta en esta especificación, pendiente de validar por el equipo al crearlos. La prioridad combina valor de negocio, dependencia y riesgo técnico; el detalle completo y los criterios BDD están en [01 Transformando a ágil](01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md).
 
@@ -89,7 +87,7 @@ La consigna exige recortes exclusivos del panel de Jira, sin escritorio, navegad
 
 - [x] Crear proyecto Scrum `ECO` (EcoLogística Huancayo).
 - [x] Crear EP-01 a EP-05 en Jira (ECO-1 a ECO-5).
-- [x] Crear EP-06 y EP-07, no previstas en la especificación original (ECO-6/7 y ECO-8) — **eliminar la épica EP-06 duplicada (`ECO-7`)**.
+- [x] Crear EP-06 y EP-07, no previstas en la especificación original (ECO-6 y ECO-8).
 - [ ] Crear el resto del backlog (HU-008, HU-009, HU-004, EN-001, HU-010, HU-011, EN-002, EN-003, EN-004) y asignarle puntos Fibonacci.
 - [ ] Crear la versión `v1.0.0-MVP` y asociarla a las historias.
 - [ ] Configurar columnas del flujo indicado en el tablero.
