@@ -23,8 +23,12 @@ Se toma como línea base la documentación de requisitos de las semanas 2 y 3. C
 | EP-01 Gestión de pedidos | Registrar, validar y ubicar entregas con ventana horaria | RF-001 a RF-004, RNF-006 |
 | EP-02 Flota y conductores | Mantener capacidades, turnos y restricciones operativas | RF-005 a RF-007 |
 | EP-03 Optimización sostenible | Generar rutas VRPTW/Green VRP medibles | RF-008 a RF-010, RNF-001, RNF-004 |
-| EP-04 Seguimiento y re-enrutamiento | Visualizar y ajustar la operación durante la jornada | RF-011 a RF-013, RNF-003 |
-| EP-05 Indicadores y auditoría | Explicar puntualidad, costo, CO₂ y trazabilidad | RF-014 a RF-016, RNF-005 |
+| EP-04 Visor cartográfico de rutas | Mostrar en mapa la secuencia, estado y avance de cada entrega | RF-011, RF-012 |
+| EP-05 Indicadores y auditoría | Explicar puntualidad, costo, CO₂ y trazabilidad | RF-014 a RF-016, RNF-002, RNF-005 |
+| EP-06 Re-enrutamiento dinámico | Reoptimizar ante pedidos urgentes o incidencias en curso | RF-013, RNF-003 |
+| EP-07 Plataforma técnica y calidad | Sostener la plataforma con persistencia geoespacial, integración continua y documentación técnica | RNF-007, RNF-008 |
+
+> **Control de cambios (11/09/2026):** al configurar el proyecto real en Jira (`ECO`), el equipo dividió la épica original "EP-04 Seguimiento y re-enrutamiento" en **EP-04 Visor cartográfico** (consulta y estados) y **EP-06 Re-enrutamiento dinámico** (reoptimización), y agregó **EP-07 Plataforma técnica y calidad** para los enablers de infraestructura que no tenían épica propia. Esta versión del documento se actualiza para reflejar esa estructura verificada en Jira.
 
 | Orden | ID | Tipo | Épica | Puntos | Elemento |
 |---:|---|---|---|---:|---|
@@ -35,14 +39,16 @@ Se toma como línea base la documentación de requisitos de las semanas 2 y 3. C
 | 5 | HU-009 | Story | EP-02 | 3 | Parametrizar restricciones vehiculares |
 | 6 | HU-004 | Story | EP-03 | 8 | Generar ruta optimizada sostenible |
 | 7 | EN-001 | Enabler | EP-03 | 5 | Medir latencia y calidad del optimizador |
-| 8 | HU-005 | Story | EP-04 | 5 | Consultar ruta en mapa y estado de entregas |
-| 9 | HU-006 | Story | EP-04 | 8 | Reoptimizar ante pedido urgente o incidencia |
-| 10 | HU-010 | Story | EP-04 | 5 | Reportar y consultar estados de entrega |
-| 11 | EN-002 | Enabler | EP-04 | 5 | Implementar disponibilidad y recuperación |
-| 12 | HU-007 | Story | EP-05 | 5 | Consultar KPI de costo, puntualidad y CO₂ |
-| 13 | HU-011 | Story | EP-05 | 5 | Comparar ruta optimizada contra línea base manual |
-| 14 | EN-003 | Enabler | EP-05 | 3 | Proteger datos y registrar auditoría |
-| 15 | EN-004 | Enabler | EP-05 | 8 | Hardening OWASP Top 10 |
+| 8 | HU-005 | Story | EP-04 | 3 | Consultar ruta en mapa y estado de entregas |
+| 9 | HU-010 | Story | EP-04 | 5 | Reportar y consultar estados de entrega |
+| 10 | HU-007 | Story | EP-05 | 5 | Consultar KPI de costo, puntualidad y CO₂ |
+| 11 | HU-011 | Story | EP-05 | 5 | Comparar ruta optimizada contra línea base manual |
+| 12 | EN-003 | Enabler | EP-05 | 3 | Proteger datos y registrar auditoría |
+| 13 | EN-004 | Enabler | EP-05 | 8 | Hardening OWASP Top 10 |
+| 14 | HU-006 | Story | EP-06 | 5 | Reoptimizar ante pedido urgente o incidencia |
+| 15 | EN-002 | Enabler | EP-06 | 5 | Implementar disponibilidad y recuperación |
+| 16 | EN-005 | Enabler | EP-07 | 5 | Configurar persistencia PostgreSQL/PostGIS |
+| 17 | EN-006 | Enabler | EP-07 | 8 | Integrar CI/CD, pruebas y documentación OpenAPI |
 
 ## 3. Historias de usuario y criterios BDD
 
@@ -190,7 +196,7 @@ Entonces el sistema muestra la marca de actualización y conserva la informació
 
 ### HU-006 — Re-enrutar incidencia
 
-**Épica:** EP-04. **Prioridad:** Media.
+**Épica:** EP-06. **Prioridad:** Media.
 
 ```gherkin
 Escenario: Reoptimizar pedido urgente
@@ -206,7 +212,7 @@ Entonces la propuesta queda en revisión y no reemplaza la ruta publicada
 
 ### EN-002 — Disponibilidad
 
-**Épica:** EP-04. **Prioridad:** Alta.
+**Épica:** EP-06. **Prioridad:** Alta.
 
 ```gherkin
 Escenario: Recuperar servicio
@@ -302,6 +308,42 @@ Escenario: Cero vulnerabilidades críticas en el pipeline
 Dado el pipeline de CI/CD con análisis SAST/DAST configurado
 Cuando se ejecuta un despliegue a staging
 Entonces el reporte no muestra vulnerabilidades críticas del OWASP Top 10 pendientes de corrección
+```
+
+### EN-005 — Persistencia geoespacial
+
+**Épica:** EP-07. **Prioridad:** Alta.
+
+Soporta el almacenamiento y las consultas geográficas que usan HU-002, HU-003 y HU-004 (PostgreSQL + PostGIS, según el [Modelo C4](../01%20Inicio/12.%20Modelo%20C4%20V_1_0_0.md)).
+
+```gherkin
+Escenario: Consultar por proximidad
+Dado que existen pedidos y vehículos con coordenadas geocodificadas
+Cuando el motor de optimización consulta distancias entre puntos
+Entonces la base de datos resuelve la consulta espacial usando índices PostGIS sin degradar el tiempo de respuesta
+
+Escenario: Migración versionada
+Dado un cambio en el esquema de datos geoespaciales
+Cuando se aplica la migración en el pipeline de despliegue
+Entonces la migración queda versionada, es reproducible y no requiere intervención manual en staging
+```
+
+### EN-006 — Integración continua y documentación técnica
+
+**Épica:** EP-07. **Prioridad:** Alta.
+
+Cubre RNF-007 (mantenibilidad) y RNF-008 (portabilidad): pipeline de CI/CD, pruebas automatizadas y documentación OpenAPI/Swagger actualizada.
+
+```gherkin
+Escenario: Pipeline bloquea código sin pruebas
+Dado un Pull Request que reduce la cobertura de pruebas por debajo del 80%
+Cuando se ejecuta el pipeline de CI
+Entonces el pipeline falla y bloquea el merge hasta corregir la cobertura
+
+Escenario: Despliegue reproducible documentado
+Dado un entorno nuevo siguiendo únicamente la documentación del repositorio
+Cuando un integrante del equipo ejecuta el procedimiento de despliegue
+Entonces el servicio queda operativo en staging en 10 minutos o menos
 ```
 
 ## 4. Definition of Done global
