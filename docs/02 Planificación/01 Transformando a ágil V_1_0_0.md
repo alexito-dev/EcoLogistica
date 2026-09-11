@@ -8,7 +8,7 @@
 |---|---|
 | Proyecto | EcoLogística Huancayo |
 | Código | PFA-TP2-ECOLOG-2026 |
-| Equipo | Zorrilla Apumayta, Alex Jesus; Anco Porras Jhean, Pier Julio; Hilario Talavera, Alexander Daniel; Vera Zea, Jhoanna Hade; Isidro Casio, Jose Luis |
+| Equipo | Zorrilla Apumayta, Alex Jesus; Anco Porras, Jhean Pier Julio; Hilario Talavera, Alexander Daniel; Vera Zea, Jhoanna Hade; Isidro Casio, Jose Luis |
 | Versión | 1.0.0 |
 | Fecha | 11 de septiembre de 2026 |
 
