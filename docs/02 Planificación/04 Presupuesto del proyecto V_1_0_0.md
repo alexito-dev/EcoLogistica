@@ -14,6 +14,8 @@
 
 > Presupuesto académico referencial para el PMV. Las horas y tarifas son supuestos de planificación, no pagos ejecutados. La reserva se calcula sobre el subtotal y se libera solo mediante control de cambios.
 
+> **Nota sobre moneda:** el presupuesto se expresa en soles peruanos (S/) porque DistriRápido S.A.C., la empresa patrocinadora, opera y factura en Huancayo, Perú. La plantilla de la consigna en USD es referencial; se mantiene la moneda local para que las tarifas y subtotales sean auditables frente al contexto real del proyecto.
+
 ## 1. Recursos humanos (CAPEX)
 
 | Rol | Horas | Tarifa S/ hora | Subtotal |

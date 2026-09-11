@@ -38,8 +38,11 @@
 | 8 | Task | EN-001 | Benchmark del motor ≤45 s | 5 | Motor |
 | 9 | Epic | EP-04 | Seguimiento y re-enrutamiento | — | Mapa |
 | 10 | Story | US-005 | Consultar ruta en mapa | 5 | Mapa |
-| 11 | Epic | EP-05 | Indicadores y auditoría | — | Dashboard |
-| 12 | Story | US-007 | Consultar KPI de costo, puntualidad y CO₂ | 5 | Dashboard |
+| 11 | Story | US-006 | Reoptimizar ante pedido urgente o incidencia | 8 | Mapa |
+| 12 | Task | EN-002 | Disponibilidad y recuperación del servicio | 5 | Mapa |
+| 13 | Epic | EP-05 | Indicadores y auditoría | — | Dashboard |
+| 14 | Story | US-007 | Consultar KPI de costo, puntualidad y CO₂ | 5 | Dashboard |
+| 15 | Task | EN-003 | Protección de datos y auditoría | 3 | Dashboard |
 
 Los puntos usan Fibonacci (1, 2, 3, 5, 8, 13). La prioridad combina valor de negocio, dependencia y riesgo técnico; el detalle completo y los criterios BDD están en [01 Transformando a ágil](01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md).
 
