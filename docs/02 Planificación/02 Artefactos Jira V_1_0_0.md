@@ -28,19 +28,19 @@
 
 | Prioridad | Tipo | Clave | Resumen | Story Points | Componente |
 |---:|---|---|---|---:|---|
-| 1 | Epic | EP-01 | Gestión de pedidos | — | Pedidos |
+| 1 | Epic | EP-01 / SCRUM-5 | Gestión de pedidos | — | Pedidos |
 | 2 | Story | US-001 | Registrar pedido con ventana horaria | 5 | Pedidos |
 | 3 | Story | US-002 | Validar y geocodificar pedido | 3 | Pedidos |
-| 4 | Epic | EP-02 | Flota y conductores | — | Flota |
+| 4 | Epic | EP-02 / SCRUM-6 | Flota y conductores | — | Flota |
 | 5 | Story | US-003 | Configurar vehículo y conductor | 5 | Flota |
-| 6 | Epic | EP-03 | Optimización sostenible | — | Motor |
+| 6 | Epic | EP-03 / SCRUM-7 | Optimización sostenible | — | Motor |
 | 7 | Story | US-004 | Generar ruta VRPTW/Green VRP | 8 | Motor |
 | 8 | Task | EN-001 | Benchmark del motor ≤45 s | 5 | Motor |
-| 9 | Epic | EP-04 | Seguimiento y re-enrutamiento | — | Mapa |
+| 9 | Epic | EP-04 / SCRUM-8 | Seguimiento y re-enrutamiento | — | Mapa |
 | 10 | Story | US-005 | Consultar ruta en mapa | 5 | Mapa |
 | 11 | Story | US-006 | Reoptimizar ante pedido urgente o incidencia | 8 | Mapa |
 | 12 | Task | EN-002 | Disponibilidad y recuperación del servicio | 5 | Mapa |
-| 13 | Epic | EP-05 | Indicadores y auditoría | — | Dashboard |
+| 13 | Epic | EP-05 / SCRUM-9 | Indicadores y auditoría | — | Dashboard |
 | 14 | Story | US-007 | Consultar KPI de costo, puntualidad y CO₂ | 5 | Dashboard |
 | 15 | Task | EN-003 | Protección de datos y auditoría | 3 | Dashboard |
 
@@ -62,7 +62,7 @@ La consigna exige recortes exclusivos del panel de Jira, sin escritorio, navegad
 
 1. **Evidencia 1 — Roadmap:** épicas ubicadas en la línea de tiempo.
 2. **Evidencia 2 — Backlog:** orden, puntos y componentes visibles.
-3. **Evidencia 3 — Sprint Planning:** Sprint 1 activo con su Sprint Goal.
+3. **Evidencia 3 — Sprint Planning:** Sprint 1 preparado con su Sprint Goal: MVP operativo de pedidos, flota, rutas sostenibles y seguimiento.
 4. **Evidencia 4 — Tablero Scrum:** tarjetas distribuidas en To Do, In Progress, In Review / QA y Done.
 5. **Evidencia 5 — Release:** `v1.0.0-MVP` y asociación de historias.
 
@@ -71,10 +71,10 @@ La consigna exige recortes exclusivos del panel de Jira, sin escritorio, navegad
 ## 5. Checklist de configuración
 
 - [ ] Crear proyecto Scrum `EcoLogística Huancayo`.
-- [ ] Crear EP-01 a EP-05 y asignar componentes.
+- [x] Crear EP-01 a EP-05 en Jira: SCRUM-5 a SCRUM-9.
 - [ ] Crear US/EN del backlog y asignar puntos Fibonacci.
 - [ ] Crear versión `v1.0.0-MVP`.
 - [ ] Configurar columnas del flujo indicado.
-- [ ] Crear Sprint 1 con duración de 2 semanas y Sprint Goal.
-- [ ] Asociar historias al Sprint 1 y a la versión.
+- [x] Crear Sprint 1 con duración planificada de 2 semanas y Sprint Goal.
+- [ ] Asociar todas las historias al Sprint 1 y a la versión (pendiente de configuración visual de Jira).
 - [ ] Capturar los cinco recortes limpios e insertarlos en este archivo.
