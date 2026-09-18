@@ -22,8 +22,8 @@
 | Jerarquía | Epic → Story / Task → Sub-task; Bug para incidencias |
 | Flujo | To Do → In Progress → In Review / QA → Done |
 | Release | `v1.0.0-MVP` (pendiente de crear en Jira) |
-| Sprint | ECO Sprint 1, 18 sep – 25 sep 2026 (**activo**, iniciado el 18 de septiembre) |
-| Sprint Goal (real, tomado de Jira) | "Entregar el primer incremento funcional de EcoLogística: registrar pedidos y flota, generar rutas optimizadas y visualizar resultados, con criterios de calidad verificables." |
+| Sprint | ECO Sprint 1, 14 sep – 28 sep 2026 (2 semanas, **activo**, recreado e iniciado el 18 de septiembre) |
+| Sprint Goal (real, tomado de Jira) | "Registrar pedidos con ventana horaria y permitir reenrutar una ruta ante incidencia." |
 
 ## 2. Épicas y backlog priorizado
 
@@ -66,14 +66,14 @@ Los puntos usan Fibonacci (1, 2, 3, 5, 8, 13); los de los ítems marcados ✅ so
 
 | Periodo | Entrega | Épicas |
 |---|---|---|
-| Sprint 1 — 11 sep a 25 sep 2026 | Registrar pedido y re-enrutar ante incidencia (ECO-9, ECO-15 ya cargados en el sprint) | EP-01, EP-06 |
+| Sprint 1 — 14 sep a 28 sep 2026 | Registrar pedido y re-enrutar ante incidencia (ECO-9, ECO-15 ya cargados en el sprint) | EP-01, EP-06 |
 | Sprint 2 — semanas 3–4 | Flota, geocodificación y motor de optimización | EP-02, EP-03 |
 | Sprint 3 — semanas 5–6 | Visor cartográfico y disponibilidad del servicio | EP-04 |
 | Sprint 4 — semanas 7–8 | Dashboard, auditoría y hardening de seguridad | EP-05 |
 | Sprint 5 — semana adicional de cierre | Persistencia geoespacial, CI/CD y documentación técnica | EP-07 |
 | Release v1.0.0-MVP | Integración y aceptación | EP-01 a EP-07 |
 
-> El Sprint 1 real en Jira solo tiene 2 historias cargadas (10 puntos), aunque su Sprint Goal menciona también generar rutas y visualizar resultados; el resto del alcance del objetivo se completará al cargar HU-004 y HU-005 en un sprint posterior.
+> El Sprint 1 real en Jira tiene 2 historias cargadas (10 puntos) y su Sprint Goal ya coincide exactamente con ese alcance; generar rutas optimizadas y visualizar resultados (HU-004, HU-005) queda para un sprint posterior, como corresponde según el roadmap.
 
 ## 4. Evidencias requeridas para completar en Jira
 
@@ -87,7 +87,7 @@ La consigna exige recortes exclusivos del panel de Jira, sin escritorio, navegad
 
 > Verificado directamente en el proyecto Jira `ECO` el 11 de septiembre de 2026: existen 8 épicas y 8 historias/tareas creadas, y el Sprint 1 está planificado pero aún no iniciado. Aún faltan las 5 capturas recortadas del panel de Jira (sin escritorio ni navegador) — no se fabrican imágenes por integridad académica; deben tomarse directamente del proyecto real una vez completada la configuración pendiente.
 >
-> **Reverificado el 18 de septiembre de 2026:** el Roadmap (Cronograma) ya muestra las 8 épicas correctamente ubicadas en la línea de tiempo con "ECO Sprint 1" marcado en septiembre. **El Sprint 1 ya está activo** — el tablero muestra el botón "Completar sprint" y las fechas se ajustaron a 18–25 sep, con las mismas 2 historias cargadas (ECO-9, ECO-15 = 10 puntos) visibles en la columna "Por hacer". El Backlog ya no tiene duplicados: `ECO-18`/`ECO-19` se renombraron a HU-008/HU-009 (ver sección 2). Las 5 capturas recortadas siguen sin insertarse en este documento — es lo único que falta para cerrar este archivo.
+> **Reverificado el 18 de septiembre de 2026:** el Roadmap (Cronograma) ya muestra las 8 épicas correctamente ubicadas en la línea de tiempo con "ECO Sprint 1" marcado en septiembre. **El Sprint 1 se recreó desde cero y ya está activo**: el Sprint Goal anterior prometía más de lo que el sprint contenía (mencionaba generar rutas optimizadas y visualizar resultados, sin tener esas historias cargadas), así que se completó el sprint original, se creó uno nuevo con duración estándar de 2 semanas (14–28 sep), un Sprint Goal ajustado exactamente a lo que contiene (ECO-9, ECO-15 = 10 puntos) y se inició. El Backlog ya no tiene duplicados: `ECO-18`/`ECO-19` se renombraron a HU-008/HU-009 (ver sección 2). Las 5 capturas recortadas siguen sin insertarse en este documento — es lo único que falta para cerrar este archivo.
 >
 > ⚠️ **Nuevo hallazgo:** el Tablero Scrum tiene 5 columnas (Por hacer, En curso, **Listo**, In Review/QA, Done), pero la consigna exige exactamente 4 (To Do → In Progress → In Review/QA → Done). Sobra la columna "Listo"; conviene quitarla o fusionarla antes de tomar la Evidencia 4.
 
@@ -113,8 +113,7 @@ Cuando tengas los 5 recortes, se insertan aquí mismo reemplazando cada línea d
 - [ ] Reasignar la épica de `ECO-19` (HU-009) de EP-01 a EP-02, donde corresponde por contenido.
 - [ ] Crear la versión `v1.0.0-MVP` y asociarla a las historias (función Releases no habilitada aún en el proyecto — activarla primero en Configuración del proyecto → Features).
 - [ ] Configurar columnas del flujo indicado en el tablero.
-- [x] Crear Sprint 1 (18 sep – 25 sep) con Sprint Goal real.
+- [x] Recrear Sprint 1 (14 sep – 28 sep, 2 semanas) con Sprint Goal ajustado a su alcance real (ECO-9, ECO-15) — hecho el 18 sep.
 - [x] Iniciar el Sprint 1 — confirmado activo el 18 sep (tablero con "Completar sprint").
-- [ ] Cargar HU-004 y HU-005 al Sprint 1 para que coincida con lo declarado en su Sprint Goal, o reescribir el Sprint Goal para que coincida con el alcance real (ECO-9, ECO-15).
 - [ ] Quitar o fusionar la columna extra "Listo" del tablero para que queden exactamente los 4 estados exigidos.
 - [ ] Capturar los cinco recortes limpios e insertarlos en este archivo (pendiente — ver sección 4).
