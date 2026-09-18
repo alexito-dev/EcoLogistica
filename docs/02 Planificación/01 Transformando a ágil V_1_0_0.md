@@ -1,0 +1,351 @@
+# 01. Transformando a ágil
+
+[← Volver al README Principal](../../README.md)
+
+## Metadatos
+
+| Campo | Valor |
+|---|---|
+| Proyecto | EcoLogística Huancayo |
+| Código | PFA-TP2-ECOLOG-2026 |
+| Equipo | Zorrilla Apumayta, Alex Jesus; Anco Porras, Jhean Pier Julio; Hilario Talavera, Alexander Daniel; Vera Zea, Jhoanna Hade; Isidro Casio, Jose Luis |
+| Versión | 1.0.0 |
+| Fecha | 11 de septiembre de 2026 |
+
+## 1. Método de transformación
+
+Se toma como línea base la documentación de requisitos de las semanas 2 y 3. Cada capacidad de negocio se convierte en una **Épica**; los resultados observables para un rol se expresan como **Historias de Usuario (HU)**; y las condiciones de calidad, arquitectura, seguridad, datos y operación se expresan como **Enablers (EN)**. La trazabilidad evita convertir una decisión técnica en una promesa de usuario.
+
+## 2. Mapa de épicas y backlog inicial
+
+| Épica | Objetivo de valor | Requisitos relacionados |
+|---|---|---|
+| EP-01 Gestión de pedidos | Registrar, validar y ubicar entregas con ventana horaria | RF-001 a RF-004, RNF-006 |
+| EP-02 Flota y conductores | Mantener capacidades, turnos y restricciones operativas | RF-005 a RF-007 |
+| EP-03 Optimización sostenible | Generar rutas VRPTW/Green VRP medibles | RF-008 a RF-010, RNF-001, RNF-004 |
+| EP-04 Visor cartográfico de rutas | Mostrar en mapa la secuencia, estado y avance de cada entrega | RF-011, RF-012 |
+| EP-05 Indicadores y auditoría | Explicar puntualidad, costo, CO₂ y trazabilidad | RF-014 a RF-016, RNF-002, RNF-005 |
+| EP-06 Re-enrutamiento dinámico | Reoptimizar ante pedidos urgentes o incidencias en curso | RF-013, RNF-003 |
+| EP-07 Plataforma técnica y calidad | Sostener la plataforma con persistencia geoespacial, integración continua y documentación técnica | RNF-007, RNF-008 |
+
+> **Control de cambios (11/09/2026):** al configurar el proyecto real en Jira (`ECO`), el equipo dividió la épica original "EP-04 Seguimiento y re-enrutamiento" en **EP-04 Visor cartográfico** (consulta y estados) y **EP-06 Re-enrutamiento dinámico** (reoptimización), y agregó **EP-07 Plataforma técnica y calidad** para los enablers de infraestructura que no tenían épica propia. Esta versión del documento se actualiza para reflejar esa estructura verificada en Jira.
+
+| Orden | ID | Tipo | Épica | Puntos | Elemento |
+|---:|---|---|---|---:|---|
+| 1 | HU-001 | Story | EP-01 | 5 | Registrar pedido con dirección y ventana horaria |
+| 2 | HU-002 | Story | EP-01 | 3 | Validar datos y geocodificar pedido |
+| 3 | HU-008 | Story | EP-01 | 5 | Importar pedidos por plantilla |
+| 4 | HU-003 | Story | EP-02 | 5 | Configurar vehículo y conductor |
+| 5 | HU-009 | Story | EP-02 | 3 | Parametrizar restricciones vehiculares |
+| 6 | HU-004 | Story | EP-03 | 8 | Generar ruta optimizada sostenible |
+| 7 | EN-001 | Enabler | EP-03 | 5 | Medir latencia y calidad del optimizador |
+| 8 | HU-005 | Story | EP-04 | 3 | Consultar ruta en mapa y estado de entregas |
+| 9 | HU-010 | Story | EP-04 | 5 | Reportar y consultar estados de entrega |
+| 10 | HU-007 | Story | EP-05 | 5 | Consultar KPI de costo, puntualidad y CO₂ |
+| 11 | HU-011 | Story | EP-05 | 5 | Comparar ruta optimizada contra línea base manual |
+| 12 | EN-003 | Enabler | EP-05 | 3 | Proteger datos y registrar auditoría |
+| 13 | EN-004 | Enabler | EP-05 | 8 | Hardening OWASP Top 10 |
+| 14 | HU-006 | Story | EP-06 | 5 | Reoptimizar ante pedido urgente o incidencia |
+| 15 | EN-002 | Enabler | EP-06 | 5 | Implementar disponibilidad y recuperación |
+| 16 | EN-005 | Enabler | EP-07 | 5 | Configurar persistencia PostgreSQL/PostGIS |
+| 17 | EN-006 | Enabler | EP-07 | 8 | Integrar CI/CD, pruebas y documentación OpenAPI |
+
+## 3. Historias de usuario y criterios BDD
+
+### HU-001 — Registrar pedido
+
+**Épica:** EP-01. **Prioridad:** Alta.
+
+Como **despachador**, quiero **registrar un pedido con dirección, carga y ventana horaria**, para **incorporarlo a la planificación diaria**.
+
+#### Criterios de aceptación
+
+```gherkin
+Escenario: Registrar pedido válido
+Dado que el despachador está autenticado
+Cuando ingresa dirección, peso y ventana horaria válida
+Entonces el sistema crea el pedido con estado Pendiente y muestra su identificador
+
+Escenario: Rechazar ventana inválida
+Dado que la hora final es anterior a la hora inicial
+Cuando el despachador intenta guardar el pedido
+Entonces el sistema rechaza la operación e indica el campo que debe corregirse
+```
+
+### HU-002 — Geocodificar pedido
+
+**Épica:** EP-01. **Prioridad:** Alta.
+
+Como **despachador**, quiero **confirmar la ubicación geográfica de un pedido**, para **evitar rutas basadas en direcciones ambiguas**.
+
+```gherkin
+Escenario: Geocodificación con confianza suficiente
+Dado un pedido con dirección válida
+Cuando el servicio devuelve una coincidencia con precisión de manzana o superior
+Entonces el sistema guarda latitud, longitud y nivel de confianza
+
+Escenario: Geocodificación no concluyente
+Dado un pedido cuya dirección no tiene coincidencia suficiente
+Cuando finaliza la búsqueda automática
+Entonces el sistema solicita un punto manual y mantiene el pedido fuera de la ruta
+```
+
+### HU-008 — Importar pedidos por plantilla
+
+**Épica:** EP-01. **Prioridad:** Media.
+
+Como **despachador**, quiero **importar varios pedidos a la vez desde una plantilla validada**, para **cargar el volumen diario de entregas sin registrarlas una por una**.
+
+```gherkin
+Escenario: Importar plantilla válida
+Dado que el despachador carga un archivo con la plantilla oficial de pedidos
+Cuando todas las filas cumplen el formato y los campos obligatorios
+Entonces el sistema crea un pedido por cada fila válida en estado Pendiente
+
+Escenario: Reportar filas rechazadas
+Dado un archivo de importación con filas incompletas o con formato inválido
+Cuando el sistema procesa el archivo
+Entonces registra cada fila rechazada con el motivo y conserva la carga de las filas válidas
+```
+
+### HU-003 — Configurar flota
+
+**Épica:** EP-02. **Prioridad:** Alta.
+
+Como **administrador de operaciones**, quiero **registrar capacidad, combustible y turno de cada vehículo**, para **generar asignaciones factibles**.
+
+```gherkin
+Escenario: Crear vehículo operativo
+Dado que el administrador tiene permiso de configuración
+Cuando registra placa, capacidad, tipo de combustible y turno válidos
+Entonces el vehículo aparece disponible para planificación
+
+Escenario: Evitar capacidad negativa
+Dado un formulario de vehículo abierto
+Cuando se ingresa una capacidad menor o igual a cero
+Entonces el sistema no guarda el registro y muestra una validación explícita
+```
+
+### HU-009 — Parametrizar restricciones vehiculares
+
+**Épica:** EP-02. **Prioridad:** Media.
+
+Como **administrador de operaciones**, quiero **parametrizar las restricciones de placa, vía y horario vigentes en Huancayo**, para **evitar que el sistema asigne rutas que infrinjan la normativa vehicular local**.
+
+```gherkin
+Escenario: Registrar restricción de placa vigente
+Dado que el administrador define el día, la zona y el rango horario de la restricción
+Cuando guarda la configuración
+Entonces la regla queda activa y se aplica en la siguiente optimización
+
+Escenario: Excluir vehículo fuera de norma
+Dado un vehículo cuyo último dígito de placa está restringido en la zona y horario configurados
+Cuando el optimizador intenta asignarlo a una ruta dentro de esa ventana
+Entonces el sistema lo excluye de la asignación y registra el motivo
+```
+
+### HU-004 — Generar ruta sostenible
+
+**Épica:** EP-03. **Prioridad:** Alta.
+
+Como **planificador**, quiero **generar rutas considerando ventanas, capacidad, distancia y CO₂**, para **reducir costo y entregas tardías**.
+
+```gherkin
+Escenario: Generar solución factible
+Dado un conjunto de pedidos geocodificados y una flota disponible
+Cuando el planificador solicita optimizar
+Entonces el sistema devuelve rutas asignadas, secuencia, distancia, puntualidad estimada y CO2
+
+Escenario: Reportar pedidos no asignables
+Dado un pedido incompatible con capacidad o ventana de toda la flota
+Cuando finaliza la optimización
+Entonces el sistema conserva el pedido como no asignado y explica la causa
+```
+
+### EN-001 — Rendimiento del optimizador
+
+**Épica:** EP-03. **Prioridad:** Alta.
+
+```gherkin
+Escenario: Cumplir tiempo objetivo
+Dado un escenario de 150 pedidos y 15 vehículos
+Cuando se ejecuta la optimización en el entorno objetivo
+Entonces el resultado se entrega en un máximo de 45 segundos en al menos 95 de 100 ejecuciones
+
+Escenario: Registrar degradación
+Dado que la ejecución supera el umbral de 45 segundos
+Cuando el motor termina o es cancelado
+Entonces se registra la métrica, se informa al usuario y no se presenta la solución como óptima
+```
+
+### HU-005 — Consultar operación en mapa
+
+**Épica:** EP-04. **Prioridad:** Alta.
+
+```gherkin
+Escenario: Ver ruta y estados
+Dado que existe una planificación publicada
+Cuando el operador abre el visor
+Entonces observa secuencia, vehículo, ventanas y estado de cada entrega
+
+Escenario: Conexión intermitente
+Dado que el dispositivo pierde conectividad temporalmente
+Cuando el operador consulta la última ruta sincronizada
+Entonces el sistema muestra la marca de actualización y conserva la información disponible
+```
+
+### HU-006 — Re-enrutar incidencia
+
+**Épica:** EP-06. **Prioridad:** Media.
+
+```gherkin
+Escenario: Reoptimizar pedido urgente
+Dado que una ruta publicada tiene un pedido urgente nuevo
+Cuando el operador solicita reoptimización
+Entonces el sistema propone una nueva secuencia sin violar capacidad ni ventanas confirmadas
+
+Escenario: Cancelar propuesta riesgosa
+Dado que la propuesta aumenta la tardanza por encima del umbral configurado
+Cuando el motor evalúa la alternativa
+Entonces la propuesta queda en revisión y no reemplaza la ruta publicada
+```
+
+### EN-002 — Disponibilidad
+
+**Épica:** EP-06. **Prioridad:** Alta.
+
+```gherkin
+Escenario: Recuperar servicio
+Dado que un proceso de aplicación deja de responder
+Cuando el monitor detecta el fallo
+Entonces el servicio se reinicia y queda disponible dentro de 30 segundos
+
+Escenario: Mantener consistencia
+Dado que ocurre un fallo durante una actualización de ruta
+Cuando se recupera el servicio
+Entonces la última versión confirmada permanece intacta y la operación inconclusa queda registrada
+```
+
+### HU-010 — Reportar y consultar estados de entrega
+
+**Épica:** EP-04. **Prioridad:** Alta.
+
+Como **conductor**, quiero **registrar el estado de cada entrega (En ruta, Entregado, Incidencia, Cancelado) desde el modo conductor**, para **que el planificador y la gerencia tengan visibilidad del avance real de la ruta**.
+
+```gherkin
+Escenario: Registrar entrega exitosa
+Dado que el conductor tiene una parada asignada en estado Pendiente o En ruta
+Cuando confirma la entrega desde el modo conductor
+Entonces el sistema actualiza el estado a Entregado con fecha, hora y ubicación disponible
+
+Escenario: Registrar incidencia
+Dado que el conductor no puede completar una entrega asignada
+Cuando selecciona el motivo de la incidencia y lo confirma
+Entonces el sistema marca la parada como Incidencia y notifica al planificador para su re-enrutamiento
+```
+
+### HU-007 — Consultar indicadores
+
+**Épica:** EP-05. **Prioridad:** Media.
+
+```gherkin
+Escenario: Consultar indicadores diarios
+Dado que existen rutas ejecutadas con datos de distancia y combustible
+Cuando el usuario abre el dashboard
+Entonces observa puntualidad, distancia, costo estimado y CO2 con periodo y fuente
+
+Escenario: Sin datos del periodo
+Dado que no existen rutas para el filtro seleccionado
+Cuando el usuario consulta el dashboard
+Entonces el sistema muestra cero de forma diferenciada de un dato no disponible
+```
+
+### HU-011 — Comparar ruta optimizada contra línea base manual
+
+**Épica:** EP-05. **Prioridad:** Media.
+
+Como **gerencia**, quiero **comparar cada ruta optimizada contra la planificación manual histórica**, para **cuantificar el ahorro real en distancia, costo y CO₂ que genera el sistema**.
+
+```gherkin
+Escenario: Mostrar comparación de un periodo
+Dado que existen rutas optimizadas y su línea base manual registrada para un periodo
+Cuando la gerencia solicita el comparativo
+Entonces el sistema muestra la diferencia en distancia, costo y CO2 entre ambas planificaciones
+
+Escenario: Línea base no disponible
+Dado un periodo sin línea base manual registrada
+Cuando se solicita el comparativo
+Entonces el sistema indica que no hay línea base y no calcula una diferencia inexistente
+```
+
+### EN-003 — Seguridad y auditoría
+
+**Épica:** EP-05. **Prioridad:** Alta.
+
+```gherkin
+Escenario: Autorizar acceso por rol
+Dado un usuario autenticado sin permiso administrativo
+Cuando intenta modificar parámetros de flota
+Entonces el sistema deniega la operación y registra el evento
+
+Escenario: Auditar exportación
+Dado un usuario con permiso de auditoría
+Cuando exporta un registro
+Entonces el sistema registra usuario, fecha, filtro y resultado sin exponer credenciales
+```
+
+### EN-004 — Hardening OWASP Top 10
+
+**Épica:** EP-05. **Prioridad:** Alta.
+
+```gherkin
+Escenario: Bloquear intento de inyección
+Dado un endpoint de la API que recibe parámetros de usuario
+Cuando se envía una carga con patrón de inyección SQL o script
+Entonces el sistema rechaza la solicitud, no ejecuta el payload y registra el intento
+
+Escenario: Cero vulnerabilidades críticas en el pipeline
+Dado el pipeline de CI/CD con análisis SAST/DAST configurado
+Cuando se ejecuta un despliegue a staging
+Entonces el reporte no muestra vulnerabilidades críticas del OWASP Top 10 pendientes de corrección
+```
+
+### EN-005 — Persistencia geoespacial
+
+**Épica:** EP-07. **Prioridad:** Alta.
+
+Soporta el almacenamiento y las consultas geográficas que usan HU-002, HU-003 y HU-004 (PostgreSQL + PostGIS, según el [Modelo C4](../01%20Inicio/12.%20Modelo%20C4%20V_1_0_0.md)).
+
+```gherkin
+Escenario: Consultar por proximidad
+Dado que existen pedidos y vehículos con coordenadas geocodificadas
+Cuando el motor de optimización consulta distancias entre puntos
+Entonces la base de datos resuelve la consulta espacial usando índices PostGIS sin degradar el tiempo de respuesta
+
+Escenario: Migración versionada
+Dado un cambio en el esquema de datos geoespaciales
+Cuando se aplica la migración en el pipeline de despliegue
+Entonces la migración queda versionada, es reproducible y no requiere intervención manual en staging
+```
+
+### EN-006 — Integración continua y documentación técnica
+
+**Épica:** EP-07. **Prioridad:** Alta.
+
+Cubre RNF-007 (mantenibilidad) y RNF-008 (portabilidad): pipeline de CI/CD, pruebas automatizadas y documentación OpenAPI/Swagger actualizada.
+
+```gherkin
+Escenario: Pipeline bloquea código sin pruebas
+Dado un Pull Request que reduce la cobertura de pruebas por debajo del 80%
+Cuando se ejecuta el pipeline de CI
+Entonces el pipeline falla y bloquea el merge hasta corregir la cobertura
+
+Escenario: Despliegue reproducible documentado
+Dado un entorno nuevo siguiendo únicamente la documentación del repositorio
+Cuando un integrante del equipo ejecuta el procedimiento de despliegue
+Entonces el servicio queda operativo en staging en 10 minutos o menos
+```
+
+## 4. Definition of Done global
+
+Una HU o EN está Done cuando: (1) cumple todos sus criterios BDD; (2) tiene pruebas unitarias con cobertura mínima de 80% en el alcance modificado (RNF-007); (3) el análisis estático (SonarQube/CodeQL) no reporta vulnerabilidades críticas (RNF-002); (4) un par técnico aprobó el Pull Request; (5) el despliegue automatizado es ejecutable en staging y es reproducible en 10 minutos o menos desde la documentación (RNF-008); (6) OpenAPI/Swagger y la documentación afectada están actualizadas; (7) las vistas modificadas cumplen WCAG 2.1 AA y el payload inicial no supera 500 KB (RNF-006); (8) no quedan errores de consola ni migraciones pendientes; y (9) la evidencia queda enlazada en Jira.
