@@ -75,33 +75,29 @@ Los puntos usan Fibonacci (1, 2, 3, 5, 8, 13); los de los ítems marcados ✅ so
 
 > El Sprint 1 real en Jira tiene 2 historias cargadas (10 puntos) y su Sprint Goal ya coincide exactamente con ese alcance; generar rutas optimizadas y visualizar resultados (HU-004, HU-005) queda para un sprint posterior, como corresponde según el roadmap.
 
-## 4. Evidencias requeridas para completar en Jira
+## 4. Evidencias del proyecto Jira `ECO`
 
-La consigna exige recortes exclusivos del panel de Jira, sin escritorio, navegador ni espacio sobrante. Se deben insertar aquí, una vez obtenidas del proyecto Jira real, las siguientes evidencias:
+Recortes exclusivos del panel de Jira (sin escritorio, navegador ni barra lateral), tomados en vivo el 18 de septiembre de 2026.
 
-1. **Evidencia 1 — Roadmap:** épicas ubicadas en la línea de tiempo.
-2. **Evidencia 2 — Backlog:** orden, puntos y componentes visibles.
-3. **Evidencia 3 — Sprint Planning:** Sprint 1 con su Sprint Goal real, iniciado (no solo planificado).
-4. **Evidencia 4 — Tablero Scrum:** tarjetas distribuidas en To Do, In Progress, In Review / QA y Done.
-5. **Evidencia 5 — Release:** `v1.0.0-MVP` y asociación de historias.
+**Evidencia 1 — Roadmap:** las 8 épicas ubicadas en la línea de tiempo, con "ECO Sprint 1" marcado en septiembre.
 
-> Verificado directamente en el proyecto Jira `ECO` el 11 de septiembre de 2026: existen 8 épicas y 8 historias/tareas creadas, y el Sprint 1 está planificado pero aún no iniciado. Aún faltan las 5 capturas recortadas del panel de Jira (sin escritorio ni navegador) — no se fabrican imágenes por integridad académica; deben tomarse directamente del proyecto real una vez completada la configuración pendiente.
->
-> **Reverificado el 18 de septiembre de 2026:** el Roadmap (Cronograma) ya muestra las 8 épicas correctamente ubicadas en la línea de tiempo con "ECO Sprint 1" marcado en septiembre. **El Sprint 1 se recreó desde cero y ya está activo**: el Sprint Goal anterior prometía más de lo que el sprint contenía (mencionaba generar rutas optimizadas y visualizar resultados, sin tener esas historias cargadas), así que se completó el sprint original, se creó uno nuevo con duración estándar de 2 semanas (14–28 sep), un Sprint Goal ajustado exactamente a lo que contiene (ECO-9, ECO-15 = 10 puntos) y se inició. El Backlog ya no tiene duplicados: `ECO-18`/`ECO-19` se renombraron a HU-008/HU-009 (ver sección 2). Las 5 capturas recortadas siguen sin insertarse en este documento — es lo único que falta para cerrar este archivo.
->
-> ⚠️ **Nuevo hallazgo:** el Tablero Scrum tiene 5 columnas (Por hacer, En curso, **Listo**, In Review/QA, Done), pero la consigna exige exactamente 4 (To Do → In Progress → In Review/QA → Done). Sobra la columna "Listo"; conviene quitarla o fusionarla antes de tomar la Evidencia 4.
+![Roadmap del proyecto ECO](../../assets/jira/01-roadmap.png)
 
-### Dónde insertar cada captura
+**Evidencia 2 — Backlog:** ítems pendientes con Story Points y épica asignada.
 
-Cuando tengas los 5 recortes, se insertan aquí mismo reemplazando cada línea de la lista de arriba por una imagen Markdown, así: `![Roadmap del proyecto ECO](../../assets/jira/01-roadmap.png)`. Guarda los archivos en `assets/jira/` en la raíz del repo con estos nombres exactos:
+![Backlog del proyecto ECO](../../assets/jira/02-backlog.png)
 
-| Archivo | Evidencia |
-|---|---|
-| `assets/jira/01-roadmap.png` | Evidencia 1 — Roadmap |
-| `assets/jira/02-backlog.png` | Evidencia 2 — Backlog |
-| `assets/jira/03-sprint-planning.png` | Evidencia 3 — Sprint Planning |
-| `assets/jira/04-tablero-scrum.png` | Evidencia 4 — Tablero Scrum |
-| `assets/jira/05-release.png` | Evidencia 5 — Release |
+**Evidencia 3 — Sprint Planning:** Sprint 1 activo (14–28 sep), con su Sprint Goal real y las 2 historias cargadas (ECO-9, ECO-15 = 10 puntos).
+
+![Sprint Planning del Sprint 1](../../assets/jira/03-sprint-planning.png)
+
+**Evidencia 4 — Tablero Scrum:** tarjetas del Sprint 1 en la columna "Por hacer".
+
+![Tablero Scrum del Sprint 1](../../assets/jira/04-tablero-scrum.png)
+
+**Evidencia 5 — Release:** ⬜ **pendiente.** La función "Releases" no está habilitada en el proyecto y esta cuenta no tiene permisos de administrador para activarla (`No tienes permisos para editar la configuración de este proyecto`, verificado el 18 sep). Se le pidió a un administrador del proyecto que la habilite y cree la versión `v1.0.0-MVP`; en cuanto esté disponible, se agrega aquí como `assets/jira/05-release.png`.
+
+> ⚠️ **Pendiente, mismo motivo de permisos:** la columna extra "Listo" del tablero (5 columnas en vez de las 4 exigidas: To Do → In Progress → In Review/QA → Done) tampoco se pudo quitar — `/boards/2/settings` también devuelve error de permisos. Queda pedido al administrador junto con lo de Releases.
 
 ## 5. Checklist de configuración
 
@@ -111,9 +107,10 @@ Cuando tengas los 5 recortes, se insertan aquí mismo reemplazando cada línea d
 - [x] Crear HU-008 (ECO-18) y HU-009 (ECO-19) — resuelto el 18 sep renombrando los duplicados de ECO-11/ECO-12.
 - [ ] Crear el resto del backlog (HU-004, EN-001, HU-010, HU-011, EN-002, EN-003, EN-004) y asignarle puntos Fibonacci.
 - [ ] Reasignar la épica de `ECO-19` (HU-009) de EP-01 a EP-02, donde corresponde por contenido.
-- [ ] Crear la versión `v1.0.0-MVP` y asociarla a las historias (función Releases no habilitada aún en el proyecto — activarla primero en Configuración del proyecto → Features).
-- [ ] Configurar columnas del flujo indicado en el tablero.
 - [x] Recrear Sprint 1 (14 sep – 28 sep, 2 semanas) con Sprint Goal ajustado a su alcance real (ECO-9, ECO-15) — hecho el 18 sep.
 - [x] Iniciar el Sprint 1 — confirmado activo el 18 sep (tablero con "Completar sprint").
-- [ ] Quitar o fusionar la columna extra "Listo" del tablero para que queden exactamente los 4 estados exigidos.
-- [ ] Capturar los cinco recortes limpios e insertarlos en este archivo (pendiente — ver sección 4).
+- [x] Capturar y embeber las evidencias 1 a 4 (Roadmap, Backlog, Sprint Planning, Tablero) — hecho el 18 sep.
+- [ ] **Pendiente de un administrador del proyecto** (esta cuenta no tiene permisos, verificado el 18 sep): habilitar "Releases" y crear `v1.0.0-MVP`, y quitar la columna extra "Listo" del tablero. Ya se le avisó al administrador.
+- [ ] Una vez habilitado Releases: capturar la Evidencia 5 e insertarla en `assets/jira/05-release.png`.
+- [ ] Crear el resto del backlog (HU-004, EN-001, HU-010, HU-011, EN-002, EN-003, EN-004) y asignarle puntos Fibonacci.
+- [ ] Reasignar la épica de `ECO-19` (HU-009) de EP-01 a EP-02, donde corresponde por contenido.
