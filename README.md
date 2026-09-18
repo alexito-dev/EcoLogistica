@@ -87,13 +87,13 @@ Desarrollar e implementar un PMV web que optimice las rutas de distribución urb
 ```mermaid
 graph TD
     subgraph Cliente [Capa de Presentación - Frontend]
-        UI[React / Vite + Vanilla CSS]
+        UI[React + Next.js + Tailwind CSS]
         Map[Visor Cartográfico - Leaflet / OSM Huancayo]
         Dash[Dashboard de Indicadores & Sostenibilidad]
     end
 
     subgraph Servidor [Capa de Negocio - Backend]
-        API[API RESTful - Controladores & Servicios]
+        API[API RESTful - Django + Nest.js]
         Auth[Módulo de Autenticación & Seguridad]
         Engine[Motor de Optimización Metaheurística VRPTW / Green VRP]
         CO2[Calculador de Emisiones de CO₂]
@@ -111,6 +111,15 @@ graph TD
     API --> CO2
     API --> DB
 ```
+
+### 5.1. Herramientas y tecnologías
+
+- **Frontend:** React con Next.js.
+- **Estilos e interfaz:** Tailwind CSS.
+- **Backend:** Python con Django y TypeScript con Nest.js.
+- **Base de datos:** PostgreSQL con PostGIS.
+- **Cartografía:** Leaflet y OpenStreetMap.
+- **Optimización:** motor metaheurístico para VRPTW y Green VRP.
 
 ---
 
@@ -247,12 +256,35 @@ npm test
 
 ## 9. Navegación de Documentación
 
-Acceso directo a la documentación oficial del repositorio:
+Acceso directo a la documentación oficial del repositorio, organizada por las cinco áreas del proyecto:
+
+### 9.1. Fase 01: Inicio
+
 - [01. Selección del enfoque del proyecto](docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20V_1_0_0.md)
 - [02. Acta de constitución](docs/01%20Inicio/02.%20Acta%20de%20constituci%C3%B3n%20V_1_0_0.md)
 - [03. Declaración de la visión](docs/01%20Inicio/03.%20Declaraci%C3%B3n%20de%20la%20visi%C3%B3n%20V_1_0_0.md)
 - [04. Registro de supuestos y restricciones](docs/01%20Inicio/04.%20Registro%20de%20supuestos%20y%20restricciones%20V_1_0_0.md)
 - [05. Registro de interesados](docs/01%20Inicio/05.%20Registro%20de%20interesados%20V_1_0_0.md)
+
+### 9.2. Fase 02: Planificación
+
+- [Documentación de planificación](docs/02%20Planificaci%C3%B3n/)
+
+### 9.3. Fase 03: Ejecución
+
+- [Documentación de ejecución](docs/03%20Ejecuci%C3%B3n/)
+
+### 9.4. Fase 04: Seguimiento y Control
+
+- [Documentación de seguimiento y control](docs/04%20Seguimiento%20y%20Control/)
+
+### 9.5. Fase 05: Cierre
+
+- [Documentación de cierre](docs/05%20Cierre/)
+
+### 9.6. Material técnico adicional
+
+- [Material técnico de soporte](docs/otros/)
 
 ---
 
