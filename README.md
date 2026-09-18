@@ -87,15 +87,15 @@ Desarrollar e implementar un PMV web que optimice las rutas de distribución urb
 ```mermaid
 graph TD
     subgraph Cliente [Capa de Presentación - Frontend]
-        UI[React + Next.js + Tailwind CSS]
+        UI[Next.js + TypeScript + Tailwind CSS]
         Map[Visor Cartográfico - Leaflet / OSM Huancayo]
         Dash[Dashboard de Indicadores & Sostenibilidad]
     end
 
     subgraph Servidor [Capa de Negocio - Backend]
-        API[API RESTful - Django + Nest.js]
+        API[API RESTful - Nest.js]
         Auth[Módulo de Autenticación & Seguridad]
-        Engine[Motor de Optimización Metaheurística VRPTW / Green VRP]
+        Engine[Servicio Python de Optimización VRPTW / Green VRP]
         CO2[Calculador de Emisiones de CO₂]
     end
 
@@ -114,9 +114,10 @@ graph TD
 
 ### 5.1. Herramientas y tecnologías
 
-- **Frontend:** React con Next.js.
+- **Frontend:** Next.js con TypeScript.
 - **Estilos e interfaz:** Tailwind CSS.
-- **Backend:** Python con Django y TypeScript con Nest.js.
+- **Backend principal:** TypeScript con Nest.js.
+- **Optimizador:** Python como servicio especializado para VRPTW y Green VRP.
 - **Base de datos:** PostgreSQL con PostGIS.
 - **Cartografía:** Leaflet y OpenStreetMap.
 - **Optimización:** motor metaheurístico para VRPTW y Green VRP.
