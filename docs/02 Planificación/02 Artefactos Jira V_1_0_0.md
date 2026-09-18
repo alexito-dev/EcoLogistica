@@ -12,7 +12,7 @@
 | Fecha | 11 de septiembre de 2026 |
 | Responsable de configuración | Isidro Casio, Jose Luis |
 | Clave del proyecto en Jira | `ECO` |
-| Estado | Proyecto Scrum `ECO` creado y en configuración activa; 8 épicas y 8 historias/tareas ya creadas, verificado en el proyecto real. Reverificado el 18 de septiembre de 2026: el backlog creció a 10 historias/tareas (aparecieron `ECO-18` y `ECO-19`, ver nota en la sección 2) y el Sprint 1 seguía sin iniciar |
+| Estado | Proyecto Scrum `ECO` creado y en configuración activa; 8 épicas y 10 historias/tareas creadas, verificado en el proyecto real el 18 de septiembre de 2026 (`ECO-18` y `ECO-19` — antes duplicados de `ECO-11`/`ECO-12` — se renombraron a HU-008 y HU-009). El Sprint 1 seguía sin iniciar |
 
 ## 1. Configuración objetivo
 
@@ -34,10 +34,10 @@
 | 1 | Epic | EP-01 | ECO-1 | Gestión de pedidos y ventanas horarias | — | ✅ |
 | 2 | Story | HU-001 | ECO-9 | Registrar pedido con ventana horaria | 5 | ✅ |
 | 3 | Story | HU-002 | ECO-11 | Consultar pedidos geocodificados | 3 | ✅ |
-| 4 | Story | HU-008 | — | Importar pedidos por plantilla | 5 | ⬜ |
+| 4 | Story | HU-008 | ECO-18 | Importar pedidos por plantilla | 3 | ✅ |
 | 5 | Epic | EP-02 | ECO-2 | Gestión de flota y conductores | — | ✅ |
 | 6 | Story | HU-003 | ECO-12 | Registrar vehículos y capacidades | 5 | ✅ |
-| 7 | Story | HU-009 | — | Parametrizar restricciones vehiculares | 3 | ⬜ |
+| 7 | Story | HU-009 | ECO-19 | Parametrizar restricciones vehiculares | 5 | ✅ |
 | 8 | Epic | EP-03 | ECO-3 | Motor de optimización VRPTW y Green VRP | — | ✅ |
 | 9 | Story | HU-004 | — | Generar ruta VRPTW/Green VRP | 8 | ⬜ |
 | 10 | Task | EN-001 | — | Benchmark del motor ≤45 s | 5 | ⬜ |
@@ -58,7 +58,9 @@
 
 Los puntos usan Fibonacci (1, 2, 3, 5, 8, 13); los de los ítems marcados ✅ son los reales tomados de Jira, los de los ítems ⬜ son la estimación propuesta en esta especificación, pendiente de validar por el equipo al crearlos. La prioridad combina valor de negocio, dependencia y riesgo técnico; el detalle completo y los criterios BDD están en [01 Transformando a ágil](01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md).
 
-> ⚠️ **Hallazgo del 18 de septiembre de 2026:** el Backlog de Jira muestra dos ítems adicionales no listados arriba — `ECO-18` "Consultar pedidos geocodificados" y `ECO-19` "Registrar vehículos y capacidades" — que duplican literalmente el título y la épica de `ECO-11` y `ECO-12` respectivamente. Pendiente que el equipo confirme si son duplicados por eliminar o historias distintas mal tituladas, y corrija el backlog antes de tomar las capturas finales.
+> ✅ **Resuelto el 18 de septiembre de 2026:** `ECO-18` y `ECO-19` habían sido creados como duplicados literales de `ECO-11` y `ECO-12` (mismo título y misma épica EP-01). Se renombraron en Jira a HU-008 "Importar pedidos por plantilla" y HU-009 "Parametrizar restricciones vehiculares" respectivamente, completando así los 8 épicas + 10 historias/tareas reales del backlog.
+>
+> ⚠️ **Pendiente de corrección:** `ECO-19` (HU-009, restricciones vehiculares) quedó asignado a la épica `EP-01 Gestión de pedidos`; por su contenido debería estar en `EP-02 Gestión de flota y conductores`, igual que `ECO-12`. Falta reasignar la épica en Jira.
 
 ## 3. Roadmap y Sprint 1
 
@@ -85,16 +87,29 @@ La consigna exige recortes exclusivos del panel de Jira, sin escritorio, navegad
 
 > Verificado directamente en el proyecto Jira `ECO` el 11 de septiembre de 2026: existen 8 épicas y 8 historias/tareas creadas, y el Sprint 1 está planificado pero aún no iniciado. Aún faltan las 5 capturas recortadas del panel de Jira (sin escritorio ni navegador) — no se fabrican imágenes por integridad académica; deben tomarse directamente del proyecto real una vez completada la configuración pendiente.
 >
-> **Reverificado el 18 de septiembre de 2026:** el Roadmap (Cronograma) ya muestra las 8 épicas correctamente ubicadas en la línea de tiempo con "ECO Sprint 1" marcado en septiembre. El Sprint 1 **sigue planificado pero no iniciado** (el tablero muestra el botón "Iniciar sprint", no un sprint activo), con las mismas 2 historias cargadas (ECO-9, ECO-15 = 10 puntos). El Backlog ahora tiene 8 ítems visibles más los 2 del sprint, incluyendo los duplicados `ECO-18`/`ECO-19` señalados arriba. Las 5 capturas recortadas siguen sin insertarse en este documento.
+> **Reverificado el 18 de septiembre de 2026:** el Roadmap (Cronograma) ya muestra las 8 épicas correctamente ubicadas en la línea de tiempo con "ECO Sprint 1" marcado en septiembre. El Sprint 1 **sigue planificado pero no iniciado** (el tablero muestra el botón "Iniciar sprint", no un sprint activo), con las mismas 2 historias cargadas (ECO-9, ECO-15 = 10 puntos). El Backlog ya no tiene duplicados: `ECO-18`/`ECO-19` se renombraron a HU-008/HU-009 (ver sección 2). Las 5 capturas recortadas siguen sin insertarse en este documento — es lo único que falta para cerrar este archivo.
+
+### Dónde insertar cada captura
+
+Cuando tengas los 5 recortes, se insertan aquí mismo reemplazando cada línea de la lista de arriba por una imagen Markdown, así: `![Roadmap del proyecto ECO](../../assets/jira/01-roadmap.png)`. Guarda los archivos en `assets/jira/` en la raíz del repo con estos nombres exactos:
+
+| Archivo | Evidencia |
+|---|---|
+| `assets/jira/01-roadmap.png` | Evidencia 1 — Roadmap |
+| `assets/jira/02-backlog.png` | Evidencia 2 — Backlog |
+| `assets/jira/03-sprint-planning.png` | Evidencia 3 — Sprint Planning |
+| `assets/jira/04-tablero-scrum.png` | Evidencia 4 — Tablero Scrum |
+| `assets/jira/05-release.png` | Evidencia 5 — Release |
 
 ## 5. Checklist de configuración
 
 - [x] Crear proyecto Scrum `ECO` (EcoLogística Huancayo).
 - [x] Crear EP-01 a EP-05 en Jira (ECO-1 a ECO-5).
 - [x] Crear EP-06 y EP-07, no previstas en la especificación original (ECO-6 y ECO-8).
-- [ ] Crear el resto del backlog (HU-008, HU-009, HU-004, EN-001, HU-010, HU-011, EN-002, EN-003, EN-004) y asignarle puntos Fibonacci.
-- [ ] **Nuevo (18 sep):** revisar y resolver `ECO-18`/`ECO-19`, duplicados aparentes de `ECO-11`/`ECO-12`.
-- [ ] Crear la versión `v1.0.0-MVP` y asociarla a las historias.
+- [x] Crear HU-008 (ECO-18) y HU-009 (ECO-19) — resuelto el 18 sep renombrando los duplicados de ECO-11/ECO-12.
+- [ ] Crear el resto del backlog (HU-004, EN-001, HU-010, HU-011, EN-002, EN-003, EN-004) y asignarle puntos Fibonacci.
+- [ ] Reasignar la épica de `ECO-19` (HU-009) de EP-01 a EP-02, donde corresponde por contenido.
+- [ ] Crear la versión `v1.0.0-MVP` y asociarla a las historias (función Releases no habilitada aún en el proyecto — activarla primero en Configuración del proyecto → Features).
 - [ ] Configurar columnas del flujo indicado en el tablero.
 - [x] Crear Sprint 1 (11 sep – 25 sep) con Sprint Goal real.
 - [ ] Iniciar el Sprint 1 — reverificado el 18 sep: sigue planificado, no iniciado.
