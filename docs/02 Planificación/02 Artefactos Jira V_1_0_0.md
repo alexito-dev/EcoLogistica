@@ -12,7 +12,7 @@
 | Fecha | 11 de septiembre de 2026 |
 | Responsable de configuración | Isidro Casio, Jose Luis |
 | Clave del proyecto en Jira | `ECO` |
-| Estado | Proyecto Scrum `ECO` creado y en configuración activa; 8 épicas y 8 historias/tareas ya creadas, verificado en el proyecto real |
+| Estado | Proyecto Scrum `ECO` creado y en configuración activa; 8 épicas y 8 historias/tareas ya creadas, verificado en el proyecto real. Reverificado el 18 de septiembre de 2026: el backlog creció a 10 historias/tareas (aparecieron `ECO-18` y `ECO-19`, ver nota en la sección 2) y el Sprint 1 seguía sin iniciar |
 
 ## 1. Configuración objetivo
 
@@ -58,6 +58,8 @@
 
 Los puntos usan Fibonacci (1, 2, 3, 5, 8, 13); los de los ítems marcados ✅ son los reales tomados de Jira, los de los ítems ⬜ son la estimación propuesta en esta especificación, pendiente de validar por el equipo al crearlos. La prioridad combina valor de negocio, dependencia y riesgo técnico; el detalle completo y los criterios BDD están en [01 Transformando a ágil](01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md).
 
+> ⚠️ **Hallazgo del 18 de septiembre de 2026:** el Backlog de Jira muestra dos ítems adicionales no listados arriba — `ECO-18` "Consultar pedidos geocodificados" y `ECO-19` "Registrar vehículos y capacidades" — que duplican literalmente el título y la épica de `ECO-11` y `ECO-12` respectivamente. Pendiente que el equipo confirme si son duplicados por eliminar o historias distintas mal tituladas, y corrija el backlog antes de tomar las capturas finales.
+
 ## 3. Roadmap y Sprint 1
 
 | Periodo | Entrega | Épicas |
@@ -82,6 +84,8 @@ La consigna exige recortes exclusivos del panel de Jira, sin escritorio, navegad
 5. **Evidencia 5 — Release:** `v1.0.0-MVP` y asociación de historias.
 
 > Verificado directamente en el proyecto Jira `ECO` el 11 de septiembre de 2026: existen 8 épicas y 8 historias/tareas creadas, y el Sprint 1 está planificado pero aún no iniciado. Aún faltan las 5 capturas recortadas del panel de Jira (sin escritorio ni navegador) — no se fabrican imágenes por integridad académica; deben tomarse directamente del proyecto real una vez completada la configuración pendiente.
+>
+> **Reverificado el 18 de septiembre de 2026:** el Roadmap (Cronograma) ya muestra las 8 épicas correctamente ubicadas en la línea de tiempo con "ECO Sprint 1" marcado en septiembre. El Sprint 1 **sigue planificado pero no iniciado** (el tablero muestra el botón "Iniciar sprint", no un sprint activo), con las mismas 2 historias cargadas (ECO-9, ECO-15 = 10 puntos). El Backlog ahora tiene 8 ítems visibles más los 2 del sprint, incluyendo los duplicados `ECO-18`/`ECO-19` señalados arriba. Las 5 capturas recortadas siguen sin insertarse en este documento.
 
 ## 5. Checklist de configuración
 
@@ -89,9 +93,10 @@ La consigna exige recortes exclusivos del panel de Jira, sin escritorio, navegad
 - [x] Crear EP-01 a EP-05 en Jira (ECO-1 a ECO-5).
 - [x] Crear EP-06 y EP-07, no previstas en la especificación original (ECO-6 y ECO-8).
 - [ ] Crear el resto del backlog (HU-008, HU-009, HU-004, EN-001, HU-010, HU-011, EN-002, EN-003, EN-004) y asignarle puntos Fibonacci.
+- [ ] **Nuevo (18 sep):** revisar y resolver `ECO-18`/`ECO-19`, duplicados aparentes de `ECO-11`/`ECO-12`.
 - [ ] Crear la versión `v1.0.0-MVP` y asociarla a las historias.
 - [ ] Configurar columnas del flujo indicado en el tablero.
 - [x] Crear Sprint 1 (11 sep – 25 sep) con Sprint Goal real.
-- [ ] Iniciar el Sprint 1 (hoy está planificado pero no iniciado; el tablero Scrum aparece vacío hasta iniciarlo).
+- [ ] Iniciar el Sprint 1 — reverificado el 18 sep: sigue planificado, no iniciado.
 - [ ] Cargar HU-004 y HU-005 al Sprint 1 para que coincida con lo declarado en su Sprint Goal, o reescribir el Sprint Goal para que coincida con el alcance real (ECO-9, ECO-15).
-- [ ] Capturar los cinco recortes limpios e insertarlos en este archivo.
+- [ ] Capturar los cinco recortes limpios e insertarlos en este archivo (pendiente — ver sección 4).
