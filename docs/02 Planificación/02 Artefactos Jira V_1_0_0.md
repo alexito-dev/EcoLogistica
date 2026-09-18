@@ -58,9 +58,9 @@
 
 Los puntos usan Fibonacci (1, 2, 3, 5, 8, 13); los de los ítems marcados ✅ son los reales tomados de Jira, los de los ítems ⬜ son la estimación propuesta en esta especificación, pendiente de validar por el equipo al crearlos. La prioridad combina valor de negocio, dependencia y riesgo técnico; el detalle completo y los criterios BDD están en [01 Transformando a ágil](01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md).
 
-> ✅ **Resuelto el 18 de septiembre de 2026:** `ECO-18` y `ECO-19` habían sido creados como duplicados literales de `ECO-11` y `ECO-12` (mismo título y misma épica EP-01). Se renombraron en Jira a HU-008 "Importar pedidos por plantilla" y HU-009 "Parametrizar restricciones vehiculares" respectivamente, completando así los 8 épicas + 10 historias/tareas reales del backlog.
+> **Resuelto el 18 de septiembre de 2026:** `ECO-18` y `ECO-19` habían sido creados como duplicados literales de `ECO-11` y `ECO-12` (mismo título y misma épica EP-01). Se renombraron en Jira a HU-008 "Importar pedidos por plantilla" y HU-009 "Parametrizar restricciones vehiculares" respectivamente, completando así los 8 épicas + 10 historias/tareas reales del backlog.
 >
-> ⚠️ **Pendiente de corrección:** `ECO-19` (HU-009, restricciones vehiculares) quedó asignado a la épica `EP-01 Gestión de pedidos`; por su contenido debería estar en `EP-02 Gestión de flota y conductores`, igual que `ECO-12`. Falta reasignar la épica en Jira.
+> **Pendiente de corrección:** `ECO-19` (HU-009, restricciones vehiculares) quedó asignado a la épica `EP-01 Gestión de pedidos`; por su contenido debería estar en `EP-02 Gestión de flota y conductores`, igual que `ECO-12`. Falta reasignar la épica en Jira.
 
 ## 3. Roadmap y Sprint 1
 
@@ -97,7 +97,7 @@ Recortes exclusivos del panel de Jira (sin escritorio, navegador ni barra latera
 
 **Evidencia 5 — Release:** ⬜ **pendiente.** La función "Releases" no está habilitada en el proyecto y esta cuenta no tiene permisos de administrador para activarla (`No tienes permisos para editar la configuración de este proyecto`, verificado el 18 sep). Se le pidió a un administrador del proyecto que la habilite y cree la versión `v1.0.0-MVP`; en cuanto esté disponible, se agrega aquí como `assets/jira/05-release.png`.
 
-> ⚠️ **Pendiente, mismo motivo de permisos:** la columna extra "Listo" del tablero (5 columnas en vez de las 4 exigidas: To Do → In Progress → In Review/QA → Done) tampoco se pudo quitar — `/boards/2/settings` también devuelve error de permisos. Queda pedido al administrador junto con lo de Releases.
+> **Pendiente, mismo motivo de permisos:** la columna extra "Listo" del tablero (5 columnas en vez de las 4 exigidas: To Do → In Progress → In Review/QA → Done) tampoco se pudo quitar — `/boards/2/settings` también devuelve error de permisos. Queda pedido al administrador junto con lo de Releases.
 
 ## 5. Checklist de configuración
 
