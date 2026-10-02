@@ -99,8 +99,8 @@ timeline
 | IMP-001 Historias duplicadas | 11/09/2026 | 18/09/2026 | 7 | Media |
 | IMP-002 Épica equivocada | 18/09/2026 | 02/10/2026 | 14 | Baja |
 | IMP-003 Permisos de Jira | 18/09/2026 | 02/10/2026 | 14 | Media |
-| IMP-006 Dependencia del motor | 28/09/2026 | Abierto | Pendiente | Alta |
-| IMP-007 Sin código base | 18/09/2026 | Abierto | Pendiente | Alta |
+| IMP-006 Dependencia del motor | 28/09/2026 | Abierto | En curso | Alta |
+| IMP-007 Sin código base | 18/09/2026 | Abierto | En curso | Alta |
 | IMP-008 Backlog incompleto | 18/09/2026 | En espera | En curso | Media |
 
 Promedio de resolución de los 5 cerrados: 7.8 días. Los dos impedimentos de prioridad Alta que siguen abiertos son técnicos y se atacan en el Sprint 2.
