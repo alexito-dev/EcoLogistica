@@ -1,0 +1,83 @@
+# Informe de estado del proyecto
+
+[← Volver al README Principal](../../README.md)
+
+**Nombre del Proyecto:** EcoLogística Huancayo — Plataforma de Optimización de Rutas Sostenibles de Última Milla
+
+**Líder del Proyecto:** Alex Jesus Zorrilla Apumayta
+
+**Fecha:** 2 de octubre de 2026
+
+**Periodo del Informe:** 14/09/2026 – 28/09/2026 (Sprint 1, 2 semanas)
+
+## Metadatos del documento
+
+| Campo | Valor |
+|---|---|
+| Código del proyecto | PFA-TP2-ECOLOG-2026 |
+| Versión | 1.0.0 |
+| Iteración reportada | ECO Sprint 1 |
+| Sprint Goal | "Registrar pedidos con ventana horaria y permitir reenrutar una ruta ante incidencia." |
+| Fuentes | Jira `ECO` (evidencias 1–4 en [02 Artefactos Jira](../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md)), historial Git, [Registro de riesgos](../02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md), [Presupuesto](../02%20Planificaci%C3%B3n/04%20Presupuesto%20del%20proyecto%20V_1_0_0.md) |
+| Documentos hermanos | [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [04 Retrospectiva del Sprint](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
+
+## Historial de cambios
+
+| Versión | Fecha | Autor | Cambio |
+|---|---|---|---|
+| 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión del informe de estado del Sprint 1. |
+
+## Resumen ejecutivo
+
+El Sprint 1 cerró el 28/09/2026 **sin entregar incremento funcional de software**: ninguna de las dos historias comprometidas (ECO-9 / HU-001 y ECO-15 / HU-006, 10 puntos) alcanzó la Definición de Hecho. El esfuerzo del periodo se concentró en la gobernanza y la base técnica del proyecto: backlog y tablero Scrum en Jira, estructura de repositorio, decisión de arquitectura (React + Vite + FastAPI + motor de optimización Python + PostgreSQL/PostGIS, Alternativa A del documento de stack, ratificada por el líder el 02/10/2026), inicialización de OpenSpec y consolidación de los 17 entregables documentales de las fases de Inicio y Planificación.
+
+El análisis del sprint reveló además un defecto de planificación: **HU-006 (reenrutar ante incidencia) depende del motor de optimización (HU-004), que según el roadmap pertenece al Sprint 2**, por lo que no era alcanzable en el Sprint 1. Ambas historias se re-planifican (ver *Próximos avances*).
+
+## Estado del proyecto
+
+| Variables de control | Descripción del estado |
+| --- | --- |
+| **Alcance** | 🔴 **0 de 2 historias comprometidas completadas (0 de 10 puntos de historia).** Velocidad del Sprint 1 = 0. Sí se completaron 17 de 17 entregables documentales de Inicio y Planificación (13 + 4) y la estructura base del repositorio. Alcance total del PMV: 0 de 11 historias de usuario del backlog terminadas (0 %). |
+| **Cronograma** | 🔴 **Atrasados respecto de lo planificado en entrega de software.** Al 28/09 habían transcurrido 5 de 15 semanas del proyecto (≈ 33 % del tiempo) y el avance funcional es 0 %. El avance de documentación y gobierno es ≈ 100 % de lo previsto para las fases 01 y 02. Recuperación: reordenar el backlog por dependencias y priorizar HU-001 al inicio del Sprint 2 (ver *Próximos avances*). |
+| **Costos** | 🟢 **Sin sobrecosto.** Presupuesto aprobado: S/ 54,538.40 (S/ 48,695 + 12 % de contingencia S/ 5,843.40). Infraestructura cloud contratada y facturada a la fecha: **S/ 0** (el entorno de despliegue aún no se provisiona; OPEX planificado S/ 2,220 para 4 meses). El único licenciamiento activo es Jira (S/ 35 por usuario/mes dentro de los S/ 1,155 de licencias planificados). El esfuerzo del equipo corresponde a horas académicas no facturadas, dentro de los S/ 45,320 de recursos humanos planificados. La contingencia no se ha utilizado. |
+| **Calidad** | 🟡 **0 defectos registrados** (no existe código ejecutable que probar; un valor de cero no indica ausencia de riesgo). Actividades de calidad realizadas: revisión de entregables vía *Pull Request* (PR #1 `developer` → `main`), plantillas de PR e incidencias en `.github/`, convención *Conventional Commits* aplicada en el historial, `.gitignore` y `.env.example` definidos para evitar versionar secretos y dependencias, criterios de aceptación BDD (Gherkin) para HU-001 y HU-006, y configuración de OpenSpec (`openspec/config.yaml`) con reglas de idioma y trazabilidad RF/RNF/RN. Pendiente: pruebas unitarias, CI/CD (EN-006 / ECO-17) y base PostGIS (EN-005 / ECO-16). |
+
+Leyenda: 🟢 en control · 🟡 atención · 🔴 fuera de lo planificado.
+
+### Indicadores del Sprint
+
+| Indicador | Planificado | Real |
+|---|---:|---:|
+| Historias comprometidas | 2 | 2 |
+| Historias completadas (Definición de Hecho) | 2 | 0 |
+| Puntos de historia | 10 | 0 |
+| Defectos abiertos | — | 0 |
+| Entregables documentales de fases 01–02 | 17 | 17 |
+| Impedimentos registrados (ver [Registro](02%20Registro%20de%20Impedimentos%20V_1_0_0.md)) | — | 8 (5 cerrados, 3 abiertos/en espera) |
+
+## Riesgos
+
+| **Riesgo** | **Responsable** | **Mitigación** |
+| -- | -- | -- |
+| **R-S1-01 — Dependencia mal secuenciada:** HU-006 (reenrutar) requiere el motor de HU-004, planificado en el Sprint 2. Materializado en el Sprint 1. (RSK-04, cambios de alcance y fechas — exposición 16, Alta) | Alex Zorrilla | Reordenar el backlog con mapa de dependencias; HU-006 se programa tras HU-004 y EN-001; el Sprint Planning valida dependencias técnicas antes de comprometer historias. |
+| **R-S1-02 — Rendimiento del motor:** no entregar solución en ≤ 45 s con 150 pedidos (RSK-02, exposición 15, Alta). | Alexander Hilario Talavera | Iniciar benchmark (EN-001) en el Sprint 2 con prototipo mínimo del solver y límites de tiempo por tamaño de instancia. |
+| **R-S1-03 — Integración tardía frontend/backend:** al no existir código aún, los defectos de integración se postergan (RSK-07, exposición 12, Media). | Jose Luis Isidro Casio | Definir contrato OpenAPI desde el primer cambio OpenSpec; levantar CI con lint y pruebas (EN-006) antes de mergear a `develop`. |
+| **R-S1-04 — Inestabilidad de la decisión de stack:** el 18/09 se propuso en `main` Next.js + Nest.js (commit `3565685`), sin puntuarlo en la matriz del documento de stack; el 02/10 el líder ratificó la Alternativa A (React + FastAPI, 93 %) y se revirtieron los documentos. Retrasó el inicio de la construcción. | Alex Zorrilla | Stack congelado hasta el Sprint 3; cualquier cambio exige ADR y nueva matriz (sección 12 del documento de stack); plantilla de arranque (scaffold) compartida. |
+| **R-S1-05 — Dependencia de administrador de Jira** para habilitar Releases y ajustar el tablero (RSK-04). | Jose Luis Isidro Casio | Solicitud formal al administrador; evidencia 5 pendiente en [Artefactos Jira](../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md); no bloquea el desarrollo. |
+| **R-S1-06 — Disponibilidad parcial del equipo** (5 integrantes a tiempo parcial) limita la velocidad. | Alex Zorrilla | Estimar con capacidad real (puntos por persona), tareas ≤ 8 h y revisión de carga en cada Daily. |
+
+## Próximos avances
+
+1. **Sprint 2:** entregar HU-001 (registrar pedido con ventana horaria, 5 pts) como primer incremento demostrable con API FastAPI, validación RN-001/RF-02.2 y formulario React, siguiendo el ciclo OpenSpec `propose → apply → verify → sync → archive` en una rama `feature/*`.
+2. Provisionar el esqueleto de `backend/` (FastAPI) y `frontend/` (React + Vite) con *scripts* de ejecución y pruebas, más pipeline mínimo de CI (EN-006).
+3. Iniciar el motor de optimización: prototipo Python aislado y benchmark EN-001 (RSK-02), prerrequisito de HU-004 y, después, de HU-006.
+4. Configurar PostgreSQL + PostGIS en entorno local con migraciones versionadas (EN-005).
+5. Completar el backlog restante en Jira (HU-004, HU-010, HU-011, EN-001, EN-002, EN-003, EN-004) con puntos Fibonacci estimados por el equipo.
+6. Habilitar Releases y crear `v1.0.0-MVP` (administrador de Jira) y capturar la evidencia 5.
+
+## Notas
+
+- Este informe refleja el estado real verificado en el repositorio y en Jira; no se declara como completado ningún trabajo que no esté respaldado por una evidencia revisable.
+- El detalle de lo completado y lo pendiente por historia está en [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md); los obstáculos, en [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md); las lecciones y acciones, en [04 Retrospectiva del Sprint](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md).
+- Para la trazabilidad con el alcance, ver [06 Requisitos funcionales](../01%20Inicio/06.%20Requisitos%20funcionales%20V_1_0_0.md) y [09 Reglas de negocio](../01%20Inicio/09.%20Reglas%20de%20negocio%20V_1_0_0.md).
+- Nomenclatura de versionado: *Semantic Versioning* `MAYOR.MENOR.PARCHE`, escrita en el nombre del archivo como `V_M_m_p`.

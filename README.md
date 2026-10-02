@@ -5,8 +5,9 @@
 # EcoLogística Huancayo
 ### Plataforma de Optimización de Rutas Sostenibles de Última Milla
 
-[![Estado](https://img.shields.io/badge/Estado-Fase%20de%20Inicio-2ea44f?style=flat-square)](docs/01%20Inicio)
+[![Estado](https://img.shields.io/badge/Estado-Implementaci%C3%B3n%20%C2%B7%20Sprint%202-2ea44f?style=flat-square)](docs/03%20Implementaci%C3%B3n)
 [![Versión](https://img.shields.io/badge/Versión-v1.0.0--alpha-blue?style=flat-square)](README.md)
+[![Stack](https://img.shields.io/badge/Stack-React%20%2B%20FastAPI-025B29?style=flat-square)](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md)
 [![Metodología](https://img.shields.io/badge/Metodología-Scrum%20%2B%20Git%20Flow-6f42c1?style=flat-square)](docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20V_1_0_0.md)
 [![Curso](https://img.shields.io/badge/Asignatura-Taller%20de%20Proyectos%202-0969da?style=flat-square)](README.md)
 [![Zona](https://img.shields.io/badge/Ubicación-Huancayo%2C%20Perú-d97706?style=flat-square)](README.md)
@@ -87,15 +88,15 @@ Desarrollar e implementar un PMV web que optimice las rutas de distribución urb
 ```mermaid
 graph TD
     subgraph Cliente [Capa de Presentación - Frontend]
-        UI[Next.js + TypeScript + Tailwind CSS]
+        UI[React + Vite + TypeScript]
         Map[Visor Cartográfico - Leaflet / OSM Huancayo]
         Dash[Dashboard de Indicadores & Sostenibilidad]
     end
 
     subgraph Servidor [Capa de Negocio - Backend]
-        API[API RESTful - Nest.js]
+        API[API RESTful - FastAPI + Python]
         Auth[Módulo de Autenticación & Seguridad]
-        Engine[Servicio Python de Optimización VRPTW / Green VRP]
+        Engine[Motor de Optimización Metaheurística VRPTW / Green VRP]
         CO2[Calculador de Emisiones de CO₂]
     end
 
@@ -114,10 +115,9 @@ graph TD
 
 ### 5.1. Herramientas y tecnologías
 
-- **Frontend:** Next.js con TypeScript.
-- **Estilos e interfaz:** Tailwind CSS.
-- **Backend principal:** TypeScript con Nest.js.
-- **Optimizador:** Python como servicio especializado para VRPTW y Green VRP.
+- **Frontend:** React con Vite y TypeScript.
+- **Estilos e interfaz:** CSS (con diseño responsivo y enfoque de bajo consumo para 2G/3G).
+- **Backend:** Python con FastAPI, Pydantic y SQLAlchemy/Alembic.
 - **Base de datos:** PostgreSQL con PostGIS.
 - **Cartografía:** Leaflet y OpenStreetMap.
 - **Optimización:** motor metaheurístico para VRPTW y Green VRP.
@@ -143,7 +143,7 @@ EcoLogistica/
 │   │   ├── 04. Registro de supuestos y restricciones.md
 │   │   └── 05. Registro de interesados.md
 │   ├── 02 Planificación/          # Cronogramas, backlog y EDT/WBS
-│   ├── 03 Ejecución/              # Diseños técnicos y especificaciones
+│   ├── 03 Implementación/         # Informe de estado, impedimentos, revisión y retrospectiva por sprint
 │   ├── 04 Seguimiento y Control/  # Minutas de sprint y métricas QA
 │   ├── 05 Cierre/                 # Informes de entrega de PMV
 │   └── otros/                     # Material técnico de soporte
@@ -230,28 +230,50 @@ cp .env.example .env
 ```
 
 ### 8.3. Despliegue Local
-```bash
-# Iniciar Backend
-cd backend
-npm install
-npm run dev
 
-# Iniciar Frontend (en otra terminal)
-cd ../frontend
+Requisitos: Python 3.10+ y Node.js 20+.
+
+```bash
+# Backend (FastAPI) — http://localhost:8000  ·  documentación: http://localhost:8000/docs
+cd backend
+python -m venv .venv
+.venv/Scripts/activate        # Windows (Git Bash: source .venv/Scripts/activate · Linux/macOS: source .venv/bin/activate)
+pip install -r requirements.txt
+uvicorn app.main:app --app-dir src --reload --port 8000
+
+# Frontend (React + Vite) — http://localhost:3000  (en otra terminal)
+cd frontend
 npm install
 npm run dev
 ```
 
 ### 8.4. Pruebas Automatizadas
 ```bash
-# Ejecutar pruebas de backend y algoritmos
-cd backend
-npm test
+# Backend (pytest, con cobertura)
+cd backend && pytest --cov=app
 
-# Ejecutar pruebas de interfaz frontend
-cd ../frontend
-npm test
+# Frontend (Vitest + Testing Library)
+cd frontend && npm test
 ```
+
+### 8.5. API de pedidos (HU-001)
+
+| Método | Ruta | Descripción |
+| :--- | :--- | :--- |
+| `POST` | `/api/v1/pedidos` | Registra un pedido (estado inicial `PENDIENTE`) |
+| `GET` | `/api/v1/pedidos?estado&pagina&limite` | Lista pedidos, del más reciente al más antiguo (límite máx. 100) |
+| `GET` | `/api/v1/pedidos/{id}` | Consulta un pedido por UUID |
+
+Errores: `400` formato o tipo inválido, `422` regla de negocio (ventana, carga, ámbito), `404` inexistente, `409` código duplicado. Las ventanas horarias se envían en ISO 8601 **con desfase** (por ejemplo `2026-10-05T08:00:00-05:00`). Contrato completo en `/docs`.
+
+### 8.6. Alcance y límites del primer incremento
+
+Implementado con OpenSpec en el cambio `registro-pedidos` (ver `openspec/`): registrar, consultar y listar pedidos. Límites conocidos, pendientes de otros cambios:
+
+- Persistencia **en memoria** (se pierde al reiniciar); el adaptador PostgreSQL/PostGIS llegará con EN-005.
+- Sin autenticación ni auditoría (RF-11.1 y RF-11.2); no se despliega fuera de entornos locales.
+- El ámbito geográfico es un rectángulo de aproximación configurable en `.env` (`AMBITO_*`), por validar con el negocio.
+- La fuente **Codec Pro** es comercial: ver `frontend/public/fonts/LEEME.md`; sin ella se usa la fuente del sistema.
 
 ---
 
@@ -288,9 +310,16 @@ Artefactos de la semana 4: transformación ágil, configuración y evidencias Ji
 
 - [Documentación de planificación](docs/02%20Planificaci%C3%B3n/)
 
-### 9.3. Fase 03: Ejecución
+### 9.3. Fase 03: Implementación
 
-- [Documentación de ejecución](docs/03%20Ejecuci%C3%B3n/)
+Entregables del **Sprint 1** (ECO Sprint 1, 14/09/2026 – 28/09/2026):
+
+- [01. Informe de estado del proyecto](docs/03%20Implementaci%C3%B3n/01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md)
+- [02. Registro de Impedimentos](docs/03%20Implementaci%C3%B3n/02%20Registro%20de%20Impedimentos%20V_1_0_0.md)
+- [03. Revisión del Sprint](docs/03%20Implementaci%C3%B3n/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
+- [04. Retrospectiva del Sprint](docs/03%20Implementaci%C3%B3n/04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
+
+Carpeta completa: [docs/03 Implementación](docs/03%20Implementaci%C3%B3n/)
 
 ### 9.4. Fase 04: Seguimiento y Control
 

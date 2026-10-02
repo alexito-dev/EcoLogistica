@@ -8,7 +8,7 @@
 |---|---|
 | Proyecto | EcoLogística Huancayo |
 | Herramienta | Atlassian Jira Software — Scrum |
-| Versión del entregable | 1.0.0-MVP |
+| Versión del entregable | 1.1.0 (release objetivo en Jira: `v1.0.0-MVP`) |
 | Fecha | 11 de septiembre de 2026 |
 | Responsable de configuración | Isidro Casio, Jose Luis |
 | Clave del proyecto en Jira | `ECO` |
@@ -106,11 +106,19 @@ Recortes exclusivos del panel de Jira (sin escritorio, navegador ni barra latera
 - [x] Crear EP-06 y EP-07, no previstas en la especificación original (ECO-6 y ECO-8).
 - [x] Crear HU-008 (ECO-18) y HU-009 (ECO-19) — resuelto el 18 sep renombrando los duplicados de ECO-11/ECO-12.
 - [ ] Crear el resto del backlog (HU-004, EN-001, HU-010, HU-011, EN-002, EN-003, EN-004) y asignarle puntos Fibonacci.
-- [ ] Reasignar la épica de `ECO-19` (HU-009) de EP-01 a EP-02, donde corresponde por contenido.
+- [x] Reasignar la épica de `ECO-19` (HU-009) de EP-01 a EP-02, donde corresponde por contenido — corregido en Jira y confirmado el 02 oct (ver IMP-002 en [02 Registro de Impedimentos](../03%20Implementaci%C3%B3n/02%20Registro%20de%20Impedimentos%20V_1_0_0.md)).
 - [x] Recrear Sprint 1 (14 sep – 28 sep, 2 semanas) con Sprint Goal ajustado a su alcance real (ECO-9, ECO-15) — hecho el 18 sep.
 - [x] Iniciar el Sprint 1 — confirmado activo el 18 sep (tablero con "Completar sprint").
 - [x] Capturar y embeber las evidencias 1 a 4 (Roadmap, Backlog, Sprint Planning, Tablero) — hecho el 18 sep.
-- [ ] **Pendiente de un administrador del proyecto** (esta cuenta no tiene permisos, verificado el 18 sep): habilitar "Releases" y crear `v1.0.0-MVP`, y quitar la columna extra "Listo" del tablero. Ya se le avisó al administrador.
+- [x] **Ajuste de administrador** (corregido por el equipo y confirmado el 02 oct, IMP-003; falta capturar la evidencia 5) (esta cuenta no tiene permisos, verificado el 18 sep): habilitar "Releases" y crear `v1.0.0-MVP`, y quitar la columna extra "Listo" del tablero. Ya se le avisó al administrador.
 - [ ] Una vez habilitado Releases: capturar la Evidencia 5 e insertarla en `assets/jira/05-release.png`.
 - [ ] Crear el resto del backlog (HU-004, EN-001, HU-010, HU-011, EN-002, EN-003, EN-004) y asignarle puntos Fibonacci.
-- [ ] Reasignar la épica de `ECO-19` (HU-009) de EP-01 a EP-02, donde corresponde por contenido.
+- [x] Reasignar la épica de `ECO-19` (HU-009) de EP-01 a EP-02, donde corresponde por contenido — corregido en Jira y confirmado el 02 oct (ver IMP-002 en [02 Registro de Impedimentos](../03%20Implementaci%C3%B3n/02%20Registro%20de%20Impedimentos%20V_1_0_0.md)).
+
+## 6. Historial de cambios
+
+| Versión | Fecha | Cambio |
+|---|---|---|
+| 1.0.0 | 11/09/2026 | Primera emisión del backlog y configuración de Jira. |
+| 1.0.1 | 18/09/2026 | Verificación en el proyecto real, resolución de duplicados `ECO-18`/`ECO-19`, recreación del Sprint 1 y evidencias 1–4. |
+| 1.1.0 | 02/10/2026 | Cierre del Sprint 1 (28/09) sin historias completadas; se marcan como resueltos la épica de `ECO-19` y el ajuste de administrador. Detalle en [01 Informe de estado](../03%20Implementaci%C3%B3n/01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) y [03 Revisión del Sprint](../03%20Implementaci%C3%B3n/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md). |
