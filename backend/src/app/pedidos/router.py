@@ -6,6 +6,8 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, Query, status
 
+from app.auth.dependencias import requerir_rol
+from app.auth.domain import Rol
 from app.config import get_settings
 from app.pedidos.domain import EstadoPedido
 from app.pedidos.memory_repository import PedidosMemoryRepository
@@ -30,8 +32,14 @@ def get_servicio(
 
 ServicioDep = Annotated[PedidosService, Depends(get_servicio)]
 
+# Matriz RBAC (documento 08): el planificador registra; planificador y administrador consultan.
+PUEDE_REGISTRAR = Depends(requerir_rol(Rol.PLANIFICADOR))
+PUEDE_CONSULTAR = Depends(requerir_rol(Rol.PLANIFICADOR, Rol.ADMIN))
+
 _ERRORES = {
     400: {"model": ErrorOut, "description": "Datos con formato o tipo inválido"},
+    401: {"model": ErrorOut, "description": "Sin sesión válida"},
+    403: {"model": ErrorOut, "description": "Rol sin permiso"},
     404: {"model": ErrorOut, "description": "Pedido no encontrado"},
     409: {"model": ErrorOut, "description": "Código de pedido duplicado"},
     422: {"model": ErrorOut, "description": "Regla de negocio incumplida"},
@@ -43,7 +51,8 @@ _ERRORES = {
     response_model=PedidoOut,
     status_code=status.HTTP_201_CREATED,
     summary="Registrar pedido",
-    responses={k: _ERRORES[k] for k in (400, 409, 422)},
+    responses={k: _ERRORES[k] for k in (400, 401, 403, 409, 422)},
+    dependencies=[PUEDE_REGISTRAR],
 )
 def registrar_pedido(datos: PedidoCrear, servicio: ServicioDep) -> PedidoOut:
     return PedidoOut.desde_dominio(servicio.registrar(datos))
@@ -53,7 +62,8 @@ def registrar_pedido(datos: PedidoCrear, servicio: ServicioDep) -> PedidoOut:
     "",
     response_model=ListadoPedidosOut,
     summary="Listar pedidos",
-    responses={400: _ERRORES[400]},
+    responses={k: _ERRORES[k] for k in (400, 401, 403)},
+    dependencies=[PUEDE_CONSULTAR],
 )
 def listar_pedidos(
     servicio: ServicioDep,
@@ -74,7 +84,8 @@ def listar_pedidos(
     "/{pedido_id}",
     response_model=PedidoOut,
     summary="Consultar pedido por identificador",
-    responses={k: _ERRORES[k] for k in (400, 404)},
+    responses={k: _ERRORES[k] for k in (400, 401, 403, 404)},
+    dependencies=[PUEDE_CONSULTAR],
 )
 def obtener_pedido(pedido_id: UUID, servicio: ServicioDep) -> PedidoOut:
     return PedidoOut.desde_dominio(servicio.obtener(pedido_id))

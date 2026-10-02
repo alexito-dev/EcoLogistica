@@ -1,6 +1,9 @@
 """Configuración de la aplicación, leída de variables de entorno (.env)."""
 
+import logging
+import secrets
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -16,6 +19,12 @@ class Settings(BaseSettings):
     )
 
     cors_origin: str = "http://localhost:3000"
+
+    # Autenticación (RF-11.1, RNF-06). Sin valores reales en el repositorio.
+    jwt_secret: str = ""
+    cookie_secure: bool = False  # True cuando se sirve por HTTPS
+    demo_clave: str = ""  # vacía: se genera una aleatoria y se muestra una vez en consola
+    usuarios_archivo: Path = Path(__file__).resolve().parents[2] / ".data" / "usuarios.json"
 
     # Ámbito geográfico configurable (RF-02.2). Rectángulo de aproximación para
     # desarrollo; debe validarse con el negocio y sustituirse por PostGIS (EN-005).
@@ -33,6 +42,11 @@ class Settings(BaseSettings):
             raise ValueError("AMBITO_LON_MIN debe ser menor que AMBITO_LON_MAX (rango -180..180)")
         if not self.distritos:
             raise ValueError("AMBITO_DISTRITOS no puede estar vacío")
+        if len(self.jwt_secret) < 32 or "change" in self.jwt_secret:
+            logging.getLogger("ecologistica").warning(
+                "JWT_SECRET ausente o débil: se usa una clave aleatoria (las sesiones se pierden al reiniciar)."
+            )
+            self.jwt_secret = secrets.token_urlsafe(48)
         return self
 
     @property

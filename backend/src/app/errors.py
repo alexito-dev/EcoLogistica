@@ -7,6 +7,14 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from app.auth.domain import (
+    AccesoDenegadoError,
+    CodigoInvalidoError,
+    ComprobanteInvalidoError,
+    CredencialesInvalidasError,
+    CuentaBloqueadaError,
+    NoAutenticadoError,
+)
 from app.pedidos.domain import CodigoDuplicadoError, PedidoNoEncontradoError, ReglaDominioError
 
 logger = logging.getLogger("ecologistica")
@@ -71,6 +79,30 @@ def registrar_manejadores(app: FastAPI) -> None:
     @app.exception_handler(PedidoNoEncontradoError)
     async def _no_encontrado(_: Request, __: PedidoNoEncontradoError) -> JSONResponse:
         return _respuesta(404, "Pedido no encontrado")
+
+    @app.exception_handler(CredencialesInvalidasError)
+    async def _credenciales(_: Request, __: CredencialesInvalidasError) -> JSONResponse:
+        return _respuesta(401, "Correo o contraseña incorrectos")
+
+    @app.exception_handler(CuentaBloqueadaError)
+    async def _bloqueada(_: Request, __: CuentaBloqueadaError) -> JSONResponse:
+        return _respuesta(429, "Demasiados intentos fallidos. Intente nuevamente en 15 minutos.")
+
+    @app.exception_handler(CodigoInvalidoError)
+    async def _codigo(_: Request, __: CodigoInvalidoError) -> JSONResponse:
+        return _respuesta(401, "Código incorrecto", {"codigo": "El código no es válido o ya fue usado"})
+
+    @app.exception_handler(ComprobanteInvalidoError)
+    async def _comprobante(_: Request, __: ComprobanteInvalidoError) -> JSONResponse:
+        return _respuesta(401, "El paso de verificación venció. Inicie sesión nuevamente.")
+
+    @app.exception_handler(NoAutenticadoError)
+    async def _no_autenticado(_: Request, __: NoAutenticadoError) -> JSONResponse:
+        return _respuesta(401, "Sesión no válida o vencida. Inicie sesión.")
+
+    @app.exception_handler(AccesoDenegadoError)
+    async def _denegado(_: Request, __: AccesoDenegadoError) -> JSONResponse:
+        return _respuesta(403, "No tiene permiso para realizar esta acción")
 
     @app.exception_handler(StarletteHTTPException)
     async def _http(_: Request, exc: StarletteHTTPException) -> JSONResponse:

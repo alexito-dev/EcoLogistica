@@ -35,3 +35,14 @@ def test_lee_ambito_personalizado():
 def test_configuracion_invalida_impide_el_arranque(env):
     with pytest.raises(ValidationError):
         _settings(**env)
+
+
+def test_la_auditoria_se_envia_a_la_consola():
+    import logging
+
+    from app.main import configurar_registro
+
+    configurar_registro()
+    registro = logging.getLogger("ecologistica")
+    assert registro.handlers and registro.level == logging.INFO
+    assert logging.getLogger("ecologistica.auditoria").getEffectiveLevel() == logging.INFO

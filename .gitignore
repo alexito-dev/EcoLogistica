@@ -76,3 +76,6 @@ __pycache__/
 *$py.class
 .eslintcache
 .stylelintcache
+
+# Datos locales de desarrollo (usuarios de demostración, secretos TOTP)
+backend/.data/
