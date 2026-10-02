@@ -1,0 +1,44 @@
+schema: spec-driven
+
+context: |
+  Language: es
+  All artifacts must be written in es.
+  Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+
+  Proyecto: EcoLogística Huancayo — PMV web de optimización de rutas de última milla
+  (VRPTW + Green VRP) para DistriRápido S.A.C. en Huancayo, Perú (3,250 msnm).
+  Stack: Frontend React + Vite + TypeScript, mapas con Leaflet/OpenStreetMap;
+  Backend FastAPI (Python) con Pydantic y SQLAlchemy/Alembic (API REST, auth, reglas de
+  negocio); motor de optimización Python (OR-Tools + metaheurística) desacoplado
+  (VRPTW/Green VRP, cálculo de CO2); PostgreSQL + PostGIS.
+  Estructura: frontend/, backend/, database/ (migrations, seeds), docs/ (fases PMI).
+  Módulos: pedidos y ventanas horarias, flota y conductores, motor de optimización,
+  visor cartográfico, dashboard de KPIs/CO2, re-enrutamiento dinámico.
+  Metas: -15% distancia total, >=92% puntualidad, hasta 1,000 pedidos/día y 50 vehículos,
+  operación en redes 2G/3G.
+  Fuente de verdad de requisitos: docs/01 Inicio (requisitos funcionales/no funcionales,
+  reglas de negocio, base de datos, modelo C4). Referenciar IDs de requisitos (RF/RNF/RN)
+  cuando existan. No duplicar lógica de negocio entre frontend y optimizador.
+  Flujo Git: Git Flow (feature/* desde develop) y Conventional Commits.
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing
