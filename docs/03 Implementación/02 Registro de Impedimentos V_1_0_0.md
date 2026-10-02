@@ -14,7 +14,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.1.0 |
+| Versión | 1.1.1 |
 | Formato de fechas | DD/MM/AAAA |
 | Escala de prioridad | Alta · Media · Baja |
 | Estados válidos | Abierto · En Espera · Cerrado |
@@ -27,6 +27,7 @@
 |---|---|---|---|
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión: 8 impedimentos del Sprint 1 con impacto, prioridad, responsable y trazabilidad de estado. |
 | 1.1.0 | 02/10/2026 | Alex Zorrilla | Se agregan diagramas Mermaid y tablas de análisis con los mismos datos; el contenido no cambia. |
+| 1.1.1 | 02/10/2026 | Alex Zorrilla | La fecha de resolución de los impedimentos abiertos se indica como "Pendiente" en lugar de un guion. |
 
 ## Registro
 
@@ -37,9 +38,9 @@
 | IMP-003 | 18/09/2026 | **Falta de permisos de administrador en Jira.** No se podía habilitar "Releases" (`v1.0.0-MVP`) ni quitar la columna extra "Listo" del tablero (5 columnas en vez de las 4 acordadas: To Do → In Progress → In Review/QA → Done). **Impacto:** flujo de trabajo distinto al definido en el proceso, evidencia 5 del entregable Jira sin completar y riesgo de métricas de tablero erróneas. | Media | Jose Luis Isidro Casio | 28/09/2026 | Cerrado | 02/10/2026 | Configuración ajustada en Jira por el equipo y confirmada por el líder el 02/10/2026. Acción de seguimiento: capturar la evidencia 5 (`assets/jira/05-release.png`) y reflejarla en el documento de Jira. |
 | IMP-004 | 14/09/2026 | **Sprint 1 sin iniciar y con Sprint Goal desalineado del alcance.** Al verificar el proyecto el 18/09, el sprint seguía en estado "no iniciado" y su objetivo no coincidía con las historias cargadas (ECO-9, ECO-15). **Impacto:** 4 días de la iteración (≈ 29 %) sin ceremonias de Sprint Planning ni seguimiento de tablero; duración efectiva de ejecución menor a la planificada. | Alta | Alex Zorrilla | 18/09/2026 | Cerrado | 18/09/2026 | Sprint recreado con fechas 14/09–28/09 y Sprint Goal real ("Registrar pedidos con ventana horaria y permitir reenrutar una ruta ante incidencia"); iniciado el 18/09. Acción preventiva: iniciar el sprint el día de su Planning. |
 | IMP-005 | 02/10/2026 | **Carpeta de entregables desalineada con la consigna.** El repositorio tenía `docs/03 Ejecución`, pero la consigna del Taller exige `docs/03 Implementación`. **Impacto:** entregables fuera de ruta penalizados en el criterio de ubicación y enlaces del README. | Media | Alex Zorrilla | 02/10/2026 | Cerrado | 02/10/2026 | Carpeta renombrada con `git mv` (se conserva historial) y README actualizado con los enlaces relativos a los 4 documentos del sprint. |
-| IMP-006 | 28/09/2026 | **Dependencia técnica mal secuenciada entre HU-006 y HU-004.** Reenrutar ante incidencia (ECO-15 / HU-006, 5 pts) requiere el motor de optimización VRPTW (HU-004, 8 pts) y su benchmark (EN-001), planificados para el Sprint 2. **Impacto:** HU-006 era inalcanzable en el Sprint 1; 5 de 10 puntos (50 %) del compromiso nunca podían cumplirse y el Sprint Goal fue sobredimensionado. | Alta | Alex Zorrilla | 12/10/2026 | Abierto | — | HU-006 se reprograma detrás de HU-004 y EN-001 en el backlog. Se agrega al Sprint Planning una revisión obligatoria de dependencias técnicas y *Definition of Ready* con campo "depende de". Seguimiento en la [Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md). |
-| IMP-007 | 18/09/2026 | **Sin código base ejecutable y cambio tardío de stack.** `backend/` y `frontend/` solo contienen `.gitkeep`; el 18/09, a mitad del sprint, se modificaron los documentos de arquitectura hacia Next.js + Nest.js sin evaluarlo en la matriz de stack; el 02/10 el líder ratificó React + Vite + FastAPI (Alternativa A, 93 %) y se revirtieron los documentos. **Impacto:** HU-001 (ECO-9, 5 pts) no pudo implementarse ni demostrarse; la decisión de stack no estuvo estable durante el sprint; riesgo de integración tardía (RSK-07). | Alta | Jhean Pier Julio Anco Porras | 12/10/2026 | Abierto | — | Plan: (1) *scaffold* de FastAPI y React + Vite con scripts `dev`/`test`, (2) cambio OpenSpec `registro-pedidos` con `propose → apply → verify → archive`, (3) CI mínimo (EN-006). Responsables: Anco Porras (backend), Vera Zea (frontend), Isidro Casio (CI). El stack se congela hasta el Sprint 3. |
-| IMP-008 | 18/09/2026 | **Backlog de Jira incompleto y estimaciones sin validar.** Faltan crear HU-004, HU-010, HU-011, EN-001, EN-002, EN-003 y EN-004; sus puntos (Fibonacci) son propuestos y no validados por el equipo. **Impacto:** el Sprint Planning del Sprint 2 no puede cerrar capacidad ni dependencias con certeza; riesgo de repetir el desajuste de IMP-006. | Media | Jose Luis Isidro Casio | 05/10/2026 | En Espera | — | A la espera de una sesión de estimación (*Planning Poker*) con los cinco integrantes antes del Planning del Sprint 2. Una vez creadas las tarjetas, se actualiza [02 Artefactos Jira](../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md). |
+| IMP-006 | 28/09/2026 | **Dependencia técnica mal secuenciada entre HU-006 y HU-004.** Reenrutar ante incidencia (ECO-15 / HU-006, 5 pts) requiere el motor de optimización VRPTW (HU-004, 8 pts) y su benchmark (EN-001), planificados para el Sprint 2. **Impacto:** HU-006 era inalcanzable en el Sprint 1; 5 de 10 puntos (50 %) del compromiso nunca podían cumplirse y el Sprint Goal fue sobredimensionado. | Alta | Alex Zorrilla | 12/10/2026 | Abierto | Pendiente | HU-006 se reprograma detrás de HU-004 y EN-001 en el backlog. Se agrega al Sprint Planning una revisión obligatoria de dependencias técnicas y *Definition of Ready* con campo "depende de". Seguimiento en la [Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md). |
+| IMP-007 | 18/09/2026 | **Sin código base ejecutable y cambio tardío de stack.** `backend/` y `frontend/` solo contienen `.gitkeep`; el 18/09, a mitad del sprint, se modificaron los documentos de arquitectura hacia Next.js + Nest.js sin evaluarlo en la matriz de stack; el 02/10 el líder ratificó React + Vite + FastAPI (Alternativa A, 93 %) y se revirtieron los documentos. **Impacto:** HU-001 (ECO-9, 5 pts) no pudo implementarse ni demostrarse; la decisión de stack no estuvo estable durante el sprint; riesgo de integración tardía (RSK-07). | Alta | Jhean Pier Julio Anco Porras | 12/10/2026 | Abierto | Pendiente | Plan: (1) *scaffold* de FastAPI y React + Vite con scripts `dev`/`test`, (2) cambio OpenSpec `registro-pedidos` con `propose → apply → verify → archive`, (3) CI mínimo (EN-006). Responsables: Anco Porras (backend), Vera Zea (frontend), Isidro Casio (CI). El stack se congela hasta el Sprint 3. |
+| IMP-008 | 18/09/2026 | **Backlog de Jira incompleto y estimaciones sin validar.** Faltan crear HU-004, HU-010, HU-011, EN-001, EN-002, EN-003 y EN-004; sus puntos (Fibonacci) son propuestos y no validados por el equipo. **Impacto:** el Sprint Planning del Sprint 2 no puede cerrar capacidad ni dependencias con certeza; riesgo de repetir el desajuste de IMP-006. | Media | Jose Luis Isidro Casio | 05/10/2026 | En Espera | Pendiente | A la espera de una sesión de estimación (*Planning Poker*) con los cinco integrantes antes del Planning del Sprint 2. Una vez creadas las tarjetas, se actualiza [02 Artefactos Jira](../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md). |
 
 ## Resumen
 
@@ -98,9 +99,9 @@ timeline
 | IMP-001 Historias duplicadas | 11/09/2026 | 18/09/2026 | 7 | Media |
 | IMP-002 Épica equivocada | 18/09/2026 | 02/10/2026 | 14 | Baja |
 | IMP-003 Permisos de Jira | 18/09/2026 | 02/10/2026 | 14 | Media |
-| IMP-006 Dependencia del motor | 28/09/2026 | Abierto | — | Alta |
-| IMP-007 Sin código base | 18/09/2026 | Abierto | — | Alta |
-| IMP-008 Backlog incompleto | 18/09/2026 | En espera | — | Media |
+| IMP-006 Dependencia del motor | 28/09/2026 | Abierto | Pendiente | Alta |
+| IMP-007 Sin código base | 18/09/2026 | Abierto | Pendiente | Alta |
+| IMP-008 Backlog incompleto | 18/09/2026 | En espera | En curso | Media |
 
 Promedio de resolución de los 5 cerrados: 7.8 días. Los dos impedimentos de prioridad Alta que siguen abiertos son técnicos y se atacan en el Sprint 2.
 

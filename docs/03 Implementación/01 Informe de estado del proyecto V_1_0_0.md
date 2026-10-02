@@ -15,7 +15,7 @@
 | Campo | Valor |
 |---|---|
 | Código del proyecto | PFA-TP2-ECOLOG-2026 |
-| Versión | 1.1.0 |
+| Versión | 1.1.1 |
 | Iteración reportada | ECO Sprint 1 |
 | Sprint Goal | "Registrar pedidos con ventana horaria y permitir reenrutar una ruta ante incidencia." |
 | Fuentes | Jira `ECO` (evidencias 1–4 en [02 Artefactos Jira](../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md)), historial Git, [Registro de riesgos](../02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md), [Presupuesto](../02%20Planificaci%C3%B3n/04%20Presupuesto%20del%20proyecto%20V_1_0_0.md) |
@@ -27,6 +27,7 @@
 |---|---|---|---|
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión del informe de estado del Sprint 1. |
 | 1.1.0 | 02/10/2026 | Alex Zorrilla | Se agregan diagramas Mermaid y tablas de análisis con los mismos datos; el contenido no cambia. |
+| 1.1.1 | 02/10/2026 | Alex Zorrilla | Se agregan las secciones de la plantilla de la consigna (historias completadas, demostración y pendientes). |
 
 ## Resumen ejecutivo
 
@@ -54,6 +55,23 @@ gantt
 ```
 
 El Sprint 1 ocupó las semanas 4 y 5 de un proyecto de 15 semanas (del 24/08 al 05/12/2026).
+
+## Historias de Usuario completadas en este Sprint
+
+Ninguna de las dos historias comprometidas cumplió la Definición de Hecho:
+
+| Historia | Clave Jira | Puntos | Estado | Causa |
+|---|---|---:|---|---|
+| HU-001 Registrar pedido con ventana horaria | ECO-9 | 5 | No completada | Sin base de código ([IMP-007](02%20Registro%20de%20Impedimentos%20V_1_0_0.md)) |
+| HU-006 Reenrutar ruta ante incidencia | ECO-15 | 5 | No completada | Depende del motor HU-004 ([IMP-006](02%20Registro%20de%20Impedimentos%20V_1_0_0.md)) |
+
+## Demostración del trabajo completado
+
+Demostración a los stakeholders de las funcionalidades implementadas: al no haber software, en la Inspección 2 (02/10/2026) se presentan las seis evidencias del trabajo base — Jira, estructura del repositorio, arquitectura, flujo OpenSpec, criterios de aceptación y registro de impedimentos —. El detalle está en la [Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md).
+
+## Pendientes
+
+HU-001 pasa al Sprint 2 como primera prioridad; HU-006 se reprograma detrás del motor (HU-004 y EN-001); además quedan la base de código, CI (EN-006), PostgreSQL con PostGIS (EN-005) y las 7 tarjetas faltantes en Jira. La lista completa, con responsables, está en la [Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md#pendientes).
 
 ## Estado del proyecto
 
