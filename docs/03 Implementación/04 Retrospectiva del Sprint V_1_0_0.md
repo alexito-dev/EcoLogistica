@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.0.0 |
+| Versión | 1.1.0 |
 | Sprint | ECO Sprint 1 (14/09/2026 – 28/09/2026) |
 | Fecha de la retrospectiva | 02/10/2026 |
 | Facilitador | Alex Zorrilla |
@@ -22,6 +22,41 @@
 | Versión | Fecha | Autor | Cambio |
 |---|---|---|---|
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión de la retrospectiva del Sprint 1. |
+| 1.1.0 | 02/10/2026 | Alex Zorrilla | Se agregan diagramas Mermaid y tablas de análisis con los mismos datos; el contenido no cambia. |
+
+## Mapa de la retrospectiva
+
+```mermaid
+mindmap
+  root((Retrospectiva<br/>Sprint 1))
+    Aprendimos
+      Revisar dependencias
+      Comprometer según capacidad
+      Decidir el stack temprano
+      Especificar antes de programar
+      Documentos no reemplazan software
+      Resolver permisos el día 1
+    Hacemos bien
+      Trazabilidad
+      Honestidad en el reporte
+      Control de versiones
+      Reacción rápida
+      Arquitectura razonada
+      Herramientas listas
+    Mejorar
+      Personas
+        Carga concentrada
+        Curva de aprendizaje
+      Relaciones
+        Decisiones sin equipo
+        Dependencias invisibles
+      Procesos
+        Sin Definition of Ready
+        Done sin demo
+      Herramientas
+        Sin base común
+        Sin CI
+```
 
 ## ¿Qué aprendimos?
 
@@ -84,6 +119,50 @@
 | A8 | Establecer 15 minutos diarios de Daily asincrónico en el canal del equipo y registro de decisiones técnicas (ADR breve) antes de cambios de stack. | Relaciones | Alex Zorrilla | 05/10/2026 | Decisiones técnicas registradas en `docs/otros` |
 | A9 | Pedir al administrador de Jira habilitar Releases y mantener el tablero con 4 columnas; capturar la evidencia 5. | Herramientas | Jose Luis Isidro Casio | 07/10/2026 | `assets/jira/05-release.png` incluido en el documento de Jira |
 | A10 | Revisar criterios de aceptación y prioridades con el docente (Product Owner) antes de cada Planning. | Relaciones | Alex Zorrilla | Cada Planning | Acta breve de validación del backlog |
+
+### Calendario de acciones
+
+```mermaid
+gantt
+    title Acciones del Sprint 1 (desde la retrospectiva del 02/10)
+    dateFormat YYYY-MM-DD
+    axisFormat %d/%m
+    section Procesos
+    A1 Definition of Ready (Alex)               :a1, 2026-10-02, 2026-10-05
+    A2 Definition of Done (Alex · Jose Luis)    :a2, 2026-10-02, 2026-10-05
+    A4 Cambio OpenSpec (Alex · Jhean)           :a4, 2026-10-02, 2026-10-10
+    A7 Prototipo del motor (Alexander)          :a7, 2026-10-02, 2026-10-12
+    section Herramientas
+    A3 Base de código (Jhean · Jhoanna)         :a3, 2026-10-02, 2026-10-08
+    A5 CI mínimo (Jose Luis)                    :a5, 2026-10-02, 2026-10-10
+    A9 Releases y tablero de Jira (Jose Luis)   :a9, 2026-10-02, 2026-10-07
+    section Personas y relaciones
+    A6 Planning Poker (Jose Luis · equipo)      :a6, 2026-10-02, 2026-10-05
+    A8 Daily y registro de decisiones (Alex)    :a8, 2026-10-02, 2026-10-05
+    A10 Validar backlog con el docente (Alex)   :milestone, 2026-10-09, 0d
+```
+
+| Eje | Acciones | Responsables |
+|---|---|---|
+| Procesos | A1, A2, A4, A7 | Alex, Jose Luis, Jhean, Alexander |
+| Herramientas | A3, A5, A9 | Jhean, Jhoanna, Jose Luis |
+| Personas | A6 | Jose Luis y todo el equipo |
+| Relaciones | A8, A10 | Alex |
+
+### De la causa a la acción
+
+```mermaid
+flowchart LR
+    C1["HU-006 dependía del motor<br/>y el Done no exigía software"] --> I6["IMP-006"]
+    I6 --> A1["A1 Definition of Ready"]
+    I6 --> A2["A2 Definition of Done"]
+    I6 --> A4["A4 Cambio OpenSpec"]
+    C2["Sin código base"] --> I7["IMP-007"]
+    I7 --> A3["A3 Base de código"]
+    I7 --> A5["A5 CI mínimo"]
+    C3["Backlog sin estimar"] --> I8["IMP-008"] --> A6["A6 Planning Poker"]
+    C4["Sin permisos en Jira"] --> I3["IMP-003"] --> A9["A9 Releases y tablero"]
+```
 
 ### Seguimiento de acuerdos
 

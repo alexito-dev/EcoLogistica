@@ -15,7 +15,7 @@
 | Campo | Valor |
 |---|---|
 | Código del proyecto | PFA-TP2-ECOLOG-2026 |
-| Versión | 1.0.0 |
+| Versión | 1.1.0 |
 | Iteración reportada | ECO Sprint 1 |
 | Sprint Goal | "Registrar pedidos con ventana horaria y permitir reenrutar una ruta ante incidencia." |
 | Fuentes | Jira `ECO` (evidencias 1–4 en [02 Artefactos Jira](../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md)), historial Git, [Registro de riesgos](../02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md), [Presupuesto](../02%20Planificaci%C3%B3n/04%20Presupuesto%20del%20proyecto%20V_1_0_0.md) |
@@ -26,12 +26,34 @@
 | Versión | Fecha | Autor | Cambio |
 |---|---|---|---|
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión del informe de estado del Sprint 1. |
+| 1.1.0 | 02/10/2026 | Alex Zorrilla | Se agregan diagramas Mermaid y tablas de análisis con los mismos datos; el contenido no cambia. |
 
 ## Resumen ejecutivo
 
 El Sprint 1 cerró el 28/09/2026 **sin entregar incremento funcional de software**: ninguna de las dos historias comprometidas (ECO-9 / HU-001 y ECO-15 / HU-006, 10 puntos) alcanzó la Definición de Hecho. El esfuerzo del periodo se concentró en la gobernanza y la base técnica del proyecto: backlog y tablero Scrum en Jira, estructura de repositorio, decisión de arquitectura (React + Vite + FastAPI + motor de optimización Python + PostgreSQL/PostGIS, Alternativa A del documento de stack, ratificada por el líder el 02/10/2026), inicialización de OpenSpec y consolidación de los 17 entregables documentales de las fases de Inicio y Planificación.
 
 El análisis del sprint reveló además un defecto de planificación: **HU-006 (reenrutar ante incidencia) depende del motor de optimización (HU-004), que según el roadmap pertenece al Sprint 2**, por lo que no era alcanzable en el Sprint 1. Ambas historias se re-planifican (ver *Próximos avances*).
+
+### Línea de tiempo del proyecto
+
+```mermaid
+gantt
+    title EcoLogística Huancayo — iteraciones y evaluaciones (2026)
+    dateFormat YYYY-MM-DD
+    axisFormat %d/%m
+    section Fases previas
+    Inicio y Planificación (docs 01 y 02)     :done, ini, 2026-08-24, 2026-09-13
+    section Sprint 1
+    Sprint 1 · ECO-9 y ECO-15 (10 pts)         :crit, done, s1, 2026-09-14, 2026-09-28
+    Inspección 2 · Sprint 01                   :milestone, 2026-10-02, 0d
+    section Sprint 2
+    Sprint 2 · HU-001 y autenticación          :active, s2, 2026-09-29, 2026-10-12
+    Evaluación Parcial · Sprint 02             :milestone, 2026-10-09, 0d
+    section Cierre
+    Entrega del PMV                            :milestone, 2026-12-05, 0d
+```
+
+El Sprint 1 ocupó las semanas 4 y 5 de un proyecto de 15 semanas (del 24/08 al 05/12/2026).
 
 ## Estado del proyecto
 
@@ -55,7 +77,67 @@ Leyenda: 🟢 en control · 🟡 atención · 🔴 fuera de lo planificado.
 | Entregables documentales de fases 01–02 | 17 | 17 |
 | Impedimentos registrados (ver [Registro](02%20Registro%20de%20Impedimentos%20V_1_0_0.md)) | — | 8 (5 cerrados, 3 abiertos/en espera) |
 
+### Planificado frente a real
+
+```mermaid
+xychart-beta
+    title "Sprint 1: planificado frente a real"
+    x-axis ["Historias plan", "Historias real", "Puntos plan", "Puntos real", "Documentos plan", "Documentos real"]
+    y-axis "Cantidad" 0 --> 20
+    bar [2, 0, 10, 0, 17, 17]
+```
+
+| Indicador | Planificado | Real | Cumplimiento |
+|---|---:|---:|---:|
+| Historias de usuario | 2 | 0 | 0 % |
+| Puntos de historia | 10 | 0 | 0 % |
+| Documentos de las fases 01 y 02 | 17 | 17 | 100 % |
+
+Lo documental se cumplió al 100 %; el software, al 0 %.
+
+### Presupuesto y ejecución
+
+| Rubro | Presupuesto (S/) | Ejecutado al 28/09 | Comentario |
+|---|---:|---:|---|
+| Recursos humanos | 45,320.00 | Horas académicas | Esfuerzo del equipo, no facturado |
+| Licencias de software | 1,155.00 | Jira activo | S/ 35 por usuario al mes |
+| Infraestructura en la nube | 2,220.00 | 0.00 | Aún no se contrata: todo corre en local |
+| **Subtotal** | **48,695.00** | | |
+| Reserva de contingencia (12 %) | 5,843.40 | 0.00 | Intacta |
+| **Total aprobado** | **54,538.40** | | |
+
+```mermaid
+pie showData
+    title Distribución del presupuesto aprobado (S/)
+    "Recursos humanos" : 45320
+    "Reserva de contingencia" : 5843.40
+    "Infraestructura en la nube" : 2220
+    "Licencias de software" : 1155
+```
+
 ## Riesgos
+
+Los riesgos del sprint se ubican según la probabilidad y el impacto de su riesgo base en el [Registro de riesgos](../02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md) (escala de 1 a 5):
+
+```mermaid
+quadrantChart
+    title Riesgos del Sprint 1 según su riesgo base
+    x-axis Baja probabilidad --> Alta probabilidad
+    y-axis Bajo impacto --> Alto impacto
+    quadrant-1 Atender ya
+    quadrant-2 Vigilar
+    quadrant-3 Aceptar
+    quadrant-4 Reducir
+    "RSK-04 alcance": [0.8, 0.8]
+    "RSK-02 motor": [0.6, 0.95]
+    "RSK-07 integración": [0.6, 0.72]
+```
+
+| Riesgo base | Probabilidad | Impacto | Exposición | Riesgos del sprint asociados |
+|---|---:|---:|---:|---|
+| RSK-04 Cambios de alcance y fechas | 4 | 4 | 16 (Alta) | R-S1-01, R-S1-04, R-S1-05, R-S1-06 |
+| RSK-02 Rendimiento del motor | 3 | 5 | 15 (Alta) | R-S1-02 |
+| RSK-07 Integración tardía | 3 | 4 | 12 (Media) | R-S1-03 |
 
 | **Riesgo** | **Responsable** | **Mitigación** |
 | -- | -- | -- |

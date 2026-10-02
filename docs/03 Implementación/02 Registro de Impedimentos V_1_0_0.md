@@ -14,7 +14,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.0.0 |
+| Versión | 1.1.0 |
 | Formato de fechas | DD/MM/AAAA |
 | Escala de prioridad | Alta · Media · Baja |
 | Estados válidos | Abierto · En Espera · Cerrado |
@@ -26,6 +26,7 @@
 | Versión | Fecha | Autor | Cambio |
 |---|---|---|---|
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión: 8 impedimentos del Sprint 1 con impacto, prioridad, responsable y trazabilidad de estado. |
+| 1.1.0 | 02/10/2026 | Alex Zorrilla | Se agregan diagramas Mermaid y tablas de análisis con los mismos datos; el contenido no cambia. |
 
 ## Registro
 
@@ -54,6 +55,73 @@
 | Alta | 3 (IMP-004, IMP-006, IMP-007) |
 | Media | 4 (IMP-001, IMP-003, IMP-005, IMP-008) |
 | Baja | 1 (IMP-002) |
+
+### Estado y prioridad
+
+```mermaid
+pie showData
+    title Impedimentos por estado
+    "Cerrado" : 5
+    "Abierto" : 2
+    "En espera" : 1
+```
+
+```mermaid
+pie showData
+    title Impedimentos por prioridad
+    "Alta" : 3
+    "Media" : 4
+    "Baja" : 1
+```
+
+### Cronología
+
+```mermaid
+timeline
+    title Impedimentos del Sprint 1 por fecha de registro
+    11/09 : IMP-001 historias duplicadas en Jira
+    14/09 : IMP-004 sprint sin iniciar
+    18/09 : IMP-002 épica equivocada
+          : IMP-003 sin permisos de administrador
+          : IMP-007 sin código base y cambio de stack
+          : IMP-008 backlog incompleto
+    28/09 : IMP-006 dependencia HU-006 y HU-004
+    02/10 : IMP-005 carpeta de entregables
+```
+
+### Tiempo de resolución
+
+| Impedimento | Registro | Resolución | Días | Prioridad |
+|---|---|---|---:|---|
+| IMP-005 Carpeta de entregables | 02/10/2026 | 02/10/2026 | 0 | Media |
+| IMP-004 Sprint sin iniciar | 14/09/2026 | 18/09/2026 | 4 | Alta |
+| IMP-001 Historias duplicadas | 11/09/2026 | 18/09/2026 | 7 | Media |
+| IMP-002 Épica equivocada | 18/09/2026 | 02/10/2026 | 14 | Baja |
+| IMP-003 Permisos de Jira | 18/09/2026 | 02/10/2026 | 14 | Media |
+| IMP-006 Dependencia del motor | 28/09/2026 | Abierto | — | Alta |
+| IMP-007 Sin código base | 18/09/2026 | Abierto | — | Alta |
+| IMP-008 Backlog incompleto | 18/09/2026 | En espera | — | Media |
+
+Promedio de resolución de los 5 cerrados: 7.8 días. Los dos impedimentos de prioridad Alta que siguen abiertos son técnicos y se atacan en el Sprint 2.
+
+### Ciclo de vida de un impedimento
+
+```mermaid
+flowchart LR
+    A([Se detecta el problema]) --> B[Se registra el mismo día<br/>con impacto y prioridad]
+    B --> C{¿Prioridad Alta?}
+    C -- Sí --> D[Revisión en cada Daily]
+    C -- No --> E[Revisión semanal]
+    D --> F{¿Depende de un tercero?}
+    E --> F
+    F -- Sí --> G[En espera]
+    F -- No --> H[Abierto con responsable<br/>y fecha tope]
+    G --> H
+    H --> I{¿Hay evidencia de la solución?<br/>commit, captura o documento}
+    I -- No --> J[Escalar al docente<br/>si vence la fecha tope]
+    J --> H
+    I -- Sí --> K([Cerrado])
+```
 
 ## Reglas de gestión
 

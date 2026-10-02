@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.0.0 |
+| Versión | 1.1.0 |
 | Sprint | ECO Sprint 1 (14/09/2026 – 28/09/2026) |
 | Sprint Goal | "Registrar pedidos con ventana horaria y permitir reenrutar una ruta ante incidencia." |
 | Reunión de revisión | Inspección 2 — Sprint 01, 02/10/2026, 17:40–18:00 |
@@ -22,6 +22,7 @@
 | Versión | Fecha | Autor | Cambio |
 |---|---|---|---|
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión de la revisión del Sprint 1. |
+| 1.1.0 | 02/10/2026 | Alex Zorrilla | Se agregan diagramas Mermaid y tablas de análisis con los mismos datos; el contenido no cambia. |
 
 ## Historias de Usuario completadas en este Sprint
 
@@ -31,6 +32,31 @@
 |---|---|---:|---|---|---|
 | HU-001 Registrar pedido con ventana horaria | ECO-9 | 5 | **No completada** (pasa al Sprint 2, primera prioridad) | Escenario "Registrar pedido válido": no verificable. Escenario "Rechazar ventana inválida": no verificable. | Sin *scaffold* de backend/frontend; decisión de stack inestable hasta el 02/10 (propuesta Next.js + Nest.js revertida a React + FastAPI) ([IMP-007](02%20Registro%20de%20Impedimentos%20V_1_0_0.md)). |
 | HU-006 Reenrutar ruta ante incidencia | ECO-15 | 5 | **No completada** (se reprograma tras HU-004 y EN-001) | Escenarios "Reoptimizar pedido urgente" y "Cancelar propuesta riesgosa": no verificables. | Depende del motor de optimización (HU-004), planificado para el Sprint 2 ([IMP-006](02%20Registro%20de%20Impedimentos%20V_1_0_0.md)). |
+
+### Por qué no se completaron: cadena de dependencias
+
+```mermaid
+flowchart LR
+    BASE["Base de código<br/>backend y frontend<br/>(no existía: IMP-007)"]:::falta --> HU001["HU-001 / ECO-9<br/>Registrar pedido<br/>5 pts"]:::sprint
+    HU001 --> HU004["HU-004<br/>Generar ruta VRPTW<br/>(Sprint 2 o posterior)"]:::futuro
+    EN001["EN-001<br/>Benchmark del motor<br/>≤ 45 s"]:::futuro --> HU004
+    HU004 --> HU006["HU-006 / ECO-15<br/>Reenrutar ante incidencia<br/>5 pts"]:::sprint
+    classDef sprint fill:#e7f6df,stroke:#025b29,color:#032d2f
+    classDef falta fill:#fdecea,stroke:#b3261e,color:#b3261e
+    classDef futuro fill:#eeeeee,stroke:#888888,color:#333333
+```
+
+Las dos historias comprometidas (en verde) dependían de elementos que no existían (en rojo) o que estaban planificados para después (en gris). Ver [IMP-006 e IMP-007](02%20Registro%20de%20Impedimentos%20V_1_0_0.md).
+
+### Verificación de la Definición de Hecho
+
+| Condición de la Definición de Hecho | HU-001 Registrar pedido | HU-006 Reenrutar |
+|---|---|---|
+| Código integrado en el repositorio | No | No |
+| Pruebas automatizadas pasando | No | No |
+| Criterios de aceptación verificados | No | No |
+| Demostración ejecutable | No | No |
+| **Resultado** | **No completada** | **No completada** |
 
 ### Trabajo base completado (habilitadores y artefactos, no cuentan como historias de usuario)
 
@@ -58,6 +84,23 @@ Demostración a los *stakeholders* de las funcionalidades implementadas: **no ex
 | 5 | Criterios de aceptación de HU-001 y HU-006 | Escenarios Gherkin ya redactados; se contrastan con las reglas RN-001 (ventana con inicio anterior al fin) y RN-005 (pedido urgente dispara reoptimización) | Que los criterios son no ambiguos y verificables |
 | 6 | Registro de impedimentos y análisis del desvío | Dependencia HU-006 → HU-004 y ausencia de código base | Transparencia sobre el desvío y el plan de recuperación |
 
+```mermaid
+flowchart TB
+    subgraph EVID["Evidencias presentadas en la revisión"]
+        E1["1 · Jira: roadmap, backlog y tablero"]
+        E2["2 · Estructura del repositorio"]
+        E3["3 · Arquitectura y modelo C4"]
+        E4["4 · Flujo OpenSpec"]
+        E5["5 · Criterios de aceptación vs RN-001 y RN-005"]
+        E6["6 · Registro de impedimentos"]
+    end
+    EVID --> V{"Validación de los stakeholders"}
+    V --> R1["Alcance alineado con la visión"]
+    V --> R2["Código organizado y sin secretos"]
+    V --> R3["Soporta 1,000 pedidos/día y 2G/3G"]
+    V --> R4["Transparencia del desvío y plan"]
+```
+
 ### Retroalimentación esperada de los stakeholders
 
 Los puntos de validación del demo se registran en la reunión y se trasladan al backlog en Jira. Cualquier comentario del docente asesor sobre alcance o prioridad se refleja en la siguiente versión de este documento (1.0.1 o superior).
@@ -84,3 +127,28 @@ Los puntos de validación del demo se registran en la reunión y se trasladan al
 | Velocidad observada | 0 pts/sprint |
 | Puntos pendientes que pasan al backlog | 10 |
 | Proyección | Si el Sprint 2 recupera HU-001 (5 pts) y avanza HU-004/EN-001, la velocidad esperada se revisa con capacidad real en el Planning. Ver [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) |
+
+```mermaid
+xychart-beta
+    title "Puntos de historia por sprint"
+    x-axis ["Sprint 1 comprometido", "Sprint 1 completado"]
+    y-axis "Puntos" 0 --> 12
+    bar [10, 0]
+```
+
+### Destino de los pendientes
+
+```mermaid
+flowchart LR
+    S1(["Sprint 1<br/>8 pendientes"]) --> S2["Sprint 2"]
+    S1 --> S23["Sprint 2 y 3"]
+    S1 --> POST["Después del motor"]
+    S2 --> P1["HU-001 registrar pedido"]
+    S2 --> P3["Base de código"]
+    S2 --> P4["Cambio OpenSpec auditado"]
+    S2 --> P5["CI y OpenAPI (EN-006)"]
+    S2 --> P7["Tarjetas faltantes en Jira"]
+    S2 --> P8["Evidencia 5 de Jira"]
+    S23 --> P6["PostgreSQL y PostGIS (EN-005)"]
+    POST --> P2["HU-006 reenrutar"]
+```
