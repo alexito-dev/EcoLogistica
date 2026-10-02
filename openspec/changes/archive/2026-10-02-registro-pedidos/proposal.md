@@ -31,4 +31,4 @@ Fuera de alcance (se documenta como *Non-goals* en el diseño): autenticación y
 - **Configuración:** variables nuevas en `.env.example` (`PORT`, límites del ámbito geográfico y `VITE_API_URL`), sin secretos en Git (RNF-06, RNF-15).
 - **Dependencias:** FastAPI, Uvicorn, Pydantic y pydantic-settings, pytest y httpx en backend; React, Vite, TypeScript, Vitest y Testing Library en frontend.
 - **Documentación:** el cambio se archiva en `openspec/changes/archive/` y su spec pasa a `openspec/specs/pedidos/`; la Revisión del Sprint 2 reportará HU-001.
-- **Trazabilidad:** RF-02.1, RF-02.2, RN-001, RN-004 (estado inicial), RNF-03, RNF-07, RNF-10, RNF-14, RNF-20 (stack ratificado en [10. Stack tecnológico](../../../docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md), Alternativa A); HU-001 / ECO-9.
+- **Trazabilidad:** RF-02.1, RF-02.2, RN-001, RN-004 (estado inicial), RNF-03, RNF-07, RNF-10, RNF-14, RNF-20 (stack ratificado en [10. Stack tecnológico](../../../../docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md), Alternativa A); HU-001 / ECO-9.

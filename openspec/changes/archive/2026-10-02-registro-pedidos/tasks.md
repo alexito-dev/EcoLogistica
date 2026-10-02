@@ -38,5 +38,5 @@
 
 - [x] 6.1 Ejecutar la demostración extremo a extremo con backend y frontend levantados: registrar un pedido válido y uno con ventana inválida, y verificar que se ve el resultado esperado de ambos escenarios Gherkin de HU-001; guardar capturas en `assets/images/`
 - [x] 6.2 Actualizar `README.md` (guía de instalación y ejecución local con `.env`, comandos de prueba y rutas de la API) y verificar que los comandos documentados funcionan en un clon limpio
-- [ ] 6.3 Documentar el límite de este cambio (repositorio en memoria, sin autenticación, ámbito aproximado y divergencia de nomenclatura de estados) en `docs/03 Implementación` del Sprint 2 y en el Registro de Impedimentos, y verificar que los enlaces relativos resuelven
-- [ ] 6.4 Ejecutar `openspec validate registro-pedidos`, `pytest` y `npm test` y el análisis estático; verificar que todo pasa y archivar con `/opsx:archive` en la rama `feature/registro-pedidos` con commits Conventional Commits
+- [x] 6.3 Documentar el límite de este cambio (repositorio en memoria, sin autenticación, ámbito aproximado y divergencia de nomenclatura de estados) en `docs/03 Implementación` del Sprint 2 y en el Registro de Impedimentos, y verificar que los enlaces relativos resuelven
+- [x] 6.4 Ejecutar `openspec validate registro-pedidos`, `pytest` y `npm test` y el análisis estático; verificar que todo pasa y archivar con `/opsx:archive` en la rama `feature/registro-pedidos` con commits Conventional Commits
