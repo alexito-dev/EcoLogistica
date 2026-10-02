@@ -1,6 +1,8 @@
 /** Cliente de la API de pedidos. Las reglas de negocio las decide el backend. */
 
-const API_URL: string = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api/v1'
+import { solicitar } from './http'
+
+export { ApiError } from './http'
 
 export type EstadoPedido =
   | 'PENDIENTE'
@@ -51,45 +53,6 @@ export interface ListadoPedidos {
   total: number
   pagina: number
   limite: number
-}
-
-/** Error de la API con detalle por campo ({ status, message, errors }). */
-export class ApiError extends Error {
-  readonly status: number
-  readonly errors: Record<string, string>
-
-  constructor(status: number, message: string, errors: Record<string, string> = {}) {
-    super(message)
-    this.name = 'ApiError'
-    this.status = status
-    this.errors = errors
-  }
-}
-
-async function solicitar<T>(ruta: string, init?: RequestInit): Promise<T> {
-  let respuesta: Response
-  try {
-    respuesta = await fetch(`${API_URL}${ruta}`, {
-      ...init,
-      headers: { 'Content-Type': 'application/json', ...init?.headers },
-    })
-  } catch {
-    throw new ApiError(0, 'No se pudo conectar con el servidor. Verifique su conexión e intente nuevamente.')
-  }
-
-  if (respuesta.ok) return (await respuesta.json()) as T
-
-  let cuerpo: { message?: string; errors?: Record<string, string> } = {}
-  try {
-    cuerpo = await respuesta.json()
-  } catch {
-    /* cuerpo no JSON: se usa el mensaje genérico */
-  }
-  throw new ApiError(
-    respuesta.status,
-    cuerpo.message ?? 'Ocurrió un error inesperado. Intente nuevamente.',
-    cuerpo.errors ?? {},
-  )
 }
 
 export function crearPedido(datos: PedidoCrear): Promise<Pedido> {

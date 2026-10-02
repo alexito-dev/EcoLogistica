@@ -1,6 +1,6 @@
 import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import App from '../src/App'
+import PaginaPedidos from '../src/pages/PaginaPedidos'
 import * as api from '../src/api/pedidos'
 
 const pedido: api.Pedido = {
@@ -39,10 +39,10 @@ const conDos = { items: [otro, pedido], total: 2, pagina: 1, limite: 100 }
 
 afterEach(() => vi.restoreAllMocks())
 
-describe('App', () => {
+describe('PaginaPedidos', () => {
   it('muestra el encabezado, los indicadores y el estado vacío con acción', async () => {
     vi.spyOn(api, 'listarPedidos').mockResolvedValue(vacio)
-    render(<App />)
+    render(<PaginaPedidos puedeRegistrar />)
     expect(screen.getByRole('heading', { name: 'Pedidos', level: 1 })).toBeInTheDocument()
     expect(screen.getByRole('region', { name: 'Resumen de pedidos' })).toBeInTheDocument()
     expect(await screen.findByText('Aún no hay pedidos')).toBeInTheDocument()
@@ -51,7 +51,7 @@ describe('App', () => {
 
   it('calcula los indicadores con los pedidos cargados', async () => {
     vi.spyOn(api, 'listarPedidos').mockResolvedValue(conDos)
-    render(<App />)
+    render(<PaginaPedidos puedeRegistrar />)
     await screen.findByText('PED-000001')
     const resumen = screen.getByRole('region', { name: 'Resumen de pedidos' })
     // Los valores se animan (conteo ascendente): se espera el valor final.
@@ -63,7 +63,7 @@ describe('App', () => {
     const listar = vi.spyOn(api, 'listarPedidos').mockResolvedValueOnce(vacio).mockResolvedValue(conPedido)
     vi.spyOn(api, 'crearPedido').mockResolvedValue(pedido)
     const user = userEvent.setup()
-    render(<App />)
+    render(<PaginaPedidos puedeRegistrar />)
     await screen.findByText('Aún no hay pedidos')
 
     await user.click(screen.getAllByRole('button', { name: /Nuevo pedido/ })[0])
@@ -81,7 +81,7 @@ describe('App', () => {
   it('el panel se cierra con Escape y devuelve el foco al botón que lo abrió', async () => {
     vi.spyOn(api, 'listarPedidos').mockResolvedValue(conPedido)
     const user = userEvent.setup()
-    render(<App />)
+    render(<PaginaPedidos puedeRegistrar />)
     await screen.findByText('PED-000001')
     const boton = screen.getAllByRole('button', { name: /Nuevo pedido/ })[0]
     boton.focus()
@@ -95,7 +95,7 @@ describe('App', () => {
   it('muestra el detalle de un pedido', async () => {
     vi.spyOn(api, 'listarPedidos').mockResolvedValue(conPedido)
     const user = userEvent.setup()
-    render(<App />)
+    render(<PaginaPedidos puedeRegistrar />)
     await user.click(await screen.findByRole('button', { name: 'Ver detalle del pedido PED-000001' }))
     const panel = await screen.findByRole('dialog', { name: 'PED-000001' })
     expect(panel).toHaveTextContent('Jr. Real 123')
@@ -106,7 +106,7 @@ describe('App', () => {
   it('filtra por estado y busca por texto', async () => {
     vi.spyOn(api, 'listarPedidos').mockResolvedValue(conDos)
     const user = userEvent.setup()
-    render(<App />)
+    render(<PaginaPedidos puedeRegistrar />)
     await screen.findByText('PED-000001')
 
     await user.selectOptions(screen.getByLabelText('Filtrar por estado'), 'ENTREGADO')
@@ -128,18 +128,17 @@ describe('App', () => {
       .mockRejectedValueOnce(new api.ApiError(0, 'No se pudo conectar con el servidor.'))
       .mockResolvedValue(conPedido)
     const user = userEvent.setup()
-    render(<App />)
+    render(<PaginaPedidos puedeRegistrar />)
     expect(await screen.findByRole('alert')).toHaveTextContent('No se pudo conectar')
     await user.click(screen.getByRole('button', { name: /Reintentar/ }))
     expect(await screen.findByText('PED-000001')).toBeInTheDocument()
   })
 
-  it('alterna entre tema claro y oscuro', async () => {
+  it('en modo consulta (administrador) no ofrece registrar pedidos', async () => {
     vi.spyOn(api, 'listarPedidos').mockResolvedValue(vacio)
-    const user = userEvent.setup()
-    render(<App />)
-    const inicial = document.documentElement.dataset.tema
-    await user.click(screen.getByRole('button', { name: /Cambiar a tema/ }))
-    expect(document.documentElement.dataset.tema).not.toBe(inicial)
+    render(<PaginaPedidos puedeRegistrar={false} />)
+    expect(await screen.findByText('Aún no hay pedidos')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /Nuevo pedido/ })).not.toBeInTheDocument()
+    expect(screen.getByText(/Modo consulta/)).toBeInTheDocument()
   })
 })

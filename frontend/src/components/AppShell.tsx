@@ -1,9 +1,12 @@
 import type { ReactNode } from 'react'
-import { Boxes, LayoutDashboard, Leaf, Route, Truck } from 'lucide-react'
+import { Boxes, LayoutDashboard, Leaf, LogOut, Route, Truck } from 'lucide-react'
+import { ETIQUETA_ROL, type Usuario } from '../api/auth'
 import ThemeToggle from './ThemeToggle'
 
 interface Props {
   children: ReactNode
+  usuario: Usuario
+  onSalir: () => void
 }
 
 const NAVEGACION = [
@@ -37,7 +40,13 @@ function Enlaces({ variante }: { variante: 'lateral' | 'inferior' }) {
   )
 }
 
-export default function AppShell({ children }: Props) {
+export default function AppShell({ children, usuario, onSalir }: Props) {
+  const iniciales = usuario.nombre
+    .split(/\s+/)
+    .map((p) => p[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase()
   return (
     <div className="shell">
       <a className="saltar" href="#contenido">
@@ -67,8 +76,28 @@ export default function AppShell({ children }: Props) {
             <img src="/logo_ecologistica.png" alt="" width="32" height="32" />
             <span>EcoLogística</span>
           </div>
-          <p className="barra__contexto">Panel del planificador</p>
-          <ThemeToggle />
+          <p className="barra__contexto">Panel de {ETIQUETA_ROL[usuario.rol].toLowerCase()}</p>
+          <div className="barra__acciones">
+            <div className="usuario" title={usuario.correo}>
+              <span className="usuario__avatar" aria-hidden="true">
+                {iniciales}
+              </span>
+              <span className="usuario__datos">
+                <span className="usuario__nombre">{usuario.nombre}</span>
+                <span className="usuario__rol">{ETIQUETA_ROL[usuario.rol]}</span>
+              </span>
+            </div>
+            <ThemeToggle />
+            <button
+              type="button"
+              className="icono-boton icono-boton--borde"
+              onClick={onSalir}
+              aria-label="Cerrar sesión"
+              title="Cerrar sesión"
+            >
+              <LogOut size={20} aria-hidden="true" />
+            </button>
+          </div>
         </header>
         <main id="contenido" tabIndex={-1}>
           {children}

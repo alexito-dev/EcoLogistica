@@ -1144,6 +1144,254 @@ select[aria-invalid='true'] {
   text-align: right;
 }
 
+/* ================= Sesión y acceso ================= */
+.barra__acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.usuario {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 12px 4px 4px;
+  border-radius: 999px;
+  background: var(--superficie);
+  box-shadow: var(--sombra);
+}
+.usuario__avatar {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--hero);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+.usuario__datos {
+  display: none;
+  flex-direction: column;
+  line-height: 1.15;
+}
+.usuario__nombre {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.usuario__rol {
+  font-size: 0.72rem;
+  color: var(--texto-suave);
+}
+.hero__nota {
+  font-size: 0.85rem;
+  background: rgb(255 255 255 / 0.14);
+  border-radius: 999px;
+  padding: 8px 14px;
+}
+.sin-acceso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 40px 20px;
+  margin-top: 8px;
+}
+.sin-acceso p {
+  max-width: 460px;
+  color: var(--texto-suave);
+}
+
+.pantalla-carga {
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 14px;
+  color: var(--texto-suave);
+}
+.girador {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 4px solid var(--acento-fondo);
+  border-top-color: var(--acento);
+  animation: girar 0.8s linear infinite;
+}
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.acceso {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.acceso__marca {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--hero);
+  color: #ffffff;
+  min-height: 200px;
+  display: flex;
+  align-items: flex-end;
+  padding: 28px 24px;
+}
+.acceso__marca-texto img {
+  border-radius: 14px;
+  background: #ffffff;
+  padding: 3px;
+  margin-bottom: 12px;
+}
+.acceso__nombre {
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+.acceso__lema {
+  margin-top: 6px;
+  color: rgb(255 255 255 / 0.85);
+  max-width: 360px;
+}
+.acceso__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 72px 16px 32px;
+}
+.acceso__tema {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+.acceso__tarjeta {
+  width: 100%;
+  max-width: 420px;
+  background: var(--superficie);
+  border-radius: 24px;
+  box-shadow: var(--sombra-alta);
+  padding: 28px 24px;
+}
+.acceso__tarjeta form {
+  display: grid;
+  gap: 16px;
+}
+.acceso__tarjeta h1 {
+  font-size: 1.5rem;
+}
+.acceso__tarjeta .subtitulo {
+  margin-top: -10px;
+}
+.acceso__icono {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: var(--acento-fondo);
+  color: var(--acento-texto);
+  animation: pop 0.5s var(--curva) both;
+}
+.acceso__pie {
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+  text-align: center;
+}
+.campo-clave {
+  position: relative;
+}
+.campo-clave input {
+  padding-right: 52px;
+}
+.campo-clave .icono-boton {
+  position: absolute;
+  right: 4px;
+  top: 3px;
+}
+.input-codigo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.5em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.boton--bloque {
+  width: 100%;
+}
+.aviso--info {
+  background: var(--acento-fondo);
+  color: var(--acento-texto);
+  margin-bottom: 0;
+}
+.pasos-enrolar {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+}
+.pasos-enrolar li::marker {
+  font-weight: 700;
+  color: var(--acento-texto);
+}
+.qr {
+  display: block;
+  margin: 10px auto 2px;
+  width: 184px;
+  height: 184px;
+  border-radius: 14px;
+  background: #ffffff;
+  padding: 8px;
+  box-shadow: var(--sombra);
+  animation: pop 0.5s var(--curva) both;
+}
+.qr--cargando {
+  background: var(--superficie-alterna);
+}
+.clave-mfa {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--superficie-alterna);
+  color: var(--texto);
+}
+.clave-mfa code {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  word-break: break-word;
+}
+
+@media (min-width: 640px) {
+  .usuario__datos {
+    display: flex;
+  }
+}
+@media (min-width: 900px) {
+  .acceso {
+    grid-template-columns: 1.1fr 1fr;
+  }
+  .acceso__marca {
+    min-height: 100vh;
+    align-items: center;
+    padding: 56px;
+  }
+  .acceso__nombre {
+    font-size: 2.4rem;
+  }
+}
+
 /* ================= Responsive ================= */
 @media (min-width: 640px) {
   .stats {

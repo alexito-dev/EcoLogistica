@@ -256,7 +256,25 @@ cd backend && pytest --cov=app
 cd frontend && npm test
 ```
 
-### 8.5. API de pedidos (HU-001)
+### 8.5. Acceso con verificación en dos pasos (RF-11.1)
+
+Toda la aplicación exige **contraseña + código TOTP** de una app autenticadora (Google Authenticator, Microsoft Authenticator u otra).
+
+1. Al iniciar el backend por primera vez se crean **cinco usuarios de demostración**, uno por rol: `admin@`, `planificador@`, `conductor@`, `gerente@` y `auditor@ecologistica.test`.
+2. La contraseña de demostración se toma de `DEMO_CLAVE` en `.env`. Si está vacía, el backend genera una aleatoria y **la muestra una sola vez en su consola**. Para generar usuarios nuevos, borre la carpeta `backend/.data/` (ignorada por Git) y reinicie el backend.
+3. En el primer ingreso de cada usuario, la app muestra un **código QR** (y la clave para ingreso manual): escanéelo con la app autenticadora y escriba el código de 6 dígitos.
+4. Permisos actuales (matriz RBAC del documento 08): **Planificador** registra y consulta pedidos; **Administrador** solo consulta; los demás roles ven "Acceso no autorizado" hasta que existan sus vistas.
+
+Seguridad: contraseñas con Argon2id, sesión en cookie `HttpOnly` y `SameSite=Strict` (15 min de inactividad, 8 h máximo), bloqueo de 15 min tras 5 intentos fallidos, códigos de un solo uso y eventos de acceso en la consola del backend sin secretos.
+
+| Método | Ruta | Descripción |
+| :--- | :--- | :--- |
+| `POST` | `/api/v1/auth/login` | Paso 1: correo y contraseña (responde `MFA` o `ENROLAR`) |
+| `POST` | `/api/v1/auth/mfa` | Paso 2: código TOTP; crea la sesión |
+| `GET` | `/api/v1/auth/sesion` | Usuario de la sesión vigente |
+| `POST` | `/api/v1/auth/logout` | Cierra la sesión e invalida los tokens emitidos |
+
+### 8.6. API de pedidos (HU-001)
 
 | Método | Ruta | Descripción |
 | :--- | :--- | :--- |
@@ -264,14 +282,14 @@ cd frontend && npm test
 | `GET` | `/api/v1/pedidos?estado&pagina&limite` | Lista pedidos, del más reciente al más antiguo (límite máx. 100) |
 | `GET` | `/api/v1/pedidos/{id}` | Consulta un pedido por UUID |
 
-Errores: `400` formato o tipo inválido, `422` regla de negocio (ventana, carga, ámbito), `404` inexistente, `409` código duplicado. Las ventanas horarias se envían en ISO 8601 **con desfase** (por ejemplo `2026-10-05T08:00:00-05:00`). Contrato completo en `/docs`.
+Requiere sesión (`401`) y rol (`403`). Errores: `400` formato o tipo inválido, `422` regla de negocio (ventana, carga, ámbito), `404` inexistente, `409` código duplicado. Las ventanas horarias se envían en ISO 8601 **con desfase** (por ejemplo `2026-10-05T08:00:00-05:00`). Contrato completo en `/docs`.
 
-### 8.6. Alcance y límites del primer incremento
+### 8.7. Alcance y límites de los incrementos
 
-Implementado con OpenSpec en el cambio `registro-pedidos` (ver `openspec/`): registrar, consultar y listar pedidos. Límites conocidos, pendientes de otros cambios:
+Implementado con OpenSpec en los cambios `registro-pedidos` (registrar, consultar y listar pedidos) y `autenticacion-mfa` (acceso con verificación en dos pasos y permisos por rol; incluye la auditoría de su especificación en `openspec/changes/archive/2026-10-02-autenticacion-mfa/auditoria-especificacion.md`). Límites conocidos, pendientes de otros cambios:
 
 - Persistencia **en memoria** (se pierde al reiniciar); el adaptador PostgreSQL/PostGIS llegará con EN-005.
-- Sin autenticación ni auditoría (RF-11.1 y RF-11.2); no se despliega fuera de entornos locales.
+- Usuarios en un archivo local (`backend/.data/`) y secretos TOTP sin cifrar en reposo hasta EN-005; sin recuperación del segundo factor ni consulta de la auditoría desde la interfaz.
 - El ámbito geográfico es un rectángulo de aproximación configurable en `.env` (`AMBITO_*`), por validar con el negocio.
 - La fuente **Codec Pro** es comercial: ver `frontend/public/fonts/LEEME.md`; sin ella se usa la fuente del sistema.
 

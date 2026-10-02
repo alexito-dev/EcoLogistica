@@ -28,7 +28,7 @@ interface Props {
   resaltadoId?: string | null
   onReintentar: () => void
   onVer: (pedido: Pedido) => void
-  onNuevo: () => void
+  onNuevo?: () => void
 }
 
 function Insignias({ p }: { p: Pedido }) {
@@ -139,9 +139,11 @@ export default function PedidosTable({ pedidos, cargando, error, resaltadoId, on
           </span>
           <p className="vacio__titulo">Aún no hay pedidos</p>
           <p>Registre el primero para empezar a armar la planificación del día.</p>
-          <button type="button" className="boton boton--primario" onClick={onNuevo}>
-            Nuevo pedido
-          </button>
+          {onNuevo && (
+            <button type="button" className="boton boton--primario" onClick={onNuevo}>
+              Nuevo pedido
+            </button>
+          )}
         </div>
       )}
 
