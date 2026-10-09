@@ -14,7 +14,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.1.1 |
+| Versión | 1.2.0 |
 | Formato de fechas | DD/MM/AAAA |
 | Escala de prioridad | Alta · Media · Baja |
 | Estados válidos | Abierto · En Espera · Cerrado |
