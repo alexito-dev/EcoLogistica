@@ -8,6 +8,8 @@ Esta auditoría contrasta la documentación versionada, el código y las depende
 
 La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mismo día, se regularizaron los sprints y la historia de autenticación en Jira y se verificó el resultado. Las pruebas y la compilación local también se ejecutaron el 09/10. El Sprint 2 continúa activo (29/09–12/10); la revisión de las 15:40, hora de Lima, aún está pendiente al corte de esta actualización.
 
+> **Verificación de ejecución (09/10/2026, 08:51, hora de Lima):** el frontend en http://localhost:3000/ respondió HTTP 200 con HTML en español; la API en http://localhost:8000/openapi.json respondió HTTP 200 y entregó el esquema OpenAPI.
+
 ## Idioma, identidad y stack comunes
 
 - La documentación de producto y planificación en `README.md`, `docs/`, las plantillas de GitHub y OpenSpec está redactada en español. El 09/10 también se localizaron al español los seis comandos `.claude/commands/opsx` y sus seis habilidades `.claude/skills/openspec-*`; se conservaron los identificadores de comandos, campos JSON, estados de la CLI, la categoría de metadatos `Workflow` y los encabezados estructurales que forman parte del contrato de OpenSpec. `openspec/config.yaml` exige `es`; las especificaciones mantienen `SHALL`/`MUST` y `WHEN`/`THEN` donde los requiere el formato.
@@ -102,3 +104,4 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 | 1.14.0 | 09/10/2026 | Se registra que ECO-20 sigue sin persona asignada en Jira y se alinea este dato en README, planificación e informes del Sprint 2. |
 | 1.15.0 | 09/10/2026 | Se extiende la trazabilidad del estado sin asignación de ECO-20 al registro de impedimentos y se renueva la verificación de Jira. |
 | 1.16.0 | 09/10/2026 | Se identifican como históricos los planes de rama develop y estructura database/ del Sprint 1, manteniendo la descripción vigente del proyecto y del repositorio. |
+| 1.17.0 | 09/10/2026 | Se añade evidencia HTTP del frontend y la API levantados en local a las 08:51, hora de Lima. |
