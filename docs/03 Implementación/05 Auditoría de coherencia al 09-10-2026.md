@@ -122,3 +122,4 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 | 1.21.0 | 09/10/2026 | Se alinea la planificación futura a recorridos de usuario, se documentan los límites funcionales del Sprint 2 y se registra el plan funcional de sprints; la revisión del Sprint 2 sigue pendiente. |
 | 1.22.0 | 09/10/2026 | Se alinea la acción de planificación del Sprint 3 y su fila de auditoría al flujo completo propuesto para Planificación. |
 | 1.23.0 | 09/10/2026 | Se amplían los criterios funcionales de las propuestas de Sprint 3 y 4 y se los enlaza con las historias existentes del backlog. |
+| 1.24.0 | 09/10/2026 | Se diferencia la evidencia de implementación de HU-001 y MFA de la aceptación formal del Sprint 2, todavía pendiente de la reunión prevista. |

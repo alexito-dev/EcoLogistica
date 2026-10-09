@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.2.4 |
+| Versión | 1.2.5 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026) |
 | Objetivo replanificado | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
@@ -31,10 +31,13 @@
 | 1.2.2 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra que ECO-20 aparece sin persona asignada ni estimación aprobada en Jira al corte previo a la revisión. |
 | 1.2.3 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se traducen las referencias narrativas a partes interesadas. |
 | 1.2.4 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se corrige la concordancia de género en las referencias a las partes interesadas. |
+| 1.2.5 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se aclara que `Listo` y las pruebas documentadas respaldan la implementación, mientras la aceptación del Sprint 2 sigue pendiente de su reunión. |
 
-## Historias de Usuario completadas en este Sprint
+## Funciones implementadas; aceptación del Sprint 2 pendiente
 
-### HU-001 / ECO-9 — Registrar pedido con ventana horaria (5 pts) · **Completada**
+El ensayo de la demostración descrito abajo se hizo el 02/10. Jira muestra ECO-9 y ECO-20 en `Listo`, pero la reunión prevista para el 09/10 a las 15:40 aún no ocurre a este corte. Aquí, "cumple" describe la evidencia de implementación y pruebas; no significa que el Product Owner ya haya aceptado el sprint.
+
+### HU-001 / ECO-9 — Registrar pedido con ventana horaria (5 pts) · **Implementada; aceptación pendiente**
 
 *Como despachador, quiero registrar un pedido con dirección, carga y ventana horaria, para incorporarlo a la planificación diaria.*
 
@@ -50,7 +53,7 @@ Alcance entregado (especificado en el cambio OpenSpec `registro-pedidos`, 9 requ
 - **Errores uniformes:** 400, 404, 409, 422 y 500, sin trazas internas.
 - **Interfaz React:** indicadores con conteo animado, tabla y lista en tarjetas con búsqueda y filtro, formulario en panel lateral (o en hoja inferior en el celular), detalle del pedido, tema claro y oscuro con la paleta de marca, navegación inferior en el celular y accesibilidad por teclado.
 
-### Historia técnica — Autenticación con verificación en dos pasos y autorización por rol (RF-11.1) · **Completada**
+### Historia técnica — Autenticación con verificación en dos pasos y autorización por rol (RF-11.1) · **Implementada; aceptación pendiente**
 
 Incorporada al sprint como precondición de HU-001 y como actividad de la semana 6. Registrada el 09/10 en Jira como [ECO-20 — Autenticación MFA y autorización por rol](https://continental-team-ecologistica.atlassian.net/browse/ECO-20), vinculada a EP-07. Al corte previo a la revisión no tiene puntos ni persona asignada: no se encontró una estimación aprobada por el equipo ni una asignación en Jira ([IMP-008](02%20Registro%20de%20Impedimentos%20V_1_0_0.md)).
 
