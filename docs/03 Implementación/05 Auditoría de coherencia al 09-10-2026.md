@@ -44,6 +44,8 @@ El [informe del Sprint 2](Sprint%202/01%20Informe%20de%20estado%20del%20proyecto
 
 La [revisión del Sprint 2](Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) tiene ahora una pauta para comprobar acceso MFA, registro y consulta de pedidos, explicar la pérdida de datos al reiniciar y anotar la decisión del Product Owner cuando ocurra la reunión. La aceptación sigue marcada como pendiente.
 
+La consulta de Jira del 09/10 no encontró incidencias asignadas a un sprint futuro. El plan funcional registra el tamaño observado y el aún propuesto del flujo de rutas, y advierte que el conjunto podría exceder la capacidad: el equipo debe revisar esa cifra en el Planning antes de fijar Sprint 3.
+
 El backend registra **tres advertencias deprecadas** durante `pytest`. La compilación frontend concluye, pero avisa que los archivos licenciados Codec Pro `.woff2` no están disponibles. La compilación y las pruebas no prueban una revisión visual extremo a extremo ni despliegue continuo.
 
 ## Consistencia de calendario y presupuesto
@@ -129,3 +131,5 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 | 1.24.0 | 09/10/2026 | Se diferencia la evidencia de implementación de HU-001 y MFA de la aceptación formal del Sprint 2, todavía pendiente de la reunión prevista. |
 | 1.25.0 | 09/10/2026 | Se ajusta el informe de Sprint 2 para plantear el trabajo futuro como un flujo completo de generación de rutas y no como una lista de componentes técnicos. |
 | 1.26.0 | 09/10/2026 | Se prepara el registro de revisión de Sprint 2 con criterios funcionales y espacios vacíos para la decisión y los acuerdos reales. |
+| 1.27.0 | 09/10/2026 | Se contrasta el backlog candidato de Sprint 3 con Jira y se deja explícito que su estimación total aún no es un compromiso de equipo. |
+| 1.28.0 | 09/10/2026 | Se actualiza el plan funcional con el estado y el tamaño observado del backlog candidato de Sprint 4, manteniendo pendiente su Planning. |

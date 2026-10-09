@@ -7,7 +7,7 @@
 | Campo | Valor |
 |---|---|
 | Proyecto | EcoLogística Huancayo |
-| Versión | 1.1.0 |
+| Versión | 1.3.0 |
 | Fecha | 09/10/2026 |
 | Enfoque | Cada sprint debe dejar una tarea real que una persona pueda completar en el sistema. |
 
@@ -42,6 +42,21 @@ Para lograrlo, el equipo tendría que trabajar juntas las historias ya definidas
 
 En la demo se empieza con pedidos reales ingresados durante la revisión o con datos claramente identificados como datos de prueba; no se presentan ejemplos ficticios como operaciones de DistriRápido. Esta propuesta todavía necesita estimación, capacidad y aprobación del equipo antes de convertirse en compromiso de Jira.
 
+### Tamaño y estado actual del trabajo candidato
+
+La consulta de Jira del 09/10 muestra los ítems siguientes en `Por hacer`; ninguno está asignado a un sprint futuro. La búsqueda de incidencias en `futureSprints()` no devolvió resultados.
+
+| Parte del flujo | Historia o tarea | Estado en Jira | Puntos observados | Nota |
+|---|---|---|---:|---|
+| Guardar pedidos y vehículos entre reinicios | EN-005 / ECO-16 | Por hacer | 3 | Existe en Jira; falta integrar y verificar la persistencia. |
+| Registrar vehículos y su disponibilidad | HU-003 / ECO-12 | Por hacer | 5 | Existe en Jira. |
+| Configurar límites y restricciones de la flota | HU-009 / ECO-19 | Por hacer | 5 | Existe en Jira. |
+| Generar la ruta | HU-004 | No creada | 8 propuestos | El puntaje aparece en el backlog documental; el equipo aún no lo aprueba. |
+| Medir el tiempo de generación | EN-001 | No creada | 5 propuestos | El puntaje es propuesta documental, no estimación acordada. |
+| Ejecutar CI en cada cambio | EN-006 / ECO-17 | Por hacer | 5 | Ayuda a revisar el incremento, pero no es por sí misma la función de Planificación. |
+
+La función de ruta suma **26 puntos candidatos** (13 observados en Jira y 13 todavía propuestos); si se incluye EN-006 en la misma iteración, serían 31. Estas cifras no son velocidad disponible ni compromiso de Sprint 3. Jira aún no tiene un Sprint 3 futuro, y la velocidad oficial de Sprint 2 depende de la revisión pendiente. En el Planning el equipo debe contrastar la capacidad real y acordar una meta que quepa. Si el flujo completo no cabe, hay que reordenar el alcance para que cada sprint termine con una acción útil en la aplicación; no cerrar solo la base de datos o el benchmark y llamarlo incremento funcional.
+
 ## Qué tendría que poder hacerse al terminar Sprint 4
 
 **Meta propuesta:** Conducción abre su ruta asignada, marca el avance de cada entrega y reporta una incidencia; Planificación puede ver el cambio y actuar.
@@ -57,6 +72,19 @@ El flujo reúne la consulta de la ruta en el mapa (HU-005), el registro de estad
 5. Los indicadores de puntualidad, distancia o emisiones solo se muestran como resultados cuando se calculan con datos y reglas acordados; no se rellenan con cifras inventadas.
 
 La decisión de incluir mapa, re-enrutamiento y comparación de rutas debe tomarse en el Planning después de estimar HU-005, HU-006, HU-010 y HU-011 y revisar las dependencias con lo entregado en Sprint 3.
+
+### Tamaño y estado actual del trabajo candidato
+
+La consulta de Jira del 09/10 tampoco encontró trabajo en un sprint futuro para este flujo. El backlog actual queda así:
+
+| Parte del recorrido | Historia | Estado en Jira | Puntos observados | Nota |
+|---|---|---|---:|---|
+| Ver la ruta y sus paradas en el mapa | HU-005 / ECO-13 | Por hacer | 3 | Existe en Jira; depende de que Sprint 3 entregue una ruta. |
+| Registrar y consultar estados de entrega | HU-010 | No creada | 5 propuestos | Puntaje del backlog documental; requiere aprobación y tarjeta Jira. |
+| Recalcular la ruta ante una incidencia | HU-006 / ECO-15 | Por hacer | 5 | Existe en Jira; depende del motor y de una ruta activa. |
+| Comparar ruta optimizada con línea base manual | HU-011 | No creada | 5 propuestos | Puntaje del backlog documental; requiere confirmar datos y medición. |
+
+El recorrido central de mapa, avance y re-enrutamiento suma **13 puntos candidatos**, de los cuales 5 corresponden a una historia sin tarjeta ni estimación aprobada. Comparar resultados (HU-011) añadiría otros 5 puntos propuestos. Son cifras para revisar, no compromiso ni capacidad confirmada. El Planning debe acordar qué parte completa el recorrido de Conducción y qué puede esperar; los indicadores se mostrarán solo cuando existan datos y reglas de cálculo acordados.
 
 ## Qué incluye hoy el incremento del Sprint 2
 
@@ -80,3 +108,5 @@ Esta definición sirve para juzgar el incremento de un sprint. No significa que 
 |---|---|---|---|
 | 1.0.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se ordenan los sprints por la tarea que la persona podrá completar y se distingue el estado comprobado de las propuestas futuras. |
 | 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se detallan los flujos propuestos para Sprint 3 y 4 con criterios de revisión ligados a las historias del backlog, sin inventar fechas ni estimaciones. |
+| 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se contrasta el backlog candidato de Sprint 3 con Jira y se documenta su capacidad pendiente de revisión. |
+| 1.3.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se añade el estado y tamaño observado del backlog candidato de Sprint 4, sin presentarlo como un sprint aprobado. |
