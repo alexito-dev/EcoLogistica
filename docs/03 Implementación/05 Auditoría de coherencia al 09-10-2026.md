@@ -19,7 +19,7 @@ La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mi
 - El diagrama de módulos del README queda etiquetado como alcance objetivo y enumera por separado los módulos implementados y los pendientes al 09/10.
 - `.env.example` y las instrucciones de instalación se contrastaron con `backend/src/app/config.py`, `frontend/vite.config.ts` y `frontend/package-lock.json`: se eliminaron variables de base de datos, mapas y optimización que el código actual ignora, se documentaron solo variables operativas y se actualizaron los comandos de PowerShell y el requisito real de Node para Vite 8.
 - El flujo de ramas se armonizó en README, OpenSpec, RES-17 y RST-ACA-02: ramas breves `feature/*` desde `main`, PR hacia `main`, sin `develop` obligatoria. La consulta Git del 09/10 muestra `developer` 29 commits detrás de `main` y sin commits propios; `docs/semana-3-entregables` está 45 commits detrás y 1 por delante, con un commit del 04/09 que añadió versiones iniciales de ocho documentos de Inicio ahora presentes y revisados en `main`. No se integran ni eliminan ramas remotas sin confirmar su destino con el equipo. La protección de `main`, revisión obligatoria y CI siguen pendientes; `gh auth status` indica que esta sesión no está autenticada y no permitió leer la configuración de protección.
-- Las referencias a `develop` en actas y retrospectivas de Sprint 1 se conservan como acuerdos históricos de esa fecha; las tareas futuras de los documentos de Sprint 2 ya apuntan al flujo actualizado. No se deben interpretar esas referencias antiguas como configuración vigente.
+- Las referencias a `develop` en informe de estado, la revisión y la retrospectiva del Sprint 1 se conservan como acuerdos históricos de esa fecha; las tareas futuras de los documentos de Sprint 2 ya apuntan al flujo actualizado. No se deben interpretar esas referencias antiguas como configuración vigente.
 
 ## Plan y resultado hasta el Sprint 2
 
@@ -101,3 +101,4 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 | 1.13.0 | 09/10/2026 | Se documenta la revisión estática de los 39 archivos Markdown: cero enlaces locales rotos, cero caracteres de reemplazo y metadatos de versión alineados. |
 | 1.14.0 | 09/10/2026 | Se registra que ECO-20 sigue sin persona asignada en Jira y se alinea este dato en README, planificación e informes del Sprint 2. |
 | 1.15.0 | 09/10/2026 | Se extiende la trazabilidad del estado sin asignación de ECO-20 al registro de impedimentos y se renueva la verificación de Jira. |
+| 1.16.0 | 09/10/2026 | Se identifican como históricos los planes de rama develop y estructura database/ del Sprint 1, manteniendo la descripción vigente del proyecto y del repositorio. |

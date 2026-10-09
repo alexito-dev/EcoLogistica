@@ -15,13 +15,15 @@
 | Campo | Valor |
 |---|---|
 | Código del proyecto | PFA-TP2-ECOLOG-2026 |
-| Versión | 1.1.3 |
+| Versión | 1.1.4 |
 | Iteración reportada | ECO Sprint 1 |
 | Sprint Goal | "Registrar pedidos con ventana horaria y permitir reenrutar una ruta ante incidencia." |
 | Fuentes | Jira `ECO` (evidencias 1–4 en [02 Artefactos Jira](../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md)), historial Git, [Registro de riesgos](../02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md), [Presupuesto](../02%20Planificaci%C3%B3n/04%20Presupuesto%20del%20proyecto%20V_1_0_0.md) |
 | Documentos hermanos | [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [04 Retrospectiva del Sprint](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 
 > **Actualización operativa (09/10/2026):** la fecha planificada de cierre fue el 28/09; Jira mantuvo activo el sprint id. 36 hasta las 07:42 del 09/10. El informe del Sprint 1 registra 0 de 2 al corte planificado. El historial de ECO-9 muestra que pasó a `Listo` el 02/10, volvió a `Por hacer` al cerrarse el Sprint 1 y volvió a `Listo` a las 07:43 al añadirse también al Sprint 2; por eso la métrica dinámica actual del Sprint 1 muestra 1 de 2. El conector no expone un reporte histórico del sprint al 28/09; no se presenta esa métrica actual como velocidad histórica. ECO-15 permanece `Por hacer`.
+
+> **Vigencia del flujo de trabajo (09/10/2026):** las referencias a integrar en develop en este informe son propuestas del corte del Sprint 1. El flujo vigente usa ramas breves feature/* desde main y PR hacia main; develop no es obligatoria. Ver la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
 
 ## Historial de cambios
 
@@ -32,6 +34,7 @@
 | 1.1.1 | 02/10/2026 | Alex Zorrilla | Se agregan las secciones de la plantilla de la consigna (historias completadas, demostración y pendientes). |
 | 1.1.2 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se aclara el corte planificado del Sprint 1 frente a la métrica dinámica actual de Jira y su cierre administrativo tardío. |
 | 1.1.3 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se detallan los cambios de estado de ECO-9 registrados por Jira entre el 02/10 y el cierre administrativo del Sprint 1. |
+| 1.1.4 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se identifica develop como propuesta histórica del Sprint 1 y se enlaza al flujo vigente documentado. |
 
 ## Resumen ejecutivo
 

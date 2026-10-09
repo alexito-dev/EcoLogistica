@@ -10,12 +10,14 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.1.0 |
+| Versión | 1.2.0 |
 | Sprint | ECO Sprint 1 (14/09/2026 – 28/09/2026) |
 | Fecha de la retrospectiva | 02/10/2026 |
 | Facilitador | Alex Zorrilla |
 | Participantes | Alex Zorrilla, Anco Porras, Jhean Pier Julio, Alexander Daniel Hilario Talavera, Jhoanna Hade Vera Zea, Jose Luis Isidro Casio |
 | Entradas | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) |
+
+> **Vigencia del flujo de trabajo (09/10/2026):** las referencias a develop en las acciones de esta retrospectiva son acuerdos históricos del corte del Sprint 1. Para el trabajo vigente se usan ramas breves feature/* desde main y PR hacia main; develop no es obligatoria. Ver la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
 
 ## Historial de cambios
 
@@ -23,6 +25,7 @@
 |---|---|---|---|
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión de la retrospectiva del Sprint 1. |
 | 1.1.0 | 02/10/2026 | Alex Zorrilla | Se agregan diagramas Mermaid y tablas de análisis con los mismos datos; el contenido no cambia. |
+| 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se aclara que las referencias a develop corresponden al plan histórico y no al flujo vigente. |
 
 ## Mapa de la retrospectiva
 
