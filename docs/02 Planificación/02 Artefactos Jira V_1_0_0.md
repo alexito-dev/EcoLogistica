@@ -8,11 +8,11 @@
 |---|---|
 | Proyecto | EcoLogística Huancayo |
 | Herramienta | Atlassian Jira Software — Scrum |
-| Versión del entregable | 1.10.0 (sin versión de entrega creada en Jira al 09/10/2026) |
-| Fecha de actualización | 09 de octubre de 2026 |
+| Versión del entregable | 1.11.0 (sin versión de entrega creada en Jira al 09/10/2026) |
+| Fecha de actualización | 09 de octubre de 2026, 12:57 hora de Lima |
 | Responsable de configuración | Isidro Casio, Jose Luis |
 | Clave del proyecto en Jira | `ECO` |
-| Estado observado | Jira contiene 8 épicas, 9 historias y 3 tareas. `ECO board` (id. 2) tiene el Sprint 1 oficial cerrado, un sprint inicial renombrado como duplicado y el Sprint 2 activo (id. 37); no hay versión de entrega. |
+| Estado observado | Jira contiene 8 épicas, 9 historias y 3 tareas. `ECO board` (id. 2) tiene el Sprint 1 oficial cerrado, un sprint inicial renombrado como duplicado y el Sprint 2 activo (id. 37); no hay versión de entrega. Las metas se alinearon al rebase funcional; Sprint 2 contiene las dos historias de flota en `Listo`. |
 
 ## 1. Configuración observada en Jira al 09/10/2026
 
@@ -20,15 +20,15 @@
 |---|---|
 | Proyecto / tablero | `EcoLogística Huancayo` / `ECO board` (id. 2; tablero administrado por el equipo) |
 | Jerarquía | Epic → Story / Task → Sub-task; Bug para incidencias |
-| Columnas del tablero | 5: `Por hacer`, `En curso`, `Listo`, `In Review / QA`, `Done`. Jira mapea `Listo` al estado de categoría completada; `Done` apunta a `Finalizada`, cuya categoría figura como nueva. Persisten la mezcla de idiomas y el mapeo incoherente. |
+| Columnas del tablero | 5: `Por hacer`, `En curso`, `Listo`, `In Review / QA`, `Done`. Jira mapea `Listo` al estado completado; `Done` apunta a `Finalizada`, cuya categoría figura como nueva. La mezcla de idiomas y el mapeo incoherente siguen pendientes de corregir desde la configuración del tablero. |
 | Versiones de entrega | Ninguna: la consulta de versiones de `ECO` devolvió 0 resultados el 09/10/2026. |
-| Sprints | Sprint id. 3, cerrado y renombrado `ECO Sprint 1 (duplicado)`; Sprint 1 oficial id. 36, cerrado administrativamente el 09/10 con fechas de trabajo 14/09–28/09; Sprint 2 id. 37, activo del 29/09 al 12/10 (hora de Lima). |
-| Resultado del Sprint 1 (id. 36) | El informe del sprint registra 0 de 2 al corte planificado del 28/09. Jira lo mantuvo activo hasta el 09/10 a las 07:42 (Lima). El historial de ECO-9 muestra `Listo` el 02/10, luego `Por hacer` al cerrar el Sprint 1 y otra vez `Listo` a las 07:43 al añadirse también al Sprint 2; ECO-15 sigue `Por hacer`. La métrica dinámica de Jira cuenta 1 de 2 porque ECO-9 conserva asociación con ambos sprints; no equivale a la velocidad del Sprint 1 al 28/09. |
-| Sprint 2 (id. 37) | Meta: Planificación inicia sesión con MFA, registra y consulta pedidos y los conserva después de reiniciar la API. Incluye ECO-9 / HU-001 (5 puntos), ECO-16 / persistencia de pedidos y ubicaciones (3 puntos) y ECO-20 / MFA (sin estimación aprobada ni persona asignada); las tres están `Listo`. El sprint continúa activo hasta el 12/10. Ver [Informe de estado del Sprint 2](../03%20Implementaci%C3%B3n/Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md). |
+| Sprints | Sprint id. 3, cerrado y renombrado `ECO Sprint 1 (duplicado)`; Sprint 1 oficial id. 36, cerrado el 09/10, con fechas de trabajo 14/09–28/09; Sprint 2 id. 37, activo del 29/09 al 12/10 (hora de Lima). |
+| Resultado del Sprint 1 (id. 36) | El informe histórico registra 0 de 2 al corte del 28/09. La meta de Jira conserva el objetivo original y anota la rebase funcional del 09/10. El Sprint 1 cerrado no admite nuevas asignaciones: ECO-15 sigue `Por hacer` en su alcance original; ECO-9 conserva su asociación histórica y la métrica dinámica muestra 1/2. ECO-16 y ECO-20 están completadas en el backlog como habilitadores de la línea base funcional vigente; no se imputan al corte ni a la velocidad del Sprint 1. |
+| Sprint 2 (id. 37) | Meta alineada el 09/10 a gestión de flota. Contiene ECO-12 / vehículos y capacidades (5 puntos) y ECO-19 / restricciones vehiculares (5 puntos), ambas `Listo`: 2/2 incidencias y 10 puntos estimados. El sprint permanece activo hasta el cierre administrativo previsto; la revisión del Product Owner está programada para el 09/10 a las 15:40. |
 
-La evidencia actual de sprints se consultó y regularizó en Jira el 09/10/2026. El historial de Jira se leyó para ECO-9 y ECO-15: ECO-9 cambió de estado tres veces entre el 02/10 y el 09/10; ECO-15 se reabrió al cerrar el Sprint 1 y permanece en `Por hacer`. ECO-20 se creó y marcó `Listo` el 09/10, sin persona asignada ni estimación aprobada. Después se actualizó ECO-9 para incluir la persistencia tras reiniciar, ECO-16 se acotó a pedidos y ubicaciones y se incorporó al Sprint 2 en `Listo`; ECO-21 registra el resto de EN-005, aún sin estimación ni sprint. ECO-15 sigue sin re-enrutamiento en el código. El informe dinámico actual del Sprint 1 no se usa para reconstruir la velocidad al cierre planificado.
+La evidencia actual de sprints se consultó y regularizó en Jira el 09/10/2026. Se conservaron las fechas y la pertenencia histórica del Sprint 1; su meta ahora distingue el compromiso original de la rebase funcional acordada el mismo día. El Sprint 2 se reorientó a flota: ECO-12 y ECO-19 pasaron a `Listo` y son sus dos incidencias actuales. ECO-9, ECO-16 y ECO-20 dejaron de contar en el Sprint 2 activo; sus estados completados se preservan en el backlog, y ECO-9 mantiene la asociación histórica con el Sprint 1 cerrado. ECO-20 sigue sin estimación ni responsable asignados. ECO-21 conserva el trabajo pendiente de cuentas, secretos TOTP y rutas, sin estimación ni sprint. ECO-15 sigue sin re-enrutamiento implementado y queda pendiente para el alcance posterior. La métrica dinámica del Sprint 1 no reconstruye la velocidad del corte del 28/09.
 
-> **Línea base funcional posterior acordada el 09/10/2026:** este documento conserva el estado de Jira consultado ese día; Jira aún refleja el alcance anterior. La distribución funcional vigente en la documentación oficial del repositorio conserva MFA/roles y pedidos persistentes en Sprint 1, asigna gestión de flota a Sprint 2 y generación/consulta de rutas a Sprint 3, y conserva el propósito de los sprints posteriores. El E2E de flota aprobó 5/5 criterios en la aplicación; no actualizó tarjetas, estimaciones, responsables ni estados de Jira. ECO-12/HU-003 y ECO-19/HU-009 siguen `Por hacer` en Jira aunque el código ya implementa el alcance de flota. ECO-21 debe ajustarse en el Planning para dejar cuentas/TOTP y rutas, sin volver a mover flota a Sprint 3.
+> **Rebase funcional acordado el 09/10/2026 y reflejado en Jira:** la línea base vigente conserva MFA/roles y pedidos persistentes en Sprint 1, asigna la gestión de flota a Sprint 2 y la generación/consulta de rutas a Sprint 3; los sprints posteriores mantienen su propósito. El E2E web de flota aprobó 5/5 criterios. ECO-12/HU-003 y ECO-19/HU-009 están ahora en `Listo` dentro del Sprint 2 (10 puntos combinados). Como el Sprint 1 ya estaba cerrado, ECO-16 y ECO-20 quedan completadas en el backlog, no añadidas retroactivamente a su velocidad histórica. ECO-21 conserva cuentas/TOTP/rutas pendientes; ECO-15 sigue pendiente de implementación.
 
 ## 2. Épicas y backlog priorizado
 
@@ -59,7 +59,7 @@ La evidencia actual de sprints se consultó y regularizó en Jira el 09/10/2026.
 | 21 | Task | EN-002 | — | Disponibilidad y recuperación del servicio | 5 | ⬜ |
 | 22 | Epic | EP-07 | ECO-8 | Plataforma técnica y calidad | — | ✅ |
 | 23 | Task | EN-005 | ECO-16 | Persistir pedidos y ubicaciones en PostgreSQL/PostGIS | 3 | ✅ |
-| 24 | Task | EN-005 | ECO-21 | Completar EN-005 para usuarios, flota y rutas | Sin estimar | ✅ |
+| 24 | Task | EN-005 | ECO-21 | Completar EN-005 para usuarios y rutas | Sin estimar | ✅ |
 | 25 | Task | EN-006 | ECO-17 | Configurar CI/CD, pruebas y documentación OpenAPI | 5 | ✅ |
 | 26 | Historia técnica | RF-11.1 | ECO-20 | Autenticación MFA y autorización por rol | — | ✅ |
 
@@ -76,13 +76,13 @@ Los puntos de los ítems con estimación marcada corresponden a los valores cons
 | Sprint / periodo | Compromiso o replanificación | Resultado / estado |
 |---|---|---|
 | Sprint 1 — 14/09 a 28/09/2026 | Compromiso histórico: ECO-9 / HU-001 y ECO-15 / HU-006; 10 puntos. Alcance funcional vigente: MFA/roles y pedidos persistentes. | El informe del sprint registra 0 de 2 historias al corte del 28/09. Jira lo mantuvo activo hasta el 09/10; el historial de ECO-9 registra `Listo` el 02/10, `Por hacer` al cerrar el Sprint 1 y `Listo` otra vez tras añadirla al Sprint 2. La métrica dinámica actual la cuenta en ambos sprints y no equivale a la del corte original. ECO-15 está `Por hacer`. |
-| Sprint 2 — 29/09 a 12/10/2026 | Meta conservada en Jira: MFA y pedidos persistentes. Alcance funcional vigente: gestión de flota. | Jira id. 37 está activo con ECO-9 (5 puntos), ECO-16 (3 puntos) y ECO-20 (MFA, sin estimación aprobada ni persona asignada); las tres están `Listo`. Tras el rebase funcional, la aplicación de flota pasó E2E 5/5 criterios el 09/10; el resultado no cambia esos estados externos. |
+| Sprint 2 — 29/09 a 12/10/2026 | Meta actualizada en Jira el 09/10: administración de vehículos y disponibilidad diaria para Planificación. | Jira id. 37 permanece activo con ECO-12 y ECO-19 en `Listo` (2/2 incidencias, 10 puntos). Los cinco criterios de flota aprobaron el E2E del 09/10. El cierre administrativo del sprint está pendiente de su fecha de revisión/cierre. |
 | Sprint 3 — propuesta funcional, sin compromiso aprobado | Que Planificación asigne pedidos pendientes a vehículos elegibles y obtenga una ruta factible, guardada y consultable con sus paradas. | Flota y su persistencia ya son entrada disponible desde Sprint 2. Quedan persistencia de rutas/paradas, generación, integración y medición; falta estimar y acordar las historias antes de cargarlas como compromiso en Jira. |
 | Sprint 4 — propuesta, sin alcance detallado aprobado | Que Conducción consulte su ruta, marque una entrega y reporte una incidencia para revisión de Planificación. | Confirmar el flujo con el equipo. Mapa y re-enrutamiento se incorporan si hacen falta para completar la tarea. No se asignan fechas ni resultados no aprobados. |
 | Cierre — semana 15 | Entrega y sustentación del PMV. | Hito planificado para la semana de cierre; sin evidencia de aceptación a la fecha de esta actualización. |
 | Release `v1.0.0-MVP` | Integración y aceptación del PMV. | No existe una versión de Jira con este nombre al 09/10/2026. |
 
-La planificación original asignaba flota y optimización a Sprint 2; una replanificación posterior priorizó HU-001 y MFA. Después se acordó una nueva línea base funcional: Sprint 1 conserva el incremento actual de MFA/roles y pedidos, Sprint 2 se dedica a flota y Sprint 3 a rutas. El rebase mueve flota fuera del alcance propuesto de Sprint 3. Jira aún refleja el objetivo anterior y debe alinearse en el Planning, sin inventar estimación ni responsable.
+La planificación original asignaba flota y optimización a Sprint 2; una replanificación posterior priorizó HU-001 y MFA. El 09/10 se acordó la línea base vigente: Sprint 1 MFA/pedidos, Sprint 2 flota y Sprint 3 rutas. Las metas de Jira y las historias de flota se actualizaron para coincidir. El Sprint 1 conserva su corte y pertenencia histórica; los habilitadores de pedidos y MFA ya completados no se añaden a una iteración cerrada. El Sprint 3 sigue sujeto a Planning, sin inventar estimación, responsables ni compromiso.
 
 El orden propuesto se guía por tareas completas de usuario, no por componentes técnicos sueltos. El estado comprobado y los límites del incremento del Sprint 2, más las propuestas funcionales posteriores, están detallados en [05. Plan funcional de sprints](05%20Plan%20funcional%20de%20sprints.md).
 

@@ -19,7 +19,7 @@
 
 > **Vigencia del repositorio (09/10/2026):** la evidencia de aceptación de esta revisión corresponde al corte del 02/10. Después se integraron la persistencia de pedidos y la gestión persistente de flota en PostgreSQL/PostGIS; usuarios y rutas siguen pendientes. El flujo vigente usa ramas breves `feature/*` desde `main` con PR hacia `main`. El resultado histórico de la revisión y el rebase funcional posterior se describen por separado abajo y en la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
 
-> **Rebase funcional posterior (09/10/2026):** Sprint 1 conserva como alcance vigente MFA/roles y pedidos persistentes. La revisión histórica sigue registrando 0/2 historias aceptadas en el corte original; la nueva etiqueta de alcance no modifica el resultado ni afirma que el trabajo se entregó durante ese sprint.
+> **Rebase funcional posterior (09/10/2026):** Sprint 1 conserva como alcance funcional MFA/roles y pedidos persistentes, entregados y comprobados después del corte original. La revisión histórica sigue registrando 0/2 historias aceptadas al 28/09; la nueva línea base no cambia ese resultado ni afirma que el código se entregó durante ese periodo. Jira no permite agregar ECO-16 y ECO-20 al Sprint 1 cerrado, por lo que están `Listo` en el backlog; ECO-15 queda `Por hacer` y con su pertenencia histórica.
 
 ## Historial de cambios
 
@@ -32,6 +32,7 @@
 | 1.2.2 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se corrige la concordancia de género en las referencias a las partes interesadas. |
 | 1.2.3 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza la nota de vigencia para reflejar la persistencia parcial incorporada después de la revisión histórica. |
 | 1.2.4 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se distingue el alcance vigente de Sprint 1 de los resultados de su revisión histórica. |
+| 1.3.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se precisa la ubicación Jira de los habilitadores de MFA/pedidos terminados después del corte: completados en backlog, sin cambiar la velocidad histórica del sprint cerrado. |
 
 ## Historias de Usuario completadas en este Sprint
 

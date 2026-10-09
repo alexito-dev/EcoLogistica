@@ -25,7 +25,7 @@
 
 > **Vigencia del flujo de trabajo (09/10/2026):** las referencias a integrar en develop en este informe son propuestas del corte del Sprint 1. El flujo vigente usa ramas breves feature/* desde main y PR hacia main; develop no es obligatoria. Ver la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
 
-> **Rebase funcional posterior (09/10/2026):** el producto conserva como Sprint 1 el incremento hoy implementado: acceso MFA/roles, gestión y consulta de pedidos y persistencia PostgreSQL/PostGIS. Esta clasificación es una línea base funcional acordada después del periodo reportado; el resultado histórico de 0/2 al corte del 28/09 y la falta de código durante esa iteración no cambian.
+> **Rebase funcional posterior (09/10/2026):** el producto conserva como Sprint 1 el incremento hoy implementado: acceso MFA/roles, gestión y consulta de pedidos y persistencia PostgreSQL/PostGIS. Esta clasificación es una línea base funcional acordada después del periodo reportado; el resultado histórico de 0/2 al corte del 28/09 y la falta de código durante esa iteración no cambian. Jira conserva ECO-15 como pendiente del compromiso original; ECO-16 y ECO-20 están completadas en el backlog con descripciones alineadas a la línea base Sprint 1, porque no se pueden agregar al sprint cerrado. ECO-20 lleva además la etiqueta `sprint1`.
 
 ## Historial de cambios
 
@@ -40,6 +40,7 @@
 | 1.1.5 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se reemplaza la mención genérica a partes interesadas por su equivalente en español. |
 | 1.1.6 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se corrige la concordancia de género en la referencia a las partes interesadas. |
 | 1.1.7 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se separa la línea base funcional vigente de los resultados históricos del periodo de Sprint 1. |
+| 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se documenta la alineación Jira posterior a la rebase y se distingue el Sprint 2 activo de 2/2 incidencias de flota del corte histórico del Sprint 1. |
 
 ## Resumen ejecutivo
 

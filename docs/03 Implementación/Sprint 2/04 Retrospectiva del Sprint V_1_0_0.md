@@ -23,6 +23,8 @@
 
 > **Resultado posterior del E2E de aceptación (09/10/2026):** se ejecutaron los cinco criterios funcionales de flota en navegador y los cinco aprobaron, incluida la regla de elegibilidad de unidades en Mantenimiento/Inactivo y la persistencia tras reiniciar la API. El ensayo se hizo con cuentas y PostGIS temporales aislados, luego retirados. La retrospectiva original del 02/10 no se reescribe ni se afirma que se haya celebrado la reunión formal de revisión; el resultado técnico queda registrado en la [revisión del Sprint 2](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md).
 
+> **Estado Jira posterior (09/10/2026, 13:00 hora de Lima):** Jira ya refleja la rebase de Sprint 2 a flota. ECO-12 y ECO-19 están en `Listo` y constituyen las 2 incidencias actuales del sprint (10 puntos estimados). ECO-9, ECO-16 y ECO-20 se retiraron del sprint activo y permanecen completadas en el backlog, conservando su historia de asignación; ECO-15 queda pendiente en el backlog para trabajo posterior. El Sprint 2 está activo y la revisión está programada para las 15:40; esta actualización no anticipa el resultado de la reunión.
+
 ## Historial de cambios
 
 | Versión | Fecha | Autor | Cambio |
@@ -40,6 +42,7 @@
 | 1.9.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se documenta la E2E de flota posterior y se actualiza el alcance restante de EN-005. |
 | 1.10.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea el trabajo candidato de Sprint 3 y EN-005 con la flota ya implementada en Sprint 2. |
 | 1.11.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se agrega el resultado posterior: 5/5 criterios E2E de aceptación funcional de flota aprobados. |
+| 1.12.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza el estado de Jira tras el rebase: Sprint 2 queda con ECO-12 y ECO-19 en `Listo`; las observaciones siguientes conservan el corte del 02/10. |
 
 ## Seguimiento de las acciones del Sprint 1
 
@@ -92,14 +95,14 @@
 ### Procesos
 
 - **El flujo de ramas acordado no se aplicó de forma uniforme:** se trabajó directamente sobre `main` y la rama remota `developer` quedó atrás (IMP-010). El estándar queda simplificado a ramas breves `feature/*` desde `main` y PR hacia `main`; no se requiere `develop`.
-- **El backlog de Jira no refleja todo el trabajo real:** al corte del 02/10 no existía la historia de autenticación; el 09/10 se creó ECO-20 sin estimación aprobada. Siguen faltando siete tarjetas y la actualización formal del roadmap (IMP-008).
+- **Al corte original, el backlog de Jira no reflejaba todo el trabajo real:** el 02/10 no existía la historia de autenticación; ECO-20 se creó el 09/10 sin estimación aprobada. Ese hallazgo se conserva como histórico. En la actualización del 13:00 se alineó Sprint 2 con ECO-12 y ECO-19, ambas en `Listo`; todavía faltan siete tarjetas y la actualización/estimación formal del roadmap futuro (IMP-008).
 - **Las verificaciones extremo a extremo fueron manuales:** se ensayaron a mano en lugar de quedar como prueba automatizada repetible.
-- **Jira aún no refleja la rebase funcional:** la documentación vigente conserva MFA/pedidos en Sprint 1, flota en Sprint 2 y rutas en Sprint 3; Jira mantiene tarjetas de flota como `Por hacer` y no tiene un Sprint 3 aprobado. El Planning debe alinear las tarjetas y estimar el recorrido de rutas con la flota ya implementada.
+- **Pendiente de planificación posterior:** Sprint 2 ya refleja flota en Jira y ECO-12/ECO-19 están terminadas. Jira aún no tiene un Sprint 3 aprobado; el Planning debe estimar y acordar el recorrido de rutas usando la flota ya implementada. La columna `Done` del tablero sigue mapeada a un estado cuya categoría no es completada.
 
 ### Herramientas
 
 - **Sin integración continua:** las 139 pruebas solo corren en la máquina de quien las ejecuta.
-- **La persistencia quedó a medias al cierre de esta actualización:** pedidos y ubicaciones ya se guardan en PostGIS, pero las cuentas siguen en archivo local y la flota/rutas aún no tienen tablas de aplicación (IMP-011).
+- **La persistencia sigue parcial al corte actual:** pedidos, ubicaciones, vehículos y disponibilidades ya se guardan en PostGIS; las cuentas siguen en archivo local, TOTP no está protegido en reposo y las rutas aún no tienen tablas de aplicación (IMP-011).
 - **Las herramientas de desarrollo no están documentadas para todos:** el servidor de Vite conservó una versión vacía de los estilos y hubo que reiniciarlo. Hace falta una guía de solución de problemas en el README.
 - **Recursos de diseño incompletos:** falta la tipografía Codec Pro con licencia (IMP-013).
 
@@ -120,7 +123,7 @@
 | A11 | Agregar al README una sección de solución de problemas (caché de Vite, contraseña de demostración, puertos) | Herramientas | Jhoanna Hade Vera Zea | 12/10/2026 | Un integrante nuevo levanta la app sin ayuda |
 | A12 | Prototipo del motor con OR-Tools y benchmark EN-001 con 50, 100 y 150 pedidos | Procesos | Alexander Daniel Hilario Talavera | 23/10/2026 | Informe de tiempos y factibilidad publicado en `docs/` |
 
-**Seguimiento al 09/10, antes de la revisión:** A7 sigue parcial; ECO-20 está creada, pero no estimada, faltan siete tarjetas y no hay evidencia de *Planning Poker* ni de una actualización del roadmap futuro en Jira. Los acuerdos de validación con el docente quedan pendientes de la reunión.
+**Seguimiento al 09/10, 13:00, antes de la revisión:** ECO-12 y ECO-19 están `Listo` en Sprint 2. A7 sigue parcial: ECO-20 continúa sin estimación, faltan siete tarjetas y no hay evidencia de *Planning Poker* ni de un Sprint 3 aprobado. Los acuerdos de validación con el docente quedan pendientes de la reunión prevista para las 15:40.
 
 ### Seguimiento de acuerdos
 
