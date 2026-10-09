@@ -65,7 +65,7 @@
 
 ### Personas
 
-- **El trabajo de código se concentró en una persona.** Al corte de la primera emisión (02/10, 10:05, hora de Lima), los primeros 8 commits del Sprint 2 en `main` eran de Alex Zorrilla. El historial consultado al 09/10 contiene 20 commits desde el 29/09: 12 de Alex Zorrilla y 8 de Anco Porras, Jhean Pier Julio; estos últimos son cambios de documentación. No se verifican commits de implementación de los demás roles, por lo que la concentración del conocimiento del código sigue siendo un riesgo.
+- **El trabajo de código se concentró en una persona.** Al corte de la primera emisión (02/10, 10:05, hora de Lima), los primeros 8 commits del Sprint 2 en `main` eran de Alex Zorrilla. El historial consultado el 09/10, antes de esta actualización, contenía 20 commits desde el 29/09: 12 de Alex Zorrilla y 8 de Anco Porras, Jhean Pier Julio; estos últimos son cambios de documentación. No se verifican commits de implementación de los demás roles, por lo que la concentración del conocimiento del código sigue siendo un riesgo.
 - **La especialización de roles no se aprovechó:** el responsable de optimización tenía el trabajo más crítico (el motor) y no empezó; el de QA/DevOps no montó la CI.
 - **Falta tiempo protegido para aprender el stack** (FastAPI, React, OpenSpec) por parte de quienes aún no lo usan.
 
