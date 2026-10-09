@@ -28,6 +28,9 @@
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión: 8 impedimentos del Sprint 1 con impacto, prioridad, responsable y trazabilidad de estado. |
 | 1.1.0 | 02/10/2026 | Alex Zorrilla | Se agregan diagramas Mermaid y tablas de análisis con los mismos datos; el contenido no cambia. |
 | 1.1.1 | 02/10/2026 | Alex Zorrilla | La fecha de resolución de los impedimentos abiertos se indica como "Pendiente" en lugar de un guion. |
+| 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se documenta la reapertura de IMP-003 tras verificar en Jira las cinco columnas mezcladas y la ausencia de versiones de entrega, manteniendo visible el corte histórico del 02/10. |
+
+> **Corte histórico:** los estados y el resumen del registro corresponden al 02/10/2026. El seguimiento posterior reabrió IMP-003 el 09/10 tras una nueva consulta de Jira; véase el [Registro de impedimentos del Sprint 2](Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_0_0.md).
 
 ## Registro
 
@@ -35,7 +38,7 @@
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | IMP-001 | 11/09/2026 | **Historias duplicadas en Jira.** `ECO-18` y `ECO-19` se crearon como copias literales de `ECO-11` y `ECO-12`. **Impacto:** backlog con 2 ítems redundantes, puntos de historia inflados y riesgo de planificar trabajo duplicado en el Sprint Planning. | Media | Jose Luis Isidro Casio | 18/09/2026 | Cerrado | 18/09/2026 | Se renombraron a HU-008 "Importar pedidos por plantilla" y HU-009 "Parametrizar restricciones vehiculares". Backlog sincronizado en [02 Artefactos Jira](../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md). |
 | IMP-002 | 18/09/2026 | **`ECO-19` (HU-009) asignada a la épica equivocada.** Quedó bajo EP-01 Gestión de pedidos en lugar de EP-02 Gestión de flota y conductores. **Impacto:** el roadmap y el avance por épica mostraban datos incorrectos y distorsionaban la planificación del Sprint 2. | Baja | Alex Zorrilla | 28/09/2026 | Cerrado | 02/10/2026 | Reasignación corregida en Jira por el equipo y confirmada por el líder el 02/10/2026; la épica de HU-009 es EP-02. |
-| IMP-003 | 18/09/2026 | **Falta de permisos de administrador en Jira.** No se podía habilitar "Releases" (`v1.0.0-MVP`) ni quitar la columna extra "Listo" del tablero (5 columnas en vez de las 4 acordadas: To Do → In Progress → In Review/QA → Done). **Impacto:** flujo de trabajo distinto al definido en el proceso, evidencia 5 del entregable Jira sin completar y riesgo de métricas de tablero erróneas. | Media | Jose Luis Isidro Casio | 28/09/2026 | Cerrado | 02/10/2026 | Configuración ajustada en Jira por el equipo y confirmada por el líder el 02/10/2026. Acción de seguimiento: capturar la evidencia 5 (`assets/jira/05-release.png`) y reflejarla en el documento de Jira. |
+| IMP-003 | 18/09/2026 | **Configuración de releases y columnas de Jira.** No se podía habilitar la versión `v1.0.0-MVP` ni quitar la columna extra "Listo" del tablero. **Impacto:** flujo de trabajo distinto al documentado, evidencia 5 incompleta y riesgo de métricas mal interpretadas. | Media | Jose Luis Isidro Casio | 28/09/2026 | Cerrado al corte 02/10 | 02/10/2026 | El 02/10 se informó que estaba ajustado. La consulta directa del 09/10 encontró cinco columnas mezcladas, mapeos incoherentes y cero versiones; el impedimento quedó reabierto y se continúa en el registro del Sprint 2. |
 | IMP-004 | 14/09/2026 | **Sprint 1 sin iniciar y con Sprint Goal desalineado del alcance.** Al verificar el proyecto el 18/09, el sprint seguía en estado "no iniciado" y su objetivo no coincidía con las historias cargadas (ECO-9, ECO-15). **Impacto:** 4 días de la iteración (≈ 29 %) sin ceremonias de Sprint Planning ni seguimiento de tablero; duración efectiva de ejecución menor a la planificada. | Alta | Alex Zorrilla | 18/09/2026 | Cerrado | 18/09/2026 | Sprint recreado con fechas 14/09–28/09 y Sprint Goal real ("Registrar pedidos con ventana horaria y permitir reenrutar una ruta ante incidencia"); iniciado el 18/09. Acción preventiva: iniciar el sprint el día de su Planning. |
 | IMP-005 | 02/10/2026 | **Carpeta de entregables desalineada con la consigna.** El repositorio tenía `docs/03 Ejecución`, pero la consigna del Taller exige `docs/03 Implementación`. **Impacto:** entregables fuera de ruta penalizados en el criterio de ubicación y enlaces del README. | Media | Alex Zorrilla | 02/10/2026 | Cerrado | 02/10/2026 | Carpeta renombrada con `git mv` (se conserva historial) y README actualizado con los enlaces relativos a los 4 documentos del sprint. |
 | IMP-006 | 28/09/2026 | **Dependencia técnica mal secuenciada entre HU-006 y HU-004.** Reenrutar ante incidencia (ECO-15 / HU-006, 5 pts) requiere el motor de optimización VRPTW (HU-004, 8 pts) y su benchmark (EN-001), planificados para el Sprint 2. **Impacto:** HU-006 era inalcanzable en el Sprint 1; 5 de 10 puntos (50 %) del compromiso nunca podían cumplirse y el Sprint Goal fue sobredimensionado. | Alta | Alex Zorrilla | 12/10/2026 | Abierto | Pendiente | HU-006 se reprograma detrás de HU-004 y EN-001 en el backlog. Se agrega al Sprint Planning una revisión obligatoria de dependencias técnicas y *Definition of Ready* con campo "depende de". Seguimiento en la [Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md). |
@@ -46,8 +49,8 @@
 
 | Estado | Cantidad | Impedimentos |
 |---|---:|---|
-| Cerrado | 5 | IMP-001, IMP-002, IMP-003, IMP-004, IMP-005 |
-| Abierto | 2 | IMP-006, IMP-007 |
+| Cerrado al 02/10 | 5 | IMP-001, IMP-002, IMP-003, IMP-004, IMP-005 |
+| Abierto al 02/10 | 2 | IMP-006, IMP-007 |
 | En Espera | 1 | IMP-008 |
 | **Total** | **8** | |
 
@@ -62,8 +65,8 @@
 ```mermaid
 pie showData
     title Impedimentos por estado
-    "Cerrado" : 5
-    "Abierto" : 2
+    "Cerrado al 02/10" : 5
+    "Abierto al 02/10" : 2
     "En espera" : 1
 ```
 
@@ -98,12 +101,12 @@ timeline
 | IMP-004 Sprint sin iniciar | 14/09/2026 | 18/09/2026 | 4 | Alta |
 | IMP-001 Historias duplicadas | 11/09/2026 | 18/09/2026 | 7 | Media |
 | IMP-002 Épica equivocada | 18/09/2026 | 02/10/2026 | 14 | Baja |
-| IMP-003 Permisos de Jira | 18/09/2026 | 02/10/2026 | 14 | Media |
+| IMP-003 Configuración de Jira | 18/09/2026 | 02/10/2026 | 14 | Media |
 | IMP-006 Dependencia del motor | 28/09/2026 | Abierto | En curso | Alta |
 | IMP-007 Sin código base | 18/09/2026 | Abierto | En curso | Alta |
 | IMP-008 Backlog incompleto | 18/09/2026 | En espera | En curso | Media |
 
-Promedio de resolución de los 5 cerrados: 7.8 días. Los dos impedimentos de prioridad Alta que siguen abiertos son técnicos y se atacan en el Sprint 2.
+Promedio registrado al 02/10 para los 5 impedimentos cerrados: 7,8 días. El cierre de IMP-003 se revisó en la auditoría del 09/10 y no se confirmó; por ello se reabrió y se trasladó al registro del Sprint 2. IMP-006 e IMP-007 también se siguieron en el segundo sprint.
 
 ### Ciclo de vida de un impedimento
 

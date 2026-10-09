@@ -26,6 +26,7 @@
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión con el trabajo completado al 02/10 y el guion de demostración ensayado. |
 | 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se incorpora ECO-20 en Jira sin estimación aprobada y se actualiza el Sprint 1 como cerrado administrativamente. La reunión de revisión del Sprint 2 sigue pendiente. |
 | 1.1.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea la acción futura de CI y ramas con el flujo de ramas breves y PR hacia `main`; la aceptación del Sprint 2 sigue pendiente de la reunión. |
+| 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se añade el historial de cambios de estado de ECO-9 y se confirma que la reunión aún no ocurrió al corte de esta actualización. |
 
 ## Historias de Usuario completadas en este Sprint
 
@@ -102,7 +103,7 @@ Lo que valida el *stakeholder*: que el despachador registra pedidos válidos y q
 
 ### Retroalimentación de los stakeholders
 
-Se registrará después de la reunión prevista para el 09/10 a las 15:40, hora de Lima, y se trasladará al backlog de Jira. A las 07:42 de Lima la reunión todavía no había ocurrido; no se atribuyen al docente acuerdos ni aceptación. Los resultados se incorporarán en una versión posterior.
+Se registrará después de la reunión prevista para el 09/10 a las 15:40, hora de Lima, y se trasladará al backlog de Jira. Al corte de esta actualización, anterior a la reunión, no hay retroalimentación ni aceptación verificable; no se atribuyen acuerdos al docente. Los resultados se incorporarán en una versión posterior.
 
 ## Pendientes
 

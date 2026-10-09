@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.1.1 |
+| Versión | 1.2.0 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026; revisión 09/10/2026) |
 | Fecha de la retrospectiva | 02/10/2026 (corte de mitad de sprint; se confirma en la reunión del 09/10) |
 | Facilitador | Alex Zorrilla |
@@ -24,6 +24,7 @@
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión: seguimiento de las acciones del Sprint 1, análisis en los cuatro ejes y plan de acción para el Sprint 3. |
 | 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Seguimiento de Jira: Sprint 1 cerrado administrativamente, Sprint 2 activo y ECO-20 registrada sin puntos. Esta retrospectiva es intermedia; la revisión y retrospectiva final siguen pendientes. |
 | 1.1.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza A6 al flujo de ramas breves desde `main` y PR hacia `main`; la retrospectiva continúa como intermedia hasta la reunión del Sprint 2. |
+| 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se corrigen el seguimiento de las acciones, el estado de Jira y el balance al corte previo a la revisión; se registra IMP-003 reabierto. |
 
 ## Seguimiento de las acciones del Sprint 1
 
@@ -34,13 +35,13 @@
 | A3 — Base de código de backend y frontend | Cumplida | `backend/` (FastAPI) y `frontend/` (React + Vite) con scripts de ejecución y prueba |
 | A4 — Primer cambio OpenSpec completo | Cumplida | `registro-pedidos` y `autenticacion-mfa` implementados, verificados y archivados |
 | A5 — CI mínimo | No cumplida | Sin GitHub Actions; las pruebas solo se ejecutan en local |
-| A6 — *Planning Poker* y backlog completo en Jira | Parcial | ECO-20 ya existe sin puntos; faltan siete tarjetas de backlog y evidencia de *Planning Poker*. La revisión sigue prevista para el 09/10 |
+| A6 — *Planning Poker* y backlog completo en Jira | Parcial | ECO-20 se creó el 09/10 sin puntos; faltan siete tarjetas de backlog y evidencia de *Planning Poker*. |
 | A7 — Prototipo del motor y benchmark | No cumplida | Sin código de optimización |
 | A8 — Registro de decisiones técnicas (ADR) | Parcial | La ratificación del stack quedó registrada en el historial del documento 10, no como ADR independiente |
-| A9 — Releases y tablero de 4 columnas en Jira | Sin evidencia | Pendiente la evidencia 5 del documento de Jira |
-| A10 — Validar el backlog con el docente | Sin evidencia | Se hará en la revisión del 09/10 |
+| A9 — Releases y tablero de 4 columnas en Jira | No cumplida al 09/10 | Jira aún no tiene versiones y mantiene cinco columnas con mezcla de idiomas y mapeos inconsistentes; IMP-003 se reabrió. |
+| A10 — Validar el backlog con el docente | Sin evidencia | Pendiente de la revisión programada para el 09/10 a las 15:40, hora de Lima. |
 
-**Balance:** 3 de 10 acciones cumplidas, 2 parciales, 2 no cumplidas y 3 sin evidencia. Las cumplidas son justamente las que desbloquearon la entrega de software.
+**Balance al corte previo a la revisión:** 3 de 10 acciones cumplidas, 3 parciales, 3 no cumplidas y 1 sin evidencia. Las cumplidas son justamente las que desbloquearon la entrega de software.
 
 ## ¿Qué aprendimos?
 
@@ -76,9 +77,9 @@
 ### Procesos
 
 - **El flujo de ramas acordado no se aplicó de forma uniforme:** se trabajó directamente sobre `main` y la rama remota `developer` quedó atrás (IMP-010). El estándar queda simplificado a ramas breves `feature/*` desde `main` y PR hacia `main`; no se requiere `develop`.
-- **El backlog de Jira no refleja el trabajo real:** la historia de autenticación no existe en Jira y faltan 7 tarjetas (IMP-008).
+- **El backlog de Jira no refleja todo el trabajo real:** al corte del 02/10 no existía la historia de autenticación; el 09/10 se creó ECO-20 sin estimación aprobada. Siguen faltando siete tarjetas y la actualización formal del roadmap (IMP-008).
 - **Las verificaciones extremo a extremo fueron manuales:** se ensayaron a mano en lugar de quedar como prueba automatizada repetible.
-- **El roadmap no se ajustó formalmente:** flota y motor se movieron al Sprint 3 en los hechos, pero falta actualizar el roadmap en Jira.
+- **El roadmap no se ajustó formalmente:** flota y motor se proponen para el Sprint 3 en los documentos, pero Jira todavía no contiene ese plan como un sprint futuro aprobado.
 
 ### Herramientas
 
@@ -103,6 +104,8 @@
 | A10 | PostgreSQL + PostGIS con `docker compose` y migraciones Alembic; adaptadores de repositorio para pedidos y usuarios (EN-005) | Herramientas | Anco Porras, Jhean Pier Julio | 23/10/2026 | Los datos sobreviven al reinicio; pruebas de integración contra la base |
 | A11 | Agregar al README una sección de solución de problemas (caché de Vite, contraseña de demostración, puertos) | Herramientas | Jhoanna Hade Vera Zea | 12/10/2026 | Un integrante nuevo levanta la app sin ayuda |
 | A12 | Prototipo del motor con OR-Tools y benchmark EN-001 con 50, 100 y 150 pedidos | Procesos | Alexander Daniel Hilario Talavera | 23/10/2026 | Informe de tiempos y factibilidad publicado en `docs/` |
+
+**Seguimiento al 09/10, antes de la revisión:** A7 sigue parcial; ECO-20 está creada, pero no estimada, faltan siete tarjetas y no hay evidencia de *Planning Poker* ni de una actualización del roadmap futuro en Jira. Los acuerdos de validación con el docente quedan pendientes de la reunión.
 
 ### Seguimiento de acuerdos
 
