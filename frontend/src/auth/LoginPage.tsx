@@ -143,7 +143,7 @@ export default function LoginPage() {
                 <LogIn size={24} aria-hidden="true" />
               </span>
               <h1>Iniciar sesión</h1>
-              <p className="subtitulo">Ingrese con su correo institucional.</p>
+              <p className="subtitulo">Ingrese con su cuenta de acceso.</p>
               {aviso && !error && (
                 <p className="aviso aviso--info" role="status">
                   {aviso}

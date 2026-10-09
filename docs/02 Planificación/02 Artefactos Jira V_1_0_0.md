@@ -8,7 +8,7 @@
 |---|---|
 | Proyecto | EcoLogística Huancayo |
 | Herramienta | Atlassian Jira Software — Scrum |
-| Versión del entregable | 1.7.0 (sin versión de entrega creada en Jira al 09/10/2026) |
+| Versión del entregable | 1.8.0 (sin versión de entrega creada en Jira al 09/10/2026) |
 | Fecha de actualización | 09 de octubre de 2026 |
 | Responsable de configuración | Isidro Casio, Jose Luis |
 | Clave del proyecto en Jira | `ECO` |
@@ -74,12 +74,14 @@ Los puntos de los ítems con estimación marcada corresponden a los valores cons
 |---|---|---|
 | Sprint 1 — 14/09 a 28/09/2026 | ECO-9 / HU-001 y ECO-15 / HU-006; 10 puntos. | El informe del sprint registra 0 de 2 historias al corte del 28/09. Jira lo mantuvo activo hasta el 09/10; el historial de ECO-9 registra `Listo` el 02/10, `Por hacer` al cerrar el Sprint 1 y `Listo` otra vez tras añadirla al Sprint 2. La métrica dinámica actual la cuenta en ambos sprints y no equivale a la del corte original. ECO-15 está `Por hacer`. |
 | Sprint 2 — 29/09 a 12/10/2026 | Replanificación: HU-001 (5 puntos) y autenticación/autorización MFA como precondición del primer incremento demostrable. | Jira id. 37 está activo con ECO-9 (5 puntos) y ECO-20 (MFA, sin estimación aprobada ni persona asignada); ambas están `Listo`. El 09/10 se verificaron 100 pruebas de backend aprobadas con 99 % de cobertura, 39 de frontend aprobadas y compilación de producción correcta. La revisión del sprint está prevista para las 15:40, hora de Lima; falta documentar su resultado. |
-| Sprint 3 — plan de trabajo propuesto | Persistencia PostgreSQL/PostGIS, gestión de flota, prototipo y benchmark de optimización, y CI. | Acciones propuestas en la retrospectiva intermedia; requieren Planning Poker, capacidad confirmada y aprobación antes de crear el sprint en Jira. |
-| Sprint 4 — alcance por definir | Visor cartográfico, dashboard, seguridad, disponibilidad, integración y aceptación, conforme al roadmap funcional y a EP-01–EP-07. | El proyecto tiene cuatro iteraciones; el detalle y las prioridades de la última todavía no están aprobados. No se asignan fechas ni resultados no verificados. |
+| Sprint 3 — propuesta, sin compromiso aprobado | Que Planificación asigne pedidos pendientes a vehículos y obtenga una ruta guardada para revisar. | La persistencia, la gestión de flota y una primera secuencia de paradas son trabajo habilitador dentro del flujo. Falta estimar y acordar historias antes de cargarlas como compromiso en Jira. |
+| Sprint 4 — propuesta, sin alcance detallado aprobado | Que Conducción consulte su ruta, marque una entrega y reporte una incidencia para revisión de Planificación. | Confirmar el flujo con el equipo. Mapa y re-enrutamiento se incorporan si hacen falta para completar la tarea. No se asignan fechas ni resultados no aprobados. |
 | Cierre — semana 15 | Entrega y sustentación del PMV. | Hito planificado para la semana de cierre; sin evidencia de aceptación a la fecha de esta actualización. |
 | Release `v1.0.0-MVP` | Integración y aceptación del PMV. | No existe una versión de Jira con este nombre al 09/10/2026. |
 
 La planificación de Sprint 2 anterior a la retrospectiva del Sprint 1 asignaba flota y optimización. La replanificación priorizó HU-001 y MFA; flota y motor pasan al plan de Sprint 3. Jira ya refleja el Sprint 2 activo y ECO-20, creado el 09/10 sin puntos aprobados ni persona asignada en la consulta actual; no se inventa estimación ni responsable.
+
+El orden propuesto se guía por tareas completas de usuario, no por componentes técnicos sueltos. El estado comprobado y los límites del incremento del Sprint 2, más las propuestas funcionales posteriores, están detallados en [05. Plan funcional de sprints](05%20Plan%20funcional%20de%20sprints.md).
 
 ## 4. Evidencias del proyecto Jira `ECO`
 
@@ -133,3 +135,4 @@ La configuración actual todavía muestra cinco columnas con idiomas mezclados y
 | 1.5.0 | 09/10/2026 | Se incorpora el historial de cambios de estado de ECO-9 y la reapertura de IMP-003 tras comprobar columnas y versiones en la configuración actual de Jira. |
 | 1.6.0 | 09/10/2026 | Se registra que ECO-20 sigue sin persona asignada ni estimación aprobada en Jira al corte actual. |
 | 1.7.0 | 09/10/2026 | Se alinea el estado de ECO-20 sin asignación ni estimación en la planificación y el historial de impedimentos del Sprint 2. |
+| 1.8.0 | 09/10/2026 | Se describe el trabajo futuro como tareas completas del sistema y se enlaza el plan funcional; Sprint 3 y 4 siguen sujetos a acuerdo del equipo. |

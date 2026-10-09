@@ -17,6 +17,7 @@ La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mi
 
 - La documentación de producto y planificación en `README.md`, `docs/`, las plantillas de GitHub y OpenSpec está redactada en español. El 09/10 también se localizaron al español los seis comandos `.claude/commands/opsx` y sus seis habilidades `.claude/skills/openspec-*`; se conservaron los identificadores de comandos, campos JSON, estados de la CLI, la categoría de metadatos `Workflow` y los encabezados estructurales que forman parte del contrato de OpenSpec. `openspec/config.yaml` exige `es`; las especificaciones mantienen `SHALL`/`MUST` y `WHEN`/`THEN` donde los requiere el formato.
 - El nombre del integrante se normaliza en la documentación como **Anco Porras, Jhean Pier Julio**.
+- Las cuentas `@ecologistica.test` descritas para el acceso son solo de demostración local; no representan conexión con el correo institucional. El inicio de sesión aclara ahora que se usa una cuenta de acceso del sistema.
 - La línea base vigente es **React + Vite + TypeScript** en el frontend y **FastAPI + Python** en la API. La propuesta de Next.js/Nest.js se revirtió el 02/10/2026 y no es una alternativa vigente.
 - PostgreSQL/PostGIS, Leaflet/OpenStreetMap y el motor Python de optimización pertenecen a la arquitectura objetivo. No deben presentarse como componentes ya ejecutados.
 - Las herramientas de seguimiento y entrega son Jira (`ECO`) para backlog y sprints, GitHub para el repositorio y OpenSpec para especificaciones y cambios. PostgreSQL/PostGIS, mapas, optimización, Docker Compose y CI no forman parte del stack ejecutable actual.
@@ -34,6 +35,8 @@ La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mi
 | Sprint 2 · 29/09–12/10 | Replanificación para entregar el primer incremento: HU-001 con autenticación y autorización MFA. | Jira sprint id. 37 activo: ECO-9 (5 puntos) y ECO-20 (MFA, sin estimación aprobada ni persona asignada), ambas `Listo`; la métrica dinámica cuenta 2/2 incidencias (100 %), no aceptación del producto. En la ejecución local del 09/10: 100 pruebas de backend aprobadas, 99 % de cobertura, 39 pruebas de frontend aprobadas y compilación de producción completada. Al corte anterior a la reunión de las 15:40, la revisión, la velocidad oficial y el cierre formal siguen pendientes. |
 | Sprint 3 | El plan de trabajo de la retrospectiva contempla PostgreSQL/PostGIS, gestión de flota, prototipo y benchmark del motor, y CI. | Trabajo futuro; las historias/tareas faltantes y su capacidad aún deben confirmarse y estimarse en Jira. |
 | Sprint 4 y cierre | El horizonte aprobado contempla cuatro iteraciones y una semana de cierre; el roadmap conserva dashboard, visor, seguridad, disponibilidad e integración/aceptación. | Alcance futuro de alto nivel; prioridades, compromisos y fechas detalladas del Sprint 4 aún no están aprobados. |
+
+Para mantener el trabajo futuro centrado en lo que alguien podrá hacer en la aplicación, se añadió el [Plan funcional de sprints](../02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md). Allí se distingue el Sprint 1 histórico, el recorrido que ya ofrece Sprint 2 y las propuestas de Sprint 3 y 4, que todavía deben acordarse. La definición de cierre de sprint ya no exige desplegar cada historia a staging; la salida operativa del PMV mantiene sus propios requisitos.
 
 El backend registra **tres advertencias deprecadas** durante `pytest`. La compilación frontend concluye, pero avisa que los archivos licenciados Codec Pro `.woff2` no están disponibles. La compilación y las pruebas no prueban una revisión visual extremo a extremo ni despliegue continuo.
 
@@ -61,13 +64,16 @@ La imagen histórica que antes se llamaba `05-releases.png` muestra un resumen a
 ## Documentos contrastados
 
 - `README.md` y la guía de ejecución local.
-- Los 13 documentos de Inicio, los 4 de Planificación y los 8 entregables de Sprint 1 y Sprint 2.
+- Los 13 documentos de Inicio, los 5 de Planificación y los 8 entregables de Sprint 1 y Sprint 2.
 - `openspec/config.yaml`, los dos cambios archivados y las especificaciones vigentes de pedidos y autenticación.
+- El nuevo plan funcional de sprints y su enlace desde README y documentos de planificación.
 - Los seis comandos y seis habilidades operativas de OpenSpec en `.claude/`, incluida su estructura de metadatos.
 - `backend/requirements.txt`, `frontend/package.json`, fuentes actuales, scripts de pruebas y estructura de `.github/`.
 - Tablero, sprints, backlog, configuración de columnas, versiones y tarjetas ECO-16/ECO-17 en Jira.
 
 En la revisión estática se recorrieron los 54 archivos Markdown versionados: no se encontraron enlaces locales rotos ni caracteres de reemplazo. La primera comprobación detectó que tres documentos versionados de Inicio y Planificación no tenían historial de cambios; se incorporó la trazabilidad sin atribuir autoría a sus primeras emisiones. Después de esa regularización, todos los documentos de `docs/` con número de versión tienen una entrada de historial coincidente con sus metadatos.
+
+Esta actualización añade un documento de Planificación y deja el total en 55 archivos Markdown versionados. El plan nuevo y sus enlaces desde README y los documentos relacionados se comprobaron junto con esta actualización.
 
 La documentación histórica de cada sprint conserva su fecha de corte original. Este documento resume las comprobaciones posteriores sin reescribir los resultados de fechas anteriores.
 
@@ -111,3 +117,4 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 | 1.18.0 | 09/10/2026 | Se unifican al español las etiquetas de roles y las menciones genéricas a partes interesadas, preservando nombres propios y términos técnicos. |
 | 1.19.0 | 09/10/2026 | Se corrigen ocho referencias con concordancia gramatical incorrecta a las partes interesadas en los informes y revisiones de Sprint 1 y Sprint 2. |
 | 1.20.0 | 09/10/2026 | Se completa el historial de cambios de tres documentos de Inicio y Planificación y se actualiza la verificación de los 54 archivos Markdown versionados. |
+| 1.21.0 | 09/10/2026 | Se alinea la planificación futura a recorridos de usuario, se documentan los límites funcionales del Sprint 2 y se registra el plan funcional de sprints; la revisión del Sprint 2 sigue pendiente. |

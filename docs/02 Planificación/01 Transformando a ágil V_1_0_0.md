@@ -9,7 +9,7 @@
 | Proyecto | EcoLogística Huancayo |
 | Código | PFA-TP2-ECOLOG-2026 |
 | Equipo | Zorrilla Apumayta, Alex Jesus; Anco Porras, Jhean Pier Julio; Hilario Talavera, Alexander Daniel; Vera Zea, Jhoanna Hade; Isidro Casio, Jose Luis |
-| Versión | 1.1.0 |
+| Versión | 1.2.0 |
 | Fecha | 11 de septiembre de 2026 |
 
 ## Historial de cambios
@@ -18,6 +18,7 @@
 |---|---|---|---|
 | 1.0.0 | 11/09/2026 | No consignado en la fuente original | Primera emisión de la transformación del backlog a épicas, historias de usuario y habilitadores. |
 | 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se incorpora el historial de cambios para mantener la trazabilidad de versiones del documento. |
+| 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se ajusta el cierre de sprint para que compruebe un recorrido útil en el sistema; el despliegue a staging queda como criterio de salida del PMV, no como requisito para cada historia. |
 
 ## 1. Método de transformación
 
@@ -353,6 +354,14 @@ Cuando un integrante del equipo ejecuta el procedimiento de despliegue
 Entonces el servicio queda operativo en staging en 10 minutos o menos
 ```
 
-## 4. Definition of Done global
+## 4. Cuándo cerramos un sprint
 
-Una HU o EN está Done cuando: (1) cumple todos sus criterios BDD; (2) tiene pruebas unitarias con cobertura mínima de 80% en el alcance modificado (RNF-007); (3) el análisis estático (SonarQube/CodeQL) no reporta vulnerabilidades críticas (RNF-002); (4) un par técnico aprobó el Pull Request; (5) el despliegue automatizado es ejecutable en staging y es reproducible en 10 minutos o menos desde la documentación (RNF-008); (6) OpenAPI/Swagger y la documentación afectada están actualizadas; (7) las vistas modificadas cumplen WCAG 2.1 AA y el payload inicial no supera 500 KB (RNF-006); (8) no quedan errores de consola ni migraciones pendientes; y (9) la evidencia queda enlazada en Jira.
+El sprint se cierra cuando el incremento permite completar el recorrido acordado desde la aplicación y hay evidencia que el equipo puede revisar. Para cada historia:
+
+1. Se cumplen sus criterios de aceptación y se comprueba el flujo con el rol correspondiente.
+2. Si el objetivo incluye guardar información, esta sigue disponible después de reiniciar el servicio.
+3. La revisión técnica del cambio está hecha y la documentación o el contrato de la API se actualizó cuando corresponde.
+4. Los problemas conocidos se registran y no se presenta una pantalla o un componente aislado como una tarea de negocio completa.
+5. La evidencia del recorrido queda enlazada en Jira y se muestra al cierre del sprint.
+
+Las pruebas, el análisis de seguridad, la accesibilidad y los umbrales de calidad se aplican según los requisitos del cambio. Tener el sprint cerrado no significa que el PMV completo esté listo para operar. El PMV necesita además un entorno reproducible y seguro, datos persistentes y respaldados, monitoreo, integración y aceptación de los resultados acordados. El plan de tareas por sprint está en [05. Plan funcional de sprints](05%20Plan%20funcional%20de%20sprints.md).

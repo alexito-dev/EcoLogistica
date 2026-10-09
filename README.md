@@ -64,6 +64,8 @@ El código disponible entrega autenticación con verificación TOTP y roles, ade
 
 Jira ya refleja el Sprint 1 cerrado, el Sprint 2 activo y la historia ECO-20 de MFA. ECO-15 está en `Por hacer` porque el repositorio no contiene re-enrutamiento. Sigue pendiente normalizar los nombres y el mapeo de las columnas del tablero; el detalle está en [02. Artefactos Jira](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md). Los estados de Jira se contrastan con el código y sus pruebas.
 
+La planificación futura ahora se organiza alrededor de tareas que una persona pueda terminar en el sistema. El detalle, con el resultado real de Sprint 1, la función de Sprint 2 y propuestas aún no aprobadas para Sprint 3 y 4, está en [05. Plan funcional de sprints](docs/02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md).
+
 ---
 
 ## 3. Capacidades y Módulos Funcionales
@@ -255,10 +257,12 @@ Pop-Location
 
 Toda la aplicación exige **contraseña + código TOTP** de una app autenticadora (Google Authenticator, Microsoft Authenticator u otra).
 
-1. Al iniciar el backend por primera vez se crean **cinco usuarios de demostración**, uno por rol: `admin@`, `planificador@`, `conductor@`, `gerente@` y `auditor@ecologistica.test`.
+1. Al iniciar el backend por primera vez se crean **cinco usuarios de demostración**, uno por rol: `admin@ecologistica.test`, `planificador@ecologistica.test`, `conductor@ecologistica.test`, `gerente@ecologistica.test` y `auditor@ecologistica.test`. Para el flujo de Sprint 2, usa `planificador@ecologistica.test`.
 2. La contraseña de demostración se toma de `DEMO_CLAVE` en `.env`. Si está vacía, el backend genera una aleatoria y **la muestra una sola vez en su consola**. Para generar usuarios nuevos, borre la carpeta `backend/.data/` (ignorada por Git) y reinicie el backend.
 3. En el primer ingreso de cada usuario, la app muestra un **código QR** (y la clave para ingreso manual): escanéelo con la app autenticadora y escriba el código de 6 dígitos.
 4. Permisos actuales (matriz RBAC del documento 08): **Planificador** registra y consulta pedidos; **Administrador** solo consulta; los demás roles ven "Acceso no autorizado" hasta que existan sus vistas.
+
+Estas cuentas locales **no están conectadas al correo institucional**. Si la contraseña aleatoria de la primera inicialización ya no está disponible, no se puede recuperar desde el hash guardado; hay que restablecer la cuenta localmente. El acceso también requiere el código de una app autenticadora.
 
 Seguridad: contraseñas con Argon2id, sesión en cookie `HttpOnly` y `SameSite=Strict` (15 min de inactividad, 8 h máximo), bloqueo de 15 min tras 5 intentos fallidos, códigos de un solo uso y eventos de acceso en la consola del backend sin secretos.
 
@@ -318,6 +322,7 @@ Artefactos de la semana 4: transformación ágil, configuración y evidencias Ji
 - [02. Artefactos Jira](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md)
 - [03. Registro de riesgos](docs/02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md)
 - [04. Presupuesto del proyecto](docs/02%20Planificaci%C3%B3n/04%20Presupuesto%20del%20proyecto%20V_1_0_0.md)
+- [05. Plan funcional de sprints](docs/02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md)
 
 ### 9.3. Fase 03: Implementación
 

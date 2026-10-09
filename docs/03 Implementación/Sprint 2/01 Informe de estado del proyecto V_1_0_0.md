@@ -36,10 +36,13 @@
 | 1.1.4 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se precisa el historial de estados de ECO-9 al cerrar Sprint 1 y al incorporarla a Sprint 2. |
 | 1.1.5 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se limita la lectura de los 5 puntos al estado de Jira observado al corte del 02/10; no se presentan como velocidad aceptada antes de la revisión del sprint. |
 | 1.1.6 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se precisa que ECO-20 no tiene persona asignada en Jira al corte previo a la revisión. |
+| 1.1.7 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se explica el recorrido que ya puede completar Planificación en el sistema y se anotan sus límites de persistencia y acceso de demostración. |
 
 ## Resumen ejecutivo
 
 El Sprint 2 corrigió el desvío del Sprint 1: el proyecto pasó de **0 a 1 historia de usuario completada** y entregó su **primer incremento de software funcional y demostrable**. El equipo replanificó el sprint siguiendo las acciones de la retrospectiva anterior: se priorizó la historia arrastrada **HU-001 (registrar pedido, 5 pts)** y se incorporó la **autenticación con verificación en dos pasos (RF-11.1)**, precondición de HU-001 ("despachador autenticado") y actividad de laboratorio de la semana 6. Ambas se construyeron con el ciclo **OpenSpec** (especificar, auditar, implementar, verificar y archivar) y quedaron publicadas en `main` con **139 pruebas automatizadas en verde**.
+
+En el sistema, Planificación puede iniciar sesión con MFA, registrar un pedido y luego buscarlo, filtrarlo o abrir su detalle. Los pedidos aún viven en memoria: al reiniciar la API se pierden. Las cuentas son de demostración local, no están conectadas al correo institucional. La revisión de Sprint 2 sigue pendiente y la métrica de Jira no equivale a aceptación formal.
 
 Al inicio del sprint también se **ratificó el stack React + FastAPI** (Alternativa A, 93 % en la matriz), revirtiendo una propuesta no evaluada, y se alinearon cinco documentos de la línea base. El alcance original del roadmap para este sprint (flota, geocodificación y motor de optimización) **no se inició** y pasa al Sprint 3.
 
