@@ -16,6 +16,7 @@ La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mi
 - PostgreSQL/PostGIS, Leaflet/OpenStreetMap y el motor Python de optimización pertenecen a la arquitectura objetivo. No deben presentarse como componentes ya ejecutados.
 - Las herramientas de seguimiento y entrega son Jira (`ECO`) para backlog y sprints, GitHub para el repositorio y OpenSpec para especificaciones y cambios. PostgreSQL/PostGIS, mapas, optimización, Docker Compose y CI no forman parte del stack ejecutable actual.
 - El árbol del README se contrastó con el repositorio: `database/` aún no existe. `docs/04 Seguimiento y Control/` y `docs/05 Cierre/` sí existen, pero solo tienen `.gitkeep` y no contienen entregables; el README ahora distingue los directorios reservados de la documentación pendiente.
+- `.env.example` y las instrucciones de instalación se contrastaron con `backend/src/app/config.py`, `frontend/vite.config.ts` y `frontend/package-lock.json`: se eliminaron variables de base de datos, mapas y optimización que el código actual ignora, se documentaron solo variables operativas y se actualizaron los comandos de PowerShell y el requisito real de Node para Vite 8.
 - El flujo de ramas se armonizó en README, OpenSpec, RES-17 y RST-ACA-02: ramas breves `feature/*` desde `main`, PR hacia `main`, sin `develop` obligatoria. La rama remota `developer` está desactualizada; protección de `main`, revisión obligatoria y CI siguen pendientes de configuración.
 - Las referencias a `develop` en actas y retrospectivas de Sprint 1 se conservan como acuerdos históricos de esa fecha; las tareas futuras de los documentos de Sprint 2 ya apuntan al flujo actualizado. No se deben interpretar esas referencias antiguas como configuración vigente.
 
@@ -80,3 +81,4 @@ La documentación histórica de cada sprint conserva su fecha de corte original.
 | 1.3.0 | 09/10/2026 | Se alinea el README y OpenSpec con la estructura existente y el flujo de ramas acordado; se identifican como pendientes la revisión del Sprint 2, la configuración de Jira, la protección de `main` y CI. |
 | 1.4.0 | 09/10/2026 | Se actualiza el conteo dinámico de Jira del Sprint 2 a 2/2 y se aclara que la métrica no sustituye la aceptación ni el cierre formal. |
 | 1.5.0 | 09/10/2026 | Se alinea RST-ACA-02 y se explicita en OpenSpec el límite entre stack objetivo e implementación ejecutable. |
+| 1.6.0 | 09/10/2026 | Se alinea `.env.example` y la guía de instalación con las variables y herramientas realmente consumidas por el código. |

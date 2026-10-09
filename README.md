@@ -204,42 +204,49 @@ gitGraph
 ## 8. Guía de Instalación y Ejecución Local
 
 ### 8.1. Clonar el Repositorio
-```bash
+```powershell
 git clone https://github.com/alexito-dev/EcoLogistica.git
 cd EcoLogistica
 ```
 
 ### 8.2. Variables de Entorno
-```bash
-cp .env.example .env
-# Configurar parámetros de base de datos y puertos en .env
+
+En PowerShell, desde la raíz del repositorio:
+
+```powershell
+Copy-Item .env.example .env
 ```
+
+El archivo contiene solo variables leídas por la implementación actual: CORS, ámbito geográfico, autenticación y URL de la API. No configures una base de datos aquí: PostgreSQL/PostGIS aún no está integrado.
 
 ### 8.3. Despliegue Local
 
-Requisitos: Python 3.10+ y Node.js 20+.
+Requisitos: Python 3.10+ y Node.js 20.19+ o 22.12+ (requisito de Vite 8 según `frontend/package-lock.json`).
 
-```bash
-# Backend (FastAPI) — http://localhost:8000  ·  documentación: http://localhost:8000/docs
-cd backend
+```powershell
+# Backend (FastAPI): http://localhost:8000; OpenAPI: http://localhost:8000/docs
+Set-Location backend
 python -m venv .venv
-.venv/Scripts/activate        # Windows (Git Bash: source .venv/Scripts/activate · Linux/macOS: source .venv/bin/activate)
-pip install -r requirements.txt
-uvicorn app.main:app --app-dir src --reload --port 8000
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir src --reload --port 8000
 
-# Frontend (React + Vite) — http://localhost:3000  (en otra terminal)
-cd frontend
-npm install
-npm run dev
+# Frontend (React + Vite), en otra terminal: http://localhost:3000
+Set-Location frontend
+npm.cmd ci
+npm.cmd run dev
 ```
 
 ### 8.4. Pruebas Automatizadas
-```bash
-# Backend (pytest, con cobertura)
-cd backend && pytest --cov=app
+```powershell
+# Desde la raíz del repositorio, con el entorno backend instalado
+Push-Location backend
+.\.venv\Scripts\python.exe -m pytest --cov=app
+Pop-Location
 
 # Frontend (Vitest + Testing Library)
-cd frontend && npm test
+Push-Location frontend
+npm.cmd test
+Pop-Location
 ```
 
 ### 8.5. Acceso con verificación en dos pasos (RF-11.1)
