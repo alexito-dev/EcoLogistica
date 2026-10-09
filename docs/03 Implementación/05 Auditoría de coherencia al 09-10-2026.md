@@ -25,8 +25,8 @@ La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mi
 
 | Iteración | Plan registrado | Resultado comprobado al 09/10/2026 |
 |---|---|---|
-| Sprint 1 · 14/09–28/09 | ECO-9 / HU-001 y ECO-15 / HU-006; 10 puntos. | El informe del Sprint 1 registra 0 de 2 al corte planificado del 28/09. Jira mantuvo el sprint id. 36 activo hasta el 09/10; ECO-9 quedó `Listo` el 02/10 y conserva ambos sprints en su historial, mientras ECO-15 está `Por hacer`. La métrica dinámica actual de Jira muestra 1 de 2 y no reconstruye la velocidad al 28/09. |
-| Sprint 2 · 29/09–12/10 | Replanificación para entregar el primer incremento: HU-001 con autenticación y autorización MFA. | Jira sprint id. 37 activo: ECO-9 (5 puntos) y ECO-20 (MFA, sin estimación aprobada), ambas `Listo`; la métrica dinámica cuenta 2/2 incidencias (100 %), no aceptación del producto. En la ejecución local del 09/10: 100 pruebas de backend aprobadas, 99 % de cobertura, 39 pruebas de frontend aprobadas y compilación de producción completada. Falta la revisión del sprint y su cierre. |
+| Sprint 1 · 14/09–28/09 | ECO-9 / HU-001 y ECO-15 / HU-006; 10 puntos. | El informe del Sprint 1 registra 0 de 2 al corte planificado del 28/09. Jira mantuvo el sprint id. 36 activo hasta el 09/10 a las 07:42. El historial de ECO-9 muestra `Listo` el 02/10, `Por hacer` al cerrarse el Sprint 1 y nuevamente `Listo` a las 07:43 al añadirse al Sprint 2; ECO-15 sigue `Por hacer`. La métrica dinámica actual de Jira muestra 1 de 2 y no reconstruye la velocidad al 28/09. |
+| Sprint 2 · 29/09–12/10 | Replanificación para entregar el primer incremento: HU-001 con autenticación y autorización MFA. | Jira sprint id. 37 activo: ECO-9 (5 puntos) y ECO-20 (MFA, sin estimación aprobada), ambas `Listo`; la métrica dinámica cuenta 2/2 incidencias (100 %), no aceptación del producto. En la ejecución local del 09/10: 100 pruebas de backend aprobadas, 99 % de cobertura, 39 pruebas de frontend aprobadas y compilación de producción completada. Al corte anterior a la reunión de las 15:40, la revisión y el cierre formal siguen pendientes. |
 | Sprint 3 | El plan de trabajo de la retrospectiva contempla PostgreSQL/PostGIS, gestión de flota, prototipo y benchmark del motor, y CI. | Trabajo futuro; las historias/tareas faltantes y su capacidad aún deben confirmarse y estimarse en Jira. |
 | Sprint 4 y cierre | El horizonte aprobado contempla cuatro iteraciones y una semana de cierre; el roadmap conserva dashboard, visor, seguridad, disponibilidad e integración/aceptación. | Alcance futuro de alto nivel; prioridades, compromisos y fechas detalladas del Sprint 4 aún no están aprobados. |
 
@@ -41,7 +41,7 @@ El backend registra **tres advertencias deprecadas** durante `pytest`. La compil
 
 El tablero consultado fue `ECO board` (id. 2). Jira devuelve 8 tarjetas de tipo Epic, 9 historias y 2 tareas; `ECO-7` duplica la épica de re-enrutamiento `ECO-6`, por lo que el backlog tiene 7 épicas lógicas EP-01–EP-07. La historia técnica ECO-20 se registró el 09/10 sin puntos aprobados.
 
-1. El sprint id. 36 es el Sprint 1 oficial; se cerró administrativamente el 09/10 después de su fecha final del 28/09. El sprint id. 3 se renombró `ECO Sprint 1 (duplicado)` y su objetivo aclara que no es el sprint oficial. El informe dinámico actual cuenta a ECO-9 como completada en ese sprint por su estado actual; el conector no expone el reporte histórico al 28/09.
+1. El sprint id. 36 es el Sprint 1 oficial; se cerró administrativamente el 09/10 después de su fecha final del 28/09. El sprint id. 3 se renombró `ECO Sprint 1 (duplicado)` y su objetivo aclara que no es el sprint oficial. El historial de ECO-9 registra `Listo` el 02/10, `Por hacer` al cierre del Sprint 1 y `Listo` otra vez después de añadirse al Sprint 2. El informe dinámico actual cuenta la incidencia en Sprint 1 por el estado vigente y la asociación doble; el conector no expone el reporte histórico al 28/09.
 2. Se creó el Sprint 2 id. 37 con fechas 29/09–12/10 y la meta de HU-001 con MFA. ECO-9 / HU-001 (5 puntos) y ECO-20 / autenticación MFA están en el sprint y en estado `Listo`; ECO-20 permanece sin estimación de puntos.
 3. ECO-15 / HU-006 está en `Por hacer`: no se encontró implementación de re-enrutamiento en el repositorio. Su historial de Sprint conserva la asignación al Sprint 1.
 4. El backlog no contiene HU-004, HU-010, HU-011 ni EN-001–EN-004. ECO-16 está estimada en 3 puntos y ECO-17 en 5.
@@ -49,6 +49,7 @@ El tablero consultado fue `ECO board` (id. 2). Jira devuelve 8 tarjetas de tipo 
 6. La consulta de versiones del proyecto devuelve cero; `v1.0.0-MVP` no existe como versión Jira.
 7. ECO-20 se creó el 09/10 bajo EP-07 para registrar autenticación MFA; quedó sin estimación y en `Listo`, con criterios vinculados a RF-11.1.
 8. Las descripciones de ECO-16 y ECO-17 mencionaban Next.js/Nest.js. Se actualizaron el 09/10 para indicar React/Vite y FastAPI, documentar el estado real y mantener PostgreSQL/CI como pendientes.
+9. La verificación del 09/10 mostró que la configuración de cinco columnas y la ausencia de versiones de entrega persisten, pese a la confirmación comunicada el 02/10. Se reabrió IMP-003 y se incorporó al registro del Sprint 2.
 
 La imagen histórica que antes se llamaba `05-releases.png` muestra un resumen analítico del proyecto, no una versión de Jira. Se renombró a `05-resumen-analitico-historico.png`; la evidencia actual de versiones sigue pendiente.
 
@@ -84,3 +85,4 @@ La documentación histórica de cada sprint conserva su fecha de corte original.
 | 1.5.0 | 09/10/2026 | Se alinea RST-ACA-02 y se explicita en OpenSpec el límite entre stack objetivo e implementación ejecutable. |
 | 1.6.0 | 09/10/2026 | Se alinea `.env.example` y la guía de instalación con las variables y herramientas realmente consumidas por el código. |
 | 1.7.0 | 09/10/2026 | Se aclara que el diagrama de módulos del README representa el alcance objetivo y se identifica el subconjunto implementado al corte. |
+| 1.8.0 | 09/10/2026 | Se detalla la secuencia de estados de ECO-9 y se incorpora IMP-003 reabierto; el Sprint 2 permanece pendiente de revisión y cierre formal. |
