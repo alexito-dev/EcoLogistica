@@ -147,6 +147,69 @@ code {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+/* ================= Flota ================= */
+.nav__item {
+  width: 100%;
+  border: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.flota-resumen,
+.flota-listado {
+  margin: 24px auto;
+  max-width: 1440px;
+  padding: 22px;
+  border-radius: var(--radio);
+  background: var(--superficie);
+  box-shadow: var(--sombra);
+}
+.flota-resumen { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+.flota-resumen__dato { display: flex; align-items: center; gap: 12px; color: var(--texto-suave); }
+.flota-resumen__dato svg { color: var(--primario); }
+.flota-resumen__dato strong { color: var(--texto); font-size: 1.2rem; }
+.flota-fecha { margin-left: auto; display: flex; align-items: center; gap: 12px; color: var(--texto-suave); }
+.flota-fecha input,
+.flota-formulario input,
+.flota-formulario select,
+.flota-formulario textarea {
+  width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--borde);
+  border-radius: var(--radio-chico); background: var(--superficie-alterna); color: var(--texto); font: inherit;
+}
+.flota-listado > header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+.flota-listado > header p { margin-top: 5px; color: var(--texto-suave); }
+.flota-tarjetas { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 16px; }
+.flota-vehiculo { padding: 20px; border: 1px solid var(--borde); border-radius: var(--radio); background: var(--superficie); }
+.flota-vehiculo__cabecera { display: flex; align-items: center; justify-content: space-between; }
+.flota-vehiculo__icono { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; color: var(--primario); background: var(--acento-fondo); }
+.estado-vehiculo { padding: 4px 10px; border-radius: 99px; font-size: .82rem; font-weight: 600; background: var(--superficie-alterna); }
+.estado-vehiculo--disponible { color: var(--primario); }
+.estado-vehiculo--mantenimiento, .estado-vehiculo--inactivo { color: var(--texto-suave); }
+.flota-vehiculo h3 { margin-top: 16px; font-size: 1.2rem; }
+.flota-vehiculo__tipo { color: var(--texto-suave); }
+.flota-vehiculo dl { display: grid; gap: 10px; margin: 18px 0 0; }
+.flota-vehiculo dl > div { display: flex; justify-content: space-between; gap: 12px; font-size: .9rem; }
+.flota-vehiculo dt { color: var(--texto-suave); }
+.flota-vehiculo dd { display: flex; align-items: center; gap: 5px; margin: 0; font-weight: 600; text-align: right; }
+.flota-restriccion, .flota-ayuda { margin-top: 14px; color: var(--texto-suave); font-size: .88rem; }
+.flota-acciones { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.flota-vacio { display: grid; justify-items: center; gap: 8px; padding: 60px 20px; text-align: center; color: var(--texto-suave); }
+.flota-vacio svg { color: var(--primario); }
+.flota-mensaje { max-width: 1440px; margin: 12px auto; padding: 12px 16px; display: flex; justify-content: space-between; border-radius: 12px; color: var(--acento-texto); background: var(--acento-fondo); }
+.flota-mensaje--error { color: var(--error); background: var(--error-fondo); }
+.flota-mensaje button { border: 0; background: transparent; color: inherit; font: inherit; font-weight: 600; cursor: pointer; }
+.flota-formulario { display: grid; gap: 15px; padding: 20px 24px 24px; }
+.flota-formulario > label, .flota-campos-dobles > label { display: grid; gap: 6px; font-weight: 600; }
+.flota-campos-dobles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.flota-checkbox { display: flex !important; align-items: center; gap: 10px !important; }
+.flota-checkbox input { width: 18px; min-height: 18px; }
+.flota-formulario textarea { min-height: 90px; resize: vertical; }
+@media (max-width: 700px) {
+  .flota-resumen, .flota-listado { margin: 16px 12px; padding: 16px; }
+  .flota-fecha { margin-left: 0; width: 100%; justify-content: space-between; }
+  .flota-campos-dobles { grid-template-columns: 1fr; }
+}
 .saltar {
   position: absolute;
   left: 8px;

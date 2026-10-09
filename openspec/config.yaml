@@ -12,11 +12,20 @@ context: |
   de negocio); motor de optimización Python (OR-Tools + metaheurística) desacoplado
   (VRPTW/Green VRP, cálculo de CO2); PostgreSQL + PostGIS.
   Implementación verificada al 09/10/2026: frontend React + Vite + TypeScript y API
-  FastAPI + Pydantic; autenticación MFA/roles y registro/consulta/listado de pedidos.
-  Los pedidos usan memoria y las cuentas locales un archivo. No afirmar como
-  implementados PostgreSQL, mapas, optimización, Docker Compose ni CI.
-  Estructura implementada: frontend/, backend/, docs/ y openspec/. El diseño de
-  persistencia PostgreSQL/PostGIS aún no tiene carpeta ni migraciones aplicadas.
+  FastAPI + Pydantic; autenticación MFA/roles, flujos de pedidos y gestión de flota.
+  PostgreSQL/PostGIS persiste pedidos, ubicaciones, vehículos y disponibilidades
+  mediante las migraciones 20261009_01 y 20261009_02. Las cuentas siguen en archivo
+  local. Docker Compose levanta la base PostGIS de desarrollo; la aplicación web y
+  la API se ejecutan por separado. No afirmar como implementados mapas, optimización,
+  persistencia de usuarios o rutas, ni CI.
+  Línea base funcional vigente: Sprint 1 conserva MFA/roles y pedidos persistentes;
+  Sprint 2 se dedica a flota; Sprint 3 a generación y consulta de rutas; se conservan
+  los propósitos de los sprints posteriores. El acuerdo no reescribe cortes históricos
+  ni cambia por sí solo el tablero Jira.
+  Estructura implementada: frontend/, backend/, database/, docs/ y openspec/.
+  Las especificaciones principales cubren autenticación, pedidos y flota.
+  Mantener separadas las capacidades implementadas del resto de módulos objetivo
+  que aún no tienen especificación o implementación.
   Módulos objetivo: pedidos y ventanas horarias, flota y conductores, motor de optimización,
   visor cartográfico, dashboard de KPIs/CO2, re-enrutamiento dinámico.
   Metas: -15% distancia total, >=92% puntualidad, hasta 1,000 pedidos/día y 50 vehículos,

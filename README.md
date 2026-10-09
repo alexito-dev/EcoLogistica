@@ -53,24 +53,26 @@ Desarrollar e implementar un PMV web que optimice las rutas de distribución urb
 
 ### 2.4. Estado verificado del proyecto al 09/10/2026
 
-La línea base tecnológica vigente es **React + Vite + TypeScript** para la interfaz, **FastAPI + Python** para la API y **PostgreSQL/PostGIS** para pedidos y ubicaciones. Todavía faltan persistir usuarios, flota y rutas, además de Leaflet/OpenStreetMap y el motor de optimización. La matriz y el alcance están en [10. Stack tecnológico](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md).
+La línea base tecnológica vigente es **React + Vite + TypeScript** para la interfaz, **FastAPI + Python** para la API y **PostgreSQL/PostGIS** para pedidos, ubicaciones, vehículos y disponibilidades. La línea base funcional se reordenó el 09/10: Sprint 1 conserva el acceso MFA/roles y pedidos persistentes; Sprint 2 se dedica a flota; Sprint 3 a rutas; los siguientes sprints mantienen sus propósitos previos. Esta decisión no cambia los resultados históricos ni los estados y fechas ya registrados en Jira. Todavía faltan persistir usuarios y rutas, además de Leaflet/OpenStreetMap y el motor de optimización. La matriz y el alcance están en [10. Stack tecnológico](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md).
 
-El sistema permite entrar con TOTP y roles, registrar pedidos, volver a encontrarlos y consultar su detalle. Los pedidos y sus coordenadas se guardan en PostgreSQL/PostGIS y se comprobó que siguen ahí tras reiniciar la API. El 09/10/2026 se volvieron a ejecutar las suites existentes después de incorporar PostGIS: **100 pruebas de backend y 39 de frontend aprobadas**. No hay todavía pruebas automatizadas de integración para el adaptador PostGIS; la permanencia tras reiniciar se comprobó manualmente en una base aislada. La compilación de producción anterior terminó correctamente, con avisos porque faltan los archivos de la fuente Codec Pro. Aún no hay optimización de rutas ni despliegue continuo.
+El sistema permite entrar con TOTP y roles, registrar pedidos, volver a encontrarlos y consultar su detalle. Los pedidos y sus coordenadas se guardan en PostgreSQL/PostGIS y se comprobó que siguen ahí tras reiniciar la API. El 09/10/2026 pasaron **107 pruebas de backend y 39 de frontend**; también terminó la compilación de producción. El incremento de flota se recorrió visualmente con MFA en un PostGIS aislado y continuó disponible tras reiniciar la API. El linter termina con dos avisos de `set-state-in-effect`, uno preexistente en pedidos y otro en la nueva vista de flota. No hay todavía pruebas automatizadas que integren los adaptadores PostgreSQL; la persistencia se comprobó manualmente en bases aisladas. La compilación avisa que faltan los archivos de la fuente Codec Pro. Aún no hay optimización de rutas ni despliegue continuo.
 
-| Sprint | Plan comprometido | Resultado documentado |
+| Sprint | Alcance funcional vigente | Estado documentado |
 |---|---|---|
-| Sprint 1 · 14/09–28/09 | ECO-9 / HU-001 y ECO-15 / HU-006 (10 puntos) | Al corte planificado del 28/09, el informe del Sprint 1 registra 0 de 2 historias completadas. Jira cerró el sprint el 09/10 a las 07:42; ECO-9 había pasado a `Listo` el 02/10, volvió a `Por hacer` al cerrar el sprint y volvió a `Listo` a las 07:43 al incorporarse también al Sprint 2. La métrica dinámica actual cuenta 1 de 2 en Sprint 1 y no representa la velocidad al 28/09. ECO-15 sigue pendiente y sin implementación demostrable. |
-| Sprint 2 · 29/09–12/10 | Que Planificación inicie sesión con MFA, registre y consulte pedidos, y conserve esos pedidos tras reiniciar la API | El recorrido se comprobó en una base aislada, incluida la persistencia tras reiniciar. La revisión local del 09/10 mostró la pantalla de Planificación y la lista vacía; con la sesión autenticada, la API devolvió 200 y 0 pedidos. Jira tiene ECO-9 (5 puntos), ECO-16 (3 puntos, persistencia de pedidos y ubicaciones) y ECO-20 (MFA, sin estimación) en `Listo`. El sprint sigue activo y la revisión formal está prevista para el 09/10 a las 15:40, hora de Lima; el estado técnico no implica aceptación ni cierre. |
+| Sprint 1 · 14/09–28/09 | Acceso MFA y roles; registrar, consultar y conservar pedidos. | Implementado y comprobado en un entorno aislado, incluida persistencia después de reiniciar la API. El informe histórico al corte del 28/09 sigue registrando 0 de 2 historias; la rebase funcional acordada después no reescribe ese resultado ni el historial de Jira. |
+| Sprint 2 · 29/09–12/10, alcance reordenado | Administración gestiona el catálogo de vehículos; Planificación declara disponibilidad y turnos por fecha. | El E2E web aprobó los 5 criterios funcionales: alta/edición, validaciones, disponibilidad por rol, exclusión de vehículos en Mantenimiento/Inactivo y persistencia tras reiniciar API. Se usó PostGIS temporal aislado y no quedaron datos de prueba en la base local. Pasaron 107 pruebas de backend, 39 de frontend y la compilación de producción. El registro de la decisión del Product Owner y el cierre de Jira siguen pendientes. |
+| Sprint 3 · siguiente alcance | Planificación genera, guarda y vuelve a consultar rutas para pedidos pendientes usando vehículos elegibles. | Pendiente: persistencia de rutas/paradas, generación factible y verificación del recorrido. Fechas y estimación se acuerdan en Jira. |
+| Sprint 4 · propósito conservado | Conducción consulta una ruta, registra avances e incidencias; Planificación puede revisarlos. | Se mantiene como alcance posterior; se precisa en el plan funcional de sprints. |
 
-Jira ya refleja el Sprint 1 cerrado y el Sprint 2 activo con ECO-9, ECO-16 y ECO-20. ECO-15 está en `Por hacer` porque el repositorio no contiene re-enrutamiento. ECO-21 registra la persistencia pendiente de cuentas, flota y rutas; no tiene estimación ni sprint asignado. Sigue pendiente normalizar los nombres y el mapeo de las columnas del tablero; el detalle está en [02. Artefactos Jira](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md). Los estados de Jira se contrastan con el código y su evidencia.
+Jira conserva por ahora las asignaciones históricas del Sprint 1 y 2. ECO-15 sigue en `Por hacer`; ECO-21 aún incluye en Jira cuentas, secretos TOTP, flota y rutas, aunque flota ya está implementada; la tarjeta no tiene estimación ni sprint asignado y debe ajustarse en el Planning. La redistribución del trabajo funcional debe reflejarse en Jira durante el Planning del equipo; esta actualización no cambia tarjetas externas. Sigue pendiente normalizar los nombres y el mapeo de las columnas del tablero; el detalle está en [02. Artefactos Jira](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md). Los estados de Jira se contrastan con el código y su evidencia.
 
-La planificación futura ahora se organiza alrededor de tareas que una persona pueda terminar en el sistema. El detalle, con el resultado real de Sprint 1, la función de Sprint 2 y propuestas aún no aprobadas para Sprint 3 y 4, está en [05. Plan funcional de sprints](docs/02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md).
+La línea base funcional acordada para Sprint 1–4 está en [05. Plan funcional de sprints](docs/02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md), con criterios para flota y rutas y con los cortes históricos preservados.
 
 ---
 
 ## 3. Capacidades y Módulos Funcionales
 
-El diagrama muestra el alcance objetivo del producto, no funcionalidades ya entregadas. Al 09/10/2026 están implementados la autenticación con MFA/roles y el registro y consulta de pedidos; flota, optimización, mapa, dashboard y re-enrutamiento siguen pendientes.
+El diagrama muestra el alcance objetivo del producto, no funcionalidades ya entregadas. Al 09/10/2026 están implementados la autenticación con MFA/roles, el registro y consulta persistente de pedidos y la gestión de flota con los criterios E2E de Sprint 2 aprobados. Generación de rutas, optimización, mapa, dashboard y re-enrutamiento siguen pendientes.
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -102,7 +104,7 @@ El diagrama muestra el alcance objetivo del producto, no funcionalidades ya entr
 
 ## 5. Arquitectura del Sistema
 
-El diagrama siguiente representa la **arquitectura objetivo del PMV**, no el despliegue actual. Al corte del 09/10/2026 están implementados React/Vite, FastAPI, autenticación MFA y pedidos; la base de datos, mapas, dashboard y motor de optimización permanecen planificados.
+El diagrama siguiente representa la **arquitectura objetivo del PMV**, no el despliegue actual. Al corte del 09/10/2026 están implementados React/Vite, FastAPI, autenticación MFA/roles, pedidos y flota persistidos en PostgreSQL/PostGIS. Persistencia de usuarios y rutas, mapas, dashboard y motor de optimización siguen pendientes.
 
 ```mermaid
 graph TD
@@ -152,6 +154,7 @@ EcoLogistica/
 ├── backend/
 │   ├── src/app/auth/              # Autenticación, MFA, roles y auditoría
 │   ├── src/app/pedidos/           # Dominio, API y repositorios en memoria y PostgreSQL/PostGIS
+│   ├── src/app/flota/             # Catálogo de vehículos y disponibilidad diaria
 │   └── tests/                     # Pruebas de API, servicios y dominio
 ├── docs/
 │   ├── 01 Inicio/                 # Acta, alcance, requisitos y arquitectura

@@ -10,18 +10,20 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | Fecha | Autor | Cambio |
+| Versión | 1.2.4 |
 | Sprint | ECO Sprint 1 (14/09/2026 – 28/09/2026) |
 | Sprint Goal | "Registrar pedidos con ventana horaria y permitir reenrutar una ruta ante incidencia." |
 | Reunión de revisión | Inspección 2 — Sprint 01, 02/10/2026, 17:40–18:00 |
 | Asistentes | Equipo Scrum: Alex Zorrilla (líder / PM), Anco Porras, Jhean Pier Julio (backend), Alexander Daniel Hilario Talavera (optimización), Jhoanna Hade Vera Zea (frontend/UX), Jose Luis Isidro Casio (QA/DevOps). Docente asesor y *Product Owner* académico: Ing. Job Daniel Gamarra Moreno |
 | Documentos hermanos | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [04 Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 
-> **Vigencia del repositorio y del flujo (09/10/2026):** la evidencia de esta revisión del Sprint 1 corresponde al corte presentado el 02/10. Desde entonces existe `database/migrations/` y se integró persistencia PostgreSQL/PostGIS para pedidos y ubicaciones; usuarios, flota y rutas siguen pendientes. El flujo vigente usa ramas breves `feature/*` desde `main` con PR hacia `main`. Ver la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
+> **Vigencia del repositorio (09/10/2026):** la evidencia de aceptación de esta revisión corresponde al corte del 02/10. Después se integraron la persistencia de pedidos y la gestión persistente de flota en PostgreSQL/PostGIS; usuarios y rutas siguen pendientes. El flujo vigente usa ramas breves `feature/*` desde `main` con PR hacia `main`. El resultado histórico de la revisión y el rebase funcional posterior se describen por separado abajo y en la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
+
+> **Rebase funcional posterior (09/10/2026):** Sprint 1 conserva como alcance vigente MFA/roles y pedidos persistentes. La revisión histórica sigue registrando 0/2 historias aceptadas en el corte original; la nueva etiqueta de alcance no modifica el resultado ni afirma que el trabajo se entregó durante ese sprint.
 
 ## Historial de cambios
 
-| Versión | 1.2.3 |
+| Versión | Fecha | Autor | Cambio |
 |---|---|---|---|
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión de la revisión del Sprint 1. |
 | 1.1.0 | 02/10/2026 | Alex Zorrilla | Se agregan diagramas Mermaid y tablas de análisis con los mismos datos; el contenido no cambia. |
@@ -29,6 +31,7 @@
 | 1.2.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se traducen las referencias narrativas a partes interesadas. |
 | 1.2.2 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se corrige la concordancia de género en las referencias a las partes interesadas. |
 | 1.2.3 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza la nota de vigencia para reflejar la persistencia parcial incorporada después de la revisión histórica. |
+| 1.2.4 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se distingue el alcance vigente de Sprint 1 de los resultados de su revisión histórica. |
 
 ## Historias de Usuario completadas en este Sprint
 

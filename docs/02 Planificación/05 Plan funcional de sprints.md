@@ -7,7 +7,7 @@
 | Campo | Valor |
 |---|---|
 | Proyecto | EcoLogística Huancayo |
-| Versión | 1.8.0 |
+| Versión | 1.12.0 |
 | Fecha | 09/10/2026 |
 | Enfoque | Cada sprint debe dejar una tarea real que una persona pueda completar en el sistema. |
 
@@ -17,24 +17,46 @@ La meta de cada sprint se escribe como una acción que alguien podrá hacer en l
 
 Este plan ordena lo que ya ocurrió y propone cómo continuar. Los compromisos futuros todavía necesitan conversación, estimación y acuerdo del equipo en Jira. No se asignan puntos ni fechas que el equipo no haya aprobado.
 
+## Línea base funcional acordada el 09/10/2026
+
+La distribución funcional vigente queda así: Sprint 1 conserva el incremento que ya está implementado (acceso MFA y roles, gestión de pedidos y persistencia PostGIS); Sprint 2 entrega la gestión de flota; Sprint 3 entrega la generación y consulta de rutas; los sprints posteriores mantienen sus objetivos. Este acuerdo reordena el alcance de producto y no modifica las fechas, actas, estados de Jira ni resultados históricos de los cortes anteriores. Jira debe alinearse en el próximo Planning del equipo.
+
 ## Sprints y resultado para quien usa el sistema
 
 | Sprint | Acción que se busca habilitar | Estado con evidencia al 09/10/2026 |
 |---|---|---|
-| **Sprint 1** · 14/09–28/09 | Que Planificación registre pedidos y atienda incidencias que cambian una ruta. | El informe del corte del 28/09 registró 0 de 2 historias terminadas. ECO-15, sobre re-enrutamiento, continúa pendiente. ECO-9 se completó después y se incorporó también al Sprint 2; ese avance posterior no cambia el resultado histórico del Sprint 1. |
-| **Sprint 2** · 29/09–12/10 | Que Planificación entre con contraseña y código de verificación, registre pedidos y luego pueda encontrarlos y consultar su detalle, incluso después de reiniciar la API. | La aplicación permite iniciar sesión con MFA y rol, registrar pedidos válidos, consultarlos y encontrarlos en la lista. Pedidos y coordenadas quedan en PostgreSQL/PostGIS; el recorrido se comprobó después de reiniciar la API en un entorno temporal aislado. Jira muestra ECO-9 (5 pts), ECO-16 (3 pts) y ECO-20 (sin estimación aprobada) en `Listo`. El sprint sigue activo y su revisión todavía está pendiente; la aceptación formal no se da por hecha. Las cuentas de demostración siguen en el archivo local. |
-| **Sprint 3** · propuesta, sin compromiso aprobado | Que Planificación registre su flota disponible, asigne pedidos pendientes y obtenga una ruta guardada para revisar. | El guardado de pedidos ya está resuelto. Para cerrar esta tarea faltan gestionar y persistir vehículos, completar las reglas de flota y generar una primera secuencia de paradas. EN-005 todavía debe cubrir las entidades que faltan; el optimizador se integra como parte de la ruta. Estimar y acordar el alcance con el equipo antes de comprometerlo en Jira. |
-| **Sprint 4** · propuesta, sin alcance detallado aprobado | Que una persona conductora consulte su ruta, marque una entrega y reporte una incidencia para que Planificación pueda revisar el cambio. | Confirmar flujo y prioridades con el equipo. El mapa, el cálculo de rutas y el re-enrutamiento se suman si son necesarios para completar esa tarea, no como entregables aislados. No hay fechas ni resultados aprobados para esta propuesta. |
+| **Sprint 1** · 14/09–28/09 | Que Planificación entre con MFA y roles, registre pedidos, los consulte y conserve los datos tras reiniciar la API. | Incremento vigente: acceso MFA y RBAC, formulario/listado/búsqueda/detalle de pedidos y persistencia PostgreSQL/PostGIS, comprobada en un entorno aislado. El informe histórico del corte 28/09 y el historial de Jira conservan sus resultados originales; esta línea base no los reescribe. |
+| **Sprint 2** · 29/09–12/10, alcance reordenado | Que Administración mantenga el catálogo de vehículos y Planificación configure su disponibilidad y turno por fecha para saber qué unidades pueden considerarse en una planificación. | **Criterios E2E de aceptación aprobados el 09/10/2026** en navegador, con MFA, API y PostGIS temporales aislados: alta/edición y unicidad, validaciones, disponibilidad con motivo, exclusión de mantenimiento/inactivos y persistencia tras reiniciar la API. La decisión de Product Owner y el cierre administrativo de Jira no se han registrado. La migración quedó aplicada a la base local, sin datos de prueba. |
+| **Sprint 3** · siguiente alcance, fechas por acordar | Que Planificación genere una ruta guardada a partir de pedidos pendientes y vehículos elegibles, y vuelva a consultar el orden de paradas, cargas y ventanas horarias. | Requiere persistir rutas y paradas, aplicar capacidades y turnos de la flota de Sprint 2 y generar una secuencia factible. El optimizador y la medición de rendimiento forman parte del recorrido; no se cuentan como entrega aparte. Alcance, estimación y fechas se acuerdan en Jira. |
+| **Sprint 4** · propósito conservado | Que una persona conductora consulte su ruta, marque el avance de las entregas y reporte incidencias para que Planificación pueda actuar. | Se mantiene el propósito anterior: ejecución de ruta por Conducción y visibilidad de estados/incidencias para Planificación. Mapa y re-enrutamiento se incorporan según el alcance acordado para completar el recorrido. |
 
-## Qué tendría que poder hacerse al terminar Sprint 3
+## Qué debe poder hacerse al terminar Sprint 2: gestión de flota
 
-**Meta propuesta:** Planificación registra la flota disponible, elige pedidos pendientes y genera una ruta que después puede volver a abrir.
+Administración registra y actualiza vehículos con placa única, tipo, capacidades en kg y m³, combustible, consumo y estado. Planificación declara por fecha el turno, disponibilidad y cualquier nota de restricción que haya verificado con la operación. La pantalla muestra qué unidades tienen turno declarado y cuáles son elegibles para planificar ese día. La aplicación almacena los datos en PostgreSQL.
 
-Para lograrlo, el equipo tendría que trabajar juntas las historias ya definidas para configurar vehículos y restricciones (HU-003 y HU-009), generar una ruta (HU-004) y completar EN-005 para guardar la flota y las rutas. La persistencia de pedidos ya está integrada; este siguiente paso amplía el mismo almacén a las entidades necesarias. El benchmark (EN-001) ayuda a comprobar que la ruta se calcule dentro del tiempo acordado. La base de datos, el optimizador y las migraciones son parte del recorrido porque hacen posible guardar y calcular la ruta; el resultado visible sigue siendo la ruta que Planificación puede revisar.
+**Criterios de revisión:**
+
+1. Administración crea y edita un vehículo; la placa se normaliza y no se permiten duplicados.
+2. Se rechazan capacidades o consumo no positivos y un turno cuya hora final no sea posterior a la inicial.
+3. Planificación declara disponibilidad y horario para una fecha; una unidad no disponible requiere motivo.
+4. Una unidad en mantenimiento o inactiva no aparece como elegible aunque tenga una disponibilidad ingresada.
+5. Vehículos y disponibilidad siguen presentes al reiniciar la API.
+
+La nota de circulación es información ingresada por el usuario; el sistema no inventa ni valida normativa vial. Las rutas todavía no se generan en este sprint.
+
+**Resultado E2E del Sprint 2 (09/10/2026):** los cinco criterios anteriores se comprobaron de punta a punta en la interfaz web. Se creó `S2-E2E-A1`, se normalizó la placa y se rechazó un duplicado; se editaron sus datos y se rechazaron valores no positivos y un turno invertido; una disponibilidad desactivada exigió motivo; los vehículos `S2-E2E-B2` (Mantenimiento) y `S2-E2E-C3` (Inactivo) conservaron un turno registrado sin ser elegibles; `S2-E2E-A1` quedó elegible. Tras reiniciar la API, se recargó la flota desde la misma base temporal y se observaron los tres vehículos, turnos y estados. El contenedor, las cuentas y los datos de prueba se retiraron al acabar; la base local no recibió esos registros. Esta aprobación cubre los criterios funcionales E2E definidos aquí; no afirma que se haya celebrado una reunión o registrado la decisión formal del Product Owner.
+
+Implementación para revisar: [pantalla de flota](../../frontend/src/pages/PaginaFlota.tsx), [cliente API](../../frontend/src/api/flota.ts), [API y reglas](../../backend/src/app/flota/router.py) y [migración de PostgreSQL](../../database/migrations/versions/20261009_02_flota.py). Especificación funcional: [OpenSpec de flota](../../openspec/specs/flota/spec.md).
+
+## Qué debe poder hacerse al terminar Sprint 3
+
+**Meta:** Planificación elige pedidos pendientes y solicita una ruta que después puede volver a abrir.
+
+Para lograrlo, el equipo completa la generación de ruta (HU-004) y persistencia de rutas/paradas (EN-005), usando la flota y las disponibilidades configuradas en Sprint 2. El benchmark (EN-001) comprueba que la ruta se calcule dentro del tiempo acordado. El resultado visible es la ruta que Planificación puede revisar y volver a abrir.
 
 **Criterios para revisar la propuesta:**
 
-1. Planificación puede registrar un vehículo disponible con su capacidad y restricciones, y volver a consultar esos datos.
+1. Planificación elige pedidos pendientes y el sistema considera únicamente vehículos y turnos elegibles.
 2. Con pedidos pendientes y vehículos disponibles, Planificación solicita una ruta y el sistema muestra el vehículo elegido, el orden de las paradas, la carga y las ventanas horarias que tuvo en cuenta.
 3. La ruta queda guardada y sigue apareciendo después de reiniciar la aplicación.
 4. Si no hay una combinación posible, el sistema explica qué pedido, ventana o capacidad impide crearla; no asigna una ruta parcial como si estuviera lista.
@@ -48,14 +70,12 @@ La consulta de Jira del 09/10 muestra los ítems siguientes en `Por hacer`; ning
 
 | Parte del flujo | Historia o tarea | Estado en Jira | Puntos observados | Nota |
 |---|---|---|---:|---|
-| Completar EN-005 para cuentas, flota y rutas | EN-005 / [ECO-21](https://continental-team-ecologistica.atlassian.net/browse/ECO-21) | Por hacer | Sin estimación | ECO-16 ya cubre pedidos y ubicaciones. ECO-21 es nueva, todavía no estimada ni asignada a un sprint. |
-| Registrar vehículos y su disponibilidad | HU-003 / ECO-12 | Por hacer | 5 | Existe en Jira. |
-| Configurar límites y restricciones de la flota | HU-009 / ECO-19 | Por hacer | 5 | Existe en Jira. |
+| Completar EN-005 para cuentas y rutas | EN-005 / [ECO-21](https://continental-team-ecologistica.atlassian.net/browse/ECO-21) | Por hacer | Sin estimación | ECO-16 ya cubre pedidos y ubicaciones; `20261009_02` añade persistencia de flota. ECO-21 sigue pendiente para cuentas, TOTP y rutas, sin estimar ni asignar a un sprint. |
 | Generar la ruta | HU-004 | No creada | 8 propuestos | El puntaje aparece en el backlog documental; el equipo aún no lo aprueba. |
 | Medir el tiempo de generación | EN-001 | No creada | 5 propuestos | El puntaje es propuesta documental, no estimación acordada. |
 | Ejecutar CI en cada cambio | EN-006 / ECO-17 | Por hacer | 5 | Ayuda a revisar el incremento, pero no es por sí misma la función de Planificación. |
 
-La función de ruta suma **23 puntos candidatos** (10 observados en Jira y 13 todavía propuestos); si se incluye EN-006 en la misma iteración, serían 28. ECO-21 aún no tiene estimación y no está incluido en esa suma. Estas cifras no son velocidad disponible ni compromiso de Sprint 3. Jira aún no tiene un Sprint 3 futuro, y la velocidad oficial de Sprint 2 depende de la revisión pendiente. En el Planning el equipo debe contrastar la capacidad real y acordar una meta que quepa. Si el flujo completo no cabe, hay que reordenar el alcance para que cada sprint termine con una acción útil en la aplicación; no cerrar solo la base de datos o el benchmark y llamarlo incremento funcional.
+HU-003 / ECO-12 y HU-009 / ECO-19 siguen apareciendo `Por hacer` en Jira, porque este reordenamiento no modificó el tablero externo. Funcionalmente pertenecen a Sprint 2 y la implementación de vehículos, capacidades, restricciones y disponibilidad ya está comprobada en este repositorio; deben alinearse en Jira durante el Planning, no volver a incluirse en el alcance de Sprint 3. La cifra anterior de 23 puntos describía un candidato que agrupaba flota y rutas antes del presente reordenamiento; no debe usarse como estimación de Sprint 3. Los puntos y las tarjetas destino deben revisarse en Jira. En el Planning se contrasta capacidad real y se acuerda una meta que quepa.
 
 ## Qué tendría que poder hacerse al terminar Sprint 4
 
@@ -86,7 +106,7 @@ La consulta de Jira del 09/10 tampoco encontró trabajo en un sprint futuro para
 
 El recorrido central de mapa, avance y re-enrutamiento suma **13 puntos candidatos**, de los cuales 5 corresponden a una historia sin tarjeta ni estimación aprobada. Comparar resultados (HU-011) añadiría otros 5 puntos propuestos. Son cifras para revisar, no compromiso ni capacidad confirmada. El Planning debe acordar qué parte completa el recorrido de Conducción y qué puede esperar; los indicadores se mostrarán solo cuando existan datos y reglas de cálculo acordados.
 
-## Qué incluye hoy el incremento del Sprint 2
+## Qué incluye hoy el incremento vigente de Sprint 1
 
 Una persona de Planificación puede abrir la aplicación, autenticarse con contraseña y TOTP, registrar un pedido con dirección, carga y ventana horaria, y después localizarlo en la lista o abrir su detalle. Administración puede consultar pedidos, pero no registrarlos. El pedido queda guardado en PostgreSQL/PostGIS y sigue disponible tras reiniciar la API.
 
@@ -96,7 +116,9 @@ Una persona de Planificación puede abrir la aplicación, autenticarse con contr
 | Registrar | Valida el pedido y sus ventanas horarias, lo crea como `PENDIENTE` y muestra el código generado. | [Formulario de pedidos](../../frontend/src/components/PedidoForm.tsx) · [casos de uso](../../backend/src/app/pedidos/service.py) · [API de pedidos](../../backend/src/app/pedidos/router.py) |
 | Encontrar y consultar | Permite ver la lista, buscar o filtrar pedidos y abrir el detalle. | [Lista de pedidos](../../frontend/src/components/PedidosTable.tsx) · [detalle](../../frontend/src/components/PedidoDetalle.tsx) · [API de pedidos](../../backend/src/app/pedidos/router.py) |
 
-El [informe de revisión del Sprint 2](../03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) recoge los criterios, el ensayo manual y sus resultados. El ensayo se hizo el 02/10; no se debe presentar como una demostración nueva ni como aceptación formal de la reunión prevista para el 09/10.
+La comprobación de pedidos tras reiniciar API se hizo en una base PostGIS temporal y aislada. Los documentos de seguimiento de Sprint 1 y 2 conservan sus cortes históricos; el cambio de alcance acordado se aplica a esta línea base funcional y a la ejecución actual del proyecto.
+
+El [informe de revisión del Sprint 2](../03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) recoge el ensayo histórico del 02/10 y el E2E actual de los cinco criterios de flota ejecutado el 09/10. Los criterios funcionales de Sprint 2 están aprobados por ese E2E; no se afirma que el ensayo antiguo sea nuevo ni que se haya registrado una decisión de Product Owner en reunión.
 
 La comprobación local del 09/10 confirmó que la interfaz responde en `http://localhost:3000/` y la API en `http://localhost:8000/openapi.json`. La captura compartida durante esta comprobación muestra la sesión de Planificación en la pantalla de Pedidos, con la lista vacía. Al autenticar por API con contraseña y TOTP, la lista respondió 200 con 0 pedidos; la ruta de sesión sin cookie sigue respondiendo 401, como debe.
 
@@ -104,9 +126,9 @@ La comprobación de persistencia se hizo en una base PostGIS temporal y aislada.
 
 Una solicitud manual de ventana invertida enviada desde PowerShell devolvió 400 y no guardó nada. No se conservó el cuerpo del error, así que ese intento no permite confirmar un defecto del endpoint. Las 28 pruebas existentes de la API pasaron e incluyen el rechazo 422 para una ventana que termina antes de empezar. Si se vuelve a probar ese caso en vivo, hay que guardar el cuerpo de la respuesta para identificar con certeza el origen del 400.
 
-Las pruebas automatizadas y la compilación anotadas en los informes corresponden a ejecuciones anteriores; no volví a ejecutar la suite en esta verificación.
+En la actualización del 09/10 pasaron la suite completa de backend, las 39 pruebas de frontend y la compilación de producción. El linter terminó con dos avisos de `set-state-in-effect`, uno ya presente en la página de pedidos y otro en la carga de flota. La comprobación visual extremo a extremo de flota se hizo con MFA y roles en una base aislada; tras reiniciar la API, el vehículo y su disponibilidad continuaron visibles.
 
-Todavía no se pueden gestionar vehículos, generar o guardar rutas, verlas en un mapa ni registrar el avance de entregas. Las cuentas de demostración siguen siendo locales y requieren contraseña y TOTP; no están conectadas al inicio de sesión institucional.
+La gestión de vehículos y turnos está implementada y sus cinco criterios funcionales de aceptación aprobaron el E2E del 09/10. La prueba usó cuentas temporales y un PostGIS aislado, retirados al terminar; no quedaron vehículos E2E en la base local del proyecto. La persistencia de rutas, su generación, el mapa y el avance de entregas siguen pendientes para Sprint 3 y posteriores. Las cuentas de demostración siguen siendo locales y requieren contraseña y TOTP; no están conectadas al inicio de sesión institucional.
 
 ## Cuándo damos por útil un sprint
 
@@ -129,3 +151,8 @@ Esta definición sirve para juzgar el incremento de un sprint. No significa que 
 | 1.6.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se integra PostgreSQL/PostGIS para pedidos, se comprueba que sobreviven al reinicio y se actualiza la propuesta de Sprint 3 para completar la persistencia de flota y rutas. |
 | 1.7.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea el Sprint 2 con ECO-16 y la persistencia verificada; ECO-21 registra el trabajo que queda para cuentas, flota y rutas. |
 | 1.8.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la pantalla autenticada y la consulta real de la lista vacía; también se aclara el resultado inconcluso de una solicitud manual inválida y la cobertura de las pruebas existentes. |
+| 1.9.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se acuerda Sprint 1 MFA/pedidos, Sprint 2 flota, Sprint 3 rutas y se conserva Sprint 4 para ejecución de rutas; los cortes históricos de Jira y seguimiento no se reescriben. |
+| 1.10.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se retira HU-003 y HU-009 del candidato de Sprint 3 y se aclara su estado en Jira frente a la implementación ya comprobada de Sprint 2. |
+| 1.11.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se completa E2E navegador y se aprueban los cinco criterios funcionales de flota de Sprint 2. |
+| 1.11.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra el E2E navegador de los cinco criterios de aceptación de flota y la persistencia después de reiniciar la API. |
+| 1.12.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se enlaza la especificación principal OpenSpec de flota desde el resultado y alcance de Sprint 2. |

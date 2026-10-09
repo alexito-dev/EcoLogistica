@@ -12,6 +12,7 @@ from app.auth.router import router as auth_router
 from app.config import get_settings
 from app.database_health import verificar_base_de_datos
 from app.errors import registrar_manejadores
+from app.flota.router import router as flota_router
 from app.pedidos.router import router as pedidos_router
 
 METODOS_QUE_CAMBIAN_ESTADO = {"POST", "PUT", "PATCH", "DELETE"}
@@ -59,12 +60,13 @@ def create_app() -> FastAPI:
         CORSMiddleware,
         allow_origins=[settings.cors_origin],
         allow_credentials=True,
-        allow_methods=["GET", "POST"],
+        allow_methods=["GET", "POST", "PUT"],
         allow_headers=["Content-Type"],
     )
     registrar_manejadores(app)
     app.include_router(auth_router, prefix="/api/v1")
     app.include_router(pedidos_router, prefix="/api/v1")
+    app.include_router(flota_router, prefix="/api/v1")
     return app
 
 

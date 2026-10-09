@@ -15,6 +15,7 @@ from app.auth.domain import (
     CuentaBloqueadaError,
     NoAutenticadoError,
 )
+from app.flota.domain import PlacaDuplicadaError, ReglaFlotaError, VehiculoNoEncontradoError
 from app.pedidos.domain import CodigoDuplicadoError, PedidoNoEncontradoError, ReglaDominioError
 
 logger = logging.getLogger("ecologistica")
@@ -79,6 +80,18 @@ def registrar_manejadores(app: FastAPI) -> None:
     @app.exception_handler(PedidoNoEncontradoError)
     async def _no_encontrado(_: Request, __: PedidoNoEncontradoError) -> JSONResponse:
         return _respuesta(404, "Pedido no encontrado")
+
+    @app.exception_handler(VehiculoNoEncontradoError)
+    async def _vehiculo_no_encontrado(_: Request, __: VehiculoNoEncontradoError) -> JSONResponse:
+        return _respuesta(404, "Vehículo no encontrado")
+
+    @app.exception_handler(ReglaFlotaError)
+    async def _regla_flota(_: Request, exc: ReglaFlotaError) -> JSONResponse:
+        return _respuesta(422, "No se cumple una regla de flota", exc.errors)
+
+    @app.exception_handler(PlacaDuplicadaError)
+    async def _placa_duplicada(_: Request, __: PlacaDuplicadaError) -> JSONResponse:
+        return _respuesta(409, "Ya existe un vehículo con esta placa", {"placa": "La placa debe ser única"})
 
     @app.exception_handler(CredencialesInvalidasError)
     async def _credenciales(_: Request, __: CredencialesInvalidasError) -> JSONResponse:
