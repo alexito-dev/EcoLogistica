@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.4.0 |
+| Versión | 1.5.0 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026; revisión 09/10/2026) |
 | Fecha de la retrospectiva | 02/10/2026 (corte de mitad de sprint; se confirma en la reunión del 09/10) |
 | Facilitador | Alex Zorrilla |
@@ -27,6 +27,7 @@
 | 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se corrigen el seguimiento de las acciones, el estado de Jira y el balance al corte previo a la revisión; se registra IMP-003 reabierto. |
 | 1.3.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se aclara el corte histórico de autoría de commits y se actualiza el dato con el historial de Git hasta el 09/10. |
 | 1.4.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza el estado de ECO-20: además de no tener estimación aprobada, Jira aún no muestra una persona asignada. |
+| 1.5.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se centra la acción de Sprint 3 en completar un recorrido de Planificación y se deja la tecnología como trabajo que habilita esa tarea. |
 
 ## Seguimiento de las acciones del Sprint 1
 
@@ -94,7 +95,7 @@
 
 | # | Acción concreta | Eje | Responsable | Fecha límite | Indicador de éxito |
 |---:|---|---|---|---|---|
-| A1 | Asignar un cambio OpenSpec por integrante en el Sprint 3: PostgreSQL y flota (backend), motor y benchmark (optimización), mejoras de interfaz y visor de mapa (frontend), CI y pruebas extremo a extremo (QA/DevOps) | Personas | Alex Zorrilla | 09/10/2026 (Planning del Sprint 3) | Los 5 integrantes con al menos un commit propio fusionado en el Sprint 3 |
+| A1 | Organizar el Sprint 3 alrededor del flujo propuesto: Planificación asigna pedidos pendientes a vehículos y revisa una ruta guardada. En el Planning, acordar las historias de interfaz, persistencia, flota y primera secuencia de paradas; repartirlas por rol y comprobarlas juntas como un recorrido. | Personas | Alex Zorrilla | 09/10/2026 (Planning del Sprint 3) | La meta y sus historias están acordadas y estimadas en Jira; el incremento permite completar el flujo y el aporte de cada integrante queda visible en el trabajo integrado. |
 | A2 | Sesión de nivelación de 1 hora sobre el stack y el flujo OpenSpec, dictada con el código real del proyecto | Personas | Alex Zorrilla | 12/10/2026 | Los 5 integrantes ejecutan el backend, el frontend y las pruebas en su máquina |
 | A3 | Toda decisión técnica que cambie la arquitectura se discute en la reunión del equipo y se registra como ADR en `docs/otros` antes de tocar `main` | Relaciones | Anco Porras, Jhean Pier Julio | Permanente desde el 09/10/2026 | 0 cambios de arquitectura sin ADR |
 | A4 | Revisión cruzada obligatoria: cada *pull request* la aprueba un integrante distinto del autor | Relaciones | Jose Luis Isidro Casio | 16/10/2026 | 100 % de PR con al menos una aprobación |

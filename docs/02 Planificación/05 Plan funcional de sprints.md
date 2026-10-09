@@ -30,7 +30,7 @@ Este plan ordena lo que ya ocurrió y propone cómo continuar. Los compromisos f
 
 Una persona puede abrir la aplicación, autenticarse, registrar un pedido con dirección, carga y ventana horaria, y después localizarlo en la lista o abrir su detalle. El acceso depende del rol: Planificación puede registrar y consultar pedidos; Administración solo puede consultarlos.
 
-La verificación local del 09/10 confirmó que la interfaz responde en `http://localhost:3000/` y que la API responde en `http://localhost:8000/openapi.json`. Las pruebas automatizadas y la compilación anotadas en los informes corresponden a ejecuciones anteriores documentadas allí; esta actualización no las vuelve a ejecutar.
+La verificación local del 09/10 confirmó que la interfaz responde en `http://localhost:3000/`, que el módulo de inicio de sesión se sirve con el texto de acceso actualizado y que la API publica sus rutas en `http://localhost:8000/openapi.json`. Sin una sesión, `/api/v1/auth/sesion` responde 401, como corresponde. Las pruebas automatizadas y la compilación anotadas en los informes corresponden a ejecuciones anteriores documentadas allí; esta actualización no las vuelve a ejecutar.
 
 Todavía no se puede guardar pedidos entre reinicios, gestionar vehículos, generar o guardar rutas, verlas en un mapa ni registrar el avance de entregas. La autenticación usa cuentas de demostración locales y requiere configurar el acceso y el código TOTP; no es inicio de sesión institucional conectado a un proveedor de identidad.
 
