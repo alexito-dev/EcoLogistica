@@ -15,7 +15,7 @@
 | Campo | Valor |
 |---|---|
 | Código del proyecto | PFA-TP2-ECOLOG-2026 |
-| Versión | 1.1.4 |
+| Versión | 1.1.5 |
 | Iteración reportada | ECO Sprint 2 |
 | Objetivo replanificado del sprint | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
 | Fuentes | Historial Git (`main`), cambios OpenSpec `registro-pedidos` y `autenticacion-mfa`, resultados de pruebas automatizadas, [Retrospectiva del Sprint 1](../04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
@@ -34,6 +34,7 @@
 | 1.1.2 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea la planificación futura de GitHub Actions y ramas con el flujo `feature/*` y PR hacia `main`; se mantiene pendiente retirar `developer`. |
 | 1.1.3 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la métrica actual de Jira (2/2 incidencias en `Listo`) y se aclara que no sustituye la aceptación ni el cierre formal del Sprint 2. |
 | 1.1.4 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se precisa el historial de estados de ECO-9 al cerrar Sprint 1 y al incorporarla a Sprint 2. |
+| 1.1.5 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se limita la lectura de los 5 puntos al estado de Jira observado al corte del 02/10; no se presentan como velocidad aceptada antes de la revisión del sprint. |
 
 ## Resumen ejecutivo
 
@@ -46,7 +47,7 @@ Al inicio del sprint también se **ratificó el stack React + FastAPI** (Alterna
 | Variables de control | Descripción del estado |
 | --- | --- |
 | **Alcance** | 🟡 **1 historia de usuario completada: HU-001 / ECO-9 (5 pts), arrastrada del Sprint 1.** La historia técnica de **autenticación y autorización (RF-11.1)** también está completada y se registró como ECO-20 el 09/10, sin estimación de puntos. Avance del PMV: 1 de 11 historias de usuario originales (9 %). Del roadmap previsto (flota y motor) no se inició ningún ítem. |
-| **Cronograma** | 🟡 **Recuperando, con atraso respecto del roadmap.** Al 02/10 han transcurrido 5,6 de 15 semanas (37 % del tiempo) y el avance funcional es del 9 % de las historias. La velocidad pasó de 0 a 5 puntos. El motor de optimización (camino crítico de HU-004 y HU-006) aún no empieza; es el principal riesgo de plazo. |
+| **Cronograma** | 🟡 **Recuperando, con atraso respecto del roadmap.** Al 02/10 han transcurrido 5,6 de 15 semanas (37 % del tiempo) y el avance funcional es del 9 % de las historias. Jira mostraba HU-001 (5 puntos) en `Listo` al corte del 02/10; este dato es provisional y no constituye velocidad aceptada en la revisión. El motor de optimización (camino crítico de HU-004 y HU-006) aún no empieza; es el principal riesgo de plazo. |
 | **Costos** | 🟢 **Sin sobrecosto.** Gasto en infraestructura cloud a la fecha: S/ 0 (todo se ejecuta en local). Licencias: solo Jira, dentro de lo previsto. Las nuevas dependencias son de código abierto y sin costo (FastAPI, React, Argon2, PyOTP, PyJWT, Lucide y qrcode). Contingencia sin usar: S/ 5,843.40. |
 | **Calidad** | 🟢 **139 pruebas automatizadas en verde: 100 de backend (cobertura del 99 %) y 39 de frontend.** 4 defectos detectados por las pruebas y la verificación, y corregidos dentro del sprint (ver [Revisión](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)). Auditoría de la especificación de seguridad con 13 hallazgos, todos resueltos o declarados fuera de alcance. Validación estricta de OpenSpec, compilación de producción y linter correctos. |
 
@@ -57,7 +58,7 @@ Leyenda: 🟢 en control · 🟡 atención · 🔴 fuera de lo planificado.
 | Indicador | Sprint 1 | Sprint 2 (corte 02/10) |
 |---|---:|---:|
 | Historias de usuario completadas | 0 | 1 (HU-001) |
-| Puntos de historia completados (velocidad) | 0 | 5 |
+| Puntos de historia en `Listo` en Jira al corte indicado | 0 | 5 (02/10; provisional, revisión pendiente) |
 | Historias técnicas completadas | 0 | 1 (autenticación RF-11.1) |
 | Cambios OpenSpec completados y archivados | 0 | 2 |
 | Pruebas automatizadas | 0 | 139 |
@@ -71,7 +72,7 @@ Leyenda: 🟢 en control · 🟡 atención · 🔴 fuera de lo planificado.
 | **Riesgo** | **Responsable** | **Mitigación** |
 | -- | -- | -- |
 | **R-S2-01 — Motor de optimización sin iniciar** (RSK-02, exposición 15, Alta). HU-004 y HU-006 dependen de él y es el núcleo del valor del producto (VRPTW/Green VRP). | Alexander Daniel Hilario Talavera | Iniciar en el Sprint 3 un prototipo con OR-Tools y el benchmark EN-001 (50/100/150 pedidos); entregar resultados parciales antes que nada. |
-| **R-S2-02 — Concentración del trabajo en una persona.** Todos los commits del sprint son del líder; el conocimiento del código no está distribuido. | Alex Zorrilla | Asignar en el Sprint 3 un cambio OpenSpec por integrante (flota a backend, motor a optimización, mapa a frontend) con revisión cruzada por *pull request*. |
+| **R-S2-02 — Concentración del trabajo de implementación en una persona.** Al corte inicial del 02/10, los primeros 8 commits del Sprint 2 en `main` eran de Alex Zorrilla. El historial consultado el 09/10 contenía 20 commits desde el 29/09: 12 de Alex y 8 de Anco Porras, Jhean Pier Julio, estos últimos de documentación; no se verificaron commits de implementación de los demás roles. | Alex Zorrilla | Asignar en el Sprint 3 un cambio OpenSpec por integrante (flota a backend, motor a optimización, mapa a frontend) con revisión cruzada por *pull request*. |
 | **R-S2-03 — Persistencia en memoria y en archivo local.** Los pedidos se pierden al reiniciar y los secretos TOTP no están cifrados en reposo (RNF-04, RNF-06, RNF-11). | Anco Porras, Jhean Pier Julio | PostgreSQL + PostGIS con migraciones (EN-005) en el Sprint 3; los adaptadores ya están aislados detrás de puertos de repositorio. |
 | **R-S2-04 — Integración sin CI.** Las pruebas solo se ejecutan en local; una regresión podría llegar a `main` (RSK-07). | Jose Luis Isidro Casio | GitHub Actions con pruebas de backend y frontend obligatorias en cada *pull request* (EN-006). |
 | **R-S2-05 — Pérdida del autenticador.** Un usuario sin su teléfono no puede entrar; no existe restablecimiento del segundo factor. | Alex Zorrilla | Cambio OpenSpec posterior para restablecimiento por administrador con auditoría; mientras tanto, procedimiento manual documentado en el README. |

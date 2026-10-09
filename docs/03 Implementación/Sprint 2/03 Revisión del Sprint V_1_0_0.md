@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.1.1 |
+| Versión | 1.2.1 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026) |
 | Objetivo replanificado | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
@@ -27,6 +27,7 @@
 | 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se incorpora ECO-20 en Jira sin estimación aprobada y se actualiza el Sprint 1 como cerrado administrativamente. La reunión de revisión del Sprint 2 sigue pendiente. |
 | 1.1.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea la acción futura de CI y ramas con el flujo de ramas breves y PR hacia `main`; la aceptación del Sprint 2 sigue pendiente de la reunión. |
 | 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se añade el historial de cambios de estado de ECO-9 y se confirma que la reunión aún no ocurrió al corte de esta actualización. |
+| 1.2.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se distingue el estado provisional de Jira de la velocidad y aceptación oficiales del Sprint 2, que siguen pendientes de la revisión y del cierre. |
 
 ## Historias de Usuario completadas en este Sprint
 
@@ -117,12 +118,12 @@ Se registrará después de la reunión prevista para el 09/10 a las 15:40, hora 
 | 6 | Restablecimiento del segundo factor por un administrador | Historia técnica | Auditoría, caso E6 | Alex Zorrilla | Sprint 4 |
 | 7 | Archivos de la tipografía Codec Pro | Diseño | [IMP-013](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jhoanna Hade Vera Zea | Antes del 09/10 |
 
-### Velocidad y proyección
+### Estado provisional de Jira y proyección
 
-| Métrica | Sprint 1 | Sprint 2 |
+| Métrica | Sprint 1 al corte planificado | Sprint 2 al 09/10, antes de la revisión |
 |---|---:|---:|
-| Puntos de historia completados | 0 | 5 |
-| Historias técnicas completadas | 0 | 1 (sin estimar en Jira) |
-| Velocidad promedio | — | 2,5 pts por sprint |
+| Puntos de historias que alcanzaron la Definición de Hecho / están en `Listo` en Jira | 0 | 5 (estado de Jira; revisión pendiente) |
+| Historias técnicas en `Listo` en Jira | 0 | 1 (ECO-20; sin estimación aprobada) |
+| Velocidad oficial del Sprint 2 | 0 | Pendiente de revisión y cierre |
 
-Con 2,5 pts por sprint no se alcanzan las 11 historias del PMV. La proyección se recalculará en el Planning del Sprint 3 con la estimación completa del backlog y el trabajo repartido entre los cinco integrantes (ver [Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)).
+El Sprint 2 continúa activo y su revisión está programada para el 09/10 a las 15:40, hora de Lima; por ello, el dato de 5 puntos en `Listo` todavía no es velocidad oficial ni aceptación del producto. No se calcula una velocidad promedio con un sprint pendiente de cierre y ECO-20 sin estimación aprobada. La proyección se actualizará en el Planning del Sprint 3 con el backlog estimado y la capacidad confirmada del equipo (ver [Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)).

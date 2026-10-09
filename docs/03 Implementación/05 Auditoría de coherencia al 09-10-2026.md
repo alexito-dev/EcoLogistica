@@ -26,7 +26,7 @@ La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mi
 | Iteración | Plan registrado | Resultado comprobado al 09/10/2026 |
 |---|---|---|
 | Sprint 1 · 14/09–28/09 | ECO-9 / HU-001 y ECO-15 / HU-006; 10 puntos. | El informe del Sprint 1 registra 0 de 2 al corte planificado del 28/09. Jira mantuvo el sprint id. 36 activo hasta el 09/10 a las 07:42. El historial de ECO-9 muestra `Listo` el 02/10, `Por hacer` al cerrarse el Sprint 1 y nuevamente `Listo` a las 07:43 al añadirse al Sprint 2; ECO-15 sigue `Por hacer`. La métrica dinámica actual de Jira muestra 1 de 2 y no reconstruye la velocidad al 28/09. |
-| Sprint 2 · 29/09–12/10 | Replanificación para entregar el primer incremento: HU-001 con autenticación y autorización MFA. | Jira sprint id. 37 activo: ECO-9 (5 puntos) y ECO-20 (MFA, sin estimación aprobada), ambas `Listo`; la métrica dinámica cuenta 2/2 incidencias (100 %), no aceptación del producto. En la ejecución local del 09/10: 100 pruebas de backend aprobadas, 99 % de cobertura, 39 pruebas de frontend aprobadas y compilación de producción completada. Al corte anterior a la reunión de las 15:40, la revisión y el cierre formal siguen pendientes. |
+| Sprint 2 · 29/09–12/10 | Replanificación para entregar el primer incremento: HU-001 con autenticación y autorización MFA. | Jira sprint id. 37 activo: ECO-9 (5 puntos) y ECO-20 (MFA, sin estimación aprobada), ambas `Listo`; la métrica dinámica cuenta 2/2 incidencias (100 %), no aceptación del producto. En la ejecución local del 09/10: 100 pruebas de backend aprobadas, 99 % de cobertura, 39 pruebas de frontend aprobadas y compilación de producción completada. Al corte anterior a la reunión de las 15:40, la revisión, la velocidad oficial y el cierre formal siguen pendientes. |
 | Sprint 3 | El plan de trabajo de la retrospectiva contempla PostgreSQL/PostGIS, gestión de flota, prototipo y benchmark del motor, y CI. | Trabajo futuro; las historias/tareas faltantes y su capacidad aún deben confirmarse y estimarse en Jira. |
 | Sprint 4 y cierre | El horizonte aprobado contempla cuatro iteraciones y una semana de cierre; el roadmap conserva dashboard, visor, seguridad, disponibilidad e integración/aceptación. | Alcance futuro de alto nivel; prioridades, compromisos y fechas detalladas del Sprint 4 aún no están aprobados. |
 
@@ -64,6 +64,8 @@ La imagen histórica que antes se llamaba `05-releases.png` muestra un resumen a
 
 La documentación histórica de cada sprint conserva su fecha de corte original. Este documento resume las comprobaciones posteriores sin reescribir los resultados de fechas anteriores.
 
+En la revisión documental del 09/10 se corrigió el uso de “velocidad” para el Sprint 2: antes de la reunión y del cierre, los 5 puntos de ECO-9 son estado observado en Jira (`Listo`), no velocidad aceptada. También se acotó la afirmación sobre concentración de commits al corte del 02/10 y se incorporó el historial verificado hasta el 09/10.
+
 ## Acciones abiertas
 
 - Después de la revisión prevista para el 09/10 a las 15:40, registrar sus decisiones, actualizar el estado y cerrar el Sprint 2 el 12/10.
@@ -90,3 +92,4 @@ La documentación histórica de cada sprint conserva su fecha de corte original.
 | 1.8.0 | 09/10/2026 | Se detalla la secuencia de estados de ECO-9 y se incorpora IMP-003 reabierto; el Sprint 2 permanece pendiente de revisión y cierre formal. |
 | 1.9.0 | 09/10/2026 | Se comparan las ramas remotas con `main`; se registra el límite de autenticación de GitHub CLI para verificar protección y se deja pendiente la disposición de las ramas antiguas. |
 | 1.10.0 | 09/10/2026 | Se traducen al español los comandos y habilidades OpenSpec de `.claude/`, conservando sus nombres ejecutables, campos de datos y contratos estructurales. |
+| 1.11.0 | 09/10/2026 | Se corrige la presentación de los 5 puntos del Sprint 2 como velocidad, se deja la velocidad oficial pendiente de revisión y cierre, y se acota al corte correspondiente el análisis de autoría de commits. |
