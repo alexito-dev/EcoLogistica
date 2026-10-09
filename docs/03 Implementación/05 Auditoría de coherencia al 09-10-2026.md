@@ -10,17 +10,21 @@ La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mi
 
 ## Idioma, identidad y stack comunes
 
-- Los documentos de producto en `README.md`, `docs/` y los artefactos OpenSpec están redactados en español. `openspec/config.yaml` exige `es`; mantiene en inglés únicamente los encabezados estructurales y las palabras obligatorias `SHALL`/`MUST` del formato. Los archivos `.claude/commands/opsx` y `.claude/skills/openspec-*` son instrucciones del flujo de herramienta y se conservan en el idioma original del proveedor.
+- Los documentos de producto en `README.md`, `docs/`, plantillas de GitHub y contenido OpenSpec están redactados en español. `openspec/config.yaml` exige `es`; conserva en inglés únicamente los encabezados estructurales y las palabras obligatorias `SHALL`/`MUST` del formato. Los archivos `.claude/commands/opsx` y `.claude/skills/openspec-*` son instrucciones del proveedor de la herramienta y se conservan en su idioma original.
 - El nombre del integrante se normaliza en la documentación como **Anco Porras, Jhean Pier Julio**.
 - La línea base vigente es **React + Vite + TypeScript** en el frontend y **FastAPI + Python** en la API. La propuesta de Next.js/Nest.js se revirtió el 02/10/2026 y no es una alternativa vigente.
 - PostgreSQL/PostGIS, Leaflet/OpenStreetMap y el motor Python de optimización pertenecen a la arquitectura objetivo. No deben presentarse como componentes ya ejecutados.
+- Las herramientas de seguimiento y entrega son Jira (`ECO`) para backlog y sprints, GitHub para el repositorio y OpenSpec para especificaciones y cambios. PostgreSQL/PostGIS, mapas, optimización, Docker Compose y CI no forman parte del stack ejecutable actual.
+- El árbol del README se contrastó con el repositorio: `database/` aún no existe. `docs/04 Seguimiento y Control/` y `docs/05 Cierre/` sí existen, pero solo tienen `.gitkeep` y no contienen entregables; el README ahora distingue los directorios reservados de la documentación pendiente.
+- El flujo de ramas se armonizó en README, OpenSpec, RES-17 y RST-ACA-02: ramas breves `feature/*` desde `main`, PR hacia `main`, sin `develop` obligatoria. La rama remota `developer` está desactualizada; protección de `main`, revisión obligatoria y CI siguen pendientes de configuración.
+- Las referencias a `develop` en actas y retrospectivas de Sprint 1 se conservan como acuerdos históricos de esa fecha; las tareas futuras de los documentos de Sprint 2 ya apuntan al flujo actualizado. No se deben interpretar esas referencias antiguas como configuración vigente.
 
 ## Plan y resultado hasta el Sprint 2
 
 | Iteración | Plan registrado | Resultado comprobado al 09/10/2026 |
 |---|---|---|
 | Sprint 1 · 14/09–28/09 | ECO-9 / HU-001 y ECO-15 / HU-006; 10 puntos. | El informe del Sprint 1 registra 0 de 2 al corte planificado del 28/09. Jira mantuvo el sprint id. 36 activo hasta el 09/10; ECO-9 quedó `Listo` el 02/10 y conserva ambos sprints en su historial, mientras ECO-15 está `Por hacer`. La métrica dinámica actual de Jira muestra 1 de 2 y no reconstruye la velocidad al 28/09. |
-| Sprint 2 · 29/09–12/10 | Replanificación para entregar el primer incremento: HU-001 con autenticación y autorización MFA. | Jira sprint id. 37 activo: ECO-9 (5 puntos) y ECO-20 (MFA, sin estimación aprobada), ambas `Listo`. En la ejecución local del 09/10: 100 pruebas de backend aprobadas, 99 % de cobertura, 39 pruebas de frontend aprobadas y compilación de producción completada. Falta la revisión del sprint y su cierre. |
+| Sprint 2 · 29/09–12/10 | Replanificación para entregar el primer incremento: HU-001 con autenticación y autorización MFA. | Jira sprint id. 37 activo: ECO-9 (5 puntos) y ECO-20 (MFA, sin estimación aprobada), ambas `Listo`; la métrica dinámica cuenta 2/2 incidencias (100 %), no aceptación del producto. En la ejecución local del 09/10: 100 pruebas de backend aprobadas, 99 % de cobertura, 39 pruebas de frontend aprobadas y compilación de producción completada. Falta la revisión del sprint y su cierre. |
 | Sprint 3 | El plan de trabajo de la retrospectiva contempla PostgreSQL/PostGIS, gestión de flota, prototipo y benchmark del motor, y CI. | Trabajo futuro; las historias/tareas faltantes y su capacidad aún deben confirmarse y estimarse en Jira. |
 | Sprint 4 y cierre | El horizonte aprobado contempla cuatro iteraciones y una semana de cierre; el roadmap conserva dashboard, visor, seguridad, disponibilidad e integración/aceptación. | Alcance futuro de alto nivel; prioridades, compromisos y fechas detalladas del Sprint 4 aún no están aprobados. |
 
@@ -58,8 +62,9 @@ La documentación histórica de cada sprint conserva su fecha de corte original.
 
 ## Acciones abiertas
 
-- Después de la revisión del 09/10, registrar sus decisiones, actualizar el estado y cerrar el Sprint 2 el 12/10.
+- Después de la revisión prevista para el 09/10 a las 15:40, registrar sus decisiones, actualizar el estado y cerrar el Sprint 2 el 12/10.
 - Corregir la mezcla de idiomas y el mapeo de las cinco columnas del tablero Jira; mantener `Listo` como único estado de categoría completada.
+- Aplicar el flujo de ramas acordado, retirar la rama `developer` desactualizada cuando el equipo confirme la migración, y configurar revisión y CI para `main`.
 - Definir si las cuatro iteraciones del Acta son periodos macro o si corresponden uno a uno con sprints; luego calendarizar Sprint 3 y 4 sin alterar las fechas históricas.
 - Completar las tarjetas faltantes, confirmar estimaciones y decidir cuándo crear la versión `v1.0.0-MVP`.
 - Después de la revisión del Sprint 2 y de confirmar los acuerdos del equipo, actualizar su informe, revisión y retrospectiva con resultados y evidencia final.
@@ -72,3 +77,6 @@ La documentación histórica de cada sprint conserva su fecha de corte original.
 | 1.0.0 | 09/10/2026 | Contraste inicial de idioma, stack, implementación, sprints y Jira; evidencia local de pruebas y compilación. |
 | 1.1.0 | 09/10/2026 | Se actualiza con la regularización de sprints e incidencias de Jira, la distinción entre techo y estimado presupuestario, y la ambigüedad pendiente entre iteración y sprint. |
 | 1.2.0 | 09/10/2026 | Se actualiza con la métrica dinámica de Sprint 1 y su diferencia respecto del corte planificado, además de la regularización de sprints e incidencias de Jira, la distinción entre techo y estimado presupuestario, y la ambigüedad pendiente entre iteración y sprint. |
+| 1.3.0 | 09/10/2026 | Se alinea el README y OpenSpec con la estructura existente y el flujo de ramas acordado; se identifican como pendientes la revisión del Sprint 2, la configuración de Jira, la protección de `main` y CI. |
+| 1.4.0 | 09/10/2026 | Se actualiza el conteo dinámico de Jira del Sprint 2 a 2/2 y se aclara que la métrica no sustituye la aceptación ni el cierre formal. |
+| 1.5.0 | 09/10/2026 | Se alinea RST-ACA-02 y se explicita en OpenSpec el límite entre stack objetivo e implementación ejecutable. |

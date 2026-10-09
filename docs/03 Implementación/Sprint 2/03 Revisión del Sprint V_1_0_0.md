@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.1.0 |
+| Versión | 1.1.1 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026) |
 | Objetivo replanificado | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
@@ -25,6 +25,7 @@
 |---|---|---|---|
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión con el trabajo completado al 02/10 y el guion de demostración ensayado. |
 | 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se incorpora ECO-20 en Jira sin estimación aprobada y se actualiza el Sprint 1 como cerrado administrativamente. La reunión de revisión del Sprint 2 sigue pendiente. |
+| 1.1.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea la acción futura de CI y ramas con el flujo de ramas breves y PR hacia `main`; la aceptación del Sprint 2 sigue pendiente de la reunión. |
 
 ## Historias de Usuario completadas en este Sprint
 
@@ -111,7 +112,7 @@ Se registrará después de la reunión prevista para el 09/10 a las 15:40, hora 
 | 2 | PostgreSQL + PostGIS con migraciones y adaptadores reales (EN-005 / ECO-16) | Habilitador | [IMP-011](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Anco Porras, Jhean Pier Julio | Sprint 3 |
 | 3 | Gestión de flota y restricciones vehiculares (HU-003, HU-009) | Historia | Roadmap del Sprint 2, no iniciado | Anco Porras, Jhean Pier Julio | Sprint 3 |
 | 4 | Prototipo del motor VRPTW y benchmark EN-001 (desbloquea HU-004 y HU-006) | Historia / habilitador | Roadmap; [IMP-006](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Alexander Daniel Hilario Talavera | Sprint 3 |
-| 5 | CI en GitHub Actions y Git Flow con `developer` y *pull requests* (EN-006) | Habilitador | [IMP-010](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jose Luis Isidro Casio | Sprint 3 |
+| 5 | CI en GitHub Actions y ramas breves `feature/*` con *pull requests* hacia `main` (EN-006); retirar `developer` tras confirmar la migración | Habilitador | [IMP-010](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jose Luis Isidro Casio | Sprint 3 |
 | 6 | Restablecimiento del segundo factor por un administrador | Historia técnica | Auditoría, caso E6 | Alex Zorrilla | Sprint 4 |
 | 7 | Archivos de la tipografía Codec Pro | Diseño | [IMP-013](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jhoanna Hade Vera Zea | Antes del 09/10 |
 

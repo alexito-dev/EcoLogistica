@@ -6,9 +6,9 @@
 ### Plataforma de Optimización de Rutas Sostenibles de Última Milla
 
 [![Estado](https://img.shields.io/badge/Estado-Implementaci%C3%B3n%20%C2%B7%20Sprint%202-2ea44f?style=flat-square)](docs/03%20Implementaci%C3%B3n)
-[![Versión](https://img.shields.io/badge/Versión-v1.0.0--alpha-blue?style=flat-square)](README.md)
+[![Versión](https://img.shields.io/badge/Versión-En%20desarrollo-blue?style=flat-square)](README.md)
 [![Stack](https://img.shields.io/badge/Stack-React%20%2B%20FastAPI-025B29?style=flat-square)](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md)
-[![Metodología](https://img.shields.io/badge/Metodología-Scrum%20%2B%20Git%20Flow-6f42c1?style=flat-square)](docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20V_1_0_0.md)
+[![Metodología](https://img.shields.io/badge/Metodología-Scrum%20%2B%20ramas%20cortas-6f42c1?style=flat-square)](docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20V_1_0_0.md)
 [![Curso](https://img.shields.io/badge/Asignatura-Taller%20de%20Proyectos%202-0969da?style=flat-square)](README.md)
 [![Zona](https://img.shields.io/badge/Ubicación-Huancayo%2C%20Perú-d97706?style=flat-square)](README.md)
 
@@ -60,7 +60,7 @@ El código disponible entrega autenticación con verificación TOTP y roles, ade
 | Sprint | Plan comprometido | Resultado documentado |
 |---|---|---|
 | Sprint 1 · 14/09–28/09 | ECO-9 / HU-001 y ECO-15 / HU-006 (10 puntos) | Al corte planificado del 28/09, el informe del Sprint 1 registra 0 de 2 historias completadas. Jira siguió activo hasta el 09/10; ECO-9 pasó a `Listo` el 02/10 y su métrica dinámica actual cuenta 1 de 2 en Sprint 1. Esa métrica actual no representa la velocidad al 28/09. ECO-15 sigue pendiente y sin implementación demostrable. |
-| Sprint 2 · 29/09–12/10 | Replanificación: primer incremento demostrable de HU-001 con autenticación y autorización MFA | HU-001 (5 puntos) y MFA están implementadas en `main` y registradas como ECO-9 y ECO-20 en Jira; ECO-20 no tiene estimación aprobada. Jira mantiene el Sprint 2 activo. La revisión está prevista para el 09/10 a las 15:40, hora de Lima; este estado tiene corte previo a esa reunión. |
+| Sprint 2 · 29/09–12/10 | Replanificación: primer incremento demostrable de HU-001 con autenticación y autorización MFA | HU-001 (5 puntos) y MFA están implementadas en `main` y registradas como ECO-9 y ECO-20 en Jira; ECO-20 no tiene estimación aprobada. La consulta actual de Jira muestra 2/2 incidencias en `Listo` (100 %), pero el sprint sigue activo y la reunión de revisión está prevista para el 09/10 a las 15:40, hora de Lima; el conteo no implica aceptación ni cierre. |
 
 Jira ya refleja el Sprint 1 cerrado, el Sprint 2 activo y la historia ECO-20 de MFA. ECO-15 está en `Por hacer` porque el repositorio no contiene re-enrutamiento. Sigue pendiente normalizar los nombres y el mapeo de las columnas del tablero; el detalle está en [02. Artefactos Jira](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md). Los estados de Jira se contrastan con el código y sus pruebas.
 
@@ -143,81 +143,52 @@ graph TD
 
 ```text
 EcoLogistica/
-│
-├── .github/                       # Plantillas de PRs e Issues
-│   ├── ISSUE_TEMPLATE/
-│   │   ├── bug_report.md
-│   │   └── feature_request.md
-│   └── pull_request_template.md
-│
-├── docs/                          # Documentación formal (Estándares PMI / Ágil)
-│   ├── 01 Inicio/                 # Fase de inicio y gobernanza
-│   │   ├── 01. Selección del enfoque del proyecto .md
-│   │   ├── 02. Acta de constitución.md
-│   │   ├── 03. Declaración de la visión.md
-│   │   ├── 04. Registro de supuestos y restricciones.md
-│   │   └── 05. Registro de interesados.md
-│   ├── 02 Planificación/          # Cronogramas, backlog y EDT/WBS
-│   ├── 03 Implementación/         # Informe de estado, impedimentos, revisión y retrospectiva por sprint
-│   ├── 04 Seguimiento y Control/  # Minutas de sprint y métricas QA
-│   ├── 05 Cierre/                 # Informes de entrega de PMV
-│   └── otros/                     # Material técnico de soporte
-│
-├── frontend/                      # Aplicación cliente (Web UI)
-│   ├── src/                       # Componentes, vistas y servicios cliente
-│   ├── tests/                     # Pruebas de interfaz
-│   └── public/                    # Archivos estáticos
-│
-├── backend/                       # Servidor API y Algoritmo de Optimización
-│   ├── src/                       # Controladores, servicios y motor metaheurístico
-│   └── tests/                     # Pruebas unitarias e integración
-│
-├── database/                      # Esquemas de Base de Datos y Datos Semilla
-│   ├── migrations/                # Scripts DDL y control de migraciones
-│   └── seeds/                     # Datos iniciales para pruebas en Huancayo
-│
-├── assets/                        # Recursos gráficos y multimedia
-│   ├── diagrams/                  # Diagramas de arquitectura y flujos
-│   ├── mockups/                   # Diseños de interfaz UI/UX
-│   └── images/                    # Capturas y recursos gráficos
-│
-├── .gitignore                     # Reglas de exclusión de Git
-├── .env.example                   # Plantilla de variables de entorno
-└── README.md                      # Documento principal del repositorio
+├── .github/                       # Plantillas de incidencias y solicitudes de cambio
+├── assets/                        # Logotipo y evidencias de Jira
+├── backend/
+│   ├── src/app/auth/              # Autenticación, MFA, roles y auditoría
+│   ├── src/app/pedidos/           # Dominio, API y repositorio en memoria
+│   └── tests/                     # Pruebas de API, servicios y dominio
+├── docs/
+│   ├── 01 Inicio/                 # Acta, alcance, requisitos y arquitectura
+│   ├── 02 Planificación/          # Backlog, Jira, riesgos y presupuesto
+│   ├── 03 Implementación/         # Informes, revisión, retrospectiva e impedimentos
+│   │   └── Sprint 2/              # Artefactos del segundo sprint
+│   ├── 04 Seguimiento y Control/  # Carpeta reservada; aún sin entregables
+│   ├── 05 Cierre/                 # Carpeta reservada; aún sin entregables
+│   └── otros/                     # Reservado para soporte técnico
+├── frontend/
+│   ├── src/                       # Interfaz React, autenticación y cliente API
+│   ├── tests/                     # Pruebas con Vitest y Testing Library
+│   └── public/                    # Logotipo y guía de fuentes
+├── openspec/
+│   ├── specs/                     # Especificaciones vigentes
+│   └── changes/archive/           # Cambios implementados y archivados
+├── .env.example                   # Variables de entorno de ejemplo, sin secretos
+└── README.md                      # Guía y estado del proyecto
 ```
 
 ---
 
 ## 7. Modelo de Ramas y Control de Versiones
 
-Se utiliza **Git Flow** como estándar de desarrollo colaborativo:
+El flujo definido usa **ramas cortas desde `main` y revisión mediante Pull Request hacia `main`**. No se requiere una rama `develop`; `main` es la rama de integración y cada cambio conserva commits descriptivos con Conventional Commits.
 
 ```mermaid
 gitGraph
-    commit id: "Inicial"
-    branch develop
-    checkout develop
-    commit id: "Base del Proyecto"
-    branch feature/backend-pedidos
-    checkout feature/backend-pedidos
-    commit id: "CRUD Pedidos"
-    checkout develop
-    merge feature/backend-pedidos id: "PR #1"
-    branch release/v1.0.0
-    checkout release/v1.0.0
-    commit id: "Release Candidate"
+    commit id: "main"
+    branch feature/pedidos
+    checkout feature/pedidos
+    commit id: "feat(pedidos): registrar pedidos"
     checkout main
-    merge release/v1.0.0 id: "PMV Final" tag: "v1.0.0"
-    checkout develop
-    merge release/v1.0.0 id: "Sync Develop"
+    merge feature/pedidos id: "Pull Request revisado"
 ```
 
-### 7.1. Ramas Principales y de Soporte
-- `main`: Código productivo, estable y auditado.
-- `develop`: Rama troncal de integración continua.
-- `feature/*`: Desarrollo de módulos específicos (ej. `feature/optimizacion-rutas`, `feature/mapa-leaflet`).
-- `release/*`: Estabilización y congelamiento de versión previa a entrega.
-- `hotfix/*`: Correcciones críticas sobre `main`.
+### 7.1. Ramas y revisión
+- `main`: rama compartida de integración; no representa un despliegue productivo.
+- `feature/*`: rama temporal creada desde `main` para una tarea y enviada mediante Pull Request.
+- No se usa `develop` ni se mantienen ramas `release/*` permanentes.
+- La revisión por pares, la protección de `main` y CI siguen pendientes de configuración. El historial reciente incluye cambios integrados directamente en `main`, por lo que el flujo descrito aún no está aplicado de forma uniforme.
 
 ### 7.2. Convención de Commits (Conventional Commits v1.0.0)
 - `feat:` Nuevas funcionalidades (`feat(pedidos): agregar validacion de ventanas horarias`).
@@ -312,7 +283,7 @@ Implementado con OpenSpec en los cambios `registro-pedidos` (registrar, consulta
 
 ## 9. Navegación de Documentación
 
-Acceso directo a la documentación oficial del repositorio, organizada por las cinco áreas del proyecto:
+Acceso directo a los documentos versionados. Las carpetas de Seguimiento y Control y de Cierre ya están reservadas, pero aún contienen solo `.gitkeep`; sus entregables siguen pendientes.
 
 ### 9.1. Fase 01: Inicio
 
@@ -330,7 +301,7 @@ Acceso directo a la documentación oficial del repositorio, organizada por las c
 - [12. Modelo C4](docs/01%20Inicio/12.%20Modelo%20C4%20V_1_0_0.md)
 - [13. Restricciones](docs/01%20Inicio/13.%20Restricciones%20V_1_0_0.md)
 
-## Fase 02: Planificación del Proyecto
+### 9.2. Fase 02: Planificación
 
 Artefactos de la semana 4: transformación ágil, configuración y evidencias Jira, registro cuantitativo de riesgos y presupuesto financiero.
 
@@ -338,10 +309,6 @@ Artefactos de la semana 4: transformación ágil, configuración y evidencias Ji
 - [02. Artefactos Jira](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md)
 - [03. Registro de riesgos](docs/02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md)
 - [04. Presupuesto del proyecto](docs/02%20Planificaci%C3%B3n/04%20Presupuesto%20del%20proyecto%20V_1_0_0.md)
-
-### 9.2. Fase 02: Planificación
-
-- [Documentación de planificación](docs/02%20Planificaci%C3%B3n/)
 
 ### 9.3. Fase 03: Implementación
 
@@ -362,17 +329,14 @@ Entregables del **Sprint 2** (ECO Sprint 2, desde el 29/09/2026; revisión el 09
 
 Carpeta completa: [docs/03 Implementación](docs/03%20Implementaci%C3%B3n/)
 
-### 9.4. Fase 04: Seguimiento y Control
-
-- [Documentación de seguimiento y control](docs/04%20Seguimiento%20y%20Control/)
-
-### 9.5. Fase 05: Cierre
-
-- [Documentación de cierre](docs/05%20Cierre/)
-
-### 9.6. Material técnico adicional
+### 9.4. Material técnico adicional
 
 - [Material técnico de soporte](docs/otros/)
+
+### 9.5. Fases pendientes
+
+- [Seguimiento y Control](docs/04%20Seguimiento%20y%20Control/) — directorio reservado, sin entregables.
+- [Cierre](docs/05%20Cierre/) — directorio reservado, sin entregables.
 
 ---
 

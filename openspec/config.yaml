@@ -7,19 +7,28 @@ context: |
 
   Proyecto: EcoLogística Huancayo — PMV web de optimización de rutas de última milla
   (VRPTW + Green VRP) para DistriRápido S.A.C. en Huancayo, Perú (3,250 msnm).
-  Stack: Frontend React + Vite + TypeScript, mapas con Leaflet/OpenStreetMap;
-  Backend FastAPI (Python) con Pydantic y SQLAlchemy/Alembic (API REST, auth, reglas de
-  negocio); motor de optimización Python (OR-Tools + metaheurística) desacoplado
+  Stack objetivo: frontend React + Vite + TypeScript, mapas con Leaflet/OpenStreetMap;
+  backend FastAPI (Python) con Pydantic y SQLAlchemy/Alembic (API REST, auth, reglas
+  de negocio); motor de optimización Python (OR-Tools + metaheurística) desacoplado
   (VRPTW/Green VRP, cálculo de CO2); PostgreSQL + PostGIS.
-  Estructura: frontend/, backend/, database/ (migrations, seeds), docs/ (fases PMI).
-  Módulos: pedidos y ventanas horarias, flota y conductores, motor de optimización,
+  Implementación verificada al 09/10/2026: frontend React + Vite + TypeScript y API
+  FastAPI + Pydantic; autenticación MFA/roles y registro/consulta/listado de pedidos.
+  Los pedidos usan memoria y las cuentas locales un archivo. No afirmar como
+  implementados PostgreSQL, mapas, optimización, Docker Compose ni CI.
+  Estructura implementada: frontend/, backend/, docs/ y openspec/. El diseño de
+  persistencia PostgreSQL/PostGIS aún no tiene carpeta ni migraciones aplicadas.
+  Módulos objetivo: pedidos y ventanas horarias, flota y conductores, motor de optimización,
   visor cartográfico, dashboard de KPIs/CO2, re-enrutamiento dinámico.
   Metas: -15% distancia total, >=92% puntualidad, hasta 1,000 pedidos/día y 50 vehículos,
   operación en redes 2G/3G.
   Fuente de verdad de requisitos: docs/01 Inicio (requisitos funcionales/no funcionales,
   reglas de negocio, base de datos, modelo C4). Referenciar IDs de requisitos (RF/RNF/RN)
   cuando existan. No duplicar lógica de negocio entre frontend y optimizador.
-  Flujo Git: Git Flow (feature/* desde develop) y Conventional Commits.
+  Control de versiones: GitHub y Git. El flujo acordado usa ramas cortas feature/*
+  creadas desde main y Pull Requests revisados hacia main; no existe una rama
+  develop obligatoria. Los commits siguen Conventional Commits. La protección de
+  main, la revisión obligatoria y CI deben configurarse y verificarse antes de
+  considerarlas controles implantados.
 
 # Per-artifact rules (optional)
 # Add custom rules for specific artifacts.

@@ -1,5 +1,5 @@
 ---
-name: Solicitud de Funcionalidad (Feature Request)
+name: Solicitud de funcionalidad
 about: Sugerir una nueva idea o funcionalidad para EcoLogística
 title: "[FEAT] <descripción breve de la funcionalidad>"
 labels: enhancement

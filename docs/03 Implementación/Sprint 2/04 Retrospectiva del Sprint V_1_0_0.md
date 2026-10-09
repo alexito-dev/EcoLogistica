@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.1.0 |
+| Versión | 1.1.1 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026; revisión 09/10/2026) |
 | Fecha de la retrospectiva | 02/10/2026 (corte de mitad de sprint; se confirma en la reunión del 09/10) |
 | Facilitador | Alex Zorrilla |
@@ -23,6 +23,7 @@
 |---|---|---|---|
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión: seguimiento de las acciones del Sprint 1, análisis en los cuatro ejes y plan de acción para el Sprint 3. |
 | 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Seguimiento de Jira: Sprint 1 cerrado administrativamente, Sprint 2 activo y ECO-20 registrada sin puntos. Esta retrospectiva es intermedia; la revisión y retrospectiva final siguen pendientes. |
+| 1.1.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza A6 al flujo de ramas breves desde `main` y PR hacia `main`; la retrospectiva continúa como intermedia hasta la reunión del Sprint 2. |
 
 ## Seguimiento de las acciones del Sprint 1
 
@@ -74,7 +75,7 @@
 
 ### Procesos
 
-- **Git Flow incompleto:** se trabajó directamente sobre `main` y `developer` quedó atrás (IMP-010).
+- **El flujo de ramas acordado no se aplicó de forma uniforme:** se trabajó directamente sobre `main` y la rama remota `developer` quedó atrás (IMP-010). El estándar queda simplificado a ramas breves `feature/*` desde `main` y PR hacia `main`; no se requiere `develop`.
 - **El backlog de Jira no refleja el trabajo real:** la historia de autenticación no existe en Jira y faltan 7 tarjetas (IMP-008).
 - **Las verificaciones extremo a extremo fueron manuales:** se ensayaron a mano en lugar de quedar como prueba automatizada repetible.
 - **El roadmap no se ajustó formalmente:** flota y motor se movieron al Sprint 3 en los hechos, pero falta actualizar el roadmap en Jira.
@@ -95,7 +96,7 @@
 | A3 | Toda decisión técnica que cambie la arquitectura se discute en la reunión del equipo y se registra como ADR en `docs/otros` antes de tocar `main` | Relaciones | Anco Porras, Jhean Pier Julio | Permanente desde el 09/10/2026 | 0 cambios de arquitectura sin ADR |
 | A4 | Revisión cruzada obligatoria: cada *pull request* la aprueba un integrante distinto del autor | Relaciones | Jose Luis Isidro Casio | 16/10/2026 | 100 % de PR con al menos una aprobación |
 | A5 | Daily asincrónico de 15 minutos en el canal del equipo: qué hice, qué haré y qué me bloquea | Relaciones | Alex Zorrilla | 09/10/2026 | Al menos 4 registros por integrante en la semana |
-| A6 | Sincronizar `developer` con `main`, proteger `main` y trabajar con `feature/*` → `developer` → `main` mediante PR | Procesos | Jose Luis Isidro Casio | 16/10/2026 | 0 commits directos en `main` en el Sprint 3 |
+| A6 | Retirar `developer` como rama de integración; crear ramas breves `feature/*` desde `main`, integrar mediante PR y configurar protección de `main` y CI | Procesos | Jose Luis Isidro Casio | 16/10/2026 | PR revisados hacia `main`; reglas de protección y CI verificadas; ningún cambio funcional entra sin revisión |
 | A7 | Registrar en Jira la historia de autenticación y estimar las 7 tarjetas faltantes con *Planning Poker*; actualizar el roadmap | Procesos | Jose Luis Isidro Casio | 09/10/2026 | Backlog completo y estimado; roadmap del Sprint 3 publicado |
 | A8 | Convertir el guion de demostración en pruebas extremo a extremo automatizadas (Playwright, previsto en el documento de stack) | Procesos | Jose Luis Isidro Casio | 23/10/2026 | Guion de 12 pasos ejecutándose en CI |
 | A9 | Configurar GitHub Actions con las pruebas de backend y frontend, el lint y la compilación en cada PR (EN-006) | Herramientas | Jose Luis Isidro Casio | 16/10/2026 | Pipeline en verde obligatorio para fusionar |

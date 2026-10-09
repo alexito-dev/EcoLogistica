@@ -1,5 +1,5 @@
 ---
-name: Reporte de Incidencia (Bug Report)
+name: Reporte de incidencia
 about: Crear un informe de error para ayudar a mejorar el sistema
 title: "[BUG] <descripción breve del error>"
 labels: bug
@@ -22,6 +22,6 @@ assignees: ''
 <!-- Adjuntar capturas de pantalla o logs del error si corresponde -->
 
 ## Entorno de Ejecución
-- OS: [e.g. Windows 11 / Ubuntu 22.04]
-- Navegador: [e.g. Chrome 120, Firefox 121]
-- Rama / Versión: [e.g. develop / v0.2.0]
+- Sistema operativo: [p. ej., Windows 11 / Ubuntu 22.04]
+- Navegador: [p. ej., Chrome 120 / Firefox 121]
+- Rama / versión: [p. ej., main / v0.2.0]
