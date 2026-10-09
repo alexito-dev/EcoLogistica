@@ -14,7 +14,7 @@
 | Sprint | ECO Sprint 2 (inicio 29/09/2026; revisión 09/10/2026) |
 | Fecha de la retrospectiva | 02/10/2026 (corte de mitad de sprint; se confirma en la reunión del 09/10) |
 | Facilitador | Alex Zorrilla |
-| Participantes | Alex Zorrilla, Jhean Pier Julio Anco Porras, Alexander Daniel Hilario Talavera, Jhoanna Hade Vera Zea, Jose Luis Isidro Casio |
+| Participantes | Alex Zorrilla, Anco Porras, Jhean Pier Julio, Alexander Daniel Hilario Talavera, Jhoanna Hade Vera Zea, Jose Luis Isidro Casio |
 | Entradas | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [Retrospectiva del Sprint 1](../04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 
 ## Historial de cambios
@@ -91,14 +91,14 @@
 |---:|---|---|---|---|---|
 | A1 | Asignar un cambio OpenSpec por integrante en el Sprint 3: PostgreSQL y flota (backend), motor y benchmark (optimización), mejoras de interfaz y visor de mapa (frontend), CI y pruebas extremo a extremo (QA/DevOps) | Personas | Alex Zorrilla | 09/10/2026 (Planning del Sprint 3) | Los 5 integrantes con al menos un commit propio fusionado en el Sprint 3 |
 | A2 | Sesión de nivelación de 1 hora sobre el stack y el flujo OpenSpec, dictada con el código real del proyecto | Personas | Alex Zorrilla | 12/10/2026 | Los 5 integrantes ejecutan el backend, el frontend y las pruebas en su máquina |
-| A3 | Toda decisión técnica que cambie la arquitectura se discute en la reunión del equipo y se registra como ADR en `docs/otros` antes de tocar `main` | Relaciones | Jhean Pier Julio Anco Porras | Permanente desde el 09/10/2026 | 0 cambios de arquitectura sin ADR |
+| A3 | Toda decisión técnica que cambie la arquitectura se discute en la reunión del equipo y se registra como ADR en `docs/otros` antes de tocar `main` | Relaciones | Anco Porras, Jhean Pier Julio | Permanente desde el 09/10/2026 | 0 cambios de arquitectura sin ADR |
 | A4 | Revisión cruzada obligatoria: cada *pull request* la aprueba un integrante distinto del autor | Relaciones | Jose Luis Isidro Casio | 16/10/2026 | 100 % de PR con al menos una aprobación |
 | A5 | Daily asincrónico de 15 minutos en el canal del equipo: qué hice, qué haré y qué me bloquea | Relaciones | Alex Zorrilla | 09/10/2026 | Al menos 4 registros por integrante en la semana |
 | A6 | Sincronizar `developer` con `main`, proteger `main` y trabajar con `feature/*` → `developer` → `main` mediante PR | Procesos | Jose Luis Isidro Casio | 16/10/2026 | 0 commits directos en `main` en el Sprint 3 |
 | A7 | Registrar en Jira la historia de autenticación y estimar las 7 tarjetas faltantes con *Planning Poker*; actualizar el roadmap | Procesos | Jose Luis Isidro Casio | 09/10/2026 | Backlog completo y estimado; roadmap del Sprint 3 publicado |
 | A8 | Convertir el guion de demostración en pruebas extremo a extremo automatizadas (Playwright, previsto en el documento de stack) | Procesos | Jose Luis Isidro Casio | 23/10/2026 | Guion de 12 pasos ejecutándose en CI |
 | A9 | Configurar GitHub Actions con las pruebas de backend y frontend, el lint y la compilación en cada PR (EN-006) | Herramientas | Jose Luis Isidro Casio | 16/10/2026 | Pipeline en verde obligatorio para fusionar |
-| A10 | PostgreSQL + PostGIS con `docker compose` y migraciones Alembic; adaptadores de repositorio para pedidos y usuarios (EN-005) | Herramientas | Jhean Pier Julio Anco Porras | 23/10/2026 | Los datos sobreviven al reinicio; pruebas de integración contra la base |
+| A10 | PostgreSQL + PostGIS con `docker compose` y migraciones Alembic; adaptadores de repositorio para pedidos y usuarios (EN-005) | Herramientas | Anco Porras, Jhean Pier Julio | 23/10/2026 | Los datos sobreviven al reinicio; pruebas de integración contra la base |
 | A11 | Agregar al README una sección de solución de problemas (caché de Vite, contraseña de demostración, puertos) | Herramientas | Jhoanna Hade Vera Zea | 12/10/2026 | Un integrante nuevo levanta la app sin ayuda |
 | A12 | Prototipo del motor con OR-Tools y benchmark EN-001 con 50, 100 y 150 pedidos | Procesos | Alexander Daniel Hilario Talavera | 23/10/2026 | Informe de tiempos y factibilidad publicado en `docs/` |
 

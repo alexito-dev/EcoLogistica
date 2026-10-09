@@ -14,7 +14,7 @@
 | Sprint | ECO Sprint 1 (14/09/2026 – 28/09/2026) |
 | Fecha de la retrospectiva | 02/10/2026 |
 | Facilitador | Alex Zorrilla |
-| Participantes | Alex Zorrilla, Jhean Pier Julio Anco Porras, Alexander Daniel Hilario Talavera, Jhoanna Hade Vera Zea, Jose Luis Isidro Casio |
+| Participantes | Alex Zorrilla, Anco Porras, Jhean Pier Julio, Alexander Daniel Hilario Talavera, Jhoanna Hade Vera Zea, Jose Luis Isidro Casio |
 | Entradas | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) |
 
 ## Historial de cambios
@@ -111,8 +111,8 @@ mindmap
 |---:|---|---|---|---|---|
 | A1 | Agregar al Planning una checklist de *Definition of Ready* con campos "depende de", estimación acordada y criterios BDD revisados. | Procesos | Alex Zorrilla | 05/10/2026 (Planning Sprint 2) | 100 % de las historias del Sprint 2 con dependencias declaradas |
 | A2 | Redefinir la *Definition of Done*: código en `develop`, pruebas pasando, criterios de aceptación verificados y demo ejecutable. | Procesos | Alex Zorrilla · Isidro Casio | 05/10/2026 | Ninguna historia en Done sin evidencia ejecutable |
-| A3 | Crear el *scaffold* de `backend/` (FastAPI) y `frontend/` (React + Vite) con scripts de ejecución y prueba y `docker compose` para PostgreSQL/PostGIS. | Herramientas | Jhean Pier Julio Anco Porras · Jhoanna Vera Zea | 08/10/2026 | `uvicorn` y `pytest` en backend y `npm run dev` y `npm test` en frontend funcionan en el equipo completo |
-| A4 | Ejecutar el primer cambio OpenSpec `registro-pedidos` (HU-001): propose, auditoría de la spec con el prompt de auditor, apply, verify, sync y archive. | Procesos | Alex Zorrilla · Jhean Pier Julio Anco Porras | 10/10/2026 | `openspec/changes/archive/` con el cambio archivado y spec principal actualizada |
+| A3 | Crear el *scaffold* de `backend/` (FastAPI) y `frontend/` (React + Vite) con scripts de ejecución y prueba y `docker compose` para PostgreSQL/PostGIS. | Herramientas | Anco Porras, Jhean Pier Julio · Jhoanna Vera Zea | 08/10/2026 | `uvicorn` y `pytest` en backend y `npm run dev` y `npm test` en frontend funcionan en el equipo completo |
+| A4 | Ejecutar el primer cambio OpenSpec `registro-pedidos` (HU-001): propose, auditoría de la spec con el prompt de auditor, apply, verify, sync y archive. | Procesos | Alex Zorrilla · Anco Porras, Jhean Pier Julio | 10/10/2026 | `openspec/changes/archive/` con el cambio archivado y spec principal actualizada |
 | A5 | Configurar CI mínimo (lint + pruebas) para PRs hacia `develop` (EN-006). | Herramientas | Jose Luis Isidro Casio | 10/10/2026 | Pipeline verde obligatorio antes de merge |
 | A6 | Sesión de *Planning Poker* con los cinco integrantes y creación de las 7 tarjetas faltantes en Jira, con capacidad por persona y factor de foco. | Personas | Jose Luis Isidro Casio · todo el equipo | 05/10/2026 | Backlog completo y estimado; compromiso del sprint ≤ capacidad medida |
 | A7 | Prototipo del motor Python y benchmark inicial (EN-001), para desbloquear HU-004 y luego HU-006. | Procesos | Alexander Daniel Hilario Talavera | 12/10/2026 | Informe de tiempos con 50, 100 y 150 pedidos |

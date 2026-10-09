@@ -15,7 +15,7 @@
 | Objetivo replanificado | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
 | Ensayo de la demostración | 02/10/2026, contra los servidores locales (resultados en la sección *Demostración*) |
-| Participantes previstos | Equipo Scrum: Alex Zorrilla (líder / PM), Jhean Pier Julio Anco Porras (backend), Alexander Daniel Hilario Talavera (optimización), Jhoanna Hade Vera Zea (frontend/UX), Jose Luis Isidro Casio (QA/DevOps). Docente asesor y *Product Owner* académico: Ing. Job Daniel Gamarra Moreno |
+| Participantes previstos | Equipo Scrum: Alex Zorrilla (líder / PM), Anco Porras, Jhean Pier Julio (backend), Alexander Daniel Hilario Talavera (optimización), Jhoanna Hade Vera Zea (frontend/UX), Jose Luis Isidro Casio (QA/DevOps). Docente asesor y *Product Owner* académico: Ing. Job Daniel Gamarra Moreno |
 | Documentos hermanos | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [04 Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 | Sprint anterior | [Revisión del Sprint 1](../03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) |
 
@@ -107,8 +107,8 @@ Se registrará en la reunión del 09/10 y se trasladará al backlog de Jira. Los
 | # | Pendiente | Tipo | Origen | Responsable | Destino |
 |---:|---|---|---|---|---|
 | 1 | Registrar y estimar en Jira la historia de autenticación y las 7 tarjetas faltantes | Gestión | [IMP-008](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jose Luis Isidro Casio · equipo | Antes del 09/10 |
-| 2 | PostgreSQL + PostGIS con migraciones y adaptadores reales (EN-005 / ECO-16) | Habilitador | [IMP-011](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jhean Pier Julio Anco Porras | Sprint 3 |
-| 3 | Gestión de flota y restricciones vehiculares (HU-003, HU-009) | Historia | Roadmap del Sprint 2, no iniciado | Jhean Pier Julio Anco Porras | Sprint 3 |
+| 2 | PostgreSQL + PostGIS con migraciones y adaptadores reales (EN-005 / ECO-16) | Habilitador | [IMP-011](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Anco Porras, Jhean Pier Julio | Sprint 3 |
+| 3 | Gestión de flota y restricciones vehiculares (HU-003, HU-009) | Historia | Roadmap del Sprint 2, no iniciado | Anco Porras, Jhean Pier Julio | Sprint 3 |
 | 4 | Prototipo del motor VRPTW y benchmark EN-001 (desbloquea HU-004 y HU-006) | Historia / habilitador | Roadmap; [IMP-006](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Alexander Daniel Hilario Talavera | Sprint 3 |
 | 5 | CI en GitHub Actions y Git Flow con `developer` y *pull requests* (EN-006) | Habilitador | [IMP-010](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jose Luis Isidro Casio | Sprint 3 |
 | 6 | Restablecimiento del segundo factor por un administrador | Historia técnica | Auditoría, caso E6 | Alex Zorrilla | Sprint 4 |

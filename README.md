@@ -51,6 +51,19 @@ La operativa logística en el valle del Mantaro presenta retos críticos que imp
 ### 2.3. Objetivo General
 Desarrollar e implementar un PMV web que optimice las rutas de distribución urbana de DistriRápido S.A.C. en Huancayo, reduciendo la distancia total recorrida en al menos un **15%**, elevando la puntualidad al menos al **92%** y calculando la reducción efectiva de emisiones de $CO_2$ en 14 semanas de desarrollo y una semana de cierre.
 
+### 2.4. Estado verificado del proyecto al 09/10/2026
+
+La línea base tecnológica vigente es **React + Vite + TypeScript** para la interfaz y **FastAPI + Python** para la API. El modelo objetivo incorpora PostgreSQL/PostGIS, Leaflet/OpenStreetMap y un motor Python de optimización; esos tres componentes todavía no están implementados en el repositorio. La matriz y el alcance están en [10. Stack tecnológico](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md).
+
+El código disponible entrega autenticación con verificación TOTP y roles, además del registro, consulta y listado de pedidos. La ejecución del 09/10/2026 registró **100 pruebas de backend aprobadas, 99 % de cobertura y 39 pruebas de frontend aprobadas**; la compilación de producción terminó correctamente, con avisos porque los archivos de la fuente Codec Pro no están incluidos. Este estado no implica persistencia PostgreSQL, optimización de rutas ni despliegue continuo.
+
+| Sprint | Plan comprometido | Resultado documentado |
+|---|---|---|
+| Sprint 1 · 14/09–28/09 | ECO-9 / HU-001 y ECO-15 / HU-006 (10 puntos) | 0 de 2 historias cumplieron la Definición de Hecho al cierre. HU-001 se terminó después, durante el Sprint 2; HU-006 sigue sin implementación demostrable. |
+| Sprint 2 · 29/09–12/10 | Replanificación: primer incremento demostrable de HU-001 con autenticación y autorización MFA | HU-001 (5 puntos) y la autenticación quedaron implementadas en `main` al corte del 02/10. El sprint sigue abierto hasta el 12/10; la revisión prevista para el 09/10 aún no se ha celebrado a la hora de esta actualización. |
+
+El estado operativo de Jira no refleja este plan: el tablero tiene dos sprints llamados **ECO Sprint 1** (uno cerrado y otro activo con fecha de fin 28/09) y no tiene Sprint 2. Además, muestra ECO-15 como `Listo` aunque el repositorio no contiene una implementación de re-enrutamiento. El detalle y la evidencia de consulta están en [02. Artefactos Jira](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md); no se trata el estado de Jira como prueba de código.
+
 ---
 
 ## 3. Capacidades y Módulos Funcionales
@@ -85,6 +98,8 @@ Desarrollar e implementar un PMV web que optimice las rutas de distribución urb
 
 ## 5. Arquitectura del Sistema
 
+El diagrama siguiente representa la **arquitectura objetivo del PMV**, no el despliegue actual. Al corte del 09/10/2026 están implementados React/Vite, FastAPI, autenticación MFA y pedidos; la base de datos, mapas, dashboard y motor de optimización permanecen planificados.
+
 ```mermaid
 graph TD
     subgraph Cliente [Capa de Presentación - Frontend]
@@ -113,7 +128,7 @@ graph TD
     API --> DB
 ```
 
-### 5.1. Herramientas y tecnologías
+### 5.1. Herramientas y tecnologías objetivo
 
 - **Frontend:** React con Vite y TypeScript.
 - **Estilos e interfaz:** CSS (con diseño responsivo y enfoque de bajo consumo para 2G/3G).
@@ -336,6 +351,7 @@ Entregables del **Sprint 1** (ECO Sprint 1, 14/09/2026 – 28/09/2026):
 - [02. Registro de Impedimentos](docs/03%20Implementaci%C3%B3n/02%20Registro%20de%20Impedimentos%20V_1_0_0.md)
 - [03. Revisión del Sprint](docs/03%20Implementaci%C3%B3n/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
 - [04. Retrospectiva del Sprint](docs/03%20Implementaci%C3%B3n/04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
+- [05. Auditoría de coherencia al 09/10/2026](docs/03%20Implementaci%C3%B3n/05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md)
 
 Entregables del **Sprint 2** (ECO Sprint 2, desde el 29/09/2026; revisión el 09/10/2026):
 
