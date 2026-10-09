@@ -42,6 +42,8 @@ El plan funcional ahora incluye criterios de revisión ligados a HU-003, HU-004,
 
 El [informe del Sprint 2](Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) también deja los siguientes pasos bajo la meta de generar una ruta que Planificación pueda consultar. La persistencia, la flota, el optimizador y la integración figuran como partes necesarias de ese recorrido, sujetas a la capacidad del equipo.
 
+La [revisión del Sprint 2](Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) tiene ahora una pauta para comprobar acceso MFA, registro y consulta de pedidos, explicar la pérdida de datos al reiniciar y anotar la decisión del Product Owner cuando ocurra la reunión. La aceptación sigue marcada como pendiente.
+
 El backend registra **tres advertencias deprecadas** durante `pytest`. La compilación frontend concluye, pero avisa que los archivos licenciados Codec Pro `.woff2` no están disponibles. La compilación y las pruebas no prueban una revisión visual extremo a extremo ni despliegue continuo.
 
 ## Consistencia de calendario y presupuesto
@@ -126,3 +128,4 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 | 1.23.0 | 09/10/2026 | Se amplían los criterios funcionales de las propuestas de Sprint 3 y 4 y se los enlaza con las historias existentes del backlog. |
 | 1.24.0 | 09/10/2026 | Se diferencia la evidencia de implementación de HU-001 y MFA de la aceptación formal del Sprint 2, todavía pendiente de la reunión prevista. |
 | 1.25.0 | 09/10/2026 | Se ajusta el informe de Sprint 2 para plantear el trabajo futuro como un flujo completo de generación de rutas y no como una lista de componentes técnicos. |
+| 1.26.0 | 09/10/2026 | Se prepara el registro de revisión de Sprint 2 con criterios funcionales y espacios vacíos para la decisión y los acuerdos reales. |

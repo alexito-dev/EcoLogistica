@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.2.5 |
+| Versión | 1.2.6 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026) |
 | Objetivo replanificado | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
@@ -32,6 +32,7 @@
 | 1.2.3 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se traducen las referencias narrativas a partes interesadas. |
 | 1.2.4 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se corrige la concordancia de género en las referencias a las partes interesadas. |
 | 1.2.5 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se aclara que `Listo` y las pruebas documentadas respaldan la implementación, mientras la aceptación del Sprint 2 sigue pendiente de su reunión. |
+| 1.2.6 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se deja lista una pauta para revisar el recorrido funcional, explicar sus límites y registrar la decisión sin adelantarla. |
 
 ## Funciones implementadas; aceptación del Sprint 2 pendiente
 
@@ -108,9 +109,28 @@ Demostración a las *partes interesadas* de las funcionalidades implementadas. G
 
 Lo que validan las partes interesadas: que el despachador registra pedidos válidos y que el sistema rechaza los incoherentes antes de que lleguen al optimizador; y que solo entran personas autorizadas, con dos factores y según su rol.
 
-### Retroalimentación de las partes interesadas
+## Registro para la reunión de revisión (pendiente)
 
-Se registrará después de la reunión prevista para el 09/10 a las 15:40, hora de Lima, y se trasladará al backlog de Jira. Al corte de esta actualización, anterior a la reunión, no hay retroalimentación ni aceptación verificable; no se atribuyen acuerdos al docente. Los resultados se incorporarán en una versión posterior.
+La reunión está prevista para el 09/10 a las 15:40, hora de Lima. Este registro se completa durante la sesión; el ensayo del 02/10 y el estado `Listo` de Jira no reemplazan lo que decida el Product Owner.
+
+Antes de mostrar el flujo, confirmar que el equipo tiene a mano una cuenta de Planificación y su app autenticadora. No anotar contraseñas, códigos TOTP ni secretos en este documento. Si se usa un pedido de prueba, identificarlo como tal y no presentarlo como una operación real de DistriRápido.
+
+| Qué revisar en la reunión | Estado de la revisión | Comentarios que se registrarán |
+|---|---|---|
+| Entrar con MFA y comprobar que los permisos corresponden al rol. | Pendiente | — |
+| Registrar un pedido válido y ver el código de confirmación. | Pendiente | — |
+| Mostrar cómo se rechaza una ventana horaria inválida. | Pendiente | — |
+| Encontrar el pedido en la lista, buscarlo o filtrarlo y abrir su detalle. | Pendiente | — |
+| Explicar que, por ahora, los pedidos se pierden al reiniciar la API. | Pendiente | Acordar si este límite se acepta para el incremento de demostración o requiere trabajo antes de darlo por aceptado. |
+
+| Decisión del Product Owner sobre el incremento | Pendiente de registrar |
+|---|---|
+| Aceptado / aceptado con pendientes / no aceptado | — |
+| Cambios o incidencias que se crearán en Jira | — |
+| Responsable y fecha acordada para cada acción | — |
+| Comentarios de las personas que participaron | — |
+
+Hasta que se complete esta tabla con lo que ocurra en la reunión, la aceptación formal y la retroalimentación siguen pendientes; no se atribuyen acuerdos al docente ni al equipo.
 
 ## Pendientes
 
