@@ -9,7 +9,7 @@
 | Proyecto | EcoLogística Huancayo |
 | Herramienta | Atlassian Jira Software — Scrum |
 | Versión del entregable | 1.11.0 (sin versión de entrega creada en Jira al 09/10/2026) |
-| Fecha de actualización | 09 de octubre de 2026, 12:57 hora de Lima |
+| Fecha de actualización | 09 de octubre de 2026, 13:24 hora de Lima |
 | Responsable de configuración | Isidro Casio, Jose Luis |
 | Clave del proyecto en Jira | `ECO` |
 | Estado observado | Jira contiene 8 épicas, 9 historias y 3 tareas. `ECO board` (id. 2) tiene el Sprint 1 oficial cerrado, un sprint inicial renombrado como duplicado y el Sprint 2 activo (id. 37); no hay versión de entrega. Las metas se alinearon al rebase funcional; Sprint 2 contiene las dos historias de flota en `Listo`. |
@@ -20,7 +20,7 @@
 |---|---|
 | Proyecto / tablero | `EcoLogística Huancayo` / `ECO board` (id. 2; tablero administrado por el equipo) |
 | Jerarquía | Epic → Story / Task → Sub-task; Bug para incidencias |
-| Columnas del tablero | 5: `Por hacer`, `En curso`, `Listo`, `In Review / QA`, `Done`. Jira mapea `Listo` al estado completado; `Done` apunta a `Finalizada`, cuya categoría figura como nueva. La mezcla de idiomas y el mapeo incoherente siguen pendientes de corregir desde la configuración del tablero. |
+| Columnas del tablero | 5: `Por hacer`, `En curso`, `Listo`, `In Review / QA`, `Done`. Mapeo de estados y categorías: `Por hacer` → nueva; `En curso` y `En revisión / QA` → en curso; `Listo` y `Finalizada` → completadas. La mezcla de idiomas y la quinta columna siguen pendientes de normalización. |
 | Versiones de entrega | Ninguna: la consulta de versiones de `ECO` devolvió 0 resultados el 09/10/2026. |
 | Sprints | Sprint id. 3, cerrado y renombrado `ECO Sprint 1 (duplicado)`; Sprint 1 oficial id. 36, cerrado el 09/10, con fechas de trabajo 14/09–28/09; Sprint 2 id. 37, activo del 29/09 al 12/10 (hora de Lima). |
 | Resultado del Sprint 1 (id. 36) | El informe histórico registra 0 de 2 al corte del 28/09. La meta de Jira conserva el objetivo original y anota la rebase funcional del 09/10. El Sprint 1 cerrado no admite nuevas asignaciones: ECO-15 sigue `Por hacer` en su alcance original; ECO-9 conserva su asociación histórica y la métrica dinámica muestra 1/2. ECO-16 y ECO-20 están completadas en el backlog como habilitadores de la línea base funcional vigente; no se imputan al corte ni a la velocidad del Sprint 1. |
@@ -110,7 +110,7 @@ Las imágenes 01–04 son capturas históricas del 18/09/2026 y describen el est
 
 ![Resumen analítico histórico del proyecto ECO](../../assets/jira/05-resumen-analitico-historico.png)
 
-La configuración actual todavía muestra cinco columnas con idiomas mezclados y un mapeo inconsistente: `Listo` está asociado a categoría completada, mientras `Done` está asociado a `Finalizada`, cuya categoría Jira informa como nueva. Este pendiente se mantiene separado de la regularización de sprints.
+**Correcciones verificadas el 09/10/2026, después del corte de auditoría:** se editó y publicó el flujo compartido de Historia, Tarea, Error, Subtask y Epic. `En revisión / QA` ahora pertenece a categoría en curso y `Finalizada` a categoría completada. `getJiraBoardConfig` confirma los cinco mapeos: `Por hacer` → nueva; `En curso` y `En revisión / QA` → en curso; `Listo` y `Finalizada` → completadas. El tablero aún tiene cinco columnas y etiquetas mezcladas; el proyecto no tiene versiones de entrega (`getJiraProjectVersions`: 0). La corrección de categorías no cierra IMP-003 ni crea una versión de aceptación.
 
 ## 5. Checklist de configuración
 
@@ -121,7 +121,8 @@ La configuración actual todavía muestra cinco columnas con idiomas mezclados y
 - [x] Crear y cargar el Sprint 2 id. 37; registrar la historia técnica ECO-20 para MFA, sin inventar una estimación.
 - [x] Revisar ECO-15: devolverla a `Por hacer` por falta de implementación de re-enrutamiento demostrable.
 - [ ] Completar las historias y tareas ausentes: HU-004, HU-010, HU-011 y EN-001 a EN-004; confirmar prioridades y puntos con el equipo.
-- [ ] Corregir el flujo de cinco columnas y validar las categorías de los estados `Listo` y `Done`.
+- [x] Corregir las categorías de `En revisión / QA` y `Finalizada`; validar los cinco estados con `getJiraBoardConfig` (09/10/2026).
+- [ ] Reducir/normalizar las cinco columnas del tablero y sus etiquetas.
 - [ ] Crear y documentar la versión `v1.0.0-MVP` cuando el alcance de aceptación esté acordado.
 - [ ] Sustituir las capturas históricas por evidencias actuales del roadmap, backlog, sprints, tablero y versión.
 
@@ -141,3 +142,4 @@ La configuración actual todavía muestra cinco columnas con idiomas mezclados y
 | 1.8.0 | 09/10/2026 | Se describe el trabajo futuro como tareas completas del sistema y se enlaza el plan funcional; Sprint 3 y 4 siguen sujetos a acuerdo del equipo. |
 | 1.9.0 | 09/10/2026 | Se refleja en Jira y en este inventario la meta funcional actualizada, ECO-16 completada para pedidos y ECO-21 creada para el resto de EN-005. |
 | 1.10.0 | 09/10/2026 | Se alinea la línea base documental a Sprint 1 MFA/pedidos, Sprint 2 flota y Sprint 3 rutas; se deja claro que Jira conserva sus asignaciones anteriores. |
+| 1.11.0 | 09/10/2026 | Se actualiza el estado vivo del tablero: categorías de `En revisión / QA` y `Finalizada` corregidas y mapeos verificados; permanecen cinco columnas mixtas y cero versiones de entrega. |
