@@ -15,7 +15,7 @@
 | Campo | Valor |
 |---|---|
 | Código del proyecto | PFA-TP2-ECOLOG-2026 |
-| Versión | 1.6.0 |
+| Versión | 1.7.0 |
 | Iteración reportada | ECO Sprint 2 |
 | Objetivo replanificado del sprint | "Que Planificación inicie sesión con MFA, registre y consulte pedidos, y los conserve después de reiniciar la API." |
 | Fuentes | Historial Git (`main`), cambios OpenSpec `registro-pedidos` y `autenticacion-mfa`, resultados de pruebas automatizadas, [Retrospectiva del Sprint 1](../04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
@@ -53,6 +53,7 @@
 | 1.4.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se documenta la implementación y la E2E web de flota como alcance vigente de Sprint 2, diferenciándolas de la aceptación formal pendiente. |
 | 1.5.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la regresión actual de backend, frontend y compilación, con las advertencias de lint y tipografía pendientes. |
 | 1.6.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra el E2E completo de aceptación funcional de flota: 5/5 criterios aprobados, incluida persistencia tras reinicio. |
+| 1.7.0 | 09/10/2026 | Alex Zorrilla | Se registra el avance posterior al E2E de flota: vista previa de rutas en mapa, dashboard de indicadores, ubicación del pedido en el mapa, menú por rol y CI en GitHub Actions, con dos cambios OpenSpec archivados. No modifica la aceptación ni el alcance comprometido del Sprint 3. |
 
 ## Resumen ejecutivo
 
@@ -87,6 +88,20 @@ Leyenda: 🟢 en control · 🟡 atención · 🔴 fuera de lo planificado.
 | Commits en `main` desde el cierre del Sprint 1 | 0 | 8 |
 | Impedimentos activos en el periodo (ver [Registro](02%20Registro%20de%20Impedimentos%20V_1_0_0.md)) | 8 | 8 (3 cerrados, 4 abiertos, 1 en espera) |
 
+### Avance posterior al E2E de flota (09/10)
+
+Con pedidos y flota disponibles, se adelantó una **vista previa** de lo que el Sprint 3 debe entregar completo. Se construyó con el mismo ciclo OpenSpec y no reemplaza la aceptación de HU-004 ni HU-005: la ruta no se guarda ni se publica, y no usa todavía el motor VRPTW.
+
+| Entrega | Qué permite | Evidencia |
+| --- | --- | --- |
+| **Vista previa de rutas en mapa** (Leaflet + OpenStreetMap, RES-06) | Ver, para una fecha, cómo se reparten los pedidos entre los vehículos con turno: orden de visita, hora estimada, puntualidad, distancia, carga y CO₂e, y el ahorro frente a un despacho sin optimizar. Con los datos de demostración: 6/6 pedidos a tiempo y **46 % menos CO₂e**. | `openspec/changes/archive/2026-10-09-vista-previa-rutas/`, `openspec/specs/rutas/` |
+| **Dashboard de indicadores** | Ahorro de CO₂e, puntualidad, uso de capacidad y distribución de pedidos (estado, distrito y prioridad) y de la flota (combustible). Es la primera vista habilitada para **Gerencia**. | `openspec/changes/archive/2026-10-09-indicadores-y-ubicacion/`, `openspec/specs/indicadores/` |
+| **Ubicación del pedido en el mapa** | Completar latitud y longitud con un clic al registrar un pedido; el ingreso manual se conserva. | Requisito agregado a `openspec/specs/pedidos/` |
+| **Menú por rol** | Cada rol ve solo sus vistas; Conductor y Auditoría mantienen el aviso de acceso no autorizado. | Requisito modificado en `openspec/specs/autenticacion/` |
+| **Integración continua** (EN-006) | GitHub Actions ejecuta en cada *push* y *pull request* las pruebas del backend con cobertura, las migraciones sobre PostgreSQL/PostGIS (aplicar, revertir y volver a aplicar), los tipos, el lint, las pruebas y la compilación del frontend, y la validación estricta de OpenSpec. | `.github/workflows/ci.yml` |
+
+Regresión local al cierre de este avance: **128 pruebas de backend y 47 de frontend en verde**, `tsc` y `oxlint` sin hallazgos, compilación de producción con el paquete inicial en 474 kB (Flota, Rutas e Indicadores se cargan al abrirlas) y **5 especificaciones OpenSpec válidas** (`autenticacion`, `pedidos`, `flota`, `rutas`, `indicadores`).
+
 ## Riesgos
 
 | **Riesgo** | **Responsable** | **Mitigación** |
@@ -94,7 +109,7 @@ Leyenda: 🟢 en control · 🟡 atención · 🔴 fuera de lo planificado.
 | **R-S2-01 — Motor de optimización sin iniciar** (RSK-02, exposición 15, Alta). HU-004 y HU-006 dependen de él y es el núcleo del valor del producto (VRPTW/Green VRP). | Alexander Daniel Hilario Talavera | Incluir el motor y su benchmark EN-001 en la función de generar y guardar una ruta para Planificación; una optimización aislada no cuenta como flujo entregado. |
 | **R-S2-02 — Concentración del trabajo de implementación en una persona.** Al corte inicial del 02/10, los primeros 8 commits del Sprint 2 en `main` eran de Alex Zorrilla. El historial consultado el 09/10 contenía 20 commits desde el 29/09: 12 de Alex y 8 de Anco Porras, Jhean Pier Julio, estos últimos de documentación; no se verificaron commits de implementación de los demás roles. | Alex Zorrilla | Repartir en el Sprint 3 la persistencia de rutas, la generación de secuencias, la optimización y la interfaz; usar la flota ya implementada, integrar el flujo en una demo y revisarlo entre integrantes. |
 | **R-S2-03 — Persistencia parcial y secretos locales.** Pedidos, ubicaciones, vehículos y disponibilidades se guardan en PostgreSQL/PostGIS. Las cuentas siguen en archivo y los secretos TOTP no están cifrados en reposo (RNF-06); las rutas todavía no tienen tablas de aplicación. | Anco Porras, Jhean Pier Julio | ECO-16 cubre pedidos y ubicaciones; la migración `20261009_02` implementa flota. ECO-21 conserva trabajo pendiente para cuentas, secretos TOTP y rutas; se ajusta en Jira y se estima en Planning. |
-| **R-S2-04 — Integración sin CI.** Las pruebas solo se ejecutan en local; una regresión podría llegar a `main` (RSK-07). | Jose Luis Isidro Casio | GitHub Actions con pruebas de backend y frontend obligatorias en cada *pull request* (EN-006). |
+| **R-S2-04 — Integración sin CI.** Las pruebas solo se ejecutan en local; una regresión podría llegar a `main` (RSK-07). | Jose Luis Isidro Casio | GitHub Actions con pruebas de backend y frontend obligatorias en cada *pull request* (EN-006). **09/10:** el flujo `.github/workflows/ci.yml` ya existe; falta exigirlo como verificación obligatoria con la protección de `main`. |
 | **R-S2-05 — Pérdida del autenticador.** Un usuario sin su teléfono no puede entrar; no existe restablecimiento del segundo factor. | Alex Zorrilla | Cambio OpenSpec posterior para restablecimiento por administrador con auditoría; mientras tanto, procedimiento manual documentado en el README. |
 | **R-S2-06 — Ámbito geográfico aproximado** (rectángulo configurable sin validar con el negocio, RF-02.2). | Alex Zorrilla | Validar límites con DistriRápido y migrar a polígono PostGIS con EN-005. |
 

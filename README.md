@@ -5,6 +5,7 @@
 # EcoLogística Huancayo
 ### Plataforma de Optimización de Rutas Sostenibles de Última Milla
 
+[![CI](https://github.com/alexito-dev/EcoLogistica/actions/workflows/ci.yml/badge.svg)](https://github.com/alexito-dev/EcoLogistica/actions/workflows/ci.yml)
 [![Estado](https://img.shields.io/badge/Estado-Implementaci%C3%B3n%20%C2%B7%20Sprint%202-2ea44f?style=flat-square)](docs/03%20Implementaci%C3%B3n)
 [![Versión](https://img.shields.io/badge/Versión-En%20desarrollo-blue?style=flat-square)](README.md)
 [![Stack](https://img.shields.io/badge/Stack-React%20%2B%20FastAPI-025B29?style=flat-square)](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md)
@@ -53,9 +54,11 @@ Desarrollar e implementar un PMV web que optimice las rutas de distribución urb
 
 ### 2.4. Estado verificado del proyecto al 09/10/2026
 
-La línea base tecnológica vigente es **React + Vite + TypeScript** para la interfaz, **FastAPI + Python** para la API y **PostgreSQL/PostGIS** para pedidos, ubicaciones, vehículos y disponibilidades. La línea base funcional se reordenó el 09/10: Sprint 1 conserva el acceso MFA/roles y pedidos persistentes; Sprint 2 se dedica a flota; Sprint 3 a rutas; los siguientes sprints mantienen sus propósitos previos. Esta decisión no cambia los resultados históricos ni los estados y fechas ya registrados en Jira. Todavía faltan persistir usuarios y rutas, además de Leaflet/OpenStreetMap y el motor de optimización. La matriz y el alcance están en [10. Stack tecnológico](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md).
+La línea base tecnológica vigente es **React + Vite + TypeScript** para la interfaz, **FastAPI + Python** para la API y **PostgreSQL/PostGIS** para pedidos, ubicaciones, vehículos y disponibilidades. La línea base funcional se reordenó el 09/10: Sprint 1 conserva el acceso MFA/roles y pedidos persistentes; Sprint 2 se dedica a flota; Sprint 3 a rutas; los siguientes sprints mantienen sus propósitos previos. Esta decisión no cambia los resultados históricos ni los estados y fechas ya registrados en Jira. Todavía faltan persistir usuarios y rutas, y el motor de optimización; Leaflet/OpenStreetMap ya se usa en la vista previa de rutas y en el registro de pedidos. La matriz y el alcance están en [10. Stack tecnológico](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md).
 
-El sistema permite entrar con TOTP y roles, registrar pedidos, volver a encontrarlos y consultar su detalle. Los pedidos y sus coordenadas se guardan en PostgreSQL/PostGIS y se comprobó que siguen ahí tras reiniciar la API. El 09/10/2026 pasaron **107 pruebas de backend y 39 de frontend**; también terminó la compilación de producción. El incremento de flota se recorrió visualmente con MFA en un PostGIS aislado y continuó disponible tras reiniciar la API. El linter termina con dos avisos de `set-state-in-effect`, uno preexistente en pedidos y otro en la nueva vista de flota. No hay todavía pruebas automatizadas que integren los adaptadores PostgreSQL; la persistencia se comprobó manualmente en bases aisladas. La compilación avisa que faltan los archivos de la fuente Codec Pro. Aún no hay optimización de rutas ni despliegue continuo.
+El sistema permite entrar con TOTP y roles, registrar pedidos, volver a encontrarlos y consultar su detalle. Los pedidos y sus coordenadas se guardan en PostgreSQL/PostGIS y se comprobó que siguen ahí tras reiniciar la API. El 09/10/2026 pasaron **107 pruebas de backend y 39 de frontend**; también terminó la compilación de producción. El incremento de flota se recorrió visualmente con MFA en un PostGIS aislado y continuó disponible tras reiniciar la API. No hay todavía pruebas automatizadas que integren los adaptadores PostgreSQL; la persistencia se comprobó manualmente en bases aisladas. La compilación avisa que faltan los archivos de la fuente Codec Pro. Aún no hay optimización de rutas ni despliegue continuo.
+
+**Avance posterior del 09/10 (vista previa, sin reemplazar la aceptación del Sprint 3):** página **Rutas** con mapa Leaflet/OpenStreetMap que propone el reparto de una fecha entre los vehículos con turno y compara su CO₂e contra un despacho sin optimizar; página **Indicadores** (también para Gerencia); ubicación del pedido con un clic en el mapa; menú por rol; e **integración continua** en GitHub Actions. Al cierre de este avance pasan **128 pruebas de backend y 47 de frontend**, `tsc` y `oxlint` terminan sin hallazgos y OpenSpec tiene 5 especificaciones válidas.
 
 | Sprint | Alcance funcional vigente | Estado documentado |
 |---|---|---|
@@ -72,7 +75,7 @@ La línea base funcional acordada para Sprint 1–4 está en [05. Plan funcional
 
 ## 3. Capacidades y Módulos Funcionales
 
-El diagrama muestra el alcance objetivo del producto, no funcionalidades ya entregadas. Al 09/10/2026 están implementados la autenticación con MFA/roles, el registro y consulta persistente de pedidos y la gestión de flota con los criterios E2E de Sprint 2 aprobados. Generación de rutas, optimización, mapa, dashboard y re-enrutamiento siguen pendientes.
+El diagrama muestra el alcance objetivo del producto, no funcionalidades ya entregadas. Al 09/10/2026 están implementados la autenticación con MFA/roles, el registro y consulta persistente de pedidos y la gestión de flota con los criterios E2E de Sprint 2 aprobados. Existe una vista previa de rutas en mapa y un dashboard de indicadores; la generación y publicación de rutas guardadas, la optimización VRPTW y el re-enrutamiento siguen pendientes.
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -259,8 +262,14 @@ Pop-Location
 # Frontend (Vitest + Testing Library)
 Push-Location frontend
 npm.cmd test
+npm.cmd run lint
 Pop-Location
+
+# Especificaciones OpenSpec
+openspec validate --specs --strict
 ```
+
+Estas mismas verificaciones, junto con las migraciones sobre PostgreSQL/PostGIS y la compilación de producción, se ejecutan en GitHub Actions en cada *push* a `main` o `developer` y en cada *pull request* (`.github/workflows/ci.yml`).
 
 ### 8.5. Acceso con verificación en dos pasos (RF-11.1)
 
@@ -269,7 +278,8 @@ Toda la aplicación exige **contraseña + código TOTP** de una app autenticador
 1. En un entorno local nuevo, al iniciar el backend se crean **cinco usuarios de demostración**, uno por rol: `admin@ecologistica.test`, `planificador@ecologistica.test`, `conductor@ecologistica.test`, `gerente@ecologistica.test` y `auditor@ecologistica.test`. Para recorrer el Sprint 2, usa `planificador@ecologistica.test`.
 2. Antes de ese primer inicio, puedes definir `DEMO_CLAVE` en `.env` con una contraseña local. Si la dejas vacía, el backend genera una aleatoria y **la muestra una sola vez en su consola**. Esa configuración solo se usa al crear las cuentas por primera vez; cambiarla después no reemplaza las contraseñas guardadas.
 3. En el primer ingreso de cada usuario, la app muestra un **código QR** (y la clave para ingreso manual): escanéelo con la app autenticadora y escriba el código de 6 dígitos.
-4. Permisos actuales (matriz RBAC del documento 08): **Planificador** registra y consulta pedidos; **Administrador** solo consulta; los demás roles ven "Acceso no autorizado" hasta que existan sus vistas.
+4. Permisos actuales (matriz RBAC del documento 08): **Planificador** registra pedidos y declara turnos; **Administrador** consulta pedidos y administra la flota; ambos ven Rutas e Indicadores. **Gerencia** entra directo a Indicadores. **Conductor** y **Auditoría** ven "Acceso no autorizado" hasta que existan sus vistas.
+5. Con `DEMO_PEDIDOS=true` en `.env`, al arrancar se cargan 6 pedidos y 3 vehículos con turno para el día siguiente, para mostrar Rutas e Indicadores sin registrar datos a mano.
 
 Estas cuentas locales **no están conectadas al correo institucional**. El archivo `backend/.data/usuarios.json` conserva hashes de contraseña y secretos TOTP, no las contraseñas originales. Si se pierde una contraseña, no se puede recuperar desde ese archivo y actualmente el proyecto no ofrece una recuperación desde la interfaz. No borres `backend/.data/` para intentar obtenerla: esa carpeta guarda las cuentas y su configuración de acceso. El ingreso también requiere el código de una app autenticadora.
 
@@ -292,11 +302,21 @@ Seguridad: contraseñas con Argon2id, sesión en cookie `HttpOnly` y `SameSite=S
 
 Requiere sesión (`401`) y rol (`403`). Errores: `400` formato o tipo inválido, `422` regla de negocio (ventana, carga, ámbito), `404` inexistente, `409` código duplicado. Las ventanas horarias se envían en ISO 8601 **con desfase** (por ejemplo `2026-10-05T08:00:00-05:00`). Contrato completo en `/docs`.
 
-### 8.7. Alcance y límites de los incrementos
+### 8.7. API de rutas e indicadores
 
-Implementado con OpenSpec en los cambios `registro-pedidos` (registrar, consultar y listar pedidos) y `autenticacion-mfa` (acceso con verificación en dos pasos y permisos por rol; incluye la auditoría de su especificación en `openspec/changes/archive/2026-10-02-autenticacion-mfa/auditoria-especificacion.md`). Límites conocidos, pendientes de otros cambios:
+| Método | Ruta | Descripción |
+| :--- | :--- | :--- |
+| `GET` | `/api/v1/rutas/vista-previa?fecha=AAAA-MM-DD` | Propuesta de rutas de la fecha: paradas en orden, hora estimada, puntualidad, distancia, carga, CO₂e y comparación con un despacho sin optimizar. No guarda nada. |
+| `GET` | `/api/v1/indicadores?fecha=AAAA-MM-DD` | Pedidos por estado, distrito y prioridad; flota por combustible; uso de capacidad, puntualidad y ahorro de CO₂e de la fecha. |
+
+Rutas: `PLANIFICADOR` y `ADMIN`. Indicadores: además `GERENTE`. El depósito de salida se configura con `DEPOSITO_NOMBRE`, `DEPOSITO_LAT` y `DEPOSITO_LON`.
+
+### 8.8. Alcance y límites de los incrementos
+
+Implementado con OpenSpec en los cambios `registro-pedidos` (registrar, consultar y listar pedidos), `autenticacion-mfa` (acceso con verificación en dos pasos y permisos por rol; incluye la auditoría de su especificación en `openspec/changes/archive/2026-10-02-autenticacion-mfa/auditoria-especificacion.md`), `vista-previa-rutas` (rutas en mapa) e `indicadores-y-ubicacion` (dashboard, ubicación en el mapa, menú por rol y CI). Límites conocidos, pendientes de otros cambios:
 
 - Pedidos y ubicaciones se guardan en PostgreSQL/PostGIS. Las cuentas de demostración siguen en `backend/.data/` y los secretos TOTP aún no se cifran en reposo; tampoco hay recuperación del segundo factor ni consulta de auditoría desde la interfaz. Esa parte de EN-005 sigue pendiente.
+- La vista previa de rutas usa una heurística propia (inserción más barata y 2-opt) con distancias en línea recta × 1,3 y velocidad media de 25 km/h; no sustituye al motor VRPTW con OR-Tools ni guarda las rutas.
 - El ámbito geográfico es un rectángulo de aproximación configurable en `.env` (`AMBITO_*`), por validar con el negocio.
 - La fuente **Codec Pro** es comercial: ver `frontend/public/fonts/LEEME.md`; sin ella se usa la fuente del sistema.
 

@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.7.0 |
+| Versión | 1.8.0 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026) |
 | Objetivo replanificado | "Planificación inicia sesión con MFA, registra y consulta pedidos, y los datos siguen disponibles después de reiniciar la API." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
@@ -47,6 +47,7 @@
 | 1.5.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se anota la rebase funcional posterior y se remite al plan vigente, preservando los resultados del corte original. |
 | 1.6.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se añade evidencia E2E posterior de pedidos y flota, manteniendo pendiente la aceptación formal. |
 | 1.7.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se ejecuta y registra el E2E de los cinco criterios de aceptación del alcance de flota; 5/5 aprobados. La reunión/decisión del Product Owner queda diferenciada del resultado E2E. |
+| 1.8.0 | 09/10/2026 | Alex Zorrilla | Se agrega una demostración complementaria de la vista previa de rutas, los indicadores, la ubicación en el mapa y el menú por rol, respaldada por pruebas automatizadas; su ensayo en navegador y la decisión del Product Owner quedan pendientes. |
 
 ## Criterios E2E de flota aprobados; registro de reunión pendiente
 
@@ -143,6 +144,19 @@ Demostración a las *partes interesadas* de las funcionalidades implementadas. G
 | 10 | Ingresar como Administrador | Ve los pedidos en modo consulta, sin botón de registro | Correcto |
 | 11 | Cinco contraseñas incorrectas seguidas | Bloqueo de 15 minutos (429), aun con la contraseña correcta | Correcto |
 | 12 | Enviar una solicitud desde un origen ajeno | 403 | Correcto |
+
+### Demostración complementaria: rutas e indicadores (avance posterior)
+
+Requiere `DEMO_PEDIDOS=true`, que carga 6 pedidos y 3 vehículos (diésel, GNV y eléctrico) con turno para el día siguiente. Cada paso está cubierto por pruebas automatizadas (`backend/tests/rutas`, `backend/tests/indicadores`, `frontend/tests/PaginaRutas.test.tsx`, `PaginaIndicadores.test.tsx` y `PedidoForm.test.tsx`); el ensayo en navegador con las partes interesadas queda pendiente.
+
+| # | Paso de la demostración | Resultado esperado | Respaldo |
+|---:|---|---|---|
+| 13 | Planificación abre **Rutas** (fecha: mañana) | Mapa con el depósito, paradas numeradas y una línea por vehículo; 6/6 pedidos asignados y a tiempo | Pruebas de API y de interfaz |
+| 14 | Seleccionar la tarjeta de un vehículo | Su ruta se resalta y las demás se atenúan | Prueba de interfaz |
+| 15 | Leer el indicador de emisiones | CO₂e de la propuesta frente al despacho sin optimizar (46 % menos con los datos de demostración) | Prueba de API |
+| 16 | Elegir una fecha sin pedidos | Mensaje que indica registrar pedidos y declarar turnos en Flota | Pruebas de API y de interfaz |
+| 17 | **Nuevo pedido**: hacer clic en el mapa del formulario | Latitud y longitud se completan solas | Prueba de interfaz (mapa presente) |
+| 18 | Ingresar como **Gerencia** | Entra directo a **Indicadores** y el menú no ofrece Pedidos, Flota ni Rutas | Pruebas de API (permisos) y de menú por rol |
 
 Lo que validan las partes interesadas: que el despachador registra pedidos válidos y que el sistema rechaza los incoherentes antes de que lleguen al optimizador; y que solo entran personas autorizadas, con dos factores y según su rol.
 
