@@ -6,7 +6,7 @@
 
 **Líder del Proyecto:** Alex Jesus Zorrilla Apumayta
 
-**Scrum Master / Facilitación del sprint:** Alex Jesus Zorrilla Apumayta
+**Facilitador del sprint:** Alex Jesus Zorrilla Apumayta
 
 **Iteración:** ECO Sprint 2 (inicio 29/09/2026; revisión 09/10/2026) · **Corte del registro:** 02/10/2026
 
@@ -14,7 +14,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.2.1 |
+| Versión | 1.2.2 |
 | Formato de fechas | DD/MM/AAAA |
 | Escala de prioridad | Alta · Media · Baja |
 | Estados válidos | Abierto · En Espera · Cerrado |
@@ -31,6 +31,7 @@
 | 1.1.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | IMP-010 adopta ramas breves `feature/*` desde `main` y PR hacia `main`; `developer`, la protección de rama y CI permanecen pendientes. |
 | 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se incorpora IMP-003 reabierto tras comprobar la configuración actual del tablero y la ausencia de versiones de entrega en Jira. |
 | 1.2.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se precisa que ECO-20 sigue sin estimación aprobada ni persona asignada al corte previo a la revisión. |
+| 1.2.2 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se localiza en español la etiqueta del rol de facilitación del sprint. |
 
 ## Registro
 

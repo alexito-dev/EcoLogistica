@@ -6,7 +6,7 @@
 
 **Líder del Proyecto:** Alex Jesus Zorrilla Apumayta
 
-**Scrum Master / Facilitación del sprint:** Alex Jesus Zorrilla Apumayta
+**Facilitador del sprint:** Alex Jesus Zorrilla Apumayta
 
 **Iteración:** ECO Sprint 1 (14/09/2026 – 28/09/2026) · **Corte del registro:** 02/10/2026
 
@@ -14,7 +14,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.2.0 |
+| Versión | 1.2.1 |
 | Formato de fechas | DD/MM/AAAA |
 | Escala de prioridad | Alta · Media · Baja |
 | Estados válidos | Abierto · En Espera · Cerrado |
@@ -29,6 +29,7 @@
 | 1.1.0 | 02/10/2026 | Alex Zorrilla | Se agregan diagramas Mermaid y tablas de análisis con los mismos datos; el contenido no cambia. |
 | 1.1.1 | 02/10/2026 | Alex Zorrilla | La fecha de resolución de los impedimentos abiertos se indica como "Pendiente" en lugar de un guion. |
 | 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se documenta la reapertura de IMP-003 tras verificar en Jira las cinco columnas mezcladas y la ausencia de versiones de entrega, manteniendo visible el corte histórico del 02/10. |
+| 1.2.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se localiza en español la etiqueta del rol de facilitación del sprint. |
 
 > **Corte histórico:** los estados y el resumen del registro corresponden al 02/10/2026. El seguimiento posterior reabrió IMP-003 el 09/10 tras una nueva consulta de Jira; véase el [Registro de impedimentos del Sprint 2](Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_0_0.md).
 

@@ -9,7 +9,7 @@
 | Proyecto | EcoLogística Huancayo |
 | Horizonte | 14 semanas de desarrollo + 1 semana de cierre |
 | Moneda | Soles peruanos (S/) |
-| Versión | 1.1.0 |
+| Versión | 1.2.0 |
 | Fecha | 09 de octubre de 2026 |
 
 > Presupuesto académico referencial para el PMV. Las horas y tarifas son supuestos de planificación, no pagos ejecutados. La reserva se calcula sobre el subtotal y se libera solo mediante control de cambios.
@@ -22,11 +22,11 @@
 
 | Rol | Horas | Tarifa S/ hora | Subtotal |
 |---|---:|---:|---:|
-| Project Manager | 168 | 45 | 7,560 |
-| Arquitecto / Backend | 240 | 50 | 12,000 |
+| Director del proyecto | 168 | 45 | 7,560 |
+| Arquitecto / servicios API | 240 | 50 | 12,000 |
 | Desarrollador / Optimización | 224 | 45 | 10,080 |
-| Frontend / UX | 224 | 40 | 8,960 |
-| QA / DevOps | 168 | 40 | 6,720 |
+| Interfaz / experiencia de usuario | 224 | 40 | 8,960 |
+| Calidad / operaciones de desarrollo | 168 | 40 | 6,720 |
 | **Total CAPEX** | **1,024** | — | **45,320** |
 
 Fórmula aplicada: **costo = horas asignadas × tarifa hora**.
@@ -68,3 +68,10 @@ La reserva cubre principalmente RSK-02, RSK-04, RSK-06 y RSK-08. Todo uso requie
 ## 5. Control presupuestario
 
 Se revisará el consumo al cierre de cada Sprint. Una desviación mayor al 10% del pronóstico de la categoría exige análisis de causa y decisión del Director del Proyecto; una desviación mayor al 12% del total exige activar la reserva o reducir alcance.
+
+
+## Historial de cambios
+
+| Versión | Fecha | Autor | Cambio |
+|---|---|---|---|
+| 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se unifican al español los nombres de roles con los del README. |

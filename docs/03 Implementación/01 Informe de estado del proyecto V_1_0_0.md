@@ -15,7 +15,7 @@
 | Campo | Valor |
 |---|---|
 | Código del proyecto | PFA-TP2-ECOLOG-2026 |
-| Versión | 1.1.4 |
+| Versión | 1.1.5 |
 | Iteración reportada | ECO Sprint 1 |
 | Sprint Goal | "Registrar pedidos con ventana horaria y permitir reenrutar una ruta ante incidencia." |
 | Fuentes | Jira `ECO` (evidencias 1–4 en [02 Artefactos Jira](../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md)), historial Git, [Registro de riesgos](../02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md), [Presupuesto](../02%20Planificaci%C3%B3n/04%20Presupuesto%20del%20proyecto%20V_1_0_0.md) |
@@ -35,6 +35,7 @@
 | 1.1.2 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se aclara el corte planificado del Sprint 1 frente a la métrica dinámica actual de Jira y su cierre administrativo tardío. |
 | 1.1.3 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se detallan los cambios de estado de ECO-9 registrados por Jira entre el 02/10 y el cierre administrativo del Sprint 1. |
 | 1.1.4 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se identifica develop como propuesta histórica del Sprint 1 y se enlaza al flujo vigente documentado. |
+| 1.1.5 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se reemplaza la mención genérica a partes interesadas por su equivalente en español. |
 
 ## Resumen ejecutivo
 
@@ -74,7 +75,7 @@ Ninguna de las dos historias comprometidas cumplió la Definición de Hecho:
 
 ## Demostración del trabajo completado
 
-Demostración a los stakeholders de las funcionalidades implementadas: al no haber software, en la Inspección 2 (02/10/2026) se presentan las seis evidencias del trabajo base — Jira, estructura del repositorio, arquitectura, flujo OpenSpec, criterios de aceptación y registro de impedimentos —. El detalle está en la [Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md).
+Demostración a los partes interesadas de las funcionalidades implementadas: al no haber software, en la Inspección 2 (02/10/2026) se presentan las seis evidencias del trabajo base — Jira, estructura del repositorio, arquitectura, flujo OpenSpec, criterios de aceptación y registro de impedimentos —. El detalle está en la [Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md).
 
 ## Pendientes
 

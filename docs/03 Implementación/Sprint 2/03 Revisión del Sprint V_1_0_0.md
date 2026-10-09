@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.2.2 |
+| Versión | 1.2.3 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026) |
 | Objetivo replanificado | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
@@ -29,6 +29,7 @@
 | 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se añade el historial de cambios de estado de ECO-9 y se confirma que la reunión aún no ocurrió al corte de esta actualización. |
 | 1.2.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se distingue el estado provisional de Jira de la velocidad y aceptación oficiales del Sprint 2, que siguen pendientes de la revisión y del cierre. |
 | 1.2.2 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra que ECO-20 aparece sin persona asignada ni estimación aprobada en Jira al corte previo a la revisión. |
+| 1.2.3 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se traducen las referencias narrativas a partes interesadas. |
 
 ## Historias de Usuario completadas en este Sprint
 
@@ -84,7 +85,7 @@ La especificación se **auditó antes de programar** con el prompt "Auditor Seni
 
 ## Demostración del trabajo completado
 
-Demostración a los *stakeholders* de las funcionalidades implementadas. Guion para la revisión del 09/10, **ensayado el 02/10** contra los servidores locales (backend `http://localhost:8000`, frontend `http://localhost:3000`):
+Demostración a los *partes interesadas* de las funcionalidades implementadas. Guion para la revisión del 09/10, **ensayado el 02/10** contra los servidores locales (backend `http://localhost:8000`, frontend `http://localhost:3000`):
 
 | # | Paso de la demostración | Resultado esperado | Resultado del ensayo |
 |---:|---|---|---|
@@ -101,9 +102,9 @@ Demostración a los *stakeholders* de las funcionalidades implementadas. Guion p
 | 11 | Cinco contraseñas incorrectas seguidas | Bloqueo de 15 minutos (429), aun con la contraseña correcta | Correcto |
 | 12 | Enviar una solicitud desde un origen ajeno | 403 | Correcto |
 
-Lo que valida el *stakeholder*: que el despachador registra pedidos válidos y que el sistema rechaza los incoherentes antes de que lleguen al optimizador; y que solo entran personas autorizadas, con dos factores y según su rol.
+Lo que valida el *parte interesada*: que el despachador registra pedidos válidos y que el sistema rechaza los incoherentes antes de que lleguen al optimizador; y que solo entran personas autorizadas, con dos factores y según su rol.
 
-### Retroalimentación de los stakeholders
+### Retroalimentación de los partes interesadas
 
 Se registrará después de la reunión prevista para el 09/10 a las 15:40, hora de Lima, y se trasladará al backlog de Jira. Al corte de esta actualización, anterior a la reunión, no hay retroalimentación ni aceptación verificable; no se atribuyen acuerdos al docente. Los resultados se incorporarán en una versión posterior.
 
