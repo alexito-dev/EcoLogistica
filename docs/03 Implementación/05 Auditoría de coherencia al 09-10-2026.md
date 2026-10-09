@@ -12,6 +12,8 @@ La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mi
 
 > **Alineación posterior con Jira (09/10/2026, antes de la reunión):** se actualizó la meta del Sprint 2 para incluir el recorrido de registro y consulta de pedidos después de reiniciar la API. ECO-9 añadió ese criterio; ECO-16 se acotó a pedidos y ubicaciones, se agregó al Sprint 2 con 3 puntos y quedó en `Listo`. ECO-21 deja las cuentas, secretos TOTP, flota y rutas como trabajo pendiente, sin estimación ni sprint asignado. Jira muestra ahora 3/3 incidencias en `Listo` y 8 puntos estimados más ECO-20 sin puntos; esto no equivale a aceptación del Product Owner ni al cierre del sprint.
 
+> **Verificación de regresión posterior (09/10/2026, 10:15, hora de Lima):** se volvieron a ejecutar las suites disponibles y aprobaron 100 pruebas de backend y 39 de frontend. Las pruebas existentes no cubren la integración de `PedidosPostgresRepository` con PostGIS; la permanencia del pedido tras reiniciar se respalda con la comprobación manual aislada descrita en la revisión del Sprint 2.
+
 > **Verificación de ejecución (09/10/2026, 08:51, hora de Lima):** el frontend en http://localhost:3000/ respondió HTTP 200 con HTML en español; la API en http://localhost:8000/openapi.json respondió HTTP 200 y entregó el esquema OpenAPI.
 
 - Se unifican al español las etiquetas de roles y las menciones genéricas a partes interesadas en README y artefactos afectados; se mantienen los nombres propios de herramientas, tecnologías y estándares.
@@ -146,3 +148,4 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 | 1.30.0 | 09/10/2026 | Se documenta la comprobación API aislada de Sprint 2 y se distingue del ensayo visual histórico y de la aceptación formal pendiente. |
 | 1.31.0 | 09/10/2026 | Se actualiza el corte de implementación: pedidos y ubicaciones ya se persisten en PostgreSQL/PostGIS; se corrigen referencias que aún lo marcaban pendiente. |
 | 1.32.0 | 09/10/2026 | Se actualizan Jira y los documentos de Sprint 2: ECO-16 entra en el sprint para persistencia de pedidos, y ECO-21 registra el alcance pendiente de EN-005. |
+| 1.33.0 | 09/10/2026 | Se registra la regresión aprobada después del cambio PostGIS y se aclara qué cobertura automatizada sigue pendiente. |

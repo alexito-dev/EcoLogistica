@@ -15,14 +15,14 @@
 | Campo | Valor |
 |---|---|
 | Código del proyecto | PFA-TP2-ECOLOG-2026 |
-| Versión | 1.2.0 |
+| Versión | 1.2.1 |
 | Iteración reportada | ECO Sprint 2 |
 | Objetivo replanificado del sprint | "Que Planificación inicie sesión con MFA, registre y consulte pedidos, y los conserve después de reiniciar la API." |
 | Fuentes | Historial Git (`main`), cambios OpenSpec `registro-pedidos` y `autenticacion-mfa`, resultados de pruebas automatizadas, [Retrospectiva del Sprint 1](../04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 | Documentos hermanos | [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [04 Retrospectiva del Sprint](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 | Sprint anterior | [Informe de estado del Sprint 1](../01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) |
 
-> **Actualización al 09/10/2026, antes de la revisión:** Jira mantiene el Sprint 2 id. 37 activo (29/09–12/10) y su meta ahora incluye el recorrido completo hasta comprobar la persistencia tras reiniciar la API. Incluye ECO-9 / HU-001 (5 puntos), ECO-16 / persistencia de pedidos y ubicaciones (3 puntos) y ECO-20 / MFA (sin estimación aprobada ni persona asignada); las tres están `Listo`. El conteo dinámico actual es 3/3 incidencias; no representa aceptación del producto ni cierre del sprint. El informe del Sprint 1 registra 0 de 2 al corte planificado del 28/09. El historial muestra ECO-9 en `Listo` el 02/10, su paso a `Por hacer` al cerrar Sprint 1 a las 07:42 del 09/10 y su retorno a `Listo` a las 07:43 al añadirse también al Sprint 2; la métrica dinámica actual del Sprint 1 cuenta 1/2 por su estado vigente y la asociación doble. La revisión del Sprint 2 está prevista para hoy a las 15:40, hora de Lima; sus acuerdos y aceptación todavía están pendientes.
+> **Actualización al 09/10/2026, antes de la revisión:** Jira mantiene el Sprint 2 id. 37 activo (29/09–12/10) y su meta ahora incluye el recorrido completo hasta comprobar la persistencia tras reiniciar la API. Incluye ECO-9 / HU-001 (5 puntos), ECO-16 / persistencia de pedidos y ubicaciones (3 puntos) y ECO-20 / MFA (sin estimación aprobada ni persona asignada); las tres están `Listo`. El conteo dinámico actual es 3/3 incidencias; no representa aceptación del producto ni cierre del sprint. El 09/10 a las 10:15 se volvieron a ejecutar las suites existentes: 100 pruebas de backend y 39 de frontend aprobaron. No hay pruebas automatizadas de integración para el adaptador PostgreSQL; su recorrido tras reiniciar se comprobó manualmente en una base aislada. El informe del Sprint 1 registra 0 de 2 al corte planificado del 28/09. El historial muestra ECO-9 en `Listo` el 02/10, su paso a `Por hacer` al cerrar Sprint 1 a las 07:42 del 09/10 y su retorno a `Listo` a las 07:43 al añadirse también al Sprint 2; la métrica dinámica actual del Sprint 1 cuenta 1/2 por su estado vigente y la asociación doble. La revisión del Sprint 2 está prevista para hoy a las 15:40, hora de Lima; sus acuerdos y aceptación todavía están pendientes.
 
 ## Historial de cambios
 
@@ -40,6 +40,7 @@
 | 1.1.8 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se ordenan los próximos pasos como un flujo completo de generación de rutas, con datos persistentes, flota y optimización como partes que lo habilitan. |
 | 1.1.9 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se integra y comprueba persistencia PostGIS para pedidos; se actualiza el riesgo y queda pendiente ampliar EN-005 a cuentas, flota y rutas. |
 | 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se incorpora ECO-16 al Sprint 2 con persistencia de pedidos y ubicaciones y se alinea la meta funcional del sprint en Jira; ECO-21 registra la ampliación pendiente de EN-005. |
+| 1.2.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registran las suites de regresión reejecutadas y se distingue su cobertura de la comprobación manual de PostGIS. |
 
 ## Resumen ejecutivo
 

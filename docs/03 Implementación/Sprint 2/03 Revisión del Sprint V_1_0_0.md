@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.2.9 |
+| Versión | 1.3.0 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026) |
 | Objetivo replanificado | "Planificación inicia sesión con MFA, registra y consulta pedidos, y los datos siguen disponibles después de reiniciar la API." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
@@ -36,6 +36,7 @@
 | 1.2.7 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se agrega una verificación API aislada de MFA, registro, consulta y rechazo de ventana inválida, separada del ensayo visual y de la aceptación pendiente. |
 | 1.2.8 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la comprobación aislada en PostGIS: el pedido permanece después de reiniciar la API; se ajusta la agenda de revisión y el alcance restante de EN-005. |
 | 1.2.9 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea la pauta con ECO-16 en Sprint 2, se deja EN-005 pendiente bajo ECO-21 y se actualizan los puntos observados en Jira. |
+| 1.3.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se vuelven a ejecutar las suites de backend y frontend después de incorporar PostGIS; se aclara que no cubren automáticamente ese adaptador. |
 
 ## Funciones implementadas; aceptación del Sprint 2 pendiente
 
@@ -85,7 +86,7 @@ ECO-16 se incorporó al Sprint 2 para que el pedido de HU-001 siga disponible de
 | PostGIS para pedidos y ubicaciones, migración Alembic y comprobación después de reiniciar la API | [ECO-16](https://continental-team-ecologistica.atlassian.net/browse/ECO-16), `docker-compose.yml`, `database/migrations/`, [adaptador PostgreSQL](../../../backend/src/app/pedidos/postgres_repository.py) |
 | Ratificación del stack React + FastAPI y alineación de 5 documentos de la línea base (versión 1.1.0) | [10 Stack tecnológico](../../01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md) |
 | Flujo OpenSpec completo: 2 cambios con propuesta, especificación, diseño y tareas, ambos archivados; sus especificaciones viven en `openspec/specs/pedidos` y `openspec/specs/autenticacion` | `openspec/` |
-| 139 pruebas automatizadas (100 de backend con 99 % de cobertura y 39 de frontend) | `backend/tests/`, `frontend/tests/` |
+| Suites de regresión existentes reejecutadas el 09/10 después del cambio PostGIS (100 pruebas de backend y 39 de frontend aprobadas) | `backend/tests/`, `frontend/tests/`; estas suites no incluyen integración automatizada con PostgreSQL |
 
 ### Defectos detectados y corregidos en el sprint
 
