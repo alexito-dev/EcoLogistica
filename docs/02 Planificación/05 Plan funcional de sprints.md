@@ -7,7 +7,7 @@
 | Campo | Valor |
 |---|---|
 | Proyecto | EcoLogística Huancayo |
-| Versión | 1.3.0 |
+| Versión | 1.4.0 |
 | Fecha | 09/10/2026 |
 | Enfoque | Cada sprint debe dejar una tarea real que una persona pueda completar en el sistema. |
 
@@ -88,7 +88,15 @@ El recorrido central de mapa, avance y re-enrutamiento suma **13 puntos candidat
 
 ## Qué incluye hoy el incremento del Sprint 2
 
-Una persona puede abrir la aplicación, autenticarse, registrar un pedido con dirección, carga y ventana horaria, y después localizarlo en la lista o abrir su detalle. El acceso depende del rol: Planificación puede registrar y consultar pedidos; Administración solo puede consultarlos.
+Una persona de Planificación puede abrir la aplicación, autenticarse con contraseña y TOTP, registrar un pedido con dirección, carga y ventana horaria, y después localizarlo en la lista o abrir su detalle. Administración puede consultar pedidos, pero no registrarlos. Esta es la parte del proyecto que ya se puede recorrer de principio a fin mientras la API sigue encendida.
+
+| Paso del recorrido | Qué hace el sistema | Implementación para revisar |
+|---|---|---|
+| Entrar | Pide contraseña y segundo factor; limita el acceso según el rol. | [Pantalla de acceso](../../frontend/src/auth/LoginPage.tsx) · [rutas de autenticación](../../backend/src/app/auth/router.py) |
+| Registrar | Valida el pedido y sus ventanas horarias, lo crea como `PENDIENTE` y muestra el código generado. | [Formulario de pedidos](../../frontend/src/components/PedidoForm.tsx) · [casos de uso](../../backend/src/app/pedidos/service.py) · [API de pedidos](../../backend/src/app/pedidos/router.py) |
+| Encontrar y consultar | Permite ver la lista, buscar o filtrar pedidos y abrir el detalle. | [Lista de pedidos](../../frontend/src/components/PedidosTable.tsx) · [detalle](../../frontend/src/components/PedidoDetalle.tsx) · [API de pedidos](../../backend/src/app/pedidos/router.py) |
+
+El [informe de revisión del Sprint 2](../03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) recoge los criterios, el ensayo manual y sus resultados. El ensayo se hizo el 02/10; no se debe presentar como una demostración nueva ni como aceptación formal de la reunión prevista para el 09/10.
 
 La verificación local del 09/10 confirmó que la interfaz responde en `http://localhost:3000/`, que el módulo de inicio de sesión se sirve con el texto de acceso actualizado y que la API publica sus rutas en `http://localhost:8000/openapi.json`. Sin una sesión, `/api/v1/auth/sesion` responde 401, como corresponde. Las pruebas automatizadas y la compilación anotadas en los informes corresponden a ejecuciones anteriores documentadas allí; esta actualización no las vuelve a ejecutar.
 
@@ -110,3 +118,4 @@ Esta definición sirve para juzgar el incremento de un sprint. No significa que 
 | 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se detallan los flujos propuestos para Sprint 3 y 4 con criterios de revisión ligados a las historias del backlog, sin inventar fechas ni estimaciones. |
 | 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se contrasta el backlog candidato de Sprint 3 con Jira y se documenta su capacidad pendiente de revisión. |
 | 1.3.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se añade el estado y tamaño observado del backlog candidato de Sprint 4, sin presentarlo como un sprint aprobado. |
+| 1.4.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se vincula cada paso que ya ofrece Sprint 2 con sus archivos de implementación y con la evidencia histórica de revisión. |
