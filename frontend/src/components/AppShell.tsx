@@ -7,25 +7,27 @@ interface Props {
   children: ReactNode
   usuario: Usuario
   onSalir: () => void
+  vista: 'pedidos' | 'flota'
+  onVistaChange: (vista: 'pedidos' | 'flota') => void
 }
 
 const NAVEGACION = [
-  { texto: 'Pedidos', icono: Boxes, activo: true },
-  { texto: 'Flota', icono: Truck, activo: false },
-  { texto: 'Rutas', icono: Route, activo: false },
-  { texto: 'Indicadores', icono: LayoutDashboard, activo: false },
+  { texto: 'Pedidos', icono: Boxes, vista: 'pedidos' as const, disponible: true },
+  { texto: 'Flota', icono: Truck, vista: 'flota' as const, disponible: true },
+  { texto: 'Rutas', icono: Route, vista: null, disponible: false },
+  { texto: 'Indicadores', icono: LayoutDashboard, vista: null, disponible: false },
 ]
 
-function Enlaces({ variante }: { variante: 'lateral' | 'inferior' }) {
+function Enlaces({ variante, vista, onVistaChange }: { variante: 'lateral' | 'inferior'; vista: 'pedidos' | 'flota'; onVistaChange: (vista: 'pedidos' | 'flota') => void }) {
   return (
     <ul className={variante === 'lateral' ? 'nav' : 'nav-inferior'}>
-      {NAVEGACION.map(({ texto, icono: Icono, activo }) => (
+      {NAVEGACION.map(({ texto, icono: Icono, vista: destino, disponible }) => (
         <li key={texto}>
-          {activo ? (
-            <a className="nav__item nav__item--activo" href="#contenido" aria-current="page">
+          {disponible ? (
+            <button type="button" className={`nav__item${vista === destino ? ' nav__item--activo' : ''}`} onClick={() => destino && onVistaChange(destino)} aria-current={vista === destino ? 'page' : undefined}>
               <Icono size={20} aria-hidden="true" />
               <span>{texto}</span>
-            </a>
+            </button>
           ) : (
             <span className="nav__item nav__item--pronto" aria-disabled="true" title="Disponible próximamente">
               <Icono size={20} aria-hidden="true" />
@@ -40,7 +42,7 @@ function Enlaces({ variante }: { variante: 'lateral' | 'inferior' }) {
   )
 }
 
-export default function AppShell({ children, usuario, onSalir }: Props) {
+export default function AppShell({ children, usuario, onSalir, vista, onVistaChange }: Props) {
   const iniciales = usuario.nombre
     .split(/\s+/)
     .map((p) => p[0])
@@ -62,7 +64,7 @@ export default function AppShell({ children, usuario, onSalir }: Props) {
           </div>
         </div>
         <nav aria-label="Navegación principal">
-          <Enlaces variante="lateral" />
+          <Enlaces variante="lateral" vista={vista} onVistaChange={onVistaChange} />
         </nav>
         <div className="lateral__eco">
           <Leaf size={18} aria-hidden="true" />
@@ -108,7 +110,7 @@ export default function AppShell({ children, usuario, onSalir }: Props) {
       </div>
 
       <nav className="barra-inferior" aria-label="Navegación móvil">
-        <Enlaces variante="inferior" />
+        <Enlaces variante="inferior" vista={vista} onVistaChange={onVistaChange} />
       </nav>
     </div>
   )

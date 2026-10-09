@@ -1,4 +1,4 @@
-"""Puerto de persistencia de pedidos (el adaptador PostgreSQL llegará con EN-005)."""
+"""Puerto de persistencia de pedidos; admite adaptadores en memoria y PostgreSQL/PostGIS."""
 
 from typing import Protocol
 from uuid import UUID

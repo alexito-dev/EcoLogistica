@@ -25,6 +25,8 @@
 
 > **Vigencia del flujo de trabajo (09/10/2026):** las referencias a integrar en develop en este informe son propuestas del corte del Sprint 1. El flujo vigente usa ramas breves feature/* desde main y PR hacia main; develop no es obligatoria. Ver la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
 
+> **Rebase funcional posterior (09/10/2026):** el producto conserva como Sprint 1 el incremento hoy implementado: acceso MFA/roles, gestión y consulta de pedidos y persistencia PostgreSQL/PostGIS. Esta clasificación es una línea base funcional acordada después del periodo reportado; el resultado histórico de 0/2 al corte del 28/09 y la falta de código durante esa iteración no cambian.
+
 ## Historial de cambios
 
 | Versión | Fecha | Autor | Cambio |
@@ -37,6 +39,7 @@
 | 1.1.4 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se identifica develop como propuesta histórica del Sprint 1 y se enlaza al flujo vigente documentado. |
 | 1.1.5 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se reemplaza la mención genérica a partes interesadas por su equivalente en español. |
 | 1.1.6 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se corrige la concordancia de género en la referencia a las partes interesadas. |
+| 1.1.7 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se separa la línea base funcional vigente de los resultados históricos del periodo de Sprint 1. |
 
 ## Resumen ejecutivo
 

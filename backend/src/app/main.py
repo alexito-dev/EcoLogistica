@@ -10,7 +10,9 @@ from fastapi.responses import JSONResponse
 from app.auth.dependencias import get_repositorio_usuarios
 from app.auth.router import router as auth_router
 from app.config import get_settings
+from app.database_health import verificar_base_de_datos
 from app.errors import registrar_manejadores
+from app.flota.router import router as flota_router
 from app.pedidos.router import router as pedidos_router
 
 METODOS_QUE_CAMBIAN_ESTADO = {"POST", "PUT", "PATCH", "DELETE"}
@@ -31,6 +33,8 @@ async def ciclo_de_vida(app: FastAPI):
     # Carga el almacén de usuarios al arrancar (y siembra los de demostración si está vacío),
     # para que la contraseña generada aparezca en la consola apenas se inicia el servidor.
     get_repositorio_usuarios()
+    if get_settings().database_url:
+        verificar_base_de_datos()
     yield
 
 
@@ -56,12 +60,13 @@ def create_app() -> FastAPI:
         CORSMiddleware,
         allow_origins=[settings.cors_origin],
         allow_credentials=True,
-        allow_methods=["GET", "POST"],
+        allow_methods=["GET", "POST", "PUT"],
         allow_headers=["Content-Type"],
     )
     registrar_manejadores(app)
     app.include_router(auth_router, prefix="/api/v1")
     app.include_router(pedidos_router, prefix="/api/v1")
+    app.include_router(flota_router, prefix="/api/v1")
     return app
 
 

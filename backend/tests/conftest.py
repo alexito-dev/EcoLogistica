@@ -16,6 +16,8 @@ from app.auth.archivo_repository import UsuariosArchivoRepository  # noqa: E402
 from app.auth.dependencias import get_repositorio_usuarios, usuario_actual  # noqa: E402
 from app.auth.domain import Rol, Usuario  # noqa: E402
 from app.auth.siembra import sembrar_usuarios_demo  # noqa: E402
+from app.flota.memory_repository import FlotaMemoryRepository  # noqa: E402
+from app.flota.router import get_repositorio_flota  # noqa: E402
 from app.main import app  # noqa: E402
 from app.pedidos.memory_repository import PedidosMemoryRepository  # noqa: E402
 from app.pedidos.router import get_repositorio  # noqa: E402
@@ -33,6 +35,7 @@ def client():
     """Cliente con sesión simulada de PLANIFICADOR y repositorio de pedidos nuevo por prueba."""
     repo = PedidosMemoryRepository()
     app.dependency_overrides[get_repositorio] = lambda: repo
+    app.dependency_overrides[get_repositorio_flota] = lambda: FlotaMemoryRepository()
     app.dependency_overrides[usuario_actual] = lambda: usuario_de_prueba(Rol.PLANIFICADOR)
     with TestClient(app, raise_server_exceptions=False) as c:
         yield c
@@ -43,7 +46,9 @@ def client():
 def cliente_con_rol():
     """Fábrica de clientes con sesión simulada del rol indicado."""
     repo = PedidosMemoryRepository()
+    repo_flota = FlotaMemoryRepository()
     app.dependency_overrides[get_repositorio] = lambda: repo
+    app.dependency_overrides[get_repositorio_flota] = lambda: repo_flota
 
     def _crear(rol: Rol) -> TestClient:
         app.dependency_overrides[usuario_actual] = lambda: usuario_de_prueba(rol)
@@ -65,6 +70,7 @@ def cliente_real(repo_usuarios):
     """Cliente sin sesión simulada: usa la autenticación real con un almacén temporal."""
     repo_pedidos = PedidosMemoryRepository()
     app.dependency_overrides[get_repositorio] = lambda: repo_pedidos
+    app.dependency_overrides[get_repositorio_flota] = lambda: FlotaMemoryRepository()
     app.dependency_overrides[get_repositorio_usuarios] = lambda: repo_usuarios
     with TestClient(app, raise_server_exceptions=False, headers={"Origin": ORIGEN}) as c:
         yield c

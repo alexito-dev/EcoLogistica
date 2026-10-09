@@ -9,8 +9,10 @@ from fastapi import APIRouter, Depends, Query, status
 from app.auth.dependencias import requerir_rol
 from app.auth.domain import Rol
 from app.config import get_settings
+from app.database import get_engine
 from app.pedidos.domain import EstadoPedido
 from app.pedidos.memory_repository import PedidosMemoryRepository
+from app.pedidos.postgres_repository import PedidosPostgresRepository
 from app.pedidos.repository import PedidosRepository
 from app.pedidos.schemas import ErrorOut, ListadoPedidosOut, PedidoCrear, PedidoOut
 from app.pedidos.service import PedidosService
@@ -20,7 +22,9 @@ router = APIRouter(prefix="/pedidos", tags=["Pedidos"])
 
 @lru_cache
 def get_repositorio() -> PedidosRepository:
-    """Repositorio único del proceso. Se sustituirá por el adaptador PostgreSQL (EN-005)."""
+    """Usa PostgreSQL si DATABASE_URL está definida; memoria queda para pruebas aisladas."""
+    if get_settings().database_url:
+        return PedidosPostgresRepository(get_engine())
     return PedidosMemoryRepository()
 
 

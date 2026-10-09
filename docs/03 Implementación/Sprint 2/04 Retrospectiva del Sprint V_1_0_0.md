@@ -10,12 +10,18 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.5.0 |
+| Versión | 1.11.0 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026; revisión 09/10/2026) |
 | Fecha de la retrospectiva | 02/10/2026 (corte de mitad de sprint; se confirma en la reunión del 09/10) |
 | Facilitador | Alex Zorrilla |
 | Participantes | Alex Zorrilla, Anco Porras, Jhean Pier Julio, Alexander Daniel Hilario Talavera, Jhoanna Hade Vera Zea, Jose Luis Isidro Casio |
 | Entradas | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [Retrospectiva del Sprint 1](../04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
+
+> **Nota de rebase funcional posterior (09/10/2026):** la línea base vigente mantiene MFA/roles y pedidos persistentes como Sprint 1, asigna flota a Sprint 2 y rutas a Sprint 3, y conserva el propósito de ejecución por Conducción para Sprint 4. Esta retrospectiva conserva su corte del 02/10; los criterios funcionales actuales están en el [plan de sprints](../../02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md).
+
+> **Evidencia de implementación posterior (09/10/2026):** la gestión de flota ya cuenta con migración, API y pantalla; la E2E aislada confirmó alta, consulta, disponibilidad por fecha y permanencia tras reiniciar la API. Los comentarios de esta retrospectiva sobre flota y persistencia describen el corte histórico del 02/10. En el alcance vigente, EN-005 aún requiere persistencia de cuentas y rutas, además de proteger los secretos TOTP.
+
+> **Resultado posterior del E2E de aceptación (09/10/2026):** se ejecutaron los cinco criterios funcionales de flota en navegador y los cinco aprobaron, incluida la regla de elegibilidad de unidades en Mantenimiento/Inactivo y la persistencia tras reiniciar la API. El ensayo se hizo con cuentas y PostGIS temporales aislados, luego retirados. La retrospectiva original del 02/10 no se reescribe ni se afirma que se haya celebrado la reunión formal de revisión; el resultado técnico queda registrado en la [revisión del Sprint 2](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md).
 
 ## Historial de cambios
 
@@ -28,6 +34,12 @@
 | 1.3.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se aclara el corte histórico de autoría de commits y se actualiza el dato con el historial de Git hasta el 09/10. |
 | 1.4.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza el estado de ECO-20: además de no tener estimación aprobada, Jira aún no muestra una persona asignada. |
 | 1.5.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se centra la acción de Sprint 3 en completar un recorrido de Planificación y se deja la tecnología como trabajo que habilita esa tarea. |
+| 1.6.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra que pedidos y ubicaciones ya sobreviven al reinicio con PostGIS; EN-005 sigue pendiente para usuarios, flota y rutas. |
+| 1.7.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea A10 con ECO-21 y se separa la persistencia de pedidos ya completada en ECO-16 del trabajo futuro. |
+| 1.8.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se anota la rebase funcional posterior y se conserva el corte intermedio original de la retrospectiva. |
+| 1.9.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se documenta la E2E de flota posterior y se actualiza el alcance restante de EN-005. |
+| 1.10.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea el trabajo candidato de Sprint 3 y EN-005 con la flota ya implementada en Sprint 2. |
+| 1.11.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se agrega el resultado posterior: 5/5 criterios E2E de aceptación funcional de flota aprobados. |
 
 ## Seguimiento de las acciones del Sprint 1
 
@@ -82,12 +94,12 @@
 - **El flujo de ramas acordado no se aplicó de forma uniforme:** se trabajó directamente sobre `main` y la rama remota `developer` quedó atrás (IMP-010). El estándar queda simplificado a ramas breves `feature/*` desde `main` y PR hacia `main`; no se requiere `develop`.
 - **El backlog de Jira no refleja todo el trabajo real:** al corte del 02/10 no existía la historia de autenticación; el 09/10 se creó ECO-20 sin estimación aprobada. Siguen faltando siete tarjetas y la actualización formal del roadmap (IMP-008).
 - **Las verificaciones extremo a extremo fueron manuales:** se ensayaron a mano en lugar de quedar como prueba automatizada repetible.
-- **El roadmap no se ajustó formalmente:** flota y motor se proponen para el Sprint 3 en los documentos, pero Jira todavía no contiene ese plan como un sprint futuro aprobado.
+- **Jira aún no refleja la rebase funcional:** la documentación vigente conserva MFA/pedidos en Sprint 1, flota en Sprint 2 y rutas en Sprint 3; Jira mantiene tarjetas de flota como `Por hacer` y no tiene un Sprint 3 aprobado. El Planning debe alinear las tarjetas y estimar el recorrido de rutas con la flota ya implementada.
 
 ### Herramientas
 
 - **Sin integración continua:** las 139 pruebas solo corren en la máquina de quien las ejecuta.
-- **Sin base de datos real:** la persistencia en memoria y en archivo local limita la demostración y la seguridad (IMP-011).
+- **La persistencia quedó a medias al cierre de esta actualización:** pedidos y ubicaciones ya se guardan en PostGIS, pero las cuentas siguen en archivo local y la flota/rutas aún no tienen tablas de aplicación (IMP-011).
 - **Las herramientas de desarrollo no están documentadas para todos:** el servidor de Vite conservó una versión vacía de los estilos y hubo que reiniciarlo. Hace falta una guía de solución de problemas en el README.
 - **Recursos de diseño incompletos:** falta la tipografía Codec Pro con licencia (IMP-013).
 
@@ -95,7 +107,7 @@
 
 | # | Acción concreta | Eje | Responsable | Fecha límite | Indicador de éxito |
 |---:|---|---|---|---|---|
-| A1 | Organizar el Sprint 3 alrededor del flujo propuesto: Planificación asigna pedidos pendientes a vehículos y revisa una ruta guardada. En el Planning, acordar las historias de interfaz, persistencia, flota y primera secuencia de paradas; repartirlas por rol y comprobarlas juntas como un recorrido. | Personas | Alex Zorrilla | 09/10/2026 (Planning del Sprint 3) | La meta y sus historias están acordadas y estimadas en Jira; el incremento permite completar el flujo y el aporte de cada integrante queda visible en el trabajo integrado. |
+| A1 | Organizar el Sprint 3 alrededor del flujo propuesto: Planificación asigna pedidos pendientes a vehículos elegibles y revisa una ruta guardada. En el Planning, acordar las historias de interfaz, persistencia de rutas y primera secuencia de paradas; repartirlas por rol, usar la flota ya implementada y comprobar el recorrido integrado. | Personas | Alex Zorrilla | 09/10/2026 (Planning del Sprint 3) | La meta y sus historias están acordadas y estimadas en Jira; el incremento permite completar el flujo y el aporte de cada integrante queda visible en el trabajo integrado. |
 | A2 | Sesión de nivelación de 1 hora sobre el stack y el flujo OpenSpec, dictada con el código real del proyecto | Personas | Alex Zorrilla | 12/10/2026 | Los 5 integrantes ejecutan el backend, el frontend y las pruebas en su máquina |
 | A3 | Toda decisión técnica que cambie la arquitectura se discute en la reunión del equipo y se registra como ADR en `docs/otros` antes de tocar `main` | Relaciones | Anco Porras, Jhean Pier Julio | Permanente desde el 09/10/2026 | 0 cambios de arquitectura sin ADR |
 | A4 | Revisión cruzada obligatoria: cada *pull request* la aprueba un integrante distinto del autor | Relaciones | Jose Luis Isidro Casio | 16/10/2026 | 100 % de PR con al menos una aprobación |
@@ -104,7 +116,7 @@
 | A7 | Registrar en Jira la historia de autenticación y estimar las 7 tarjetas faltantes con *Planning Poker*; actualizar el roadmap | Procesos | Jose Luis Isidro Casio | 09/10/2026 | Backlog completo y estimado; roadmap del Sprint 3 publicado |
 | A8 | Convertir el guion de demostración en pruebas extremo a extremo automatizadas (Playwright, previsto en el documento de stack) | Procesos | Jose Luis Isidro Casio | 23/10/2026 | Guion de 12 pasos ejecutándose en CI |
 | A9 | Configurar GitHub Actions con las pruebas de backend y frontend, el lint y la compilación en cada PR (EN-006) | Herramientas | Jose Luis Isidro Casio | 16/10/2026 | Pipeline en verde obligatorio para fusionar |
-| A10 | PostgreSQL + PostGIS con `docker compose` y migraciones Alembic; adaptadores de repositorio para pedidos y usuarios (EN-005) | Herramientas | Anco Porras, Jhean Pier Julio | 23/10/2026 | Los datos sobreviven al reinicio; pruebas de integración contra la base |
+| A10 | Completar EN-005 bajo ECO-21: persistir cuentas, proteger TOTP y guardar rutas con migraciones | Herramientas | Anco Porras, Jhean Pier Julio | 23/10/2026 | ECO-16 guarda pedidos y ubicaciones; la migración `20261009_02` persiste flota. ECO-21 sigue sin estimación ni sprint. Verificar las cuentas y rutas pendientes y añadir sus comprobaciones de integración |
 | A11 | Agregar al README una sección de solución de problemas (caché de Vite, contraseña de demostración, puertos) | Herramientas | Jhoanna Hade Vera Zea | 12/10/2026 | Un integrante nuevo levanta la app sin ayuda |
 | A12 | Prototipo del motor con OR-Tools y benchmark EN-001 con 50, 100 y 150 pedidos | Procesos | Alexander Daniel Hilario Talavera | 23/10/2026 | Informe de tiempos y factibilidad publicado en `docs/` |
 
@@ -112,4 +124,4 @@
 
 ### Seguimiento de acuerdos
 
-El avance de estas acciones se revisa en el Daily y se reporta en el Informe de estado del Sprint 3. Las acciones vinculadas a impedimentos se cierran también en el registro: A6 → IMP-010; A7 → IMP-008; A10 → IMP-011; A12 → IMP-006.
+El avance de estas acciones se revisa en el Daily y se reporta en el Informe de estado del Sprint 3. Las acciones vinculadas a impedimentos se cierran también en el registro: A6 → IMP-010; A7 → IMP-008; A10 → IMP-011 y ECO-21; A12 → IMP-006.

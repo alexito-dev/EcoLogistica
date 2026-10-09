@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     cookie_secure: bool = False  # True cuando se sirve por HTTPS
     demo_clave: str = ""  # vacía: se genera una aleatoria y se muestra una vez en consola
     usuarios_archivo: Path = Path(__file__).resolve().parents[2] / ".data" / "usuarios.json"
+    database_url: str | None = None
 
     # Ámbito geográfico configurable (RF-02.2). Rectángulo de aproximación para
     # desarrollo; debe validarse con el negocio y sustituirse por PostGIS (EN-005).

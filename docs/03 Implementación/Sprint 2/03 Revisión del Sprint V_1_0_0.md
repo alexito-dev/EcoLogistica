@@ -10,14 +10,20 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.2.7 |
+| Versión | 1.7.0 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026) |
-| Objetivo replanificado | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
+| Objetivo replanificado | "Planificación inicia sesión con MFA, registra y consulta pedidos, y los datos siguen disponibles después de reiniciar la API." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
 | Ensayo de la demostración | 02/10/2026, contra los servidores locales (resultados en la sección *Demostración*) |
 | Participantes previstos | Equipo Scrum: Alex Zorrilla (líder / PM), Anco Porras, Jhean Pier Julio (backend), Alexander Daniel Hilario Talavera (optimización), Jhoanna Hade Vera Zea (frontend/UX), Jose Luis Isidro Casio (QA/DevOps). Docente asesor y *Product Owner* académico: Ing. Job Daniel Gamarra Moreno |
 | Documentos hermanos | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [04 Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 | Sprint anterior | [Revisión del Sprint 1](../03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) |
+
+> **Nota de rebase funcional posterior (09/10/2026):** el incremento de MFA y pedidos persistentes queda como alcance vigente de Sprint 1; flota corresponde a Sprint 2 y rutas a Sprint 3. Esta pauta conserva la evidencia y los acuerdos de la revisión original; la decisión de reordenar no se presenta como aceptación formal ni modifica el registro de Jira.
+
+> **Comprobación posterior del alcance reordenado (09/10/2026):** en la aplicación local se completó MFA, alta/listado de vehículos con rol de Administración, disponibilidad por fecha con Planificación, y alta, búsqueda y detalle de un pedido. Se recargaron los datos tras reiniciar la API. La evidencia es de una E2E manual en una base PostGIS aislada, con datos temporales retirados al terminar; la base local conserva la migración `20261009_02` y no contiene los registros de prueba. Esta comprobación no reemplaza la decisión de aceptación que debe registrarse en la tabla de la reunión.
+
+> **E2E de aceptación funcional de flota (09/10/2026):** se completaron en el navegador, con acceso MFA de Administración y Planificación y una base PostGIS temporal, los cinco criterios de Sprint 2. Resultado: **5/5 aprobados**. La base se mantuvo al reiniciar la API y, tras volver a cargar la pantalla, siguieron presentes los tres vehículos, sus turnos y la regla que excluye de elegibilidad los estados Mantenimiento e Inactivo. Las cuentas, el contenedor y los datos temporales se retiraron al terminar; no se agregaron registros E2E a la base local. Esto confirma la aceptación según los criterios funcionales definidos en el plan. La reunión/decisión del Product Owner y el cierre de Jira siguen sin evidencia y no se presentan como realizados.
 
 ## Historial de cambios
 
@@ -34,10 +40,29 @@
 | 1.2.5 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se aclara que `Listo` y las pruebas documentadas respaldan la implementación, mientras la aceptación del Sprint 2 sigue pendiente de su reunión. |
 | 1.2.6 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se deja lista una pauta para revisar el recorrido funcional, explicar sus límites y registrar la decisión sin adelantarla. |
 | 1.2.7 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se agrega una verificación API aislada de MFA, registro, consulta y rechazo de ventana inválida, separada del ensayo visual y de la aceptación pendiente. |
+| 1.2.8 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la comprobación aislada en PostGIS: el pedido permanece después de reiniciar la API; se ajusta la agenda de revisión y el alcance restante de EN-005. |
+| 1.2.9 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea la pauta con ECO-16 en Sprint 2, se deja EN-005 pendiente bajo ECO-21 y se actualizan los puntos observados en Jira. |
+| 1.3.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se vuelven a ejecutar las suites de backend y frontend después de incorporar PostGIS; se aclara que no cubren automáticamente ese adaptador. |
+| 1.4.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la revisión visual compartida, la sesión real de Planificación y el listado vacío; se deja sin conclusión una solicitud manual que devolvió 400 y se contrasta con las 28 pruebas existentes de API. |
+| 1.5.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se anota la rebase funcional posterior y se remite al plan vigente, preservando los resultados del corte original. |
+| 1.6.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se añade evidencia E2E posterior de pedidos y flota, manteniendo pendiente la aceptación formal. |
+| 1.7.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se ejecuta y registra el E2E de los cinco criterios de aceptación del alcance de flota; 5/5 aprobados. La reunión/decisión del Product Owner queda diferenciada del resultado E2E. |
 
-## Funciones implementadas; aceptación del Sprint 2 pendiente
+## Criterios E2E de flota aprobados; registro de reunión pendiente
 
-El ensayo de la demostración descrito abajo se hizo el 02/10. Jira muestra ECO-9 y ECO-20 en `Listo`, pero la reunión prevista para el 09/10 a las 15:40 aún no ocurre a este corte. Aquí, "cumple" describe la evidencia de implementación y pruebas; no significa que el Product Owner ya haya aceptado el sprint.
+El ensayo histórico de la demostración descrito abajo se hizo el 02/10. Para el alcance funcional reordenado, el E2E de flota ejecutado el 09/10 aprobó los cinco criterios del plan. Jira muestra ECO-9, ECO-16 y ECO-20 en `Listo`, pero eso no sustituye el registro de una decisión del Product Owner. La sección de reunión más abajo conserva ese registro sin completar porque no hay evidencia de que la reunión ocurriera.
+
+### Evidencia de aceptación E2E del alcance vigente: flota
+
+| Criterio del plan funcional | Resultado E2E en navegador | Evidencia observada |
+|---|---|---|
+| Administración crea/edita vehículo, normaliza placa y rechaza duplicados. | Aprobado | Se creó `S2-E2E-A1` con placa en minúscula y se comprobó su normalización; el duplicado mostró “La placa debe ser única”; la edición confirmó “Vehículo actualizado”. |
+| Capacidades/consumo no positivos y fin de turno no posterior al inicio se rechazan. | Aprobado | El formulario rechazó valores negativos y bloqueó cero como campo requerido; la combinación 17:00–08:00 mostró “La hora final debe ser posterior a la hora inicial”. |
+| Planificación configura turno y exige motivo si la unidad no está disponible. | Aprobado | Se guardó un turno 08:00–17:00; al desactivar disponibilidad, el formulario exigió el motivo y la unidad dejó de ser elegible. |
+| Mantenimiento o Inactivo impiden elegibilidad aunque haya turno guardado. | Aprobado | `S2-E2E-B2` con turno 08:00–17:00 pasó a Mantenimiento y `S2-E2E-C3` con el mismo turno pasó a Inactivo; la cuenta Planificación mostró ambos estados sin etiqueta “Apto para planificar”. |
+| Vehículo y disponibilidad persisten tras reiniciar la API. | Aprobado | Se detuvo y volvió a iniciar la API contra la misma base PostGIS E2E; al recargar Flota reaparecieron tres vehículos, todos los turnos y un único vehículo elegible (`S2-E2E-A1`). |
+
+**Resultado:** 5/5 criterios aprobados. Las pruebas se ejecutaron el 09/10/2026 en `http://localhost:3000/`, con una API y PostGIS temporales aislados. Los datos no pertenecían a operaciones reales y fueron retirados al concluir. No se cambiaron los estados de Jira ni se atribuye aceptación formal al Product Owner.
 
 ### HU-001 / ECO-9 — Registrar pedido con ventana horaria (5 pts) · **Implementada; aceptación pendiente**
 
@@ -71,14 +96,19 @@ Incorporada al sprint como precondición de HU-001 y como actividad de la semana
 
 La especificación se **auditó antes de programar** con el prompt "Auditor Senior de Arquitectura de Software": 4 ambigüedades, 6 casos de borde y 3 preguntas de arquitectura, todos resueltos ([auditoría](../../../openspec/changes/archive/2026-10-02-autenticacion-mfa/auditoria-especificacion.md)). El cambio está **archivado** en OpenSpec y su especificación vive en `openspec/specs/autenticacion/`.
 
+### Habilitador técnico — Persistir pedidos y ubicaciones (ECO-16, 3 pts) · **Implementado; aceptación pendiente**
+
+ECO-16 se incorporó al Sprint 2 para que el pedido de HU-001 siga disponible después de reiniciar la API. Docker Compose provisiona PostgreSQL/PostGIS, Alembic crea las tablas `pedidos` y `ubicaciones`, y el adaptador de pedidos crea, lista, filtra y consulta los registros. Una comprobación funcional aislada verificó registro, listado, detalle, rechazo de ventana inválida y disponibilidad del mismo pedido después del reinicio. La comprobación fue manual; no hay una suite automatizada de integración para esta capa.
+
 ### Habilitadores completados
 
 | Habilitador | Evidencia |
 |---|---|
 | Base de código del backend (FastAPI por capas) y del frontend (React + Vite + TypeScript), con scripts de ejecución y prueba | `backend/`, `frontend/`, README sección 8 |
+| PostGIS para pedidos y ubicaciones, migración Alembic y comprobación después de reiniciar la API | [ECO-16](https://continental-team-ecologistica.atlassian.net/browse/ECO-16), `docker-compose.yml`, `database/migrations/`, [adaptador PostgreSQL](../../../backend/src/app/pedidos/postgres_repository.py) |
 | Ratificación del stack React + FastAPI y alineación de 5 documentos de la línea base (versión 1.1.0) | [10 Stack tecnológico](../../01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md) |
 | Flujo OpenSpec completo: 2 cambios con propuesta, especificación, diseño y tareas, ambos archivados; sus especificaciones viven en `openspec/specs/pedidos` y `openspec/specs/autenticacion` | `openspec/` |
-| 139 pruebas automatizadas (100 de backend con 99 % de cobertura y 39 de frontend) | `backend/tests/`, `frontend/tests/` |
+| Suites de regresión existentes reejecutadas el 09/10 después del cambio PostGIS (100 pruebas de backend y 39 de frontend aprobadas) | `backend/tests/`, `frontend/tests/`; estas suites no incluyen integración automatizada con PostgreSQL |
 
 ### Defectos detectados y corregidos en el sprint
 
@@ -94,6 +124,10 @@ La especificación se **auditó antes de programar** con el prompt "Auditor Seni
 Demostración a las *partes interesadas* de las funcionalidades implementadas. Guion para la revisión del 09/10, **ensayado el 02/10** contra los servidores locales (backend `http://localhost:8000`, frontend `http://localhost:3000`):
 
 **Comprobación API del 09/10, 09:34 (hora de Lima):** en una instancia temporal aparte, sin alterar el servidor local ni sus cuentas, se completó el ingreso con MFA, el registro de un pedido válido (201), su listado por estado y consulta por identificador (200), y el rechazo de una ventana inválida (422). La cuenta y el pedido eran datos de prueba aislados; el archivo temporal se eliminó al terminar. Esto verifica el recorrido de la API, no la interfaz React en un navegador ni la aceptación del Product Owner.
+
+**Comprobación de persistencia del 09/10:** en una segunda base PostGIS temporal, sin volumen y separada de los datos locales, se inició sesión con MFA, se registró y consultó un pedido, se rechazó una ventana inválida y se reinició FastAPI. Después del reinicio, el mismo pedido volvió a aparecer en el listado y en su detalle. El contenedor y la cuenta temporal se retiraron al terminar. Esta comprobación cubre API y base de datos, no la vista del navegador ni la aceptación del Product Owner.
+
+**Comprobación local en navegador y API del 09/10, antes de la revisión:** la captura compartida muestra a Planificación dentro de la pantalla de Pedidos; los indicadores y la lista muestran cero pedidos. En la misma sesión de comprobación, el ingreso por API aceptó contraseña y TOTP para el rol `PLANIFICADOR`, y `GET /api/v1/pedidos` respondió 200 con `total=0`. La consulta se hizo en modo lectura y no se crearon registros. Una solicitud manual de ventana invertida enviada desde PowerShell devolvió 400, pero no se guardó su cuerpo y no se puede determinar si el rechazo se debió al formato de esa solicitud. Las 28 pruebas existentes de `tests/pedidos/test_api.py` pasaron; entre ellas, las ventanas que terminan antes de empezar se rechazan con 422. Esta evidencia no reemplaza la revisión del Product Owner.
 
 | # | Paso de la demostración | Resultado esperado | Resultado del ensayo |
 |---:|---|---|---|
@@ -124,7 +158,7 @@ Antes de mostrar el flujo, confirmar que el equipo tiene a mano una cuenta de Pl
 | Registrar un pedido válido y ver el código de confirmación. | Pendiente | — |
 | Mostrar cómo se rechaza una ventana horaria inválida. | Pendiente | — |
 | Encontrar el pedido en la lista, buscarlo o filtrarlo y abrir su detalle. | Pendiente | — |
-| Explicar que, por ahora, los pedidos se pierden al reiniciar la API. | Pendiente | Acordar si este límite se acepta para el incremento de demostración o requiere trabajo antes de darlo por aceptado. |
+| Reiniciar la API y confirmar que el pedido conserva código, estado y detalle. | Pendiente | El flujo ya se comprobó en una base temporal aislada; repetirlo durante la revisión y registrar comentarios del Product Owner. |
 
 | Decisión del Product Owner sobre el incremento | Pendiente de registrar |
 |---|---|
@@ -140,19 +174,19 @@ Hasta que se complete esta tabla con lo que ocurra en la reunión, la aceptació
 | # | Pendiente | Tipo | Origen | Responsable | Destino |
 |---:|---|---|---|---|---|
 | 1 | La historia técnica se registró como ECO-20, sin puntos aprobados; faltan Planning Poker y crear las 7 tarjetas HU-004, HU-010, HU-011 y EN-001 a EN-004 | Gestión | [IMP-008](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jose Luis Isidro Casio · equipo | Antes del Planning del Sprint 3 |
-| 2 | PostgreSQL + PostGIS con migraciones y adaptadores reales (EN-005 / ECO-16) | Habilitador | [IMP-011](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Anco Porras, Jhean Pier Julio | Sprint 3 |
-| 3 | Gestión de flota y restricciones vehiculares (HU-003, HU-009) | Historia | Roadmap del Sprint 2, no iniciado | Anco Porras, Jhean Pier Julio | Sprint 3 |
-| 4 | Prototipo del motor VRPTW y benchmark EN-001 (desbloquea HU-004 y HU-006) | Historia / habilitador | Roadmap; [IMP-006](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Alexander Daniel Hilario Talavera | Sprint 3 |
-| 5 | CI en GitHub Actions y ramas breves `feature/*` con *pull requests* hacia `main` (EN-006); retirar `developer` tras confirmar la migración | Habilitador | [IMP-010](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jose Luis Isidro Casio | Sprint 3 |
-| 6 | Restablecimiento del segundo factor por un administrador | Historia técnica | Auditoría, caso E6 | Alex Zorrilla | Sprint 4 |
-| 7 | Archivos de la tipografía Codec Pro | Diseño | [IMP-013](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jhoanna Hade Vera Zea | Antes del 09/10 |
+| 2 | Completar EN-005 / [ECO-21](https://continental-team-ecologistica.atlassian.net/browse/ECO-21) para persistir cuentas, proteger secretos TOTP y persistir rutas | Habilitador | [IMP-011](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Anco Porras, Jhean Pier Julio | Planning del Sprint 3; sin estimación ni compromiso |
+| 3 | Prototipo del motor VRPTW y benchmark EN-001 (desbloquea HU-004 y HU-006) | Historia / habilitador | Roadmap; [IMP-006](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Alexander Daniel Hilario Talavera | Sprint 3 |
+| 4 | CI en GitHub Actions y ramas breves `feature/*` con *pull requests* hacia `main` (EN-006); retirar `developer` tras confirmar la migración | Habilitador | [IMP-010](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jose Luis Isidro Casio | Sprint 3 |
+| 5 | Restablecimiento del segundo factor por un administrador | Historia técnica | Auditoría, caso E6 | Alex Zorrilla | Sprint 4 |
+| 6 | Archivos de la tipografía Codec Pro | Diseño | [IMP-013](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jhoanna Hade Vera Zea | Antes del 09/10 |
 
 ### Estado provisional de Jira y proyección
 
 | Métrica | Sprint 1 al corte planificado | Sprint 2 al 09/10, antes de la revisión |
 |---|---:|---:|
-| Puntos de historias que alcanzaron la Definición de Hecho / están en `Listo` en Jira | 0 | 5 (estado de Jira; revisión pendiente) |
-| Historias técnicas en `Listo` en Jira | 0 | 1 (ECO-20; sin estimación aprobada) |
+| Puntos de historias que alcanzaron la Definición de Hecho / están en `Listo` en Jira | 0 | 5 (ECO-9; estado de Jira, revisión pendiente) |
+| Tareas técnicas en `Listo` en Jira | 0 | 2 (ECO-16: 3 pts; ECO-20: sin estimación aprobada) |
+| Puntos estimados en `Listo` en Jira | 0 | 8 (5 de ECO-9 + 3 de ECO-16; no es velocidad oficial) |
 | Velocidad oficial del Sprint 2 | 0 | Pendiente de revisión y cierre |
 
-El Sprint 2 continúa activo y su revisión está programada para el 09/10 a las 15:40, hora de Lima; por ello, el dato de 5 puntos en `Listo` todavía no es velocidad oficial ni aceptación del producto. No se calcula una velocidad promedio con un sprint pendiente de cierre y ECO-20 sin estimación aprobada. La proyección se actualizará en el Planning del Sprint 3 con el backlog estimado y la capacidad confirmada del equipo (ver [Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)).
+El Sprint 2 continúa activo y su revisión está programada para el 09/10 a las 15:40, hora de Lima; por ello, los 8 puntos estimados en `Listo` todavía no son velocidad oficial ni aceptación del producto. No se calcula una velocidad promedio con un sprint pendiente de cierre y ECO-20 sin estimación aprobada. La proyección se actualizará en el Planning del Sprint 3 con el backlog estimado y la capacidad confirmada del equipo (ver [Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)).

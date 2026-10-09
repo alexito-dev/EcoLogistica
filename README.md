@@ -53,24 +53,26 @@ Desarrollar e implementar un PMV web que optimice las rutas de distribución urb
 
 ### 2.4. Estado verificado del proyecto al 09/10/2026
 
-La línea base tecnológica vigente es **React + Vite + TypeScript** para la interfaz y **FastAPI + Python** para la API. El modelo objetivo incorpora PostgreSQL/PostGIS, Leaflet/OpenStreetMap y un motor Python de optimización; esos tres componentes todavía no están implementados en el repositorio. La matriz y el alcance están en [10. Stack tecnológico](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md).
+La línea base tecnológica vigente es **React + Vite + TypeScript** para la interfaz, **FastAPI + Python** para la API y **PostgreSQL/PostGIS** para pedidos, ubicaciones, vehículos y disponibilidades. La línea base funcional se reordenó el 09/10: Sprint 1 conserva el acceso MFA/roles y pedidos persistentes; Sprint 2 se dedica a flota; Sprint 3 a rutas; los siguientes sprints mantienen sus propósitos previos. Esta decisión no cambia los resultados históricos ni los estados y fechas ya registrados en Jira. Todavía faltan persistir usuarios y rutas, además de Leaflet/OpenStreetMap y el motor de optimización. La matriz y el alcance están en [10. Stack tecnológico](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md).
 
-El código disponible entrega autenticación con verificación TOTP y roles, además del registro, consulta y listado de pedidos. La ejecución del 09/10/2026 registró **100 pruebas de backend aprobadas, 99 % de cobertura y 39 pruebas de frontend aprobadas**; la compilación de producción terminó correctamente, con avisos porque los archivos de la fuente Codec Pro no están incluidos. Este estado no implica persistencia PostgreSQL, optimización de rutas ni despliegue continuo.
+El sistema permite entrar con TOTP y roles, registrar pedidos, volver a encontrarlos y consultar su detalle. Los pedidos y sus coordenadas se guardan en PostgreSQL/PostGIS y se comprobó que siguen ahí tras reiniciar la API. El 09/10/2026 pasaron **107 pruebas de backend y 39 de frontend**; también terminó la compilación de producción. El incremento de flota se recorrió visualmente con MFA en un PostGIS aislado y continuó disponible tras reiniciar la API. El linter termina con dos avisos de `set-state-in-effect`, uno preexistente en pedidos y otro en la nueva vista de flota. No hay todavía pruebas automatizadas que integren los adaptadores PostgreSQL; la persistencia se comprobó manualmente en bases aisladas. La compilación avisa que faltan los archivos de la fuente Codec Pro. Aún no hay optimización de rutas ni despliegue continuo.
 
-| Sprint | Plan comprometido | Resultado documentado |
+| Sprint | Alcance funcional vigente | Estado documentado |
 |---|---|---|
-| Sprint 1 · 14/09–28/09 | ECO-9 / HU-001 y ECO-15 / HU-006 (10 puntos) | Al corte planificado del 28/09, el informe del Sprint 1 registra 0 de 2 historias completadas. Jira cerró el sprint el 09/10 a las 07:42; ECO-9 había pasado a `Listo` el 02/10, volvió a `Por hacer` al cerrar el sprint y volvió a `Listo` a las 07:43 al incorporarse también al Sprint 2. La métrica dinámica actual cuenta 1 de 2 en Sprint 1 y no representa la velocidad al 28/09. ECO-15 sigue pendiente y sin implementación demostrable. |
-| Sprint 2 · 29/09–12/10 | Replanificación: primer incremento demostrable de HU-001 con autenticación y autorización MFA | HU-001 (5 puntos) y MFA están implementadas en `main` y registradas como ECO-9 y ECO-20 en Jira; ECO-20 no tiene estimación aprobada ni responsable asignado. La consulta actual de Jira muestra 2/2 incidencias en `Listo` (100 %), pero el sprint sigue activo y la reunión de revisión está prevista para el 09/10 a las 15:40, hora de Lima; el conteo no implica aceptación ni cierre. |
+| Sprint 1 · 14/09–28/09 | Acceso MFA y roles; registrar, consultar y conservar pedidos. | Implementado y comprobado en un entorno aislado, incluida persistencia después de reiniciar la API. El informe histórico al corte del 28/09 sigue registrando 0 de 2 historias; la rebase funcional acordada después no reescribe ese resultado ni el historial de Jira. |
+| Sprint 2 · 29/09–12/10, alcance reordenado | Administración gestiona el catálogo de vehículos; Planificación declara disponibilidad y turnos por fecha. | El E2E web aprobó los 5 criterios funcionales: alta/edición, validaciones, disponibilidad por rol, exclusión de vehículos en Mantenimiento/Inactivo y persistencia tras reiniciar API. Se usó PostGIS temporal aislado y no quedaron datos de prueba en la base local. Pasaron 107 pruebas de backend, 39 de frontend y la compilación de producción. El registro de la decisión del Product Owner y el cierre de Jira siguen pendientes. |
+| Sprint 3 · siguiente alcance | Planificación genera, guarda y vuelve a consultar rutas para pedidos pendientes usando vehículos elegibles. | Pendiente: persistencia de rutas/paradas, generación factible y verificación del recorrido. Fechas y estimación se acuerdan en Jira. |
+| Sprint 4 · propósito conservado | Conducción consulta una ruta, registra avances e incidencias; Planificación puede revisarlos. | Se mantiene como alcance posterior; se precisa en el plan funcional de sprints. |
 
-Jira ya refleja el Sprint 1 cerrado, el Sprint 2 activo y la historia ECO-20 de MFA. ECO-15 está en `Por hacer` porque el repositorio no contiene re-enrutamiento. Sigue pendiente normalizar los nombres y el mapeo de las columnas del tablero; el detalle está en [02. Artefactos Jira](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md). Los estados de Jira se contrastan con el código y sus pruebas.
+Jira conserva por ahora las asignaciones históricas del Sprint 1 y 2. ECO-15 sigue en `Por hacer`; ECO-21 aún incluye en Jira cuentas, secretos TOTP, flota y rutas, aunque flota ya está implementada; la tarjeta no tiene estimación ni sprint asignado y debe ajustarse en el Planning. La redistribución del trabajo funcional debe reflejarse en Jira durante el Planning del equipo; esta actualización no cambia tarjetas externas. Sigue pendiente normalizar los nombres y el mapeo de las columnas del tablero; el detalle está en [02. Artefactos Jira](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md). Los estados de Jira se contrastan con el código y su evidencia.
 
-La planificación futura ahora se organiza alrededor de tareas que una persona pueda terminar en el sistema. El detalle, con el resultado real de Sprint 1, la función de Sprint 2 y propuestas aún no aprobadas para Sprint 3 y 4, está en [05. Plan funcional de sprints](docs/02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md).
+La línea base funcional acordada para Sprint 1–4 está en [05. Plan funcional de sprints](docs/02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md), con criterios para flota y rutas y con los cortes históricos preservados.
 
 ---
 
 ## 3. Capacidades y Módulos Funcionales
 
-El diagrama muestra el alcance objetivo del producto, no funcionalidades ya entregadas. Al 09/10/2026 están implementados la autenticación con MFA/roles y el registro y consulta de pedidos; flota, optimización, mapa, dashboard y re-enrutamiento siguen pendientes.
+El diagrama muestra el alcance objetivo del producto, no funcionalidades ya entregadas. Al 09/10/2026 están implementados la autenticación con MFA/roles, el registro y consulta persistente de pedidos y la gestión de flota con los criterios E2E de Sprint 2 aprobados. Generación de rutas, optimización, mapa, dashboard y re-enrutamiento siguen pendientes.
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -102,7 +104,7 @@ El diagrama muestra el alcance objetivo del producto, no funcionalidades ya entr
 
 ## 5. Arquitectura del Sistema
 
-El diagrama siguiente representa la **arquitectura objetivo del PMV**, no el despliegue actual. Al corte del 09/10/2026 están implementados React/Vite, FastAPI, autenticación MFA y pedidos; la base de datos, mapas, dashboard y motor de optimización permanecen planificados.
+El diagrama siguiente representa la **arquitectura objetivo del PMV**, no el despliegue actual. Al corte del 09/10/2026 están implementados React/Vite, FastAPI, autenticación MFA/roles, pedidos y flota persistidos en PostgreSQL/PostGIS. Persistencia de usuarios y rutas, mapas, dashboard y motor de optimización siguen pendientes.
 
 ```mermaid
 graph TD
@@ -151,7 +153,8 @@ EcoLogistica/
 ├── assets/                        # Logotipo y evidencias de Jira
 ├── backend/
 │   ├── src/app/auth/              # Autenticación, MFA, roles y auditoría
-│   ├── src/app/pedidos/           # Dominio, API y repositorio en memoria
+│   ├── src/app/pedidos/           # Dominio, API y repositorios en memoria y PostgreSQL/PostGIS
+│   ├── src/app/flota/             # Catálogo de vehículos y disponibilidad diaria
 │   └── tests/                     # Pruebas de API, servicios y dominio
 ├── docs/
 │   ├── 01 Inicio/                 # Acta, alcance, requisitos y arquitectura
@@ -221,18 +224,24 @@ En PowerShell, desde la raíz del repositorio:
 Copy-Item .env.example .env
 ```
 
-El archivo contiene solo variables leídas por la implementación actual: CORS, ámbito geográfico, autenticación y URL de la API. No configures una base de datos aquí: PostgreSQL/PostGIS aún no está integrado.
+El archivo incluye CORS, ámbito geográfico, autenticación y conexión local a PostgreSQL/PostGIS. Antes de levantar la base, reemplaza `REEMPLAZAR_POR_UN_SECRETO_ALEATORIO` por una clave aleatoria en `POSTGRES_PASSWORD` y `DATABASE_URL`. `.env` está ignorado por Git; no subas ese archivo.
 
 ### 8.3. Despliegue Local
 
-Requisitos: Python 3.10+ y Node.js 20.19+ o 22.12+ (requisito de Vite 8 según `frontend/package-lock.json`).
+Requisitos: Python 3.10+, Node.js 20.19+ o 22.12+ (requisito de Vite 8 según `frontend/package-lock.json`) y Docker Desktop.
 
 ```powershell
-# Backend (FastAPI): http://localhost:8000; OpenAPI: http://localhost:8000/docs
+# Desde la raíz, una vez configurados POSTGRES_PASSWORD y DATABASE_URL en .env:
+docker compose up -d database
+
+# Backend: crea/actualiza el esquema y arranca FastAPI
 Set-Location backend
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\alembic.exe -c alembic.ini upgrade head
 .\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir src --reload --port 8000
+
+# API y OpenAPI: http://localhost:8000 y http://localhost:8000/docs
 
 # Frontend (React + Vite), en otra terminal: http://localhost:3000
 Set-Location frontend
@@ -257,12 +266,12 @@ Pop-Location
 
 Toda la aplicación exige **contraseña + código TOTP** de una app autenticadora (Google Authenticator, Microsoft Authenticator u otra).
 
-1. Al iniciar el backend por primera vez se crean **cinco usuarios de demostración**, uno por rol: `admin@ecologistica.test`, `planificador@ecologistica.test`, `conductor@ecologistica.test`, `gerente@ecologistica.test` y `auditor@ecologistica.test`. Para el flujo de Sprint 2, usa `planificador@ecologistica.test`.
-2. La contraseña de demostración se toma de `DEMO_CLAVE` en `.env`. Si está vacía, el backend genera una aleatoria y **la muestra una sola vez en su consola**. Para generar usuarios nuevos, borre la carpeta `backend/.data/` (ignorada por Git) y reinicie el backend.
+1. En un entorno local nuevo, al iniciar el backend se crean **cinco usuarios de demostración**, uno por rol: `admin@ecologistica.test`, `planificador@ecologistica.test`, `conductor@ecologistica.test`, `gerente@ecologistica.test` y `auditor@ecologistica.test`. Para recorrer el Sprint 2, usa `planificador@ecologistica.test`.
+2. Antes de ese primer inicio, puedes definir `DEMO_CLAVE` en `.env` con una contraseña local. Si la dejas vacía, el backend genera una aleatoria y **la muestra una sola vez en su consola**. Esa configuración solo se usa al crear las cuentas por primera vez; cambiarla después no reemplaza las contraseñas guardadas.
 3. En el primer ingreso de cada usuario, la app muestra un **código QR** (y la clave para ingreso manual): escanéelo con la app autenticadora y escriba el código de 6 dígitos.
 4. Permisos actuales (matriz RBAC del documento 08): **Planificador** registra y consulta pedidos; **Administrador** solo consulta; los demás roles ven "Acceso no autorizado" hasta que existan sus vistas.
 
-Estas cuentas locales **no están conectadas al correo institucional**. Si la contraseña aleatoria de la primera inicialización ya no está disponible, no se puede recuperar desde el hash guardado; hay que restablecer la cuenta localmente. El acceso también requiere el código de una app autenticadora.
+Estas cuentas locales **no están conectadas al correo institucional**. El archivo `backend/.data/usuarios.json` conserva hashes de contraseña y secretos TOTP, no las contraseñas originales. Si se pierde una contraseña, no se puede recuperar desde ese archivo y actualmente el proyecto no ofrece una recuperación desde la interfaz. No borres `backend/.data/` para intentar obtenerla: esa carpeta guarda las cuentas y su configuración de acceso. El ingreso también requiere el código de una app autenticadora.
 
 Seguridad: contraseñas con Argon2id, sesión en cookie `HttpOnly` y `SameSite=Strict` (15 min de inactividad, 8 h máximo), bloqueo de 15 min tras 5 intentos fallidos, códigos de un solo uso y eventos de acceso en la consola del backend sin secretos.
 
@@ -287,8 +296,7 @@ Requiere sesión (`401`) y rol (`403`). Errores: `400` formato o tipo inválido,
 
 Implementado con OpenSpec en los cambios `registro-pedidos` (registrar, consultar y listar pedidos) y `autenticacion-mfa` (acceso con verificación en dos pasos y permisos por rol; incluye la auditoría de su especificación en `openspec/changes/archive/2026-10-02-autenticacion-mfa/auditoria-especificacion.md`). Límites conocidos, pendientes de otros cambios:
 
-- Persistencia **en memoria** (se pierde al reiniciar); el adaptador PostgreSQL/PostGIS llegará con EN-005.
-- Usuarios en un archivo local (`backend/.data/`) y secretos TOTP sin cifrar en reposo hasta EN-005; sin recuperación del segundo factor ni consulta de la auditoría desde la interfaz.
+- Pedidos y ubicaciones se guardan en PostgreSQL/PostGIS. Las cuentas de demostración siguen en `backend/.data/` y los secretos TOTP aún no se cifran en reposo; tampoco hay recuperación del segundo factor ni consulta de auditoría desde la interfaz. Esa parte de EN-005 sigue pendiente.
 - El ámbito geográfico es un rectángulo de aproximación configurable en `.env` (`AMBITO_*`), por validar con el negocio.
 - La fuente **Codec Pro** es comercial: ver `frontend/public/fonts/LEEME.md`; sin ella se usa la fuente del sistema.
 
