@@ -1,7 +1,10 @@
-import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { CircleAlert, ClipboardList, MapPin, Package, Save, CalendarClock, type LucideIcon } from 'lucide-react'
 import { ApiError, crearPedido, type Pedido, type PedidoCrear } from '../api/pedidos'
 import { limaAIso } from '../lib/fechas'
+
+// Leaflet se descarga solo cuando se abre el formulario (comparte el paquete con la página Rutas).
+const SelectorUbicacion = lazy(() => import('./SelectorUbicacion'))
 
 const DISTRITOS_SUGERIDOS = ['Huancayo', 'El Tambo', 'Chilca', 'Pilcomayo', 'San Agustín de Cajas']
 
@@ -120,6 +123,11 @@ export default function PedidoForm({ onCreado, onCancelar }: Props) {
     setValores((previo) => ({ ...previo, [campo]: valor }))
   }
 
+  const elegirUbicacion = useCallback((latitud: number, longitud: number) => {
+    setValores((previo) => ({ ...previo, latitud: String(latitud), longitud: String(longitud) }))
+    setErrores(({ latitud: _lat, longitud: _lon, ...resto }) => resto)
+  }, [])
+
   async function enviar(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault()
     setEnviando(true)
@@ -231,6 +239,9 @@ export default function PedidoForm({ onCreado, onCancelar }: Props) {
             ))}
           </datalist>
           {campo('destinatarioAlias')}
+          <Suspense fallback={<div className="selector-ubicacion__mapa campo--completo" aria-hidden="true" />}>
+            <SelectorUbicacion latitud={aNumero(valores.latitud)} longitud={aNumero(valores.longitud)} onElegir={elegirUbicacion} />
+          </Suspense>
           {campo('latitud', { requerido: true, tipo: 'number', paso: 'any', ayuda: 'Ej.: -12.0651' })}
           {campo('longitud', { requerido: true, tipo: 'number', paso: 'any', ayuda: 'Ej.: -75.2049' })}
         </Seccion>

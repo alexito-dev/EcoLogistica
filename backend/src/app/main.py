@@ -12,8 +12,14 @@ from app.auth.router import router as auth_router
 from app.config import get_settings
 from app.database_health import verificar_base_de_datos
 from app.errors import registrar_manejadores
+from app.flota.router import get_repositorio_flota
 from app.flota.router import router as flota_router
+from app.flota.siembra import sembrar_vehiculos_demo
+from app.pedidos.router import get_repositorio
 from app.pedidos.router import router as pedidos_router
+from app.pedidos.siembra import sembrar_pedidos_demo
+from app.indicadores.router import router as indicadores_router
+from app.rutas.router import router as rutas_router
 
 METODOS_QUE_CAMBIAN_ESTADO = {"POST", "PUT", "PATCH", "DELETE"}
 
@@ -33,8 +39,15 @@ async def ciclo_de_vida(app: FastAPI):
     # Carga el almacén de usuarios al arrancar (y siembra los de demostración si está vacío),
     # para que la contraseña generada aparezca en la consola apenas se inicia el servidor.
     get_repositorio_usuarios()
-    if get_settings().database_url:
+    settings = get_settings()
+    if settings.database_url:
         verificar_base_de_datos()
+    if settings.demo_pedidos:
+        pedidos = sembrar_pedidos_demo(get_repositorio(), settings.ambito)
+        vehiculos = sembrar_vehiculos_demo(get_repositorio_flota())
+        logging.getLogger("ecologistica").info(
+            "Datos de demostración cargados: %s pedidos, %s vehículos", pedidos, vehiculos
+        )
     yield
 
 
@@ -67,6 +80,8 @@ def create_app() -> FastAPI:
     app.include_router(auth_router, prefix="/api/v1")
     app.include_router(pedidos_router, prefix="/api/v1")
     app.include_router(flota_router, prefix="/api/v1")
+    app.include_router(rutas_router, prefix="/api/v1")
+    app.include_router(indicadores_router, prefix="/api/v1")
     return app
 
 

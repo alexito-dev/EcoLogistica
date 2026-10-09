@@ -1,3 +1,4 @@
+import type { Combustible } from '../api/flota'
 import type { EstadoPedido } from '../api/pedidos'
 
 export const ETIQUETA_ESTADO: Record<EstadoPedido, string> = {
@@ -15,6 +16,14 @@ export const ETIQUETA_PRIORIDAD: Record<number, string> = {
   2: 'Normal',
   3: 'Alta',
   4: 'Urgente',
+}
+
+export const ETIQUETA_COMBUSTIBLE: Record<Combustible, string> = {
+  DIESEL: 'Diésel',
+  GASOLINA: 'Gasolina',
+  GNV: 'GNV',
+  ELECTRICO: 'Eléctrico',
+  HIBRIDO: 'Híbrido',
 }
 
 /** Formato corto de la ventana: "05/10 08:00 – 12:00" (hora de Lima). */

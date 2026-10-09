@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     jwt_secret: str = ""
     cookie_secure: bool = False  # True cuando se sirve por HTTPS
     demo_clave: str = ""  # vacía: se genera una aleatoria y se muestra una vez en consola
+    demo_pedidos: bool = False  # True: carga pedidos y vehículos de demostración al arrancar (solo desarrollo)
     usuarios_archivo: Path = Path(__file__).resolve().parents[2] / ".data" / "usuarios.json"
     database_url: str | None = None
 
@@ -34,6 +35,11 @@ class Settings(BaseSettings):
     ambito_lon_min: float = -75.35
     ambito_lon_max: float = -75.10
     ambito_distritos: str = "Huancayo,El Tambo,Chilca,Pilcomayo,San Agustín de Cajas"
+
+    # Depósito de salida de las rutas (RF-04). Referencial hasta que el negocio confirme su ubicación.
+    deposito_nombre: str = "Centro de distribución Huancayo"
+    deposito_lat: float = -12.0651
+    deposito_lon: float = -75.2049
 
     @model_validator(mode="after")
     def _validar_ambito(self) -> "Settings":

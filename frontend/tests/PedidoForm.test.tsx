@@ -26,6 +26,12 @@ async function llenar(user: ReturnType<typeof userEvent.setup>, sobre: Record<st
 afterEach(() => vi.restoreAllMocks())
 
 describe('PedidoForm', () => {
+  it('ofrece un mapa para ubicar el destino', async () => {
+    render(<PedidoForm onCreado={() => {}} onCancelar={() => {}} />)
+    expect(await screen.findByRole('application', { name: 'Mapa para ubicar el destino' })).toBeInTheDocument()
+    expect(screen.getByText(/Haga clic en el mapa para completar latitud y longitud/)).toBeInTheDocument()
+  })
+
   it('envía la ventana en hora de Lima con desfase y notifica el pedido creado', async () => {
     const espia = vi.spyOn(api, 'crearPedido').mockResolvedValue(creado)
     const onCreado = vi.fn()

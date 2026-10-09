@@ -46,3 +46,15 @@ export function isoAHoraLima(iso: string): string {
   const fecha = new Date(iso)
   return Number.isNaN(fecha.getTime()) ? iso : formato.format(fecha)
 }
+
+/** Fecha local en formato AAAA-MM-DD, desplazada en días (1 = mañana, el día que se suele planificar). */
+export function fechaLocal(desplazamientoDias = 0): string {
+  const d = new Date()
+  d.setDate(d.getDate() + desplazamientoDias)
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
+/** "2026-10-10" -> "10/10/2026". */
+export function fechaCorta(iso: string): string {
+  return iso.split('-').reverse().join('/')
+}

@@ -1,41 +1,27 @@
 import type { ReactNode } from 'react'
-import { Boxes, LayoutDashboard, Leaf, LogOut, Route, Truck } from 'lucide-react'
-import { ETIQUETA_ROL, type Usuario } from '../api/auth'
+import { Leaf, LogOut } from 'lucide-react'
+import { ETIQUETA_ROL, type Rol, type Usuario } from '../api/auth'
+import { NAVEGACION, type Vista } from '../lib/navegacion'
 import ThemeToggle from './ThemeToggle'
 
 interface Props {
   children: ReactNode
   usuario: Usuario
   onSalir: () => void
-  vista: 'pedidos' | 'flota'
-  onVistaChange: (vista: 'pedidos' | 'flota') => void
+  vista: Vista
+  onVistaChange: (vista: Vista) => void
 }
 
-const NAVEGACION = [
-  { texto: 'Pedidos', icono: Boxes, vista: 'pedidos' as const, disponible: true },
-  { texto: 'Flota', icono: Truck, vista: 'flota' as const, disponible: true },
-  { texto: 'Rutas', icono: Route, vista: null, disponible: false },
-  { texto: 'Indicadores', icono: LayoutDashboard, vista: null, disponible: false },
-]
-
-function Enlaces({ variante, vista, onVistaChange }: { variante: 'lateral' | 'inferior'; vista: 'pedidos' | 'flota'; onVistaChange: (vista: 'pedidos' | 'flota') => void }) {
+function Enlaces({ variante, rol, vista, onVistaChange }: { variante: 'lateral' | 'inferior'; rol: Rol; vista: Vista; onVistaChange: (vista: Vista) => void }) {
+  const enlaces = NAVEGACION.filter((n) => n.roles.includes(rol))
   return (
-    <ul className={variante === 'lateral' ? 'nav' : 'nav-inferior'}>
-      {NAVEGACION.map(({ texto, icono: Icono, vista: destino, disponible }) => (
+    <ul className={variante === 'lateral' ? 'nav' : 'nav-inferior'} style={variante === 'inferior' ? { gridTemplateColumns: `repeat(${enlaces.length}, 1fr)` } : undefined}>
+      {enlaces.map(({ texto, icono: Icono, vista: destino }) => (
         <li key={texto}>
-          {disponible ? (
-            <button type="button" className={`nav__item${vista === destino ? ' nav__item--activo' : ''}`} onClick={() => destino && onVistaChange(destino)} aria-current={vista === destino ? 'page' : undefined}>
-              <Icono size={20} aria-hidden="true" />
-              <span>{texto}</span>
-            </button>
-          ) : (
-            <span className="nav__item nav__item--pronto" aria-disabled="true" title="Disponible próximamente">
-              <Icono size={20} aria-hidden="true" />
-              <span>{texto}</span>
-              {variante === 'lateral' && <span className="nav__pronto">Pronto</span>}
-              {variante === 'inferior' && <span className="solo-lectores"> (próximamente)</span>}
-            </span>
-          )}
+          <button type="button" className={`nav__item${vista === destino ? ' nav__item--activo' : ''}`} onClick={() => onVistaChange(destino)} aria-current={vista === destino ? 'page' : undefined}>
+            <Icono size={20} aria-hidden="true" />
+            <span>{texto}</span>
+          </button>
         </li>
       ))}
     </ul>
@@ -64,7 +50,7 @@ export default function AppShell({ children, usuario, onSalir, vista, onVistaCha
           </div>
         </div>
         <nav aria-label="Navegación principal">
-          <Enlaces variante="lateral" vista={vista} onVistaChange={onVistaChange} />
+          <Enlaces variante="lateral" rol={usuario.rol} vista={vista} onVistaChange={onVistaChange} />
         </nav>
         <div className="lateral__eco">
           <Leaf size={18} aria-hidden="true" />
@@ -110,7 +96,7 @@ export default function AppShell({ children, usuario, onSalir, vista, onVistaCha
       </div>
 
       <nav className="barra-inferior" aria-label="Navegación móvil">
-        <Enlaces variante="inferior" vista={vista} onVistaChange={onVistaChange} />
+        <Enlaces variante="inferior" rol={usuario.rol} vista={vista} onVistaChange={onVistaChange} />
       </nav>
     </div>
   )

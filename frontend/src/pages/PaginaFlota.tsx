@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { CalendarDays, Fuel, Plus, RefreshCw, Truck } from 'lucide-react'
+import { CalendarCheck, Fuel, Leaf, Plus, RefreshCw, Truck, Weight } from 'lucide-react'
 import { ApiError } from '../api/http'
 import {
   actualizarVehiculo,
@@ -13,6 +13,8 @@ import {
 } from '../api/flota'
 import Drawer from '../components/Drawer'
 import Hero from '../components/Hero'
+import StatCard from '../components/StatCard'
+import { ETIQUETA_COMBUSTIBLE } from '../lib/estados'
 
 interface Props {
   puedeAdministrar: boolean
@@ -22,9 +24,6 @@ interface Props {
 const HOY = () => {
   const ahora = new Date()
   return `${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, '0')}-${String(ahora.getDate()).padStart(2, '0')}`
-}
-const ETIQUETA_COMBUSTIBLE: Record<Combustible, string> = {
-  DIESEL: 'Diésel', GASOLINA: 'Gasolina', GNV: 'GNV', ELECTRICO: 'Eléctrico', HIBRIDO: 'Híbrido',
 }
 
 export default function PaginaFlota({ puedeAdministrar, puedePlanificar }: Props) {
@@ -36,19 +35,25 @@ export default function PaginaFlota({ puedeAdministrar, puedePlanificar }: Props
   const [vehiculoForm, setVehiculoForm] = useState<Vehiculo | null | undefined>(undefined)
   const [disponibilidad, setDisponibilidad] = useState<Vehiculo | null>(null)
 
-  const cargar = useCallback(async () => {
+  const consultar = useCallback(
+    () =>
+      listarVehiculos(fecha)
+        .then((respuesta) => setVehiculos(respuesta.items))
+        .catch((e: unknown) => setError(e instanceof ApiError ? e.message : 'No se pudo cargar la flota.'))
+        .finally(() => setCargando(false)),
+    [fecha],
+  )
+  const cargar = useCallback(() => {
     setCargando(true)
     setError('')
-    try {
-      const respuesta = await listarVehiculos(fecha)
-      setVehiculos(respuesta.items)
-    } catch (e) {
-      setError(e instanceof ApiError ? e.message : 'No se pudo cargar la flota.')
-    } finally {
-      setCargando(false)
-    }
-  }, [fecha])
-  useEffect(() => { void cargar() }, [cargar])
+    return consultar()
+  }, [consultar])
+  useEffect(() => { void consultar() }, [consultar])
+  const cambiarFecha = (valor: string) => {
+    if (!valor) return
+    setCargando(true)
+    setFecha(valor)
+  }
 
   const guardarVehiculo = async (datos: VehiculoGuardar) => {
     try {
@@ -77,26 +82,45 @@ export default function PaginaFlota({ puedeAdministrar, puedePlanificar }: Props
     }
   }
 
-  const elegibles = vehiculos.filter((v) => v.elegibleParaPlanificar).length
+  const aptos = vehiculos.filter((v) => v.elegibleParaPlanificar)
+  const capacidadApta = aptos.reduce((suma, v) => suma + Number(v.capacidadKg), 0)
+  const bajasEmisiones = vehiculos.filter((v) => v.combustible === 'ELECTRICO' || v.combustible === 'HIBRIDO' || v.combustible === 'GNV').length
   return <>
-    <Hero titulo="Flota" subtitulo={puedeAdministrar ? 'Administre los vehículos y consulte su disponibilidad para planificar.' : 'Consulte la flota y declare qué unidades estarán disponibles para planificar.'} accion={puedeAdministrar ? <button className="boton boton--claro" onClick={() => setVehiculoForm(null)}><Plus size={18} /> Nuevo vehículo</button> : null} />
+    <Hero
+      titulo="Flota"
+      subtitulo={puedeAdministrar ? 'Administre los vehículos y consulte su disponibilidad para planificar.' : 'Consulte la flota y declare qué unidades estarán disponibles para planificar.'}
+      accion={
+        <div className="rutas-filtro">
+          <label>
+            <span>Fecha de turno</span>
+            <input type="date" value={fecha} onChange={(e) => cambiarFecha(e.target.value)} />
+          </label>
+          {puedeAdministrar && (
+            <button type="button" className="boton boton--claro" onClick={() => setVehiculoForm(null)}>
+              <Plus size={18} aria-hidden="true" /> Nuevo vehículo
+            </button>
+          )}
+        </div>
+      }
+    />
 
-    <section className="flota-resumen" aria-label="Resumen de flota">
-      <div className="flota-resumen__dato"><Truck /><span><strong>{vehiculos.length}</strong> vehículos registrados</span></div>
-      <div className="flota-resumen__dato"><CalendarDays /><span><strong>{elegibles}</strong> disponibles el {fecha}</span></div>
-      <label className="flota-fecha">Consultar fecha <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} /></label>
+    <section className="stats" aria-label="Resumen de flota">
+      <StatCard titulo="Vehículos" valor={vehiculos.length} detalle="Registrados en total" icono={Truck} indice={0} />
+      <StatCard titulo="Aptos" valor={aptos.length} detalle={`Con turno el ${fecha.split('-').reverse().join('/')}`} icono={CalendarCheck} indice={1} />
+      <StatCard titulo="Capacidad apta" valor={capacidadApta} sufijo="kg" detalle="Suma de los vehículos aptos" icono={Weight} indice={2} />
+      <StatCard titulo="Bajas emisiones" valor={bajasEmisiones} detalle="Eléctricos, híbridos o GNV" icono={Leaf} indice={3} />
     </section>
     {error && <div className="flota-mensaje flota-mensaje--error" role="alert">{error} <button onClick={() => void cargar()}>Reintentar</button></div>}
     {aviso && <div className="flota-mensaje" role="status">{aviso}<button aria-label="Cerrar aviso" onClick={() => setAviso('')}>×</button></div>}
 
     <section className="flota-listado" aria-labelledby="flota-listado-titulo">
-      <header><div><h2 id="flota-listado-titulo">Vehículos</h2><p>Capacidad, estado y turno configurado para la fecha seleccionada.</p></div><button className="boton boton--suave" onClick={() => void cargar()} aria-label="Actualizar lista"><RefreshCw size={17} /></button></header>
+      <header><div><h2 id="flota-listado-titulo">Vehículos</h2><p>Capacidad, estado y turno configurado para la fecha seleccionada.</p></div><button className="boton boton--secundario" onClick={() => void cargar()} aria-label="Actualizar lista"><RefreshCw size={17} /></button></header>
       {cargando ? <p className="flota-vacio" role="status">Cargando vehículos…</p> : vehiculos.length === 0 ? <div className="flota-vacio"><Truck size={32} /><h3>Aún no hay vehículos</h3><p>{puedeAdministrar ? 'Registre el primero para completar la flota.' : 'Solicite a Administración que registre vehículos para poder configurar sus turnos.'}</p></div> : <div className="flota-tarjetas">{vehiculos.map((v) => <article className="flota-vehiculo" key={v.id}>
         <div className="flota-vehiculo__cabecera"><span className="flota-vehiculo__icono"><Truck size={22} /></span><span className={`estado-vehiculo estado-vehiculo--${v.estado.toLowerCase()}`}>{v.elegibleParaPlanificar ? 'Apto para planificar' : v.estado === 'DISPONIBLE' ? 'Sin turno declarado' : v.estado === 'MANTENIMIENTO' ? 'Mantenimiento' : 'Inactivo'}</span></div>
         <h3>{v.placa}</h3><p className="flota-vehiculo__tipo">{v.tipo}{v.anio ? ` · ${v.anio}` : ''}</p>
         <dl><div><dt>Capacidad</dt><dd>{v.capacidadKg} kg · {v.capacidadM3} m³</dd></div><div><dt>Combustible</dt><dd><Fuel size={14} /> {ETIQUETA_COMBUSTIBLE[v.combustible]}</dd></div><div><dt>Turno</dt><dd>{v.disponibilidad ? `${v.disponibilidad.turnoInicio.slice(0, 5)}–${v.disponibilidad.turnoFin.slice(0, 5)}` : 'Sin declarar'}</dd></div></dl>
         {v.disponibilidad?.restriccionCirculacion && <p className="flota-restriccion">Restricción: {v.disponibilidad.restriccionCirculacion}</p>}
-        <div className="flota-acciones">{puedeAdministrar && <button className="boton boton--suave" onClick={() => setVehiculoForm(v)}>Editar vehículo</button>}{puedePlanificar && <button className="boton boton--principal" onClick={() => setDisponibilidad(v)}>Configurar turno</button>}</div>
+        <div className="flota-acciones">{puedeAdministrar && <button className="boton boton--secundario" onClick={() => setVehiculoForm(v)}>Editar vehículo</button>}{puedePlanificar && <button className="boton boton--primario" onClick={() => setDisponibilidad(v)}>Configurar turno</button>}</div>
       </article>)}</div>}
     </section>
 
@@ -124,7 +148,7 @@ function FormularioVehiculo({ inicial, onGuardar, onCancelar }: { inicial: Vehic
     <div className="flota-campos-dobles"><label>Consumo por 100 km *<input required type="number" min="0.0001" step="0.0001" value={datos.consumoBasePor100km || ''} onChange={(e) => editar('consumoBasePor100km', Number(e.target.value))} /></label><label>Año<input type="number" min="1990" max="2100" value={datos.anio ?? ''} onChange={(e) => editar('anio', e.target.value ? Number(e.target.value) : null)} /></label></div>
     <label>Factor de emisión (opcional)<input type="number" min="0.000001" step="0.000001" value={datos.factorEmisionKgco2eUnidad ?? ''} onChange={(e) => editar('factorEmisionKgco2eUnidad', e.target.value ? Number(e.target.value) : null)} /></label>
     <label>Estado<select value={datos.estado} onChange={(e) => editar('estado', e.target.value as EstadoVehiculo)}><option value="DISPONIBLE">Disponible</option><option value="MANTENIMIENTO">Mantenimiento</option><option value="INACTIVO">Inactivo</option></select></label>
-    <div className="formulario__acciones"><button type="button" className="boton boton--suave" onClick={onCancelar}>Cancelar</button><button className="boton boton--principal">{inicial ? 'Guardar cambios' : 'Registrar vehículo'}</button></div>
+    <div className="formulario__acciones"><button type="button" className="boton boton--secundario" onClick={onCancelar}>Cancelar</button><button className="boton boton--primario">{inicial ? 'Guardar cambios' : 'Registrar vehículo'}</button></div>
   </form>
 }
 
@@ -141,6 +165,6 @@ function FormularioDisponibilidad({ fechaInicial, inicial, onGuardar, onCancelar
     <label className="flota-checkbox"><input type="checkbox" checked={disponible} onChange={(e) => setDisponible(e.target.checked)} /> Disponible para planificar</label>
     {!disponible && <label>Motivo o restricción *<textarea required maxLength={500} value={restriccion} onChange={(e) => setRestriccion(e.target.value)} /></label>}
     <p className="flota-ayuda">El sistema conserva la nota ingresada; no valida reglas de circulación externas.</p>
-    <div className="formulario__acciones"><button type="button" className="boton boton--suave" onClick={onCancelar}>Cancelar</button><button className="boton boton--principal">Guardar disponibilidad</button></div>
+    <div className="formulario__acciones"><button type="button" className="boton boton--secundario" onClick={onCancelar}>Cancelar</button><button className="boton boton--primario">Guardar disponibilidad</button></div>
   </form>
 }
