@@ -10,7 +10,7 @@ La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mi
 
 ## Idioma, identidad y stack comunes
 
-- Los documentos de producto en `README.md`, `docs/`, plantillas de GitHub y contenido OpenSpec están redactados en español. `openspec/config.yaml` exige `es`; conserva en inglés únicamente los encabezados estructurales y las palabras obligatorias `SHALL`/`MUST` del formato. Los archivos `.claude/commands/opsx` y `.claude/skills/openspec-*` son instrucciones del proveedor de la herramienta y se conservan en su idioma original.
+- La documentación de producto y planificación en `README.md`, `docs/`, las plantillas de GitHub y OpenSpec está redactada en español. El 09/10 también se localizaron al español los seis comandos `.claude/commands/opsx` y sus seis habilidades `.claude/skills/openspec-*`; se conservaron los identificadores de comandos, campos JSON, estados de la CLI, la categoría de metadatos `Workflow` y los encabezados estructurales que forman parte del contrato de OpenSpec. `openspec/config.yaml` exige `es`; las especificaciones mantienen `SHALL`/`MUST` y `WHEN`/`THEN` donde los requiere el formato.
 - El nombre del integrante se normaliza en la documentación como **Anco Porras, Jhean Pier Julio**.
 - La línea base vigente es **React + Vite + TypeScript** en el frontend y **FastAPI + Python** en la API. La propuesta de Next.js/Nest.js se revirtió el 02/10/2026 y no es una alternativa vigente.
 - PostgreSQL/PostGIS, Leaflet/OpenStreetMap y el motor Python de optimización pertenecen a la arquitectura objetivo. No deben presentarse como componentes ya ejecutados.
@@ -58,6 +58,7 @@ La imagen histórica que antes se llamaba `05-releases.png` muestra un resumen a
 - `README.md` y la guía de ejecución local.
 - Los 13 documentos de Inicio, los 4 de Planificación y los 8 entregables de Sprint 1 y Sprint 2.
 - `openspec/config.yaml`, los dos cambios archivados y las especificaciones vigentes de pedidos y autenticación.
+- Los seis comandos y seis habilidades operativas de OpenSpec en `.claude/`, incluida su estructura de metadatos.
 - `backend/requirements.txt`, `frontend/package.json`, fuentes actuales, scripts de pruebas y estructura de `.github/`.
 - Tablero, sprints, backlog, configuración de columnas, versiones y tarjetas ECO-16/ECO-17 en Jira.
 
@@ -88,3 +89,4 @@ La documentación histórica de cada sprint conserva su fecha de corte original.
 | 1.7.0 | 09/10/2026 | Se aclara que el diagrama de módulos del README representa el alcance objetivo y se identifica el subconjunto implementado al corte. |
 | 1.8.0 | 09/10/2026 | Se detalla la secuencia de estados de ECO-9 y se incorpora IMP-003 reabierto; el Sprint 2 permanece pendiente de revisión y cierre formal. |
 | 1.9.0 | 09/10/2026 | Se comparan las ramas remotas con `main`; se registra el límite de autenticación de GitHub CLI para verificar protección y se deja pendiente la disposición de las ramas antiguas. |
+| 1.10.0 | 09/10/2026 | Se traducen al español los comandos y habilidades OpenSpec de `.claude/`, conservando sus nombres ejecutables, campos de datos y contratos estructurales. |

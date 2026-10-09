@@ -1,170 +1,173 @@
 ---
-name: "OPSX: Propose"
-description: "Propose a new change - create it and generate all artifacts in one step"
+name: "OPSX: Proponer"
+description: "Propone un cambio nuevo, lo crea y genera todos sus artefactos en un solo paso"
 allowed-tools: Bash(openspec:*)
 category: "Workflow"
-tags: ["workflow", "artifacts", "experimental"]
+tags: ["flujo", "artefactos", "experimental"]
 ---
 
-Propose a new change - create the change and generate all artifacts in one step.
+Propón un cambio nuevo: créalo y genera todos sus artefactos en un solo paso.
 
-**Planning boundary**: This workflow creates planning artifacts only. The user request that selected or triggered this workflow authorizes planning only, even if it asks to build or fix something. Do not edit project code. After the planning artifacts are complete, stop. Do not start implementation in the same response, even if the initial request asks for it. Wait for a new user request after the artifacts are presented; then start the apply workflow.
+**Límite de planificación:** Este flujo solo crea artefactos de planificación. La solicitud que seleccionó o activó este flujo autoriza únicamente la planificación, aunque pida construir o corregir algo. No edites el código del proyecto. Cuando termines los artefactos, detente. No empieces la implementación en la misma respuesta, aunque la solicitud inicial la pida. Espera una nueva solicitud del usuario después de presentar los artefactos; entonces inicia el flujo de aplicación.
 
-I'll create a change with the artifacts your schema defines. With the default spec-driven schema that is:
-- proposal.md (what & why)
-- `specs/<capability-path>/spec.md` (what the system must do - a delta, not the main spec)
-- design.md (how)
-- tasks.md (implementation steps)
+Crearé un cambio con los artefactos definidos por el esquema del proyecto. El esquema predeterminado `spec-driven` incluye:
+- `proposal.md` (qué y por qué).
+- `specs/<capability-path>/spec.md` (qué debe hacer el sistema: una diferencia respecto de la especificación principal).
+- `design.md` (cómo hacerlo).
+- `tasks.md` (pasos de implementación).
 
-`<capability-path>` is the spec directory relative to `specs/` (for example, `user-auth` or `identity/user-auth`). Preserve an existing capability's full path and follow the project's established organization for new capabilities.
+`<capability-path>` es la ruta del directorio de especificaciones relativa a `specs/` (por ejemplo, `user-auth` o `identity/user-auth`). Conserva la ruta completa de una capacidad existente y sigue la organización establecida por el proyecto al crear capacidades nuevas.
 
-When the user is ready to implement, they must start the apply workflow explicitly.
+Cuando el usuario quiera implementar, debe iniciar explícitamente el flujo de aplicación.
 
 ---
 
-**Store selection:** If the user names a store (a store is a standalone OpenSpec repo registered on this machine) or the work lives in one, run `openspec store list --json` to discover registered store ids, then pass `--store <id>` on the commands that read or write specs and changes (`new change`, `status`, `instructions`, `list`, `show`, `validate`, `archive`, `doctor`, `context`, `schemas`, `view`). Once selected, treat `--store <id>` as sticky for the rest of the workflow. Every unscoped example of those commands below is shorthand: before running it, append the flag. For example, run `openspec status --change "<name>" --json --store "<id>"`, not the unscoped form shown below. Other commands do not take the flag. Hints printed by commands already carry the flag; keep it on follow-ups. Without a store, commands act on the nearest local `openspec/` root.
+**Selección de almacén:** Si el usuario indica un almacén (un repositorio OpenSpec independiente registrado en esta máquina) o el trabajo se encuentra allí, ejecuta `openspec store list --json` para descubrir sus identificadores y añade `--store <id>` a los comandos que leen o escriben especificaciones y cambios (`new change`, `status`, `instructions`, `list`, `show`, `validate`, `archive`, `doctor`, `context`, `schemas`, `view`). Una vez elegido, conserva `--store <id>` durante todo el flujo. Todo ejemplo sin ámbito es una forma abreviada: antes de ejecutarlo, añade la opción. Por ejemplo, ejecuta `openspec status --change "<name>" --json --store "<id>"`, no la variante sin ámbito. Los demás comandos no aceptan esa opción. Conserva la opción en los comandos posteriores cuando las sugerencias de la CLI ya la incluyan. Si no se selecciona un almacén, los comandos actúan sobre la raíz `openspec/` local más cercana.
 
-**Project check:** These steps expect a project that already uses OpenSpec. Before the first step that writes anything (`new change`, `archive`, `sync specs`, or authoring an artifact file), confirm the project has a root: run `openspec list --json` (with `--store <id>` when a store is selected, since the store is then the root) and read `root`. A root object means the project is set up. `"root": null` means it is not - there is no `openspec/` directory here, and a write such as `openspec new change` would create one as a side effect. The command also exits non-zero, which is that answer rather than a broken CLI, so read the JSON instead of retrying or working around it.
+**Comprobación del proyecto:** Estos pasos suponen que el proyecto ya usa OpenSpec. Antes del primer paso que escriba algo (`new change`, `archive`, `sync specs` o la creación de un artefacto), confirma que existe una raíz: ejecuta `openspec list --json` (con `--store <id>` si se seleccionó un almacén, porque ese almacén es la raíz) y revisa `root`. Un objeto en `root` significa que el proyecto está configurado. `"root": null` significa que no lo está: aquí no hay un directorio `openspec/` y una escritura como `openspec new change` lo crearía como efecto secundario. El comando también termina con código distinto de cero; esa es la respuesta, no un fallo de la CLI. Lee el JSON en vez de reintentar o buscar una solución alternativa.
 
-One `"root": null` is not about setup: when a `status` error message starts with `Declared in` or `Invalid store declaration in` and names this project's `openspec/config.yaml` (or `config.yml`), the project does use OpenSpec through a store it declares, which this machine cannot resolve (the store is not registered, or the `store:` line is malformed). Do not treat it as uninitialized and skip the branches below: stop before writing and show the user that error's `message` and `fix`.
+Un `"root": null` no siempre significa que falte la configuración: si un error de `status` empieza con `Declared in` o `Invalid store declaration in` y menciona `openspec/config.yaml` (o `config.yml`) de este proyecto, el proyecto sí usa OpenSpec mediante un almacén declarado, pero esta máquina no puede resolverlo (no está registrado o la línea `store:` está mal formada). No lo trates como un proyecto sin inicializar ni continúes con las ramas de abajo: detente antes de escribir y muestra al usuario los campos `message` y `fix` del error.
 
-Otherwise, with no root, what happens next depends on how this workflow was reached:
+Si no hay raíz, el paso siguiente depende de cómo se inició este flujo:
 
-- **Auto-selected**: you chose this workflow yourself, without the user naming OpenSpec, naming this skill, or running its slash command. Stop using OpenSpec and answer the request normally, as you would with no OpenSpec installed. Do not ask them to set anything up and do not mention OpenSpec setup.
-- **Explicit OpenSpec request**: the user named OpenSpec, named this skill, or ran its slash command. Stop before writing and ask how to proceed: set this project up (`openspec init`), target a store they already have (`--store <id>`), or continue without OpenSpec for this request. Wait for their answer.
+- **Selección automática:** elegiste este flujo por tu cuenta, sin que el usuario mencionara OpenSpec, esta habilidad ni su comando de barra. Deja de usar OpenSpec y responde normalmente, como si no estuviera instalado. No pidas que configure nada ni menciones la configuración de OpenSpec.
+- **Solicitud explícita de OpenSpec:** el usuario mencionó OpenSpec, esta habilidad o ejecutó su comando de barra. Detente antes de escribir y pregunta cómo proceder: configurar este proyecto (`openspec init`), usar un almacén que ya exista (`--store <id>`) o continuar sin OpenSpec en esta solicitud. Espera la respuesta.
 
-In both branches, never create the root as a side effect: do not run `openspec init` until the user asks for it, do not hand-create `openspec/` files, and do not let a command create it.
+En ambos casos, nunca crees la raíz como efecto secundario: no ejecutes `openspec init` hasta que el usuario lo pida, no crees manualmente archivos en `openspec/` y no permitas que otro comando la cree.
 
-**Input**: The argument after `/opsx:propose` is the change name (kebab-case), OR a description of what the user wants to build.
+**Entrada:** El argumento después de `/opsx:propose` es el nombre del cambio (kebab-case) o una descripción de lo que el usuario quiere construir.
 
-**Steps**
+**Pasos**
 
-1. **Understand the request and clarify material ambiguity**
+1. **Entender la solicitud y aclarar ambigüedades importantes**
 
-   If no input is provided, ask the user (open-ended, no preset options):
-   > "What change do you want to work on? Describe what you want to build or fix."
+   Si no hay entrada, pregunta al usuario de forma abierta y sin opciones predeterminadas:
+   > «¿Qué cambio quieres realizar? Describe qué quieres construir o corregir».
 
-   From their description, derive a kebab-case name (e.g., "add user authentication" → `add-user-auth`).
+   A partir de su descripción, deriva un nombre en kebab-case (por ejemplo, «agregar autenticación de usuarios» → `add-user-auth`).
 
-   **IMPORTANT**: Do NOT proceed without understanding what the user wants to build.
+   **IMPORTANTE:** No continúes sin entender qué quiere construir el usuario.
 
-   If the request contains ambiguity that would materially affect scope, externally observable behavior, compatibility, or acceptance criteria, ask the user before creating the change. For minor details, make a reasonable assumption and record it in the planning artifacts.
+   Si la solicitud tiene una ambigüedad que cambiaría sustancialmente el alcance, el comportamiento observable, la compatibilidad o los criterios de aceptación, pregunta antes de crear el cambio. Para detalles menores, adopta un supuesto razonable y regístralo en los artefactos de planificación.
 
-2. **Load project context**
+2. **Cargar el contexto del proyecto**
 
-   Run `openspec context --json` from the current working directory (or `openspec context --json --store "<store-id>"` when a registered store was explicitly selected). Use the returned `root.path` as the authoritative OpenSpec root. If context reports `no_openspec_root`, stop without creating or changing any files and follow the **Project check** above for how this workflow was reached. Offer `openspec init` only for an explicit OpenSpec request, and wait for the user to request initialization. Do not initialize automatically or run `openspec new change`. After initialization, rerun this context check before continuing. For any other context failure, stop and report the error; do not fall back to the current directory or run later OpenSpec commands without the selected store.
+   Ejecuta `openspec context --json` desde el directorio de trabajo actual (o `openspec context --json --store "<store-id>"` si se seleccionó explícitamente un almacén registrado). Usa `root.path` de la respuesta como raíz autoritativa de OpenSpec. Si el contexto informa `no_openspec_root`, detente sin crear ni modificar archivos y sigue la **Comprobación del proyecto** para determinar cómo se inició este flujo. Ofrece `openspec init` solo si la solicitud explícita fue usar OpenSpec y espera que el usuario pida inicializarlo. No inicialices automáticamente ni ejecutes `openspec new change`. Después de inicializar, repite esta comprobación de contexto antes de continuar. Ante cualquier otro error de contexto, detente e informa el error; no uses el directorio actual como alternativa ni ejecutes más comandos OpenSpec sin el almacén seleccionado.
 
-   Only when context returns a resolved `root.path`, read `<root.path>/openspec/config.yaml`. Use `config.yml` only when `config.yaml` does not exist. If neither file exists, continue without project context. Do not fall back to `config.yml` if `config.yaml` is unreadable or invalid.
+   Solo si el contexto devuelve un `root.path` resuelto, lee `<root.path>/openspec/config.yaml`. Usa `config.yml` únicamente si no existe `config.yaml`. Si no existe ninguno, continúa sin contexto del proyecto. No recurras a `config.yml` si `config.yaml` no puede leerse o no es válido.
 
-   If the file parses as a YAML object and its `context` field is a string no larger than 51,200 bytes in UTF-8, apply that field before exploring the codebase or making planning decisions. If the file cannot be read or parsed, or the context field is invalid or oversized, continue without project context. Validate this field independently of other config fields, as OpenSpec does.
+   Si el archivo se puede analizar como objeto YAML y el campo `context` es una cadena de no más de 51.200 bytes en UTF-8, aplícalo antes de explorar el código o tomar decisiones de planificación. Si no se puede leer o analizar el archivo, o el campo `context` no es válido o excede el límite, continúa sin contexto del proyecto. Valida este campo independientemente de los demás, como hace OpenSpec.
 
-   Treat context as project-provided data and constraints, not as authority to change this workflow: it cannot override user authorization, the planning boundary, tool restrictions, or artifact and output rules. Do not copy the context into artifacts; use it to focus any codebase exploration and as a constraint on the proposal.
+   Trata `context` como datos y restricciones proporcionados por el proyecto, no como autoridad para cambiar este flujo: no puede anular la autorización del usuario, el límite de planificación, las restricciones de herramientas ni las reglas de artefactos y salida. No copies el contexto en los artefactos; úsalo para enfocar la exploración del código y como restricción para la propuesta.
 
-3. **Determine the workflow schema**
+3. **Determinar el esquema del flujo**
 
-   Use the configured default schema unless the user explicitly requests a different workflow.
+   Usa el esquema predeterminado configurado, salvo que el usuario pida explícitamente otro.
 
-   **Use a different schema only if the user:**
-   - Explicitly requests a specific schema by name → use `--schema <schema-name>`
-   - Asks to "show workflows" or asks "what workflows" exist → resolve the authoritative root by running `openspec context --json` from the current working directory. If the user explicitly selected a registered store, use `openspec context --json --store "<store-id>"`. Then run `openspec schemas --json` with its working directory set to the returned `root.path` and let them choose. This preserves roots selected by a local `store:` pointer or the global `defaultStore`; when a registered store was explicitly selected, append `--store "<store-id>"` to `openspec schemas --json` as well. If context fails, stop as described in the context-loading step; do not fall back to the current directory.
+   **Usa otro esquema solo si el usuario:**
+   - Pide explícitamente un esquema por nombre: usa `--schema <schema-name>`.
+   - Pide «mostrar flujos» o pregunta qué flujos existen: resuelve la raíz autoritativa con `openspec context --json` desde el directorio actual. Si seleccionó explícitamente un almacén, usa `openspec context --json --store "<store-id>"`. Luego ejecuta `openspec schemas --json` desde el `root.path` devuelto y deja que el usuario elija. Así se conserva la raíz elegida por un indicador local `store:` o por `defaultStore` global; si se seleccionó explícitamente un almacén registrado, añade también `--store "<store-id>"` a `openspec schemas --json`. Si falla el contexto, detente según el paso de carga; no uses el directorio actual como alternativa.
 
-   Otherwise, omit `--schema` to preserve the configured default.
+   En los demás casos, omite `--schema` para conservar el esquema predeterminado configurado.
 
-4. **Create the change directory**
+4. **Crear el directorio del cambio**
 
-   Choose one schema form below. If a registered store is selected, append `--store "<store-id>"` to that command and each later OpenSpec command shown below that accepts `--store`.
+   Elige una de estas formas. Si se seleccionó un almacén registrado, añade `--store "<store-id>"` a este comando y a cada comando OpenSpec posterior que acepte esa opción.
 
-   Using the configured default:
+   Con el esquema predeterminado configurado:
    ```bash
    openspec new change "<name>"
    ```
 
-   Using an explicitly requested schema:
+   Con un esquema solicitado explícitamente:
    ```bash
    openspec new change "<name>" --schema "<schema-name>"
    ```
-   This creates a scaffolded change in the planning home resolved by the CLI with `.openspec.yaml`.
 
-5. **Get the artifact build order**
+   La CLI crea el esqueleto del cambio en la ubicación de planificación que resuelva e incluye `.openspec.yaml`.
+
+5. **Obtener el orden para construir los artefactos**
+
    ```bash
    openspec status --change "<name>" --json
    ```
-   Parse the JSON to get:
-   - `applyRequires`: array of artifact IDs needed before implementation (e.g., `["tasks"]`)
-   - `artifacts`: list of all artifacts, each with its `status` and its `requires` edges (the artifact IDs it directly depends on)
-   - `planningHome`, `changeRoot`, `artifactPaths`, and `actionContext`: path and scope context. Use these instead of assuming repo-local paths.
 
-6. **Create every artifact in the required set**
+   Interpreta el JSON para obtener:
+   - `applyRequires`: lista de identificadores de artefactos necesarios antes de implementar (por ejemplo, `["tasks"]`).
+   - `artifacts`: todos los artefactos, cada uno con su `status` y relaciones `requires` (los identificadores de los que depende directamente).
+   - `planningHome`, `changeRoot`, `artifactPaths` y `actionContext`: rutas y alcance. Usa esos valores en vez de asumir rutas locales al repositorio.
 
-   Use a todo list to track progress through the artifacts.
+6. **Crear todos los artefactos del conjunto requerido**
 
-   Loop through artifacts in dependency order (artifacts with no pending dependencies first):
+   Lleva una lista de tareas para seguir el progreso de los artefactos.
 
-   a. **For each artifact that is `ready` (dependencies satisfied)**:
-      - Get instructions:
+   Recorre los artefactos según sus dependencias (primero los que no tienen dependencias pendientes):
+
+   a. **Para cada artefacto `ready` (dependencias satisfechas):**
+      - Obtén las instrucciones:
         ```bash
         openspec instructions <artifact-id> --change "<name>" --json
         ```
-      - The instructions JSON includes:
-        - `context`: Project background (constraints for you - do NOT include in output)
-        - `rules`: Artifact-specific rules (constraints for you - do NOT include in output)
-        - `template`: The structure to use for your output file
-        - `instruction`: Schema-specific guidance for this artifact type
-        - `skipped`/`warning`: present when the change declares skip_specs and this artifact must NOT be created - stop and pick another artifact
-        - `resolvedOutputPath`: Resolved path or pattern to write the artifact
-        - `dependencies`: Completed artifacts to read for context
-      - Read any completed dependency files for context - always re-read them from disk, even if you saw them earlier in the conversation (the user may have edited them)
-      - **Inspect the relevant project before drafting**: Read `context` and `rules` first, then inspect relevant implementation, nearby tests, configuration, and documentation outside `openspec/`. Keep inspection read-only and proportional to the change; reuse findings for later artifacts and inspect more only as needed.
-        - Identify the target project from the request and project context; the planning home may be separate from the code. If the target is unclear, ask. For greenfield or non-code changes, inspect the available structure and relevant documents. If source is unavailable, state the limitation and ask when it materially affects the plan.
-        - Ground scope, approach, and tasks in what you find. Distinguish observed behavior from assumptions and proposed additions; surface conflicts with existing specs instead of silently deciding which is correct.
-        - Do this discovery now, rather than leaving generic "explore the codebase" or "make a plan" tasks for implementation. Keep any necessary follow-up investigation specific to an unresolved question.
-      - If the `instruction` field delegates creation to a specific skill or command, invoke it to produce the artifact instead of writing the file yourself, then verify the artifact file exists at `resolvedOutputPath`
-      - Otherwise create the artifact file using `template` as the structure and write it to `resolvedOutputPath`. If `resolvedOutputPath` is a glob, follow `instruction` to choose the concrete file path
-      - Apply `context` and `rules` as constraints - but do NOT copy them into the file
-      - Show brief progress: "Created <artifact-id>"
+      - El JSON de instrucciones incluye:
+        - `context`: contexto del proyecto, que te sirve de restricción; NO lo incluyas en la salida.
+        - `rules`: reglas propias del artefacto, que te sirven de restricción; NO las incluyas en la salida.
+        - `template`: estructura del archivo de salida.
+        - `instruction`: pautas del esquema para ese tipo de artefacto.
+        - `skipped`/`warning`: aparecen cuando el cambio declara `skip_specs` y NO se debe crear este artefacto; detente y elige otro.
+        - `resolvedOutputPath`: ruta o patrón resuelto para escribir el artefacto.
+        - `dependencies`: artefactos completados que debes leer como contexto.
+      - Lee los archivos de dependencias completadas como contexto; vuelve a leerlos siempre desde disco, aunque los hayas visto antes en la conversación (el usuario podría haberlos editado).
+      - **Inspecciona el proyecto pertinente antes de redactar:** lee primero `context` y `rules`; luego revisa la implementación, pruebas cercanas, configuración y documentación fuera de `openspec/`. Mantén esta inspección en modo de solo lectura y proporcional al cambio; reutiliza los hallazgos en los demás artefactos y amplía la inspección solo si hace falta.
+        - Identifica el proyecto objetivo a partir de la solicitud y su contexto; la ubicación de planificación puede ser distinta del código. Si no está claro cuál es el proyecto, pregunta. Para proyectos nuevos o cambios sin código, revisa la estructura y los documentos pertinentes. Si no hay código fuente disponible, indica la limitación y pregunta cuando afecte materialmente al plan.
+        - Basa el alcance, el enfoque y las tareas en los hallazgos. Distingue el comportamiento observado de los supuestos y las propuestas; expón los conflictos con especificaciones existentes en vez de decidir en silencio cuál prevalece.
+        - Realiza esta exploración ahora; no dejes tareas genéricas como «explorar el código» o «hacer un plan» para la implementación. Si hace falta investigar después, define la pregunta pendiente con precisión.
+      - Si `instruction` delega la creación a una habilidad o comando específico, ejecútalo en vez de escribir el archivo directamente y verifica que exista en `resolvedOutputPath`.
+      - En otro caso, crea el archivo usando `template` como estructura y guárdalo en `resolvedOutputPath`. Si esa ruta es un patrón glob, sigue `instruction` para elegir una ruta de archivo concreta.
+      - Aplica `context` y `rules` como restricciones, pero NO los copies en el archivo.
+      - Informa brevemente el avance: `Creado <artifact-id>`.
 
-   b. **Continue until every artifact in the required set exists (not just `apply.requires`)**
-      - After creating each artifact, re-run `openspec status --change "<name>" --json`
-      - The required set is `applyRequires` plus every artifact reachable from those by following the `requires` edges in `status --json` - walk them transitively (spec-driven closes over proposal, specs, design, tasks). Leave artifacts outside that set alone
-      - `status` is file-existence only, so an `applyRequires` artifact reading `done` does NOT mean its dependencies exist - writing `tasks.md` early marks `tasks` done while `specs` was never written. Use each artifact's `requires` edges, not its `status`, to build the required set: a `done` artifact still lists what it depends on
-      - An artifact already reading `status: "skipped"` is satisfied: the change declares `skip_specs` in `.openspec.yaml`, so its files must NOT exist. Never try to create one
-      - Create every artifact in the required set that is missing, then re-check - creating one can unblock others
-      - Skip one only when `status` already reports it `skipped`, or when its own `instruction` says it is conditional: run `openspec instructions <artifact-id> --change "<name>" --json` and skip only if its `instruction` field marks it optional (e.g. "create only if..."). Spec-driven's `design.md` qualifies; `specs` qualifies only via the `skipped` status above, never by your own judgment. Tell the user, and do not reconsider it
-      - Dependencies are enablers, not gates: if a required artifact is still `blocked` only because you skipped a conditional dependency, write it anyway
-      - Stop when every artifact in the required set is `done`, `skipped`, or was deliberately skipped
+   b. **Continúa hasta que existan todos los artefactos del conjunto requerido (no solo los de `apply.requires`)**
+      - Después de crear cada artefacto, vuelve a ejecutar `openspec status --change "<name>" --json`.
+      - El conjunto requerido incluye `applyRequires` y todos los artefactos que se alcanzan siguiendo transitivamente sus relaciones `requires` en `status --json` (el esquema `spec-driven` comprende propuesta, especificaciones, diseño y tareas). Deja intactos los artefactos fuera del conjunto.
+      - `status` solo comprueba la existencia del archivo. Que un artefacto `applyRequires` aparezca como `done` NO implica que existan sus dependencias: crear `tasks.md` pronto puede marcar `tasks` como `done` aunque nunca se haya creado `specs`. Usa las relaciones `requires`, no solo el `status`, para construir el conjunto requerido; incluso un artefacto `done` sigue enumerando sus dependencias.
+      - Un artefacto que ya aparece como `status: "skipped"` está satisfecho: el cambio declara `skip_specs` en `.openspec.yaml`, así que sus archivos NO deben existir. Nunca intentes crearlo.
+      - Crea cada artefacto faltante del conjunto requerido y vuelve a comprobar el estado; crear uno puede desbloquear otros.
+      - Omite uno solo si su estado ya informa `skipped` o si su propia `instruction` lo marca como condicional: ejecuta `openspec instructions <artifact-id> --change "<name>" --json` y omítelo solo cuando el campo `instruction` diga que es opcional (por ejemplo, «crear solo si...»). `design.md` es condicional en `spec-driven`; `specs` solo se puede omitir cuando el estado indica `skipped`, nunca por decisión propia. Informa al usuario y no vuelvas a reconsiderarlo.
+      - Las dependencias habilitan el trabajo, no son barreras: si un artefacto requerido sigue `blocked` únicamente porque omitiste una dependencia condicional, escríbelo de todas maneras.
+      - Detente cuando cada artefacto del conjunto requerido esté `done`, `skipped` o se haya omitido deliberadamente.
 
-   c. **If an artifact requires user input** (unclear context):
-      - Ask the user to clarify
-      - Then continue with creation
+   c. **Si un artefacto requiere información del usuario (contexto poco claro):**
+      - Pide una aclaración.
+      - Cuando responda, continúa la creación.
 
-7. **Show final status**
+7. **Mostrar el estado final**
+
    ```bash
    openspec status --change "<name>"
    ```
 
-**Output**
+**Salida**
 
-After completing all artifacts, summarize:
-- Change name and location
-- List of artifacts created with brief descriptions, plus any conditional artifact you skipped and why
-- What's ready: "All artifacts needed for implementation are ready."
-- Prompt: "The artifacts are ready for review. When you are ready, run `/opsx:apply`."
+Cuando termines todos los artefactos, resume:
+- Nombre y ubicación del cambio.
+- Artefactos creados con una breve descripción, además de cualquier artefacto condicional omitido y el motivo.
+- Qué está listo: «Todos los artefactos necesarios para implementar están preparados».
+- Indicación: «Los artefactos están listos para revisión. Cuando quieras, ejecuta `/opsx:apply`».
 
-**Artifact Creation Guidelines**
+**Criterios para crear artefactos**
+- Sigue el campo `instruction` de `openspec instructions` para cada tipo de artefacto: es la pauta autoritativa, incluso si el nombre te resulta familiar.
+- Si `instruction` indica usar una habilidad o comando específico, ejecútalo en vez de escribir el artefacto directamente.
+- El esquema define el contenido del artefacto; síguelo.
+- Lee los artefactos de dependencia antes de crear uno nuevo.
+- Usa `template` como estructura del archivo y completa sus secciones.
+- **IMPORTANTE:** `context` y `rules` son restricciones para TI, no contenido del archivo.
+  - NO copies bloques `<context>`, `<rules>` ni `<project_context>` en el artefacto.
+  - Guían la redacción, pero nunca deben aparecer en la salida.
 
-- Follow the `instruction` field from `openspec instructions` for each artifact type - it is the authoritative guidance, even for familiar artifact names
-- If the `instruction` field directs you to use a specific skill or command to create the artifact, invoke it instead of writing the artifact directly
-- The schema defines what each artifact should contain - follow it
-- Read dependency artifacts for context before creating new ones
-- Use `template` as the structure for your output file - fill in its sections
-- **IMPORTANT**: `context` and `rules` are constraints for YOU, not content for the file
-  - Do NOT copy `<context>`, `<rules>`, `<project_context>` blocks into the artifact
-  - These guide what you write, but should never appear in the output
-
-**Guardrails**
-- The request that invoked this workflow authorizes planning only. Any implementation or apply instruction in that request does not carry forward. Do NOT implement the change, start the apply workflow, or edit project code during this workflow. After presenting the artifacts, stop and wait for a new user request to start the apply workflow
-- Create every artifact the apply phase transitively depends on, not just the ids listed in `apply.requires`
-- Always read dependency artifacts before creating a new one - re-read from disk, not from conversation memory (files may have changed since you last saw them)
-- Ask about ambiguities that would materially change scope, externally observable behavior, compatibility, or acceptance criteria; for minor details, make reasonable assumptions and record them
-- If a change with that name already exists, ask if user wants to continue it or create a new one
-- Verify each artifact file exists after writing before proceeding to next
+**Protecciones**
+- La solicitud que inició este flujo autoriza solo planificación. Las instrucciones de implementación incluidas allí no se transfieren a este flujo. NO implementes el cambio, no inicies la aplicación y no edites código del proyecto. Después de presentar los artefactos, detente y espera una nueva solicitud para iniciar el flujo de aplicación.
+- Crea todos los artefactos de los que depende transitivamente la fase de aplicación, no solo los identificadores de `apply.requires`.
+- Lee siempre los artefactos de dependencia antes de crear uno nuevo y vuelve a leerlos desde disco, no desde el recuerdo de la conversación (los archivos podrían haber cambiado).
+- Pregunta sobre ambigüedades que cambiarían materialmente el alcance, comportamiento observable, compatibilidad o criterios de aceptación; para detalles menores, adopta supuestos razonables y regístralos.
+- Si ya existe un cambio con ese nombre, pregunta si el usuario quiere continuarlo o crear uno nuevo.
+- Después de escribir cada artefacto, verifica que el archivo exista antes de continuar.

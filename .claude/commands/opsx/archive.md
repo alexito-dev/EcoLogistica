@@ -1,253 +1,216 @@
 ---
-name: "OPSX: Archive"
-description: "Archive a completed change in the experimental workflow"
+name: "OPSX: Archivar"
+description: "Archiva un cambio completado en el flujo experimental"
 allowed-tools: Bash(openspec:*)
 category: "Workflow"
-tags: ["workflow", "archive", "experimental"]
+tags: ["flujo", "archivo", "experimental"]
 ---
 
-Archive a completed change in the experimental workflow.
+Archiva un cambio completado en el flujo experimental.
 
-**Store selection:** If the user names a store (a store is a standalone OpenSpec repo registered on this machine) or the work lives in one, run `openspec store list --json` to discover registered store ids, then pass `--store <id>` on the commands that read or write specs and changes (`new change`, `status`, `instructions`, `list`, `show`, `validate`, `archive`, `doctor`, `context`, `schemas`, `view`). Once selected, treat `--store <id>` as sticky for the rest of the workflow. Every unscoped example of those commands below is shorthand: before running it, append the flag. For example, run `openspec status --change "<name>" --json --store "<id>"`, not the unscoped form shown below. Other commands do not take the flag. Hints printed by commands already carry the flag; keep it on follow-ups. Without a store, commands act on the nearest local `openspec/` root.
+**Selección de almacén:** Si el usuario indica un almacén (un repositorio OpenSpec independiente registrado en esta máquina) o el trabajo se encuentra allí, ejecuta `openspec store list --json` para descubrir sus identificadores y añade `--store <id>` a los comandos que leen o escriben especificaciones y cambios (`new change`, `status`, `instructions`, `list`, `show`, `validate`, `archive`, `doctor`, `context`, `schemas`, `view`). Una vez elegido, conserva `--store <id>` durante todo el flujo. Todo ejemplo sin ámbito es una forma abreviada: antes de ejecutarlo, añade la opción. Por ejemplo, ejecuta `openspec status --change "<name>" --json --store "<id>"`, no la variante sin ámbito. Los demás comandos no aceptan esa opción. Conserva la opción en los comandos posteriores cuando las sugerencias de la CLI ya la incluyan. Si no se selecciona un almacén, los comandos actúan sobre la raíz `openspec/` local más cercana.
 
-**Project check:** These steps expect a project that already uses OpenSpec. Before the first step that writes anything (`new change`, `archive`, `sync specs`, or authoring an artifact file), confirm the project has a root: run `openspec list --json` (with `--store <id>` when a store is selected, since the store is then the root) and read `root`. A root object means the project is set up. `"root": null` means it is not - there is no `openspec/` directory here, and a write such as `openspec new change` would create one as a side effect. The command also exits non-zero, which is that answer rather than a broken CLI, so read the JSON instead of retrying or working around it.
+**Comprobación del proyecto:** Estos pasos suponen que el proyecto ya usa OpenSpec. Antes del primer paso que escriba algo (`new change`, `archive`, `sync specs` o la creación de un artefacto), confirma que existe una raíz: ejecuta `openspec list --json` (con `--store <id>` si se seleccionó un almacén, porque ese almacén es la raíz) y revisa `root`. Un objeto en `root` significa que el proyecto está configurado. `"root": null` significa que no lo está: aquí no hay un directorio `openspec/` y una escritura como `openspec new change` lo crearía como efecto secundario. El comando también termina con código distinto de cero; esa es la respuesta, no un fallo de la CLI. Lee el JSON en vez de reintentar o buscar una solución alternativa.
 
-One `"root": null` is not about setup: when a `status` error message starts with `Declared in` or `Invalid store declaration in` and names this project's `openspec/config.yaml` (or `config.yml`), the project does use OpenSpec through a store it declares, which this machine cannot resolve (the store is not registered, or the `store:` line is malformed). Do not treat it as uninitialized and skip the branches below: stop before writing and show the user that error's `message` and `fix`.
+Un `"root": null` no siempre significa que falte la configuración: si un error de `status` empieza con `Declared in` o `Invalid store declaration in` y menciona `openspec/config.yaml` (o `config.yml`) de este proyecto, el proyecto sí usa OpenSpec mediante un almacén declarado, pero esta máquina no puede resolverlo (no está registrado o la línea `store:` está mal formada). No lo trates como un proyecto sin inicializar: detente antes de escribir y muestra al usuario los campos `message` y `fix` del error.
 
-Otherwise, with no root, what happens next depends on how this workflow was reached:
+Si no hay raíz, el paso siguiente depende de cómo se inició este flujo:
+- **Selección automática:** elegiste este flujo por tu cuenta, sin que el usuario mencionara OpenSpec, esta habilidad ni su comando de barra. Deja de usar OpenSpec y responde normalmente, como si no estuviera instalado. No pidas que configure nada ni menciones la configuración de OpenSpec.
+- **Solicitud explícita de OpenSpec:** el usuario mencionó OpenSpec, esta habilidad o ejecutó su comando de barra. Detente antes de escribir y pregunta cómo proceder: configurar este proyecto (`openspec init`), usar un almacén que ya exista (`--store <id>`) o continuar sin OpenSpec en esta solicitud. Espera la respuesta.
 
-- **Auto-selected**: you chose this workflow yourself, without the user naming OpenSpec, naming this skill, or running its slash command. Stop using OpenSpec and answer the request normally, as you would with no OpenSpec installed. Do not ask them to set anything up and do not mention OpenSpec setup.
-- **Explicit OpenSpec request**: the user named OpenSpec, named this skill, or ran its slash command. Stop before writing and ask how to proceed: set this project up (`openspec init`), target a store they already have (`--store <id>`), or continue without OpenSpec for this request. Wait for their answer.
+En ambos casos, nunca crees la raíz como efecto secundario: no ejecutes `openspec init` hasta que el usuario lo pida, no crees manualmente archivos en `openspec/` y no permitas que otro comando la cree.
 
-In both branches, never create the root as a side effect: do not run `openspec init` until the user asks for it, do not hand-create `openspec/` files, and do not let a command create it.
+`<capability-path>` es la ruta del directorio de especificaciones relativa a `specs/` (por ejemplo, `user-auth` o `identity/user-auth`). Al localizar la especificación principal correspondiente, conserva la ruta completa de cada especificación delta.
 
-`<capability-path>` is the spec directory relative to `specs/` (for example, `user-auth` or `identity/user-auth`). Preserve the full path from each delta spec when resolving its main spec.
+**Entrada:** Opcionalmente indica después de `/opsx:archive` el nombre del cambio (por ejemplo, `/opsx:archive add-auth`). Si se omite, comprueba si puede inferirse del contexto de la conversación. Si es ambiguo o poco claro, DEBES pedir que se elija entre los cambios disponibles.
 
-**Input**: Optionally specify a change name after `/opsx:archive` (e.g., `/opsx:archive add-auth`). If omitted, check if it can be inferred from conversation context. If vague or ambiguous you MUST prompt for available changes.
+**Pasos**
 
-**Steps**
+1. **Seleccionar el cambio**
 
-1. **Select the change**
+   Si se indicó un nombre, úsalo. Si no:
+   - Infiérelo del contexto si el usuario mencionó un cambio.
+   - Selecciónalo automáticamente si solo hay un cambio activo.
+   - Si hay ambigüedad, ejecuta `openspec list --json` para obtener los cambios disponibles y pide al usuario que elija.
 
-   If a name is provided, use it. Otherwise:
-   - Infer from conversation context if the user mentioned a change
-   - Auto-select if only one active change exists
-   - If ambiguous, run `openspec list --json` to get available changes and ask the user to select one
+   Al pedir que elija, muestra solo los cambios activos (no archivados) e indica el esquema utilizado cuando esté disponible.
 
-   When prompting, show only active changes (not already archived).
-   Include the schema used for each change if available.
+   Anuncia siempre: `Cambio seleccionado: <name>` e indica cómo cambiar la selección (por ejemplo, `/opsx:archive <other>`).
 
-   Always announce: "Using change: <name>" and how to override (e.g., `/opsx:archive <other>`).
+   **Cargar entradas actuales de archivado antes de las comprobaciones existentes:**
 
-   **Load current archive inputs before the existing archive checks:**
-
-   After resolving the selected change and planning root, run:
+   Después de resolver el cambio y la raíz de planificación, ejecuta:
    ```bash
    openspec instructions archive --change "<name>" --json
    ```
-   Keep the same selected-root flags on this command. This lookup is advisory and
-   optional: it only supplies extra prompt inputs, so it must never block archiving.
-   If it exits non-zero or returns invalid JSON — for example on an older CLI that
-   does not support this command yet — continue the archive workflow with no
-   context and no operation guidance. Do not report an error and do not stop.
 
-   A successful response may omit both optional fields. Treat `context` as a
-   required prompt-level input: read and consider it, and apply relevant project
-   facts, conventions, and constraints. Treat `operationGuidance` as optional
-   additive advice: read and consider every entry, and follow entries that are
-   applicable and compatible with the built-in archive workflow.
+   Conserva las opciones de raíz seleccionada en este comando. Esta consulta es complementaria y opcional; solo aporta contexto adicional al prompt y nunca debe impedir el archivado. Si termina con código distinto de cero o devuelve JSON no válido (por ejemplo, en una versión antigua de la CLI que no admite el comando), continúa el flujo de archivado sin contexto ni recomendaciones de operación. No informes el error ni te detengas.
 
-   Keep both fields separate from built-in steps, explicit user choices, resolved
-   paths, CLI checks, and command contracts. If context conflicts with one of those
-   controlling inputs, report the conflict and preserve the controlling value. If
-   guidance is inapplicable or conflicts with a controlling input, do not follow it
-   and explain why. Do not infer replacement paths, skipped prompts, or flags from
-   either field, and do not copy their text verbatim into specs, change artifacts,
-   or archive summaries unless the user separately asks for it. These are
-   prompt-level behavior contracts, not enforceable checks.
+   Una respuesta válida puede omitir ambos campos opcionales. Trata `context` como una entrada obligatoria del prompt: léelo, considéralo y aplica los datos, convenciones y restricciones pertinentes del proyecto. Trata `operationGuidance` como consejo adicional opcional: lee y considera cada entrada, y sigue las que sean aplicables y compatibles con el flujo de archivado integrado.
 
-2. **Check artifact completion status**
+   Mantén ambos campos separados de los pasos integrados, elecciones explícitas del usuario, rutas resueltas, verificaciones de la CLI y contratos de comando. Si `context` entra en conflicto con una entrada que controla el flujo, informa el conflicto y conserva el valor que prevalece. Si una recomendación no es aplicable o entra en conflicto con una entrada que controla el flujo, no la sigas y explica por qué. No infieras rutas sustitutas, prompts omitidos ni opciones de esos campos; no copies su texto literalmente a especificaciones, artefactos de cambio ni resúmenes de archivado, salvo que el usuario lo solicite por separado. Estos contratos guían el comportamiento del prompt, pero no son validaciones ejecutables.
 
-   Run `openspec status --change "<name>" --json` to check artifact completion.
+2. **Comprobar el estado de finalización de los artefactos**
 
-   Parse the JSON to understand:
-   - `schemaName`: The workflow being used
-   - `planningHome`, `changeRoot`, `artifactPaths`, and `actionContext`: path and scope context
-   - `artifacts`: List of artifacts with their status (`done`, `skipped`, or other)
+   Ejecuta `openspec status --change "<name>" --json` para comprobar la finalización.
 
-   **If any artifacts are neither `done` nor `skipped`** (skipped artifacts satisfy the requirement - the change declares skip_specs):
-   - Display warning listing incomplete artifacts
-   - Prompt user for confirmation to continue
-   - Proceed if user confirms
+   Interpreta el JSON para conocer:
+   - `schemaName`: esquema de flujo utilizado.
+   - `planningHome`, `changeRoot`, `artifactPaths` y `actionContext`: rutas y alcance.
+   - `artifacts`: artefactos y sus estados (`done`, `skipped` u otro).
 
-3. **Check task completion status**
+   Si algún artefacto no está `done` ni `skipped` (los omitidos satisfacen el requisito porque el cambio declara `skip_specs`):
+   - Muestra una advertencia con la lista de artefactos incompletos.
+   - Pide al usuario que confirme si desea continuar.
+   - Continúa si confirma.
 
-   Run `openspec list --json` with the same selected-root flags and find the
-   entry in `changes` whose `name` exactly matches the selected change.
-   Require exactly one match and nonnegative integer `totalTasks` and
-   `completedTasks`, with `completedTasks <= totalTasks`. The CLI resolves
-   the schema's tracked task files, including custom artifact names, output
-   paths, and globs.
-   Incomplete tasks = `totalTasks - completedTasks`.
+3. **Comprobar el estado de finalización de las tareas**
 
-   Do not infer task completion from artifact status or the absence of a
-   top-level `tasks.md`. If the lookup fails, returns invalid JSON, omits or
-   duplicates the selected change, or returns invalid counts, report the problem
-   and stop before syncing or archiving.
-   The CLI counts only `x`/`X` checkbox markers as complete;
-   other markers, including unfamiliar ones, remain incomplete.
+   Ejecuta `openspec list --json` con las mismas opciones de raíz seleccionada y encuentra en `changes` la entrada cuyo `name` coincida exactamente con el cambio seleccionado. Exige exactamente una coincidencia y valores enteros no negativos para `totalTasks` y `completedTasks`, con `completedTasks <= totalTasks`. La CLI resuelve los archivos de tareas que registra el esquema, incluidos nombres de artefactos personalizados, rutas de salida y patrones glob. Las tareas pendientes son `totalTasks - completedTasks`.
 
-   **If incomplete tasks found:**
-   - Display warning showing count of incomplete tasks
-   - Prompt user for confirmation to continue
-   - Proceed if user confirms
+   No infieras que las tareas terminaron por el estado de los artefactos ni porque falte un `tasks.md` en el nivel superior. Si la consulta falla, devuelve JSON no válido, omite o duplica el cambio seleccionado, o entrega conteos inválidos, informa el problema y detente antes de sincronizar o archivar. La CLI cuenta solo las casillas `x`/`X` como completas; otros marcadores, incluidos los desconocidos, siguen pendientes.
 
-   **If `totalTasks` is zero:** Proceed without a task-related warning.
+   Si hay tareas pendientes:
+   - Muestra una advertencia con su cantidad.
+   - Pide al usuario que confirme si desea continuar.
+   - Continúa si confirma.
 
-4. **Assess delta spec sync state**
+   Si `totalTasks` es cero, continúa sin advertencia sobre tareas.
 
-   Use `artifactPaths.specs.existingOutputPaths` from status JSON as the only
-   delta-spec source. If the `specs` entry is missing or
-   `existingOutputPaths` is empty, proceed without a sync prompt and do not infer
-   delta specs from other artifacts.
+4. **Evaluar la sincronización de las especificaciones delta**
 
-   **If delta specs exist:**
-   - Compare each delta spec with its corresponding main spec at `<planningHome.root>/openspec/specs/<capability-path>/spec.md` (use the store-aware `planningHome.root` from step 2, not a hardcoded repo path)
-   - A missing main spec is **not automatically** "already synced". For a new capability, the main spec is an *output* of the sync, not an input:
-     - If the delta has MODIFIED or RENAMED requirements, report that only ADDED requirements can create a new main spec and mark that capability as sync-blocked. Never invent a requirement that has no current version.
-     - Otherwise, if the delta has only REMOVED requirements and the change's `.openspec.yaml` declares `retire_capabilities: true`, the capability is already retired: count it as already synced, warn that there is nothing left to remove, and do not recreate the main spec. Apply this rule both now and when verifying a completed sync.
-     - Otherwise, if the delta has no ADDED requirements, report that no sync is possible and mark that capability as sync-blocked. For a REMOVED-only delta, warn that there is no main spec to remove from and leave the main-spec tree unchanged. `openspec archive` refuses the unmarked REMOVED-only case with `Spec must have at least one requirement`.
-     - Otherwise, count the capability as needing sync and name it in the summary (`<capability-path>: new main spec will be created`). If the delta also has REMOVED requirements, warn that they will be ignored because there is no main spec to remove from. The sync creates the main spec from only the delta's ADDED requirements, exactly as `openspec archive` does.
-   - Determine what changes would be applied (adds, modifications, removals, renames)
-   - Continue assessing the remaining capabilities even when one is sync-blocked. Show a combined summary before prompting.
+   Usa `artifactPaths.specs.existingOutputPaths` del JSON de estado como única fuente de rutas delta. Si falta la entrada `specs` o `existingOutputPaths` está vacío, continúa sin pedir sincronización y no infieras rutas de otros artefactos.
 
-   **Prompt options:**
-   - If any capability is sync-blocked: explain why and offer only "Archive without syncing", "Cancel"
-   - Otherwise, if changes needed: "Sync now (recommended)", "Archive without syncing"
-   - Otherwise, if already synced: "Archive now", "Sync anyway", "Cancel"
+   **Si existen deltas:**
+   - Compara cada delta con su especificación principal correspondiente en `<planningHome.root>/openspec/specs/<capability-path>/spec.md`. Usa `planningHome.root` consciente del almacén, indicado en el paso 2; no codifiques la ruta del repositorio.
+   - Que falte una especificación principal **no significa automáticamente** que ya esté sincronizada. Para una capacidad nueva, la especificación principal es un *resultado* de la sincronización, no una entrada:
+     - Si la delta tiene requisitos `MODIFIED` o `RENAMED`, informa que una especificación nueva solo puede crearse con requisitos `ADDED` y marca esa capacidad como bloqueada para sincronizar. Nunca inventes el requisito cuya versión vigente falta.
+     - En otro caso, si la delta solo tiene requisitos `REMOVED` y el `.openspec.yaml` del cambio declara `retire_capabilities: true`, la capacidad ya está retirada: cuéntala como sincronizada, advierte que no queda nada que quitar y no recrees su especificación principal. Aplica esta regla ahora y al verificar una sincronización completada.
+     - En otro caso, si la delta no tiene requisitos `ADDED`, informa que no se puede sincronizar y marca la capacidad como bloqueada. Para una delta que solo contiene `REMOVED`, advierte que no hay especificación principal de la cual eliminar requisitos y deja sin cambios el árbol principal. `openspec archive` rechaza el caso sin marca con `Spec must have at least one requirement`.
+     - En los demás casos, cuenta la capacidad como pendiente de sincronizar e indícala en el resumen (`<capability-path>: se creará una especificación principal nueva`). Si la delta también tiene requisitos `REMOVED`, advierte que se ignorarán porque no hay especificación principal. La sincronización crea la especificación a partir únicamente de los requisitos `ADDED`, igual que `openspec archive`.
+   - Determina qué cambios se aplicarían (adiciones, modificaciones, eliminaciones y renombres).
+   - Continúa evaluando las demás capacidades aunque una esté bloqueada para sincronización. Muestra un resumen combinado antes de preguntar.
 
-   Route on the answer:
-   - "Cancel" — stop, do not archive
-   - "Archive without syncing" or "Archive now" — proceed to archive
-   - "Sync now" or "Sync anyway" — sync, then verify (below). Do not start any sync while a capability is sync-blocked; explain the blocker and repeat the available choices.
-   - Anything else — ask again rather than archiving
+   **Opciones para el usuario:**
+   - Si alguna capacidad está bloqueada para sincronizar: explica el motivo y ofrece solo «Archivar sin sincronizar» o «Cancelar».
+   - Si no hay bloqueos y quedan cambios por aplicar: ofrece «Sincronizar ahora (recomendado)» o «Archivar sin sincronizar».
+   - Si ya está sincronizado: ofrece «Archivar ahora», «Sincronizar de nuevo» o «Cancelar».
 
-   Before a selected sync writes any main spec, run
-   `openspec instructions specs --change "<name>" --json` once with the same
-   selected-root flags. Require a zero exit status and valid artifact-instruction
-   JSON. If the lookup fails or returns invalid JSON, report the error and stop
-   before writing any main spec or moving the change. A valid response with omitted
-   `rules` is the no-rules case. Apply returned `rules` only to the content and
-   form of main specs produced by this merge; do not use them as archive guidance,
-   change CLI behavior, or copy the rule text into any output file.
+   Sigue la respuesta:
+   - «Cancelar»: detente; no archives.
+   - «Archivar sin sincronizar» o «Archivar ahora»: continúa con el archivado.
+   - «Sincronizar ahora» o «Sincronizar de nuevo»: sincroniza y verifica (más abajo). No empieces si alguna capacidad está bloqueada; explica el impedimento y vuelve a ofrecer las opciones disponibles.
+   - Cualquier otra respuesta: vuelve a preguntar en vez de archivar.
 
-   Then run the `/opsx:sync` workflow inline (agent-driven intelligent merge) for change '<name>', passing the delta spec analysis and the fetched specs-rule snapshot from above, and wait for it to finish. The inline sync must reuse that snapshot without fetching `specs` instructions again. Do not delegate it to a background task — step 5 would move `changeRoot` out from under a sync that is still reading it, leaving the change archived and the main specs never updated. If your agent can only run it by delegation, delegate synchronously and wait for the result.
+   Antes de escribir en cualquier especificación principal, ejecuta una vez `openspec instructions specs --change "<name>" --json` con las mismas opciones de raíz seleccionada. Exige código de salida cero y JSON de instrucciones de artefacto válido. Si la consulta falla o devuelve JSON no válido, informa el error y detente antes de escribir una especificación principal o mover el cambio. Una respuesta válida que no incluya `rules` significa que no hay reglas configuradas. Aplica las `rules` solo al contenido y formato de las especificaciones principales producidas por esta combinación; no las uses como orientación para archivar, cambiar el comportamiento de la CLI ni copies su texto a archivos de salida.
 
-   Then re-run the comparison from the top of this step, including the explicitly retired, missing-spec case, against every capability that has a delta spec in `artifactPaths.specs.existingOutputPaths` — not only the ones the sync reports it touched. A successful sync leaves nothing left to apply, so each capability must now read as already synced:
-   - ADDED requirements present
-   - MODIFIED requirements carrying the scenario and description changes named in the delta, with their other scenarios intact
-   - REMOVED requirements gone — and where this sync retired a capability (removed its last requirement, leaving `## Requirements` empty), its main spec deleted rather than left empty; a spec the sync deliberately kept and reported is also a match
-   - RENAMED requirements present under the new name and absent under the old one
+   Luego ejecuta en línea el flujo `/opsx:sync` para el cambio `<name>` (combinación inteligente dirigida por el agente), proporcionando el análisis de las especificaciones delta y la copia de reglas obtenida arriba, y espera a que termine. La sincronización en línea debe reutilizar esa copia sin volver a consultar las instrucciones `specs`. No la delegues a una tarea en segundo plano: el paso 5 movería `changeRoot` mientras la sincronización aún lo lee, con lo que el cambio quedaría archivado sin actualizar las especificaciones principales. Si tu agente solo puede ejecutarla mediante delegación, delega de forma síncrona y espera el resultado.
 
-   If the sync failed, or any capability does not match, report what differs and stop — do not archive. Nothing has moved and `changeRoot` is intact, so the user can fix the mismatch or re-run the sync and start the archive again.
+   Después vuelve a ejecutar la comparación desde el inicio de este paso, incluido el caso de capacidad retirada explícitamente, para **todas** las capacidades con delta en `artifactPaths.specs.existingOutputPaths`, no solo las que la sincronización diga haber tocado. Una sincronización correcta no deja cambios por aplicar; cada capacidad debe aparecer sincronizada:
+   - Requisitos `ADDED` presentes.
+   - Requisitos `MODIFIED` con los cambios de escenario y descripción indicados, y conservando los demás escenarios.
+   - Requisitos `REMOVED` ausentes; si la sincronización retiró una capacidad al eliminar su último requisito y dejar vacía `## Requirements`, también debe haber eliminado su especificación principal en vez de dejarla vacía. Una especificación que la sincronización conservó intencionalmente y explicó también cuenta como coincidencia.
+   - Requisitos `RENAMED` presentes con el nombre nuevo y ausentes con el antiguo.
 
-5. **Perform the archive**
+   Si la sincronización falla o alguna capacidad no coincide, informa qué difiere y detente: no archives. Nada se ha movido y `changeRoot` sigue intacto, así que el usuario puede corregirlo o volver a iniciar el archivado.
 
-   Create an `archive` directory under `planningHome.changesDir` if it doesn't exist:
+5. **Realizar el archivado**
+
+   Crea el directorio `archive` dentro de `planningHome.changesDir` si aún no existe:
    ```bash
    mkdir -p "<planningHome.changesDir>/archive"
    ```
 
-   Generate the target name: use the change name as-is when it already starts with a `YYYY-MM-DD-` prefix; otherwise prepend the current date as `YYYY-MM-DD-<change-name>`. Never stack a second date (same rule as `openspec archive`).
+   Genera el nombre de destino: conserva el nombre del cambio si ya empieza con el prefijo `YYYY-MM-DD-`; si no, antepón la fecha actual con el formato `YYYY-MM-DD-<change-name>`. Nunca agregues una segunda fecha (misma regla que `openspec archive`).
 
-   **Check if target already exists:**
-   - If yes: Fail with error, suggest renaming existing archive or using different date
-   - If no: Move `changeRoot` to the archive directory
+   **Comprueba si ya existe el destino:**
+   - Si existe, informa el error y sugiere renombrar el archivo existente o usar otra fecha.
+   - Si no existe, mueve `changeRoot` al directorio de archivo.
 
    ```bash
    mv "<changeRoot>" "<planningHome.changesDir>/archive/<target-name>"
    ```
 
-6. **Display summary**
+6. **Mostrar el resumen**
 
-   Show archive completion summary including:
-   - Change name
-   - Schema that was used
-   - Archive location
-   - Spec sync status (synced / sync skipped / no delta specs)
-   - Note about any warnings (incomplete artifacts/tasks)
+   Muestra un resumen de finalización con:
+   - Nombre del cambio.
+   - Esquema utilizado.
+   - Ubicación del archivo.
+   - Estado de sincronización (sincronizado, omitido o sin especificaciones delta).
+   - Advertencias sobre artefactos o tareas incompletos.
 
-**Output On Success**
-
-```markdown
-## Archive Complete
-
-**Change:** <change-name>
-**Schema:** <schema-name>
-**Archived to:** the archive path derived from `planningHome.changesDir`/<target-name>/
-**Specs:** ✓ Synced to main specs
-
-All artifacts complete. All tasks complete.
-```
-
-**Output On Success (No Delta Specs)**
+**Salida cuando termina correctamente**
 
 ```markdown
-## Archive Complete
+## Archivado completado
 
-**Change:** <change-name>
-**Schema:** <schema-name>
-**Archived to:** the archive path derived from `planningHome.changesDir`/<target-name>/
-**Specs:** No delta specs
+**Cambio:** <nombre-del-cambio>
+**Esquema:** <nombre-del-esquema>
+**Archivado en:** ruta de archivo derivada de `planningHome.changesDir`/<target-name>/
+**Especificaciones:** ✓ Sincronizadas con las especificaciones principales
 
-All artifacts complete. All tasks complete.
+Todos los artefactos y tareas están completos.
 ```
 
-**Output On Success With Warnings**
+**Salida correcta sin especificaciones delta**
 
 ```markdown
-## Archive Complete (with warnings)
+## Archivado completado
 
-**Change:** <change-name>
-**Schema:** <schema-name>
-**Archived to:** the archive path derived from `planningHome.changesDir`/<target-name>/
-**Specs:** Sync skipped (user chose to skip)
+**Cambio:** <nombre-del-cambio>
+**Esquema:** <nombre-del-esquema>
+**Archivado en:** ruta de archivo derivada de `planningHome.changesDir`/<target-name>/
+**Especificaciones:** No hay especificaciones delta
 
-**Warnings:**
-- Archived with 2 incomplete artifacts
-- Archived with 3 incomplete tasks
-- Delta spec sync was skipped (user chose to skip)
-
-Review the archive if this was not intentional.
+Todos los artefactos y tareas están completos.
 ```
 
-**Output On Error (Archive Exists)**
+**Salida correcta con advertencias**
 
 ```markdown
-## Archive Failed
+## Archivado completado (con advertencias)
 
-**Change:** <change-name>
-**Target:** the archive path derived from `planningHome.changesDir`/<target-name>/
+**Cambio:** <nombre-del-cambio>
+**Esquema:** <nombre-del-esquema>
+**Archivado en:** ruta de archivo derivada de `planningHome.changesDir`/<target-name>/
+**Especificaciones:** Sincronización omitida (el usuario eligió omitirla)
 
-Target archive directory already exists.
+**Advertencias:**
+- Se archivó con 2 artefactos incompletos.
+- Se archivó con 3 tareas incompletas.
+- Se omitió la sincronización de especificaciones delta (el usuario lo eligió).
 
-**Options:**
-1. Rename the existing archive
-2. Delete the existing archive if it's a duplicate
-3. Wait until a different date to archive
+Revisa el archivo si esto no era intencional.
 ```
 
-**Guardrails**
-- Announce the selected change; prompt for selection when it is ambiguous
-- Use artifact graph (openspec status --json) for completion checking
-- Don't block archive on warnings - just inform and confirm
-- Preserve .openspec.yaml when moving to archive (it moves with the directory)
-- Show clear summary of what happened
-- If sync is requested, run the `/opsx:sync` workflow inline (agent-driven)
-- Never archive while a spec sync is still in flight — run the sync inline and verify the main specs before moving `changeRoot`
-- If delta specs exist, always run the sync assessment and show the combined summary before prompting
-- Apply relevant runtime context and report conflicts; operation guidance remains advisory
-- Consider every guidance entry and explain any inapplicable or conflicting advice
-- Existing CLI checks, resolved paths, prompts, and command contracts are unchanged
-- Artifact rules constrain only the specs being written and are never operation guidance
-- Never copy runtime context, operation guidance, or artifact-rule text verbatim into output files
+**Salida cuando el destino ya existe**
+
+```markdown
+## Error al archivar
+
+**Cambio:** <nombre-del-cambio>
+**Destino:** ruta de archivo derivada de `planningHome.changesDir`/<target-name>/
+
+El directorio de destino ya existe.
+
+**Opciones:**
+1. Renombrar el archivo existente.
+2. Eliminarlo si es un duplicado.
+3. Esperar a otra fecha para archivar.
+```
+
+**Protecciones**
+- Anuncia el cambio seleccionado y pide que lo elijan si es ambiguo.
+- Usa el grafo de artefactos (`openspec status --json`) para comprobar la finalización.
+- No bloquees el archivado por advertencias: informa y pide confirmación.
+- Conserva `.openspec.yaml` al mover el cambio (se mueve junto con el directorio).
+- Muestra un resumen claro de lo ocurrido.
+- Si se solicitó sincronizar, ejecuta `/opsx:sync` en línea (dirigido por el agente).
+- Nunca archives mientras una sincronización sigue en curso: ejecútala en línea y verifica las especificaciones principales antes de mover `changeRoot`.
+- Si hay especificaciones delta, evalúa siempre la sincronización y muestra el resumen combinado antes de preguntar.
+- Aplica el contexto de ejecución pertinente e informa conflictos; las recomendaciones de operación son orientativas.
+- Considera todas las recomendaciones y explica las que no sean aplicables o entren en conflicto.
+- No cambies las verificaciones existentes de la CLI, rutas resueltas, preguntas ni contratos de comandos.
+- Las reglas de artefactos restringen solo las especificaciones que se escriben y nunca son instrucciones de operación.
+- Nunca copies literalmente el contexto de ejecución, las recomendaciones de operación ni reglas de artefactos a archivos de salida.

@@ -1,198 +1,186 @@
 ---
-name: "OPSX: Apply"
-description: "Implement tasks from an OpenSpec change (Experimental)"
+name: "OPSX: Aplicar"
+description: "Implementa las tareas de un cambio de OpenSpec (Experimental)"
 allowed-tools: Bash(openspec:*)
 category: "Workflow"
-tags: ["workflow", "artifacts", "experimental"]
+tags: ["flujo", "artefactos", "experimental"]
 ---
 
-Implement tasks from an OpenSpec change.
+Implementa las tareas de un cambio de OpenSpec.
 
-**Store selection:** If the user names a store (a store is a standalone OpenSpec repo registered on this machine) or the work lives in one, run `openspec store list --json` to discover registered store ids, then pass `--store <id>` on the commands that read or write specs and changes (`new change`, `status`, `instructions`, `list`, `show`, `validate`, `archive`, `doctor`, `context`, `schemas`, `view`). Once selected, treat `--store <id>` as sticky for the rest of the workflow. Every unscoped example of those commands below is shorthand: before running it, append the flag. For example, run `openspec status --change "<name>" --json --store "<id>"`, not the unscoped form shown below. Other commands do not take the flag. Hints printed by commands already carry the flag; keep it on follow-ups. Without a store, commands act on the nearest local `openspec/` root.
+**Selección de almacén:** Si el usuario indica un almacén (un repositorio OpenSpec independiente registrado en esta máquina) o el trabajo se encuentra allí, ejecuta `openspec store list --json` para descubrir sus identificadores y añade `--store <id>` a los comandos que leen o escriben especificaciones y cambios (`new change`, `status`, `instructions`, `list`, `show`, `validate`, `archive`, `doctor`, `context`, `schemas`, `view`). Una vez elegido, conserva `--store <id>` durante todo el flujo. Todo ejemplo sin ámbito es una forma abreviada: antes de ejecutarlo, añade la opción. Por ejemplo, ejecuta `openspec status --change "<name>" --json --store "<id>"`, no la variante sin ámbito. Los demás comandos no aceptan esa opción. Conserva la opción en los comandos posteriores cuando las sugerencias de la CLI ya la incluyan. Si no se selecciona un almacén, los comandos actúan sobre la raíz `openspec/` local más cercana.
 
-**Project check:** These steps expect a project that already uses OpenSpec. Before the first step that writes anything (`new change`, `archive`, `sync specs`, or authoring an artifact file), confirm the project has a root: run `openspec list --json` (with `--store <id>` when a store is selected, since the store is then the root) and read `root`. A root object means the project is set up. `"root": null` means it is not - there is no `openspec/` directory here, and a write such as `openspec new change` would create one as a side effect. The command also exits non-zero, which is that answer rather than a broken CLI, so read the JSON instead of retrying or working around it.
+**Comprobación del proyecto:** Estos pasos suponen que el proyecto ya usa OpenSpec. Antes del primer paso que escriba algo (`new change`, `archive`, `sync specs` o la creación de un artefacto), confirma que existe una raíz: ejecuta `openspec list --json` (con `--store <id>` si se seleccionó un almacén, porque ese almacén es la raíz) y revisa `root`. Un objeto en `root` significa que el proyecto está configurado. `"root": null` significa que no lo está: aquí no hay un directorio `openspec/` y una escritura como `openspec new change` lo crearía como efecto secundario. El comando también termina con código distinto de cero; esa es la respuesta, no un fallo de la CLI. Lee el JSON en vez de reintentar o buscar una solución alternativa.
 
-One `"root": null` is not about setup: when a `status` error message starts with `Declared in` or `Invalid store declaration in` and names this project's `openspec/config.yaml` (or `config.yml`), the project does use OpenSpec through a store it declares, which this machine cannot resolve (the store is not registered, or the `store:` line is malformed). Do not treat it as uninitialized and skip the branches below: stop before writing and show the user that error's `message` and `fix`.
+Un `"root": null` no siempre significa que falte la configuración: si un error de `status` empieza con `Declared in` o `Invalid store declaration in` y menciona `openspec/config.yaml` (o `config.yml`) de este proyecto, el proyecto sí usa OpenSpec mediante un almacén declarado, pero esta máquina no puede resolverlo (no está registrado o la línea `store:` está mal formada). No lo trates como un proyecto sin inicializar ni continúes con las ramas de abajo: detente antes de escribir y muestra al usuario los campos `message` y `fix` del error.
 
-Otherwise, with no root, what happens next depends on how this workflow was reached:
+Si no hay raíz, el paso siguiente depende de cómo se inició este flujo:
 
-- **Auto-selected**: you chose this workflow yourself, without the user naming OpenSpec, naming this skill, or running its slash command. Stop using OpenSpec and answer the request normally, as you would with no OpenSpec installed. Do not ask them to set anything up and do not mention OpenSpec setup.
-- **Explicit OpenSpec request**: the user named OpenSpec, named this skill, or ran its slash command. Stop before writing and ask how to proceed: set this project up (`openspec init`), target a store they already have (`--store <id>`), or continue without OpenSpec for this request. Wait for their answer.
+- **Selección automática:** elegiste este flujo por tu cuenta, sin que el usuario mencionara OpenSpec, esta habilidad ni su comando de barra. Deja de usar OpenSpec y responde normalmente, como si no estuviera instalado. No pidas que configure nada ni menciones la configuración de OpenSpec.
+- **Solicitud explícita de OpenSpec:** el usuario mencionó OpenSpec, esta habilidad o ejecutó su comando de barra. Detente antes de escribir y pregunta cómo proceder: configurar este proyecto (`openspec init`), usar un almacén que ya exista (`--store <id>`) o continuar sin OpenSpec en esta solicitud. Espera la respuesta.
 
-In both branches, never create the root as a side effect: do not run `openspec init` until the user asks for it, do not hand-create `openspec/` files, and do not let a command create it.
+En ambos casos, nunca crees la raíz como efecto secundario: no ejecutes `openspec init` hasta que el usuario lo pida, no crees manualmente archivos en `openspec/` y no permitas que otro comando la cree.
 
-**Input**: Optionally specify a change name (e.g., `/opsx:apply add-auth`). If omitted, check if it can be inferred from conversation context. If vague or ambiguous you MUST prompt for available changes.
+**Entrada:** Opcionalmente indica un nombre de cambio (por ejemplo, `/opsx:apply add-auth`). Si se omite, comprueba si puede inferirse del contexto de la conversación. Si es ambiguo o poco claro, DEBES pedir que se elija entre los cambios disponibles.
 
-**Steps**
+**Pasos**
 
-1. **Select the change**
+1. **Seleccionar el cambio**
 
-   If a name is provided, use it. Otherwise:
-   - Infer from conversation context if the user mentioned a change
-   - Auto-select if only one active change exists
-   - If ambiguous, run `openspec list --json` to get available changes and ask the user to select one
+   Si se indicó un nombre, úsalo. Si no:
+   - Infiérelo del contexto si el usuario mencionó un cambio.
+   - Selecciónalo automáticamente si solo hay un cambio activo.
+   - Si hay ambigüedad, ejecuta `openspec list --json` para obtener los cambios disponibles y pide al usuario que elija.
 
-   Always announce: "Using change: <name>" and how to override (e.g., `/opsx:apply <other>`).
+   Anuncia siempre: `Cambio seleccionado: <name>` e indica cómo cambiar la selección (por ejemplo, `/opsx:apply <other>`).
 
-2. **Check status to understand the schema**
+2. **Consultar el estado y entender el esquema**
+
    ```bash
    openspec status --change "<name>" --json
    ```
-   Parse the JSON to understand:
-   - `schemaName`: The workflow being used (e.g., "spec-driven")
-   - `planningHome`, `changeRoot`, and `actionContext`: planning scope and edit constraints
-   - Which artifact contains the tasks (typically "tasks" for spec-driven, check status for others)
 
-3. **Get apply instructions**
+   Interpreta el JSON para conocer:
+   - `schemaName`: esquema de flujo utilizado (por ejemplo, `spec-driven`).
+   - `planningHome`, `changeRoot` y `actionContext`: alcance de planificación y restricciones de edición.
+   - Qué artefacto contiene las tareas (normalmente `tasks` en `spec-driven`; consulta el estado para otros esquemas).
+
+3. **Obtener instrucciones de implementación**
 
    ```bash
    openspec instructions apply --change "<name>" --json
    ```
 
-   This returns:
-   - `contextFiles`: artifact ID -> array of concrete file paths (varies by schema - could be proposal/specs/design/tasks or spec/tests/implementation/docs)
-   - Progress (total, complete, remaining)
-   - Task list with status
-   - Dynamic instruction based on current state
-   - Optional `context`: current required project instruction input from the selected root
-   - Optional `operationGuidance`: current advisory guidance for apply
-   - `missingArtifacts` (when present): required artifact ids with no output
+   La respuesta incluye:
+   - `contextFiles`: identificador de artefacto → rutas concretas (varían según el esquema; por ejemplo, propuesta/especificaciones/diseño/tareas o especificación/pruebas/implementación/documentación).
+   - Progreso (total, completadas, pendientes).
+   - Lista de tareas y sus estados.
+   - Instrucción dinámica según el estado actual.
+   - `context` opcional: instrucciones vigentes del proyecto seleccionadas desde la raíz.
+   - `operationGuidance` opcional: recomendaciones complementarias para aplicar el cambio.
+   - `missingArtifacts`, cuando exista: identificadores requeridos sin archivo de salida.
 
-   **Handle states:**
-   - If `state: "blocked"`: show the message and pause implementation.
-     - If `missingArtifacts` is non-empty: suggest completing the missing artifacts. Run `openspec status --change "<name>" --json`, select the next `ready` artifact (not `skipped` or `blocked`), and use `openspec instructions "<artifact-id>" --change "<name>" --json` for its rules and template. Keep the selected `--store <id>` on both commands.
-     - Otherwise, follow the CLI instruction to create or repair the schema-configured tracking file from existing planning artifacts. Do not assume another artifact is ready or start implementation while blocked.
-   - If `state: "all_done"`: congratulate, suggest archive
-   - Otherwise: proceed to implementation
+   **Gestionar los estados:**
+   - Si `state: "blocked"`, muestra el mensaje y pausa la implementación.
+     - Si `missingArtifacts` no está vacío, sugiere completar los artefactos faltantes. Ejecuta `openspec status --change "<name>" --json`, selecciona el siguiente artefacto `ready` (no `skipped` ni `blocked`) y consulta `openspec instructions "<artifact-id>" --change "<name>" --json` para obtener sus reglas y plantilla. Conserva `--store <id>` en ambos comandos.
+     - En caso contrario, sigue la instrucción de la CLI para crear o reparar el archivo de seguimiento configurado para el esquema a partir de los artefactos de planificación existentes. No supongas que otro artefacto está listo ni empieces a implementar mientras el cambio esté bloqueado.
+   - Si `state: "all_done"`, felicita al usuario y sugiere archivar.
+   - En otro caso, continúa con la implementación.
 
-   Treat `context` as a required prompt-level input. Read and consider it, and
-   apply relevant project facts, conventions, and constraints while implementing.
-   Treat `operationGuidance` as optional additive advice. Read and consider every
-   entry, and follow entries that are applicable and compatible with the built-in
-   workflow.
+   Trata `context` como una instrucción obligatoria del prompt: léela, considérala y aplica los datos, convenciones y restricciones pertinentes del proyecto. Trata `operationGuidance` como consejo adicional opcional: lee y considera cada entrada, y sigue las que sean aplicables y compatibles con el flujo integrado.
 
-   Keep both fields separate from CLI-returned state, missing artifacts, tasks,
-   progress, `contextFiles`, and the built-in `instruction`. They are not
-   evidence of task completion, do not replace the built-in instruction, and do
-   not permit bypassing a blocked state. If context conflicts with the built-in
-   instruction, an explicit user choice, or a CLI-controlled value, report the
-   conflict and preserve the controlling value. If guidance is inapplicable or
-   conflicts with those controlling inputs, do not follow it and explain why.
-   These are prompt-level behavior contracts, not enforceable checks.
+   Mantén ambos campos separados del estado que devuelve la CLI, los artefactos faltantes, las tareas, el progreso, `contextFiles` y la instrucción integrada. No son evidencia de finalización, no sustituyen la instrucción integrada ni permiten saltarse un estado bloqueado. Si `context` entra en conflicto con la instrucción integrada, una elección explícita del usuario o un valor controlado por la CLI, informa el conflicto y conserva el valor que prevalece. Si una recomendación no es aplicable o contradice esas entradas, no la sigas y explica por qué. Estos contratos guían el comportamiento del prompt, pero no son validaciones ejecutables.
 
-4. **Read context files**
+4. **Leer los archivos de contexto**
 
-   Read every file path listed under `contextFiles` from the apply instructions output.
-   The files depend on the schema being used:
-   - **spec-driven**: proposal, specs, design, tasks
-   - Other schemas: follow the contextFiles from CLI output
+   Lee todos los archivos indicados en `contextFiles` por las instrucciones de implementación. Dependen del esquema:
+   - **spec-driven:** propuesta, especificaciones, diseño y tareas.
+   - Otros esquemas: sigue el `contextFiles` que devuelva la CLI.
 
-   Do not copy `context` or `operationGuidance` verbatim into implementation
-   files or planning artifacts unless the user separately asks for that content.
+   No copies `context` ni `operationGuidance` literalmente a archivos de implementación o artefactos de planificación, salvo que el usuario pida ese contenido por separado.
 
-5. **Show current progress**
+5. **Mostrar el progreso actual**
 
-   Display:
-   - Schema being used
-   - Progress: "N/M tasks complete"
-   - Remaining tasks overview
-   - Dynamic instruction from CLI
+   Muestra:
+   - Esquema utilizado.
+   - Progreso: `N/M tareas completadas`.
+   - Resumen de tareas pendientes.
+   - Instrucción dinámica de la CLI.
 
-6. **Implement tasks (loop until done or blocked)**
+6. **Implementar las tareas (repetir hasta terminar o quedar bloqueado)**
 
-   For each pending task:
-   - Show which task is being worked on
-   - Make the code changes required
-   - Keep changes minimal and focused
-   - Mark task complete in the tasks file: `- [ ]` → `- [x]`
-   - Continue to next task
+   Para cada tarea pendiente:
+   - Indica en qué tarea estás trabajando.
+   - Realiza los cambios de código requeridos.
+   - Mantén los cambios pequeños y enfocados.
+   - Marca la tarea como completada en el archivo de tareas: `- [ ]` → `- [x]`.
+   - Continúa con la siguiente tarea.
 
-   **Pause if:**
-   - Task is unclear → ask for clarification
-   - Implementation reveals a design issue → suggest updating artifacts
-   - A task needs work beyond what the spec and tasks describe, or you are tempted to drop, narrow, defer, or accept exceptions to specified behavior to make it fit → surface the added scope and ask; do not absorb it silently
-   - Error or blocker encountered → report and wait for guidance
-   - User interrupts
+   **Pausa si:**
+   - La tarea no está clara: pide una aclaración.
+   - La implementación revela un problema de diseño: sugiere actualizar los artefactos.
+   - La tarea requiere trabajo no descrito en la especificación y las tareas, o existe la tentación de quitar, reducir, postergar o aceptar excepciones para ajustarla: expón el alcance adicional y pregunta; no lo incorpores en silencio.
+   - Aparece un error o bloqueo: infórmalo y espera instrucciones.
+   - El usuario interrumpe.
 
-7. **On completion or pause, show status**
+7. **Al terminar o pausar, mostrar el estado**
 
-   Display:
-   - Tasks completed this session
-   - Overall progress: "N/M tasks complete"
-   - If all done: suggest archive
-   - If paused: explain why and wait for guidance
+   Muestra:
+   - Tareas completadas en esta sesión.
+   - Progreso total: `N/M tareas completadas`.
+   - Si todo está hecho, sugiere archivar.
+   - Si se pausó, explica el motivo y espera instrucciones.
 
-**Output During Implementation**
+**Formato de salida durante la implementación**
 
 ```
-## Implementing: <change-name> (schema: <schema-name>)
+## Implementando: <nombre-del-cambio> (esquema: <nombre-del-esquema>)
 
-Working on task 3/7: <task description>
-[...implementation happening...]
-✓ Task complete
+Trabajando en la tarea 3/7: <descripción de la tarea>
+[...implementación en curso...]
+✓ Tarea completada
 
-Working on task 4/7: <task description>
-[...implementation happening...]
-✓ Task complete
+Trabajando en la tarea 4/7: <descripción de la tarea>
+[...implementación en curso...]
+✓ Tarea completada
 ```
 
-**Output On Completion**
+**Formato de salida al completar**
 
 ```
-## Implementation Complete
+## Implementación completada
 
-**Change:** <change-name>
-**Schema:** <schema-name>
-**Progress:** 7/7 tasks complete ✓
+**Cambio:** <nombre-del-cambio>
+**Esquema:** <nombre-del-esquema>
+**Progreso:** 7/7 tareas completadas ✓
 
-### Completed This Session
-- [x] Task 1
-- [x] Task 2
+### Completado en esta sesión
+- [x] Tarea 1
+- [x] Tarea 2
 ...
 
-All tasks complete! You can archive this change with `/opsx:archive`.
+Todas las tareas están completas. Puedes archivar este cambio con `/opsx:archive`.
 ```
 
-**Output On Pause (Issue Encountered)**
+**Formato de salida al pausar (problema encontrado)**
 
 ```
-## Implementation Paused
+## Implementación pausada
 
-**Change:** <change-name>
-**Schema:** <schema-name>
-**Progress:** 4/7 tasks complete
+**Cambio:** <nombre-del-cambio>
+**Esquema:** <nombre-del-esquema>
+**Progreso:** 4/7 tareas completadas
 
-### Issue Encountered
-<description of the issue>
+### Problema encontrado
+<descripción del problema>
 
-**Options:**
-1. <option 1>
-2. <option 2>
-3. Other approach
+**Opciones:**
+1. <opción 1>
+2. <opción 2>
+3. Otro enfoque
 
-What would you like to do?
+¿Cómo deseas continuar?
 ```
 
-**Guardrails**
-- Keep going through tasks until done or blocked
-- Always read context files before starting (from the apply instructions output)
-- If task is ambiguous, pause and ask before implementing
-- If implementation reveals issues, pause and suggest artifact updates
-- Keep code changes minimal and scoped to each task
-- Update task checkbox immediately after completing each task
-- Pause on errors, blockers, or unclear requirements - don't guess
-- When a task needs work beyond what the spec describes, surface the added scope and pause - never silently narrow, defer, or simplify away specified behavior
-- Only mark a task `- [x]` when its specified behavior is fully implemented, not when it is partially done or deferred
-- Use contextFiles from CLI output, don't assume specific file names
-- Do not use context or operation guidance as proof that a task is complete
-- Apply relevant project context; report conflicts with controlling workflow inputs
-- Consider every guidance entry; explain any inapplicable or conflicting advice
-- Do not copy runtime context or operation guidance into implementation files or planning artifacts
-- Preserve CLI-controlled blocked/ready/all-done behavior and completion criteria
+**Protecciones**
+- Continúa con las tareas hasta terminar o quedar bloqueado.
+- Antes de empezar, lee los archivos de contexto de las instrucciones de implementación.
+- Si una tarea es ambigua, pausa y pregunta antes de implementarla.
+- Si la implementación revela problemas, pausa y sugiere actualizar los artefactos.
+- Mantén los cambios de código pequeños y limitados a cada tarea.
+- Actualiza la casilla de la tarea inmediatamente después de completarla.
+- Ante errores, bloqueos o requisitos poco claros, pausa; no adivines.
+- Si una tarea requiere trabajo no descrito, expón el alcance adicional y pausa; nunca reduzcas, postergues ni simplifiques en silencio el comportamiento especificado.
+- Marca `- [x]` solo cuando el comportamiento especificado esté completamente implementado, no si es parcial o quedó postergado.
+- Usa `contextFiles` de la salida de la CLI; no supongas nombres de archivo.
+- No uses `context` ni `operationGuidance` como prueba de que una tarea terminó.
+- Aplica el contexto pertinente del proyecto e informa los conflictos con las entradas que controlan el flujo.
+- Considera todas las recomendaciones y explica las que no sean aplicables o entren en conflicto.
+- No copies el contexto de ejecución ni las recomendaciones a archivos de implementación o planificación.
+- Conserva los estados y criterios de finalización controlados por la CLI: `blocked`, `ready` y `all_done`.
 
-**Fluid Workflow Integration**
+**Integración con un flujo flexible**
 
-This skill supports the "actions on a change" model:
-
-- **Can be invoked anytime**: Before all artifacts are done (if tasks exist), after partial implementation, interleaved with other actions
-- **Allows artifact updates**: If implementation reveals design issues, suggest updating artifacts - not phase-locked, work fluidly
+Este flujo sigue el modelo de «acciones sobre un cambio»:
+- Puede iniciarse en cualquier momento: antes de completar todos los artefactos (si ya hay tareas), después de una implementación parcial o intercalado con otras acciones.
+- Permite actualizar artefactos: si la implementación revela problemas de diseño, sugiere actualizarlos; no impongas una secuencia rígida de fases.

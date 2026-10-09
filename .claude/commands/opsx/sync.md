@@ -1,286 +1,226 @@
 ---
-name: "OPSX: Sync"
-description: "Sync delta specs from a change to main specs"
+name: "OPSX: Sincronizar"
+description: "Integra las diferencias de una especificación de cambio en las especificaciones principales"
 allowed-tools: Bash(openspec:*)
 category: "Workflow"
-tags: ["workflow", "specs", "experimental"]
+tags: ["flujo", "especificaciones", "experimental"]
 ---
 
-Sync delta specs from a change to main specs.
+Sincroniza las especificaciones delta de un cambio con las especificaciones principales.
 
-This is an **agent-driven** operation - you will read delta specs and directly edit main specs to apply the changes. This allows intelligent merging (e.g., adding a scenario without copying the entire requirement).
+Esta operación la dirige el agente: lee las especificaciones delta y edita directamente las especificaciones principales para aplicar los cambios. Así se pueden combinar los cambios de forma inteligente (por ejemplo, añadir un escenario sin copiar un requisito entero).
 
-**Store selection:** If the user names a store (a store is a standalone OpenSpec repo registered on this machine) or the work lives in one, run `openspec store list --json` to discover registered store ids, then pass `--store <id>` on the commands that read or write specs and changes (`new change`, `status`, `instructions`, `list`, `show`, `validate`, `archive`, `doctor`, `context`, `schemas`, `view`). Once selected, treat `--store <id>` as sticky for the rest of the workflow. Every unscoped example of those commands below is shorthand: before running it, append the flag. For example, run `openspec status --change "<name>" --json --store "<id>"`, not the unscoped form shown below. Other commands do not take the flag. Hints printed by commands already carry the flag; keep it on follow-ups. Without a store, commands act on the nearest local `openspec/` root.
+**Selección de almacén:** Si el usuario indica un almacén (un repositorio OpenSpec independiente registrado en esta máquina) o el trabajo se encuentra allí, ejecuta `openspec store list --json` para descubrir sus identificadores y añade `--store <id>` a los comandos que leen o escriben especificaciones y cambios (`new change`, `status`, `instructions`, `list`, `show`, `validate`, `archive`, `doctor`, `context`, `schemas`, `view`). Una vez elegido, conserva `--store <id>` durante todo el flujo. Todo ejemplo sin ámbito es una forma abreviada: antes de ejecutarlo, añade la opción. Por ejemplo, ejecuta `openspec status --change "<name>" --json --store "<id>"`, no la variante sin ámbito. Los demás comandos no aceptan esa opción. Conserva la opción en los comandos posteriores cuando las sugerencias de la CLI ya la incluyan. Si no se selecciona un almacén, los comandos actúan sobre la raíz `openspec/` local más cercana.
 
-**Project check:** These steps expect a project that already uses OpenSpec. Before the first step that writes anything (`new change`, `archive`, `sync specs`, or authoring an artifact file), confirm the project has a root: run `openspec list --json` (with `--store <id>` when a store is selected, since the store is then the root) and read `root`. A root object means the project is set up. `"root": null` means it is not - there is no `openspec/` directory here, and a write such as `openspec new change` would create one as a side effect. The command also exits non-zero, which is that answer rather than a broken CLI, so read the JSON instead of retrying or working around it.
+**Comprobación del proyecto:** Estos pasos suponen que el proyecto ya usa OpenSpec. Antes del primer paso que escriba algo (`new change`, `archive`, `sync specs` o la creación de un artefacto), confirma que existe una raíz: ejecuta `openspec list --json` (con `--store <id>` si se seleccionó un almacén, porque ese almacén es la raíz) y revisa `root`. Un objeto en `root` significa que el proyecto está configurado. `"root": null` significa que no lo está: aquí no hay un directorio `openspec/` y una escritura como `openspec new change` lo crearía como efecto secundario. El comando también termina con código distinto de cero; esa es la respuesta, no un fallo de la CLI. Lee el JSON en vez de reintentar o buscar una solución alternativa.
 
-One `"root": null` is not about setup: when a `status` error message starts with `Declared in` or `Invalid store declaration in` and names this project's `openspec/config.yaml` (or `config.yml`), the project does use OpenSpec through a store it declares, which this machine cannot resolve (the store is not registered, or the `store:` line is malformed). Do not treat it as uninitialized and skip the branches below: stop before writing and show the user that error's `message` and `fix`.
+Un `"root": null` no siempre significa que falte la configuración: si un error de `status` empieza con `Declared in` o `Invalid store declaration in` y menciona `openspec/config.yaml` (o `config.yml`) de este proyecto, el proyecto sí usa OpenSpec mediante un almacén declarado, pero esta máquina no puede resolverlo (no está registrado o la línea `store:` está mal formada). No lo trates como un proyecto sin inicializar ni continúes con las ramas de abajo: detente antes de escribir y muestra al usuario los campos `message` y `fix` del error.
 
-Otherwise, with no root, what happens next depends on how this workflow was reached:
+Si no hay raíz, el paso siguiente depende de cómo se inició este flujo:
+- **Selección automática:** elegiste este flujo por tu cuenta, sin que el usuario mencionara OpenSpec, esta habilidad ni su comando de barra. Deja de usar OpenSpec y responde normalmente, como si no estuviera instalado. No pidas que configure nada ni menciones la configuración de OpenSpec.
+- **Solicitud explícita de OpenSpec:** el usuario mencionó OpenSpec, esta habilidad o ejecutó su comando de barra. Detente antes de escribir y pregunta cómo proceder: configurar este proyecto (`openspec init`), usar un almacén que ya exista (`--store <id>`) o continuar sin OpenSpec en esta solicitud. Espera la respuesta.
 
-- **Auto-selected**: you chose this workflow yourself, without the user naming OpenSpec, naming this skill, or running its slash command. Stop using OpenSpec and answer the request normally, as you would with no OpenSpec installed. Do not ask them to set anything up and do not mention OpenSpec setup.
-- **Explicit OpenSpec request**: the user named OpenSpec, named this skill, or ran its slash command. Stop before writing and ask how to proceed: set this project up (`openspec init`), target a store they already have (`--store <id>`), or continue without OpenSpec for this request. Wait for their answer.
+En ambos casos, nunca crees la raíz como efecto secundario: no ejecutes `openspec init` hasta que el usuario lo pida, no crees manualmente archivos en `openspec/` y no permitas que otro comando la cree.
 
-In both branches, never create the root as a side effect: do not run `openspec init` until the user asks for it, do not hand-create `openspec/` files, and do not let a command create it.
+`<capability-path>` es la ruta del directorio de especificaciones relativa a `specs/` (por ejemplo, `user-auth` o `identity/user-auth`). Al localizar la especificación principal correspondiente, conserva la ruta completa de cada especificación delta.
 
-`<capability-path>` is the spec directory relative to `specs/` (for example, `user-auth` or `identity/user-auth`). Preserve the full path from each delta spec when resolving its main spec.
+**Entrada:** Opcionalmente indica después de `/opsx:sync` el nombre del cambio (por ejemplo, `/opsx:sync add-auth`). Si se omite, comprueba si puede inferirse del contexto de la conversación. Si es ambiguo o poco claro, DEBES pedir que se elija entre los cambios disponibles.
 
-**Input**: Optionally specify a change name after `/opsx:sync` (e.g., `/opsx:sync add-auth`). If omitted, check if it can be inferred from conversation context. If vague or ambiguous you MUST prompt for available changes.
+**Pasos**
 
-**Steps**
+1. **Seleccionar el cambio**
+   Si se indicó un nombre, úsalo. Si no:
+   - Infiérelo del contexto si el usuario mencionó un cambio.
+   - Selecciónalo automáticamente si solo hay un cambio activo.
+   - Si hay ambigüedad, ejecuta `openspec list --json` para obtener los cambios disponibles y pide al usuario que elija.
 
-1. **Select the change**
+   Al pedir que elija, muestra los cambios que tengan especificaciones delta dentro del directorio `specs/`.
 
-   If a name is provided, use it. Otherwise:
-   - Infer from conversation context if the user mentioned a change
-   - Auto-select if only one active change exists
-   - If ambiguous, run `openspec list --json` to get available changes and ask the user to select one
+   Anuncia siempre: `Cambio seleccionado: <name>` e indica cómo cambiar la selección (por ejemplo, `/opsx:sync <other>`).
 
-   When prompting, show changes that have delta specs (under `specs/` directory).
-
-   Always announce: "Using change: <name>" and how to override (e.g., `/opsx:sync <other>`).
-
-2. **Resolve change context**
-
-   Run:
+2. **Resolver el contexto del cambio**
+   Ejecuta:
    ```bash
    openspec status --change "<name>" --json
    ```
 
-   The JSON includes `planningHome.root`. Main specs live under `<planningHome.root>/openspec/specs/` — use that (store-aware) root for every main-spec path below, not a hardcoded repo path. When a store is selected it points at the store, not the current repository.
+   El JSON incluye `planningHome.root`. Las especificaciones principales se encuentran en `<planningHome.root>/openspec/specs/`; usa esa raíz consciente del almacén para todas las rutas de especificaciones principales. No codifiques una ruta del repositorio. Si se seleccionó un almacén, esa raíz apunta al almacén y no al repositorio actual.
 
-3. **Find delta specs**
+3. **Encontrar las especificaciones delta**
 
-   Use `artifactPaths.specs.existingOutputPaths` from the status JSON as the
-   only source of delta spec paths. If the `specs` entry is missing or
-   `existingOutputPaths` is empty, report that there are no delta specs to sync,
-   do not infer them from other artifacts, and stop without requesting artifact
-   instructions or writing a main spec.
+   Usa `artifactPaths.specs.existingOutputPaths` del JSON de estado como única fuente de rutas de especificaciones delta. Si no existe la entrada `specs` o `existingOutputPaths` está vacío, informa que no hay deltas para sincronizar y detente sin inferir rutas desde otros artefactos, pedir instrucciones para artefactos ni escribir una especificación principal.
 
-   Sync every path in `existingOutputPaths` unless the caller narrowed the set.
-   A caller narrows it by naming an explicit list of complete entries from
-   `existingOutputPaths` — copy those absolute values verbatim. Archive does
-   this inline, and a user can too (for example, by selecting the entry ending
-   in `/specs/billing/invoices/spec.md`).
-   Then sync only the named paths and leave the remaining delta specs untouched:
-   bulk archive excludes a delta whose implementation it could not find, and
-   syncing it anyway would write a main spec the caller deliberately withheld.
-   Carry that narrowed selection through step 4; never widen it back to the full
-   list. If a named path is not in `existingOutputPaths`, do not sync it —
-   report it and stop, rather than dropping it silently. If the named list is
-   empty, report that there is nothing to sync and stop without writing a main
-   spec.
+   Sincroniza todas las rutas de `existingOutputPaths`, salvo que quien invocó el flujo haya limitado el conjunto. Para limitarlo, debe indicar una lista explícita de entradas completas que existan en `existingOutputPaths`; copia esos valores absolutos literalmente. El archivado puede hacer esta selección en línea, y el usuario también puede hacerlo (por ejemplo, eligiendo la entrada que termina en `/specs/billing/invoices/spec.md`). Sincroniza solo las rutas nombradas y deja intactas las demás especificaciones delta: el archivado por lotes puede excluir una delta cuya implementación no encontró y sincronizarla igualmente escribiría una especificación principal que deliberadamente se retuvo. Conserva la selección limitada en el paso 4; nunca la amplíes de nuevo a la lista completa. Si una ruta nombrada no está en `existingOutputPaths`, no la sincronices: informa y detente en vez de descartarla en silencio. Si la lista nombrada está vacía, informa que no hay nada que sincronizar y detente sin escribir una especificación principal.
 
-   Each delta spec file contains sections like:
-   - `## ADDED Requirements` - New requirements to add
-   - `## MODIFIED Requirements` - Changes to existing requirements
-   - `## REMOVED Requirements` - Requirements to remove
-   - `## RENAMED Requirements` - Requirements to rename (FROM:/TO: format)
+   Cada archivo delta contiene secciones como:
+   - `## ADDED Requirements`: requisitos nuevos que se añadirán.
+   - `## MODIFIED Requirements`: cambios a requisitos existentes.
+   - `## REMOVED Requirements`: requisitos que se quitarán.
+   - `## RENAMED Requirements`: requisitos que cambiarán de nombre (formato FROM:/TO:).
 
-   If no delta specs found, inform user and stop.
+   Si no encuentras especificaciones delta, informa al usuario y detente.
 
-4. **For each delta spec, apply changes to main specs**
+4. **Aplicar los cambios de cada delta en las especificaciones principales**
 
-   Before the first main-spec write, obtain one current specs-rule snapshot:
-   - If archive invoked this workflow inline and supplied a valid snapshot from
-     `openspec instructions specs --change "<name>" --json`, reuse it and do not
-     fetch the same instructions again.
-   - Otherwise run that command once now with the same selected-root flags.
-   - If the direct lookup exits non-zero or returns invalid artifact-instruction
-     JSON, report the error and stop before writing any main spec. Do not treat the
-     failure as an absent rule set.
-   - A valid response with omitted `rules` means no artifact rules are configured
-     and the existing semantic merge continues.
+   Antes de la primera escritura en una especificación principal, obtén una copia vigente y única de las reglas de especificaciones:
+   - Si el archivado inició este flujo en línea y proporcionó una copia válida de `openspec instructions specs --change "<name>" --json`, reutilízala; no consultes las mismas instrucciones otra vez.
+   - En otro caso, ejecuta ese comando una vez ahora, con las mismas opciones para la raíz seleccionada.
+   - Si la consulta termina con código distinto de cero o devuelve JSON de instrucciones de artefactos no válido, informa el error y detente antes de escribir cualquier especificación principal. No trates el fallo como si no hubiera reglas.
+   - Una respuesta válida que no incluya `rules` significa que no hay reglas configuradas para el artefacto y puede continuar la combinación semántica habitual.
 
-   Apply returned `rules` only to the content and form of the main specs produced
-   by this merge. Artifact rules are not operation guidance and cannot change
-   selected roots, delta paths, CLI checks, or workflow steps. Use their text as
-   constraints without copying it verbatim into a main spec or summary.
+   Aplica las `rules` devueltas únicamente al contenido y formato de las especificaciones principales producidas por esta combinación. Las reglas de artefactos no son instrucciones de operación ni pueden cambiar las raíces seleccionadas, rutas delta, verificaciones de la CLI o pasos del flujo. Úsalas como restricciones sin copiarlas literalmente a una especificación principal ni al resumen.
 
-   For each capability delta spec path selected in step 3 — the full `existingOutputPaths` list, or the narrowed subset when a caller supplied one (these may belong to a selected store, not the repo):
+   Para cada ruta de especificación delta seleccionada en el paso 3 (la lista completa de `existingOutputPaths` o el subconjunto indicado; podrían pertenecer a un almacén y no al repositorio):
 
-   a. **Read the delta spec** to understand the intended changes
+   a. **Lee la especificación delta** para comprender los cambios previstos.
 
-   b. **Read the main spec** at `<planningHome.root>/openspec/specs/<capability-path>/spec.md` (may not exist yet)
+   b. **Lee la especificación principal** en `<planningHome.root>/openspec/specs/<capability-path>/spec.md` (puede no existir todavía).
 
-      **If it does not exist yet** (a new capability), match what `openspec archive` does:
-      only ADDED requirements may be applied - step d creates the spec from them.
-      MODIFIED and RENAMED have no requirement to act on, so stop the sync for that
-      capability and report that its main spec does not exist and only ADDED is allowed
-      for a new spec; never invent the missing requirement. REMOVED has nothing to
-      remove - skip it and warn.
+      **Si aún no existe** (capacidad nueva), aplica la misma regla que `openspec archive`: solo se pueden aplicar requisitos `ADDED`; el paso d crea la especificación a partir de ellos. `MODIFIED` y `RENAMED` no tienen requisitos a los que aplicarse; detén la sincronización de esa capacidad e informa que su especificación principal no existe y que solo se permite `ADDED` para una nueva. Nunca inventes el requisito ausente. `REMOVED` no tiene nada que eliminar: omítelo y advierte al usuario.
 
-   c. **Apply changes intelligently**:
+   c. **Aplica los cambios de forma inteligente:**
 
-      **ADDED Requirements:**
-      - If requirement doesn't exist in main spec → add it
-      - If requirement already exists → update it to match (treat as implicit MODIFIED)
+      **Requisitos `ADDED`:**
+      - Si el requisito no existe en la especificación principal, añádelo.
+      - Si ya existe, actualízalo para que coincida (trátalo como `MODIFIED` implícito).
 
-      **MODIFIED Requirements:**
-      - Find the requirement in main spec
-      - Apply the changes - this can be:
-        - Adding new scenarios the main spec does not have yet
-        - Modifying existing scenarios
-        - Changing the requirement description
-      - Preserve scenarios/content not mentioned in the delta
+      **Requisitos `MODIFIED`:**
+      - Encuentra el requisito en la especificación principal.
+      - Aplica los cambios, que pueden consistir en agregar escenarios nuevos, modificar escenarios existentes o cambiar la descripción del requisito.
+      - Conserva los escenarios y el contenido que la delta no menciona.
 
-      **REMOVED Requirements:**
-      - Remove the entire requirement block from main spec
-      - Retiring the capability. Delete the whole `spec.md` - and the directory once
-        nothing else is left in it - only when ALL of these hold:
-        1. removing the requirements *this run* left no requirement blocks;
-        2. the rest of the spec is well-formed (it still has a `## Purpose`);
-        3. the main spec was not already empty before this sync - if you removed
-           nothing, change nothing;
-        4. every other nonblank line in the whole file is accounted for as the
-           title, Purpose, Requirements header, or a canonical requirement's
-           statement, scenarios, or fenced examples;
-        5. the change's `.openspec.yaml` declares `retire_capabilities: true`;
-        6. the `spec.md` resolves inside the real specs root (do not follow a
-           capability-directory symlink to delete an external file).
-        If removing the selected requirements would leave no requirement blocks and
-        any retirement condition is not satisfied, do not modify the main spec. Stop
-        the sync for that capability, report the blocking condition, and tell the user
-        how to resolve it. Never write or leave an empty `## Requirements` section.
-        When only the marker is missing, say that too - it is the one thing the user
-        can add to make the retirement go through.
-      - Deleting the file also deletes its `## Purpose`; any other section blocks
-        retirement. Name Purpose when you report the retirement. Include a pasteable
-        `git checkout` only when the spec lived in the caller's checkout;
-        otherwise give checkout-scoped recovery guidance.
+      **Requisitos `REMOVED`:**
+      - Elimina de la especificación principal el bloque completo del requisito.
+      - Retira una capacidad (elimina todo `spec.md` y su directorio cuando no quede nada más) únicamente si se cumplen TODAS estas condiciones:
+        1. Esta ejecución eliminó los últimos bloques de requisitos.
+        2. El resto de la especificación está bien formado y aún contiene `## Purpose`.
+        3. La especificación principal no estaba ya vacía antes de sincronizar; si no eliminaste nada, no hagas cambios.
+        4. Todas las demás líneas no vacías del archivo corresponden al título, `Purpose`, el encabezado de requisitos o el enunciado, escenarios o ejemplos cercados de un requisito canónico.
+        5. El archivo `.openspec.yaml` del cambio declara `retire_capabilities: true`.
+        6. `spec.md` se resuelve dentro de la raíz real de especificaciones; no sigas un enlace simbólico del directorio de la capacidad para eliminar un archivo externo.
+      - Si al eliminar los requisitos seleccionados no quedan bloques y alguna condición para retirar la capacidad no se cumple, no modifiques la especificación principal. Detén la sincronización de esa capacidad, informa cuál condición bloquea y explica al usuario cómo resolverlo. Nunca escribas ni dejes una sección `## Requirements` vacía. Si solo falta el indicador, indícalo: es el único elemento que el usuario puede añadir para permitir el retiro.
+      - Eliminar el archivo también elimina `## Purpose`; cualquier otra sección impide el retiro. Menciona Purpose al informar el retiro. Incluye un comando `git checkout` listo para copiar solo si la especificación estaba en el checkout de quien inició el flujo; de lo contrario, brinda indicaciones de recuperación limitadas a ese checkout.
 
-      **RENAMED Requirements:**
-      - Find the FROM requirement, rename to TO
+      **Requisitos `RENAMED`:**
+      - Encuentra el requisito `FROM` y cámbialo al nombre `TO`.
 
-      **`## Purpose` in the delta:**
-      - The main spec already has one and it is authoritative - leave it alone
-        (this is what `openspec archive` does; it warns and moves on)
+      **`## Purpose` en la delta:**
+      - La especificación principal ya tiene uno y es la fuente autoritativa; no lo modifiques (así funciona `openspec archive`, que solo advierte y continúa).
 
-   d. **Create new main spec** if capability doesn't exist yet:
-      - Only when the delta has ADDED requirements to put in it and no MODIFIED or
-        RENAMED requirements blocked this capability in step b. Otherwise create nothing
-        and leave the specs directory untouched. For a REMOVED-only delta, if the change's
-        `.openspec.yaml` declares `retire_capabilities: true`, report it as already retired
-        and continue without recreating the spec. Without that marker, report the sync as blocked:
-        `openspec archive` rejects it with `Spec must have at least one requirement`.
-        An empty delta has no operations to sync; report it as blocked too.
-        Never write an empty `## Requirements` section.
-      - Create `<planningHome.root>/openspec/specs/<capability-path>/spec.md`
-      - Add Purpose section: copy the delta's `## Purpose` body verbatim when it has one
-        (this is what `openspec archive` does); only write a brief TBD placeholder when it does not
-      - Add Requirements section with the ADDED requirements
-      - Follow the **Main Spec Format Reference** below
+   d. **Crear una especificación principal nueva** si aún no existe la capacidad:
+      - Hazlo solo si la delta contiene requisitos `ADDED` y ningún requisito `MODIFIED` o `RENAMED` bloqueó esta capacidad en el paso b. De lo contrario, no crees nada ni modifiques el directorio de especificaciones. Para una delta que solo contiene `REMOVED`, si `.openspec.yaml` declara `retire_capabilities: true`, informa que la capacidad ya está retirada y continúa sin recrear la especificación. Sin ese indicador, informa que la sincronización está bloqueada: `openspec archive` la rechazaría con `Spec must have at least one requirement`. Una delta vacía tampoco tiene operaciones y queda bloqueada. Nunca escribas una sección `## Requirements` vacía.
+      - Crea `<planningHome.root>/openspec/specs/<capability-path>/spec.md`.
+      - Añade la sección Purpose: copia literalmente el cuerpo de `## Purpose` de la delta si existe (así funciona `openspec archive`); si no existe, añade solo una breve nota provisional TBD.
+      - Añade la sección Requirements con los requisitos `ADDED`.
+      - Sigue la **Referencia de formato para la especificación principal** de abajo.
 
-5. **Validate updated main specs**
+5. **Validar las especificaciones principales actualizadas**
 
-   Run `openspec validate --specs` with the same selected-root flags used earlier.
-   If validation fails, report the problems and do not claim the sync succeeded.
+   Ejecuta `openspec validate --specs` con las mismas opciones de raíz seleccionada. Si la validación falla, informa los problemas y no afirmes que la sincronización tuvo éxito.
 
-6. **Show summary**
+6. **Mostrar el resumen**
 
-   After applying all changes, summarize:
-   - Which capabilities were updated
-   - What changes were made (requirements added/modified/removed/renamed)
-   - Any new main spec left with a TBD Purpose placeholder, so it gets written
-     now rather than lingering
-   - Any capability retired, naming the deleted `spec.md`, its Purpose, and
-     either a pasteable `git checkout` or checkout-scoped recovery guidance
+   Después de aplicar todos los cambios, resume:
+   - Qué capacidades se actualizaron.
+   - Qué cambió (requisitos añadidos, modificados, eliminados o renombrados).
+   - Cualquier especificación principal nueva que conserve un Purpose provisional TBD, para redactarlo ahora y no dejarlo pendiente.
+   - Cualquier capacidad retirada; indica el `spec.md` eliminado, su Purpose y un comando `git checkout` listo para copiar o instrucciones de recuperación limitadas al checkout.
 
-**Delta Spec Format Reference**
+**Referencia de formato para una especificación delta**
 
 ```markdown
-# Spec Delta
+# Diferencia de especificación
 
 ## Purpose
 
-Only on a delta that introduces a brand-new capability. Seeds the new main spec.
+Solo para una delta que introduce una capacidad totalmente nueva. Sirve para inicializar la especificación principal.
 
 ## ADDED Requirements
 
-### Requirement: New Feature
-The system SHALL do something new.
+### Requirement: Función nueva
+The system SHALL realizar una acción nueva.
 
-#### Scenario: Basic case
-- **WHEN** user does X
-- **THEN** system does Y
+#### Scenario: Caso básico
+- **WHEN** el usuario hace X
+- **THEN** el sistema hace Y
 
 ## MODIFIED Requirements
 
-### Requirement: Existing Feature
-The system SHALL keep doing the existing thing, now also handling A.
+### Requirement: Función existente
+The system SHALL mantener la función existente y también gestionar A.
 
-#### Scenario: Scenario the main spec already has
-- **WHEN** user does X
-- **THEN** system does Y
+#### Scenario: Escenario que ya existe en la especificación principal
+- **WHEN** el usuario hace X
+- **THEN** el sistema hace Y
 
-#### Scenario: New scenario to add
-- **WHEN** user does A
-- **THEN** system does B
+#### Scenario: Escenario nuevo
+- **WHEN** el usuario hace A
+- **THEN** el sistema hace B
 
 ## REMOVED Requirements
 
-### Requirement: Deprecated Feature
+### Requirement: Función obsoleta
 
 ## RENAMED Requirements
 
-- FROM: `### Requirement: Old Name`
-- TO: `### Requirement: New Name`
+- FROM: `### Requirement: Nombre anterior`
+- TO: `### Requirement: Nombre nuevo`
 ```
 
-**Main Spec Format Reference**
+**Referencia de formato para la especificación principal**
 
-Main specs are what the delta merges INTO. They must never contain delta operation headers (`## ADDED/MODIFIED/REMOVED/RENAMED Requirements`) - after syncing, every requirement lives under a single `## Requirements` section:
+Las especificaciones principales son el destino de la combinación. Nunca deben contener encabezados de operaciones delta (`## ADDED/MODIFIED/REMOVED/RENAMED Requirements`); después de sincronizar, todos los requisitos deben estar bajo una única sección `## Requirements`:
 
 ```markdown
-# <capability> Specification
+# Especificación de <capacidad>
 
 ## Purpose
-Short description of what this capability does and why it exists.
+Descripción breve de qué hace esta capacidad y por qué existe.
 
 ## Requirements
 
-### Requirement: New Feature
-The system SHALL do something new.
+### Requirement: Función nueva
+The system SHALL realizar una acción nueva.
 
-#### Scenario: Basic case
-- **WHEN** user does X
-- **THEN** system does Y
+#### Scenario: Caso básico
+- **WHEN** el usuario hace X
+- **THEN** el sistema hace Y
 ```
 
-**Key Principle: Intelligent Merging**
+**Principio clave: combinación inteligente**
 
-Unlike programmatic merging, you merge rather than overwrite:
-- A MODIFIED block carries the whole requirement - body plus every scenario that survives the change. `openspec validate` and `openspec archive` both reject one that drops a scenario the main spec still has.
-- Keep anything the delta does not mention, in the main spec's existing order
-- Use your judgment to merge changes sensibly
+A diferencia de una combinación programática, combina en vez de sobrescribir:
+- Un bloque `MODIFIED` contiene el requisito completo: enunciado y todos los escenarios que sobreviven al cambio. `openspec validate` y `openspec archive` rechazan una versión que quite un escenario aún presente en la especificación principal.
+- Conserva, en el orden existente de la especificación principal, todo lo que la delta no menciona.
+- Usa criterio para integrar los cambios correctamente.
 
-**Output On Success**
+**Salida si tuvo éxito**
 
 ```markdown
-## Specs Synced: <change-name>
+## Especificaciones sincronizadas: <nombre-del-cambio>
 
-Updated main specs:
+Especificaciones principales actualizadas:
 
-**<capability-1>**:
-- Added requirement: "New Feature"
-- Modified requirement: "Existing Feature" (added 1 scenario)
+**<capacidad-1>**:
+- Requisito añadido: «Función nueva».
+- Requisito modificado: «Función existente» (se añadió un escenario).
 
-**<capability-2>**:
-- Created new spec file
-- Added requirement: "Another Feature"
+**<capacidad-2>**:
+- Se creó un archivo de especificación.
+- Requisito añadido: «Otra función».
 
-Main specs are now updated. The change remains active - archive when implementation is complete.
+Las especificaciones principales quedaron actualizadas. El cambio sigue activo; archívalo cuando termine la implementación.
 ```
 
-**Guardrails**
-- Read both delta and main specs before making changes
-- Preserve existing content not mentioned in delta
-- Never copy a delta file into a main spec as-is - merge its content so the main spec keeps the Main Spec Format Reference structure, with no delta operation headers
-- If something is unclear, ask for clarification
-- Show what you're changing as you go
-- The operation should be idempotent - running twice should give same result
-- Use only `artifactPaths.specs.existingOutputPaths`; never infer delta specs from unrelated artifacts
-- Honor a caller-supplied subset of `existingOutputPaths`; never widen it back to the full list
-- Fetch specs instructions once for direct sync, or reuse the archive-supplied snapshot inline
-- Stop before every main-spec write on a non-zero or invalid JSON specs-instruction response
-- Artifact rules constrain only the specs being written and are never copied into output files
+**Protecciones**
+- Lee tanto la delta como la especificación principal antes de hacer cambios.
+- Conserva el contenido existente que la delta no menciona.
+- Nunca copies una delta íntegra en una especificación principal: integra su contenido y conserva la estructura de la Referencia de formato para la especificación principal, sin encabezados de operaciones delta.
+- Si algo no está claro, pide una aclaración.
+- Muestra el avance de los cambios.
+- La operación debe ser idempotente: ejecutarla dos veces debe producir el mismo resultado.
+- Usa solo `artifactPaths.specs.existingOutputPaths`; nunca infieras especificaciones delta desde artefactos no relacionados.
+- Respeta el subconjunto de `existingOutputPaths` indicado por quien inició el flujo; nunca vuelvas a ampliarlo a la lista completa.
+- Consulta las instrucciones de especificaciones una vez para una sincronización directa o reutiliza la copia que entregue el flujo de archivado.
+- Ante una respuesta de instrucciones de especificación no válida o con código distinto de cero, detente antes de escribir en cada especificación principal.
+- Las reglas de artefactos restringen únicamente las especificaciones que se escribirán y nunca se copian en los archivos de salida.

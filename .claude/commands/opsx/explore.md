@@ -1,239 +1,320 @@
 ---
-name: "OPSX: Explore"
-description: "Enter explore mode - think through ideas, investigate problems, clarify requirements"
+name: "OPSX: Explorar"
+description: "Explora ideas, investiga problemas y aclara requisitos"
 allowed-tools: Bash(openspec:*)
 category: "Workflow"
-tags: ["workflow", "explore", "experimental", "thinking"]
+tags: ["flujo", "exploración", "experimental", "análisis"]
 ---
 
-Enter explore mode. Think deeply. Visualize freely. Follow the conversation wherever it goes.
+Entra en modo de exploración. Analiza a fondo, representa ideas libremente y sigue la conversación hacia donde resulte útil.
 
-**IMPORTANT: Explore mode is for thinking, not implementing.** You may read files, search code, investigate the codebase, and run read-only commands or tools without confirmation, but you must NEVER write code or implement features. If the user asks you to implement something, do not start it here: say that explore mode does not implement, and point them at `/opsx:propose`, which turns the discussion into a change. The work happens from that change, never from explore mode. You MAY create or update OpenSpec change artifacts (proposals, designs, specs) within a confirmed scope—that's capturing thinking, not implementing. Answering design or clarifying questions is never consent to write. Before the first write-capable action, name the artifacts or files you would change and what you would do, ask a direct yes/no question, and wait for the user's confirmation in a separate message. Confirmation covers only the scope you described; ask again before expanding it. An explicit request from the user to capture the exploration as a new change is itself that confirmation, covering the change and the change artifacts the request names; scaffold it first as described below.
+**IMPORTANTE: Explorar es pensar, no implementar.** Puedes leer archivos, buscar código, investigar el repositorio y ejecutar comandos o herramientas de solo lectura sin confirmación, pero NUNCA escribas código ni implementes funciones. Si el usuario pide implementar algo, no lo empieces en este modo: explica que explorar no implementa y señala `/opsx:propose`, que convierte la conversación en un cambio. El trabajo de implementación se realiza desde ese cambio, nunca desde el modo de exploración. SÍ puedes crear o actualizar artefactos de cambios OpenSpec (propuestas, diseños o especificaciones) dentro de un alcance confirmado; eso registra lo pensado y no es implementación. Responder preguntas de diseño o aclaración nunca significa consentir una escritura. Antes de la primera acción que pueda escribir, indica qué artefactos o archivos cambiarías y qué harías, pregunta directamente si confirma y espera una respuesta explícita en un mensaje posterior. La confirmación cubre solo el alcance descrito; vuelve a preguntar antes de ampliarlo. Una solicitud explícita del usuario para guardar la exploración como cambio nuevo es esa confirmación; cubre el cambio y los artefactos nombrados en la solicitud. Primero crea el esqueleto según el procedimiento de abajo.
 
-**This is a stance, not a workflow.** There are no fixed steps, no required sequence, no mandatory outputs. You're a thinking partner helping the user explore.
+**Esto es una actitud, no un flujo fijo.** No hay pasos obligatorios, secuencia fija ni resultados exigidos. Sé un interlocutor de pensamiento que ayuda al usuario a explorar.
 
-**Store selection:** If the user names a store (a store is a standalone OpenSpec repo registered on this machine) or the work lives in one, run `openspec store list --json` to discover registered store ids, then pass `--store <id>` on the commands that read or write specs and changes (`new change`, `status`, `instructions`, `list`, `show`, `validate`, `archive`, `doctor`, `context`, `schemas`, `view`). Once selected, treat `--store <id>` as sticky for the rest of the workflow. Every unscoped example of those commands below is shorthand: before running it, append the flag. For example, run `openspec status --change "<name>" --json --store "<id>"`, not the unscoped form shown below. Other commands do not take the flag. Hints printed by commands already carry the flag; keep it on follow-ups. Without a store, commands act on the nearest local `openspec/` root.
+**Selección de almacén:** Si el usuario indica un almacén (un repositorio OpenSpec independiente registrado en esta máquina) o el trabajo se encuentra allí, ejecuta `openspec store list --json` para descubrir sus identificadores y añade `--store <id>` a los comandos que leen o escriben especificaciones y cambios (`new change`, `status`, `instructions`, `list`, `show`, `validate`, `archive`, `doctor`, `context`, `schemas`, `view`). Una vez elegido, conserva `--store <id>` durante todo el flujo. Todo ejemplo sin ámbito es una forma abreviada: antes de ejecutarlo, añade la opción. Por ejemplo, ejecuta `openspec status --change "<name>" --json --store "<id>"`, no la variante sin ámbito. Los demás comandos no aceptan esa opción. Conserva la opción en los comandos posteriores cuando las sugerencias de la CLI ya la incluyan. Si no se selecciona un almacén, los comandos actúan sobre la raíz `openspec/` local más cercana.
 
-**Project check:** These steps expect a project that already uses OpenSpec. Before the first step that writes anything (`new change`, `archive`, `sync specs`, or authoring an artifact file), confirm the project has a root: run `openspec list --json` (with `--store <id>` when a store is selected, since the store is then the root) and read `root`. A root object means the project is set up. `"root": null` means it is not - there is no `openspec/` directory here, and a write such as `openspec new change` would create one as a side effect. The command also exits non-zero, which is that answer rather than a broken CLI, so read the JSON instead of retrying or working around it.
+**Comprobación del proyecto:** Estos pasos suponen que el proyecto ya usa OpenSpec. Antes del primer paso que escriba algo (`new change`, `archive`, `sync specs` o la creación de un artefacto), confirma que existe una raíz: ejecuta `openspec list --json` (con `--store <id>` si se seleccionó un almacén, porque ese almacén es la raíz) y revisa `root`. Un objeto en `root` significa que el proyecto está configurado. `"root": null` significa que no lo está: aquí no hay un directorio `openspec/` y una escritura como `openspec new change` lo crearía como efecto secundario. El comando también termina con código distinto de cero; esa es la respuesta, no un fallo de la CLI. Lee el JSON en vez de reintentar o buscar una solución alternativa.
 
-One `"root": null` is not about setup: when a `status` error message starts with `Declared in` or `Invalid store declaration in` and names this project's `openspec/config.yaml` (or `config.yml`), the project does use OpenSpec through a store it declares, which this machine cannot resolve (the store is not registered, or the `store:` line is malformed). Do not treat it as uninitialized and skip the branches below: stop before writing and show the user that error's `message` and `fix`.
+Un `"root": null` no siempre significa que falte la configuración: si un error de `status` empieza con `Declared in` o `Invalid store declaration in` y menciona `openspec/config.yaml` (o `config.yml`) de este proyecto, el proyecto sí usa OpenSpec mediante un almacén declarado, pero esta máquina no puede resolverlo (no está registrado o la línea `store:` está mal formada). No lo trates como un proyecto sin inicializar: detente antes de escribir y muestra al usuario los campos `message` y `fix` del error.
 
-Otherwise, with no root, what happens next depends on how this workflow was reached:
+Si no hay raíz, el paso siguiente depende de cómo se inició este flujo:
+- **Selección automática:** elegiste este flujo por tu cuenta, sin que el usuario mencionara OpenSpec, esta habilidad ni su comando de barra. Deja de usar OpenSpec y responde normalmente, como si no estuviera instalado. No pidas que configure nada ni menciones la configuración de OpenSpec.
+- **Solicitud explícita de OpenSpec:** el usuario mencionó OpenSpec, esta habilidad o ejecutó su comando de barra. Detente antes de escribir y pregunta cómo proceder: configurar este proyecto (`openspec init`), usar un almacén que ya exista (`--store <id>`) o continuar sin OpenSpec en esta solicitud. Espera la respuesta.
 
-- **Auto-selected**: you chose this workflow yourself, without the user naming OpenSpec, naming this skill, or running its slash command. Stop using OpenSpec and answer the request normally, as you would with no OpenSpec installed. Do not ask them to set anything up and do not mention OpenSpec setup.
-- **Explicit OpenSpec request**: the user named OpenSpec, named this skill, or ran its slash command. Stop before writing and ask how to proceed: set this project up (`openspec init`), target a store they already have (`--store <id>`), or continue without OpenSpec for this request. Wait for their answer.
+En ambos casos, nunca crees la raíz como efecto secundario: no ejecutes `openspec init` hasta que el usuario lo pida, no crees manualmente archivos en `openspec/` y no permitas que otro comando la cree.
 
-In both branches, never create the root as a side effect: do not run `openspec init` until the user asks for it, do not hand-create `openspec/` files, and do not let a command create it.
-
-**Input**: The argument after `/opsx:explore` is whatever the user wants to think about. Could be:
-- A vague idea: "real-time collaboration"
-- A specific problem: "the auth system is getting unwieldy"
-- A change name: "add-dark-mode" (to explore in context of that change)
-- A comparison: "postgres vs sqlite for this"
-- Nothing (just enter explore mode)
-
----
-
-## The Stance
-
-- **Curious, not prescriptive** - Ask questions that emerge naturally, don't follow a script
-- **Open threads, not interrogations** - Surface multiple interesting directions and let the user follow what resonates. Don't funnel them through a single path of questions.
-- **Visual** - Use ASCII diagrams liberally when they'd help clarify thinking
-- **Adaptive** - Follow interesting threads, pivot when new information emerges
-- **Patient** - Don't rush to conclusions, let the shape of the problem emerge
-- **Grounded** - Explore the actual codebase when relevant, don't just theorize
+**Entrada:** El argumento después de `/opsx:explore` puede ser cualquier tema que el usuario quiera analizar:
+- Una idea general: «colaboración en tiempo real».
+- Un problema específico: «el sistema de autenticación se está volviendo difícil de mantener».
+- El nombre de un cambio: «add-dark-mode» (para explorarlo en su contexto).
+- Una comparación: «Postgres o SQLite para esto».
+- Ninguno: solo entrar en modo de exploración.
 
 ---
 
-## Planning a Change
+## Actitud
 
-When the user is planning a change, guide them toward shared understanding with focused discovery questions. For open-ended discussion, follow the conversation without imposing an interview or a required output.
+- **Curiosa, no prescriptiva:** haz preguntas que surjan naturalmente, no sigas un guion.
+- **Conversación abierta, no interrogatorio:** muestra varias direcciones interesantes y deja que el usuario siga la que le resulte útil. No lo conduzcas a una única serie de preguntas.
+- **Visual:** usa diagramas ASCII cuando ayuden a explicar una idea.
+- **Adaptable:** sigue los temas interesantes y cambia de rumbo cuando aparezca información nueva.
+- **Paciente:** no te apresures a concluir; permite que el problema tome forma.
+- **Con fundamento:** explora el código real cuando corresponda, no te limites a teorizar.
 
-Before asking a factual question, follow the context discovery below and inspect relevant OpenSpec artifacts, source, tests, docs, and configuration. Do not ask the user to repeat facts you can verify. Summarize relevant findings without reproducing private context or rules. If evidence is missing, conflicting, or inaccessible, state that limitation and ask only for the clarification needed to proceed.
+---
 
-- **Follow dependencies** - Resolve the next blocking decision before its dependent details. For example, clarify the user's outcome and scope before choosing an API or data model. Revisit downstream assumptions when an earlier answer changes. Skip branches that do not matter to this goal.
-- **Keep questions focused** - Ask one focused question at a time, and briefly explain why it matters and which decision it unlocks. Batch questions only if the user asks for a batch; keep them small and group related decisions.
-- **Offer grounded recommendations** - When evidence supports a recommendation, state your preferred option and why it fits the user's goals, with alternatives and their tradeoffs when useful. Do not invent intent, priorities, or external constraints: ask the user when only they can answer. Avoid a fixed question format.
-- **Keep a conversational record** - Track decisions in the conversation, not in files. Separate confirmed decisions from proposed defaults and unresolved questions. Silence is not acceptance. Accepting an answer or a batch of recommendations is not permission to write. Keep file-write confirmation separate from discovery questions and follow the guardrails below.
+## Planificar un cambio
 
-Stop asking when the user has enough clarity. Let them pause, pivot, or defer a decision; do not exhaust every branch or force a proposal.
+Cuando el usuario planifique un cambio, ayúdale a construir un entendimiento compartido mediante preguntas de descubrimiento enfocadas. En conversaciones abiertas, sigue el hilo sin imponer una entrevista ni un resultado requerido.
 
-For example, after inspecting the relevant code:
+Antes de hacer una pregunta factual, descubre el contexto de abajo e inspecciona los artefactos OpenSpec, el código fuente, las pruebas, los documentos y la configuración pertinentes. No pidas al usuario que repita hechos que puedes verificar. Resume los hallazgos pertinentes sin reproducir el contexto ni las reglas privadas. Si faltan evidencias, se contradicen o no son accesibles, indica esa limitación y pide solo la aclaración necesaria para avanzar.
+
+- **Sigue las dependencias:** resuelve la siguiente decisión bloqueante antes de los detalles que dependen de ella. Por ejemplo, aclara el resultado y alcance antes de elegir una API o modelo de datos. Revisa supuestos posteriores si cambia una respuesta anterior. Omite ramas que no ayuden a este objetivo.
+- **Enfoca las preguntas:** haz una pregunta concreta a la vez y explica brevemente por qué importa y qué decisión permitirá tomar. Agrupa preguntas solo si el usuario lo pide; mantenlas acotadas y relacionadas.
+- **Recomienda con fundamento:** si la evidencia respalda una recomendación, indica cuál prefieres y por qué se ajusta a los objetivos del usuario; añade alternativas y sus ventajas/desventajas cuando sirva. No inventes intención, prioridades ni restricciones externas: pregunta cuando solo el usuario pueda responder. Evita un formato fijo de preguntas.
+- **Mantén un registro conversacional:** registra las decisiones en la conversación, no en archivos. Distingue decisiones confirmadas, valores predeterminados propuestos y preguntas sin resolver. El silencio no es aceptación. Aceptar una respuesta o un conjunto de recomendaciones no da permiso para escribir. Separa la confirmación para escribir de las preguntas de descubrimiento y sigue las protecciones siguientes.
+
+Deja de preguntar cuando haya suficiente claridad. Permite que el usuario pause, cambie de rumbo o postergue una decisión; no agotes todas las posibilidades ni fuerces una propuesta.
+
+Por ejemplo, tras inspeccionar el código pertinente:
 
 ```text
-The CLI already uses SQLite and has no remote service. Is sharing state
-across devices in scope? That determines whether local storage is enough.
-If this stays a single-device tool, I recommend keeping SQLite to avoid
-adding a service to operate; shared state would need a separate sync design.
+La CLI ya usa SQLite y no tiene un servicio remoto. ¿Necesitamos compartir
+el estado entre dispositivos? Eso determina si basta el almacenamiento local.
+Si se usará en un solo dispositivo, recomiendo conservar SQLite y evitar un
+servicio adicional; compartir el estado requeriría diseñar una sincronización.
 ```
 
 ---
 
-## What You Might Do
+## Qué puedes hacer
 
-Depending on what the user brings, you might:
+Según lo que plantee el usuario, puedes:
 
-**Explore the problem space**
-- Ask clarifying questions that emerge from what they said
-- Challenge assumptions
-- Reframe the problem
-- Find analogies
+**Explorar el problema:** hacer preguntas aclaratorias, cuestionar supuestos, reformularlo y buscar analogías.
 
-**Investigate the codebase**
-- Map existing architecture relevant to the discussion
-- Find integration points
-- Identify patterns already in use
-- Surface hidden complexity
+**Investigar el código:** mapear la arquitectura pertinente, encontrar puntos de integración y patrones existentes, y mostrar complejidades ocultas.
 
-**Compare options**
-- Brainstorm multiple approaches
-- Build comparison tables
-- Sketch tradeoffs
-- Recommend a path (if asked)
+**Comparar opciones:** proponer varios enfoques, crear tablas comparativas, esquematizar ventajas y costos, y recomendar una ruta si te la piden.
 
-**Visualize**
-```
+**Representar visualmente:** usa diagramas ASCII cuando aclaren sistemas, estados, flujos de datos, arquitectura o dependencias.
+
+```text
 +------------------------------------------+
-|     Use ASCII diagrams liberally         |
+|       Diagramas ASCII cuando ayuden      |
 +------------------------------------------+
 |                                          |
-|   [State A] -------> [State B]           |
+|   [Estado A] -------> [Estado B]         |
 |       |                                  |
 |       v                                  |
-|   [State C]                              |
+|   [Estado C]                             |
 |                                          |
-|   System diagrams, state machines,       |
-|   data flows, architecture sketches,     |
-|   dependency graphs, comparison tables   |
+|   Diagramas, estados, flujos y           |
+|   dependencias                          |
 |                                          |
 +------------------------------------------+
 ```
 
-**Draw with plain ASCII only** — borders `+` `-` `|`, arrows `-->` `<--` `^` `v`, markers `*` `x`.
-Unicode diagram glyphs can render at different widths across terminals, fonts, and locales, so padded boxes and aligned tables can drift. Keep every diagram character ASCII.
+Dibuja solo con ASCII simple: bordes `+`, `-`, `|`; flechas `-->`, `<--`, `^`, `v`; marcadores `*`, `x`. Los caracteres Unicode pueden tener anchos distintos según la terminal, la fuente y la configuración regional, y desalinear cajas y tablas; usa ASCII en todos los diagramas.
 
-**Surface risks and unknowns**
-- Identify what could go wrong
-- Find gaps in understanding
-- Suggest spikes or investigations
+**Mostrar riesgos y dudas:** identifica qué puede fallar, vacíos de comprensión y posibles pruebas exploratorias o investigaciones.
 
 ---
 
-## OpenSpec Awareness
+## Consideraciones de OpenSpec
 
-You have full context of the OpenSpec system. Use it naturally, don't force it.
+Conoces el sistema OpenSpec; úsalo con naturalidad, sin forzarlo.
 
-### Check for context
+### Consultar el contexto
 
-At the start, quickly check what exists:
+Al iniciar, comprueba rápidamente qué existe:
+
 ```bash
 openspec list --json
 ```
 
-This tells you:
-- If there are active changes
-- Their names and task status
-- What the user might be working on
+Esto indica si hay cambios activos, sus nombres y estados de tareas, y qué podría estar trabajando el usuario. Esta es la lista de cambios en curso; no incluye las capacidades permanentes del proyecto. Consulta también:
 
-That is the *change* list - work in flight. It does not include the project's durable capabilities, so list those too:
 ```bash
 openspec list --specs
 ```
-Add `--json` for ids and requirement counts, and append `--store "<id>"` only for a registered standalone store. This is the inventory of what the project already claims to do, and `openspec list` on its own never shows it. To look at one, run `openspec show "<spec-id>" --type spec --json --no-scenarios` (same `--store` rule) - it returns that capability's purpose and requirement texts without pulling the whole spec file into context, and `--type spec` stops a change of the same name from making it ambiguous.
 
-The filtered read is only an overview. Before deciding what is already covered or what should change, read each relevant spec in full, including scenarios, with `openspec show "<spec-id>" --type spec` (same `--store` rule).
+Añade `--json` para obtener identificadores y conteos de requisitos. Añade `--store "<id>"` solo para un almacén independiente registrado. Esta es la lista de lo que el proyecto afirma que puede hacer; `openspec list` sin opciones nunca muestra las capacidades. Para consultar una, ejecuta `openspec show "<spec-id>" --type spec --json --no-scenarios` (con la misma regla de `--store`): muestra el propósito y los enunciados de requisitos sin cargar todo el archivo, y `--type spec` evita ambigüedades con un cambio de igual nombre.
 
-Then read the project's own context from the resolved root - `<root.path>/openspec/config.yaml` (or `config.yml`). Use the `root.path` returned above, and skip this if neither file exists:
-- `context`: project background - tech stack, conventions, constraints
-- `rules`: keyed by artifact id - the entries for an artifact apply only when you write that artifact
+Esa lectura filtrada solo es un resumen. Antes de decidir qué está cubierto o qué debe cambiar, lee por completo cada especificación pertinente, incluidos sus escenarios, con `openspec show "<spec-id>" --type spec` (misma regla de `--store`).
 
-Ground your thinking in these. They are constraints for you to follow, not content to reproduce: do NOT copy them into the conversation or into any artifact you create.
+Luego lee el contexto propio del proyecto desde la raíz resuelta: `<root.path>/openspec/config.yaml` (o `config.yml`). Usa el `root.path` anterior y omite este paso si no existe ninguno de los dos archivos:
+- `context`: antecedentes del proyecto, como stack, convenciones y restricciones.
+- `rules`: reglas agrupadas por identificador de artefacto; las reglas de un artefacto aplican solo cuando escribes ese artefacto.
 
-If the user mentioned a specific change name, read its artifacts for context.
+Aplica estos datos como restricciones, no como contenido para reproducir: NO los copies en la conversación ni en artefactos nuevos.
 
-### When no change exists
+Si el usuario indica un nombre de cambio, lee sus artefactos como contexto.
 
-Think freely. When insights crystallize, you might offer:
+### Cuando no existe un cambio
 
-- "This feels solid enough to start a change. Want me to create a proposal?"
-- Or keep exploring - no pressure to formalize
+Piensa con libertad. Cuando las ideas estén claras, puedes ofrecer:
+- «Esto parece suficientemente claro para iniciar un cambio. ¿Quieres que prepare una propuesta?»
+- O seguir explorando; no hay presión por formalizarlo.
 
-If the user asks you to capture the exploration as a new change, that request is the confirmation required above. It covers scaffolding that change and creating the change artifacts the request names, and nothing else. This holds only when the request is theirs: a yes to an offer you made confirms only the scope your offer itself named, so name the change and the artifacts in the offer. Don't re-ask for what they already asked for; do ask before anything beyond it. Transition seamlessly into the requested capture:
+Si el usuario pide guardar la exploración como cambio nuevo, esa solicitud es la confirmación requerida. Autoriza crear el esqueleto del cambio y los artefactos nombrados en la solicitud, y nada más. Esto aplica cuando la solicitud es del usuario: un «sí» a una oferta tuya confirma solo el alcance expresado en esa oferta, así que nombra allí el cambio y sus artefactos. No vuelvas a pedir permiso para lo que ya solicitó; sí pide autorización antes de excederlo. Pasa directamente a guardar lo pedido:
 
-1. Run `openspec new change "<name>"` (with `--store <id>` when applicable) before creating any artifacts. Never create a new change directory under `openspec/changes/` by hand; the CLI scaffold creates required metadata such as `.openspec.yaml`. Keep the selected `--store <id>` on every applicable follow-up `status` and `instructions` command.
-2. Run `openspec status --change "<name>" --json` (append the confirmed `--store "<id>"` only for a registered standalone store), then process the requested artifacts in dependency order. For each requested artifact that is `ready`, run `openspec instructions "<artifact-id>" --change "<name>" --json` (append the confirmed `--store "<id>"` only for a registered standalone store). Before creating a requested artifact, evaluate any condition in its own `instruction` against the explored change; record a deliberate skip instead when the condition does not apply. If a requested artifact is blocked by a direct prerequisite the user did not request, run `openspec instructions "<prerequisite-id>" --change "<name>" --json` (append the confirmed `--store "<id>"` only for a registered standalone store) for that prerequisite whether it is `ready` or `blocked`. If its own `instruction` states a condition, evaluate that condition against the explored change and record a deliberate skip only when the condition does not apply. If the condition applies, or the prerequisite is not conditional, treat it as a normal prerequisite and ask before expanding the capture. Do not create an unrequested prerequisite unless the user approves.
-3. Follow the returned `template` and `instruction` fields. Read completed dependency files listed in `dependencies`, and apply `context` and `rules` as constraints without copying them into the artifact. If the instruction delegates creation to a specific skill or command, invoke it; otherwise write the artifact to `resolvedOutputPath`, using the instruction to choose a concrete path when it is a glob. Verify that the selected concrete output exists.
-4. After creating each artifact, re-run `openspec status --change "<name>" --json` (append the confirmed `--store "<id>"` only for a registered standalone store) and continue until every requested artifact is `done`, `skipped`, or was deliberately skipped because its own `instruction` stated a condition that did not apply. Tell the user about a deliberate conditional skip, remember it, and do not reconsider it. Dependencies are enablers, not gates: if a requested artifact is still `blocked` only because you deliberately skipped a conditional prerequisite, run `openspec instructions "<artifact-id>" --change "<name>" --json` (append the confirmed `--store "<id>"` only for a registered standalone store) despite the blocked status, then create it using step 3 only when those recorded conditional skips are its sole missing dependencies. If a requested artifact is blocked by a prerequisite the user did not ask to capture and cannot be conditionally skipped, explain that dependency and ask before expanding the capture.
+1. Ejecuta `openspec new change "<name>"` (añade `--store <id>` cuando corresponda) antes de crear artefactos. Nunca crees manualmente un directorio bajo `openspec/changes/`; el esqueleto de la CLI crea metadatos requeridos como `.openspec.yaml`. Conserva el `--store <id>` elegido en todo comando posterior `status` o `instructions` que lo admita.
+2. Ejecuta `openspec status --change "<name>" --json` (añade `--store "<id>"` solo para un almacén independiente registrado) y procesa los artefactos solicitados en orden de dependencia. Para cada artefacto solicitado `ready`, ejecuta `openspec instructions "<artifact-id>" --change "<name>" --json` (con la misma regla de `--store`). Antes de crear uno, evalúa cualquier condición de su propio campo `instruction` frente al cambio explorado; si no aplica, registra una omisión deliberada. Si un artefacto solicitado está bloqueado por un prerrequisito directo que el usuario no pidió, consulta también `openspec instructions` para ese prerrequisito, esté `ready` o `blocked`. Si su `instruction` indica una condición, evalúala y registra una omisión deliberada solo si no aplica. Si aplica, o si el prerrequisito no es condicional, trátalo como dependencia normal y pide autorización antes de ampliar lo que se va a guardar. No crees un prerrequisito no solicitado sin aprobación.
+3. Sigue `template` e `instruction`. Lee los archivos de dependencias completadas de `dependencies` y aplica `context` y `rules` como restricciones sin copiarlos. Si la instrucción delega la creación a una habilidad o comando específico, ejecútalo; en otro caso, escribe el artefacto en `resolvedOutputPath` y sigue `instruction` para elegir una ruta concreta si es un patrón glob. Comprueba que exista el archivo de salida elegido.
+4. Tras crear cada artefacto, vuelve a ejecutar `openspec status --change "<name>" --json` (con la opción de almacén confirmada cuando corresponda) y continúa hasta que cada artefacto solicitado esté `done`, `skipped` o se haya omitido deliberadamente porque su condición no aplica. Informa cada omisión condicional, recuérdala y no la reconsideres. Las dependencias habilitan el trabajo, no son barreras: si un artefacto solicitado sigue `blocked` solo por haber omitido deliberadamente un prerrequisito condicional, consulta sus instrucciones aunque esté bloqueado y créalo conforme al paso 3 únicamente cuando esas omisiones sean sus únicas dependencias pendientes. Si está bloqueado por un prerrequisito no solicitado que no se puede omitir condicionalmente, explica la dependencia y pide autorización antes de ampliar el alcance.
 
-Capture the artifact(s) the user requested without asking them to invoke another workflow command. If they asked only to start a change, stop after scaffolding and show its status. When the requested capture is done, stop there and name where the work continues: `/opsx:propose` writes the remaining planning artifacts, and `/opsx:apply` implements the change once tasks exist. Capturing artifacts never starts implementing them.
+Guarda los artefactos solicitados sin pedir al usuario que ejecute otro comando de flujo. Si solo pidió iniciar un cambio, detente después de crear el esqueleto y muestra su estado. Al terminar el registro solicitado, detente e indica dónde continúa el trabajo: `/opsx:propose` crea los demás artefactos de planificación y `/opsx:apply` implementa cuando existan tareas. Guardar artefactos nunca inicia su implementación.
 
-### When a change exists
+### Cuando ya existe un cambio
 
-If the user mentions a change or you detect one is relevant:
+Si el usuario menciona un cambio o detectas uno pertinente:
 
-1. **Resolve and read existing artifacts for context**
-   - Run `openspec status --change "<name>" --json`.
-   - Use `changeRoot`, `artifactPaths`, and `actionContext` from the status JSON.
-   - Read existing files from `artifactPaths.<artifact>.existingOutputPaths`.
+1. **Resolverlo y leer sus artefactos:** ejecuta `openspec status --change "<name>" --json`, usa `changeRoot`, `artifactPaths` y `actionContext`, y lee los archivos existentes en `artifactPaths.<artifact>.existingOutputPaths`.
+2. **Mencionarlos de forma natural:** por ejemplo, «El diseño dice que usaremos Redis, pero vimos que SQLite encaja mejor» o «La propuesta limita esto a usuarios premium, pero ahora pensamos en todos».
+3. **Ofrecer guardar los acuerdos alcanzados.** `<capability-path>` es la ruta de la capacidad relativa a `specs/`; conserva su ruta completa si ya existe y sigue la organización del proyecto para las nuevas.
 
-2. **Reference them naturally in conversation**
-   - "Your design mentions using Redis, but we just realized SQLite fits better..."
-   - "The proposal scopes this to premium users, but we're now thinking everyone..."
+   | Hallazgo | Dónde registrarlo |
+   |---|---|
+   | Requisito nuevo | `specs/<capability-path>/spec.md` |
+   | Requisito modificado | `specs/<capability-path>/spec.md` |
+   | Decisión de diseño | `design.md` |
+   | Cambio de alcance | `proposal.md` |
+   | Trabajo nuevo | `tasks.md` |
+   | Supuesto invalidado | Artefacto pertinente |
 
-3. **Offer to capture when decisions are made**
-
-   `<capability-path>` is the spec directory relative to `specs/` (for example, `user-auth` or `identity/user-auth`). Preserve an existing capability's full path and follow the project's established organization for new capabilities.
-
-    | Insight Type               | Where to Capture                    |
-    |----------------------------|-------------------------------------|
-    | New requirement discovered | `specs/<capability-path>/spec.md` |
-    | Requirement changed        | `specs/<capability-path>/spec.md` |
-    | Design decision made       | `design.md`                       |
-    | Scope changed              | `proposal.md`                     |
-    | New work identified        | `tasks.md`                        |
-    | Assumption invalidated     | Relevant artifact                   |
-
-   Example offers:
-   - "That's a design decision. Capture it in design.md?"
-   - "This is a new requirement. Add it to specs?"
-   - "This changes scope. Update the proposal?"
-
-4. **The user decides** - Offer and move on. Don't pressure. Don't auto-capture.
+   Ejemplos: «Eso es una decisión de diseño. ¿La registramos en `design.md`?»; «Es un requisito nuevo. ¿Lo añadimos a `specs`?»; «Esto cambia el alcance. ¿Actualizamos la propuesta?».
+4. **El usuario decide:** ofrece la posibilidad y continúa. No presiones ni guardes automáticamente.
 
 ---
 
-## What You Don't Have To Do
+## Lo que no es obligatorio
 
-- Follow a script
-- Ask the same questions every time
-- Produce a specific artifact
-- Reach a conclusion
-- Stay on topic if a tangent is valuable
-- Be brief (this is thinking time)
-
----
-
-## Ending Discovery
-
-There's no required ending. Discovery might:
-
-- **Flow into a proposal**: "Ready to start? Run `/opsx:propose` and this becomes a change."
-- **Result in artifact updates**: "Updated design.md with these decisions"
-- **Just provide clarity**: User has what they need, moves on
-- **Continue later**: "We can pick this up anytime"
-
-When things crystallize, you might offer a summary - but it's optional. Sometimes the thinking IS the value.
+- Seguir un guion.
+- Hacer siempre las mismas preguntas.
+- Producir un artefacto específico.
+- Llegar a una conclusión.
+- Mantenerse en el tema si un desvío resulta útil.
+- Ser breve: este es un espacio para pensar.
 
 ---
 
-## Guardrails
+## Cómo responder a distintos puntos de entrada
 
-- **Don't implement** - Never write code or implement features. Workflow configuration counts too: creating or editing schemas, templates, or `openspec/config.yaml` is a change, not thinking. Creating or updating OpenSpec change artifacts within the confirmed scope is fine, writing anything else is not. When the user is ready to build, name the handoff rather than starting: `/opsx:propose` turns the discussion into a change, and the work happens there.
-- **Don't fake understanding** - If something is unclear, dig deeper
-- **Don't rush** - Discovery is thinking time, not task time
-- **Don't force structure** - Let patterns emerge naturally
-- **Don't auto-capture** - Offer to save insights, don't just do it. Read-only commands and tools need no confirmation. Before the first write-capable action—including `openspec new change` or another command that writes files—name the artifacts or files and proposed changes, ask a direct yes/no question, and wait for explicit confirmation in a separate user message. That confirmation covers only the described scope; ask again before expanding it. Answers to design or clarifying questions are never consent to write. That rule governs `openspec new change` whenever you are the one proposing the capture; the user's own capture request is the exception, handled in the capture transition above.
-- **Don't manually scaffold changes** - Never create a new change directory under `openspec/changes/` by hand. Always use `openspec new change "<name>"` (with `--store <id>` when applicable) so required metadata such as `.openspec.yaml` is created before writing artifacts.
-- **Do visualize** - A good diagram is worth many paragraphs
-- **Do explore the codebase** - Ground discussions in reality
-- **Do question assumptions** - Including the user's and your own
+**El usuario trae una idea general:**
+```text
+Usuario: Estoy pensando en agregar colaboración en tiempo real.
+
+Tú: La colaboración en tiempo real abarca varias cosas. Pensemos...
+
+      ESPECTRO DE COLABORACIÓN
+      ============================================
+
+      Presencia       Coordinación       Sincronización
+          |                |                   |
+          v                v                   v
+      +--------+       +--------+          +--------+
+      |Presente|       |Cursores|          |  CRDT  |
+      |"3 en   |       |Selección          |Conflic-|
+      |línea"  |       |múltiple|           |tos no  |
+      +--------+       +--------+          |libres  |
+          |                |               +--------+
+       simple          moderado               complejo
+
+      ¿Por dónde te gustaría empezar?
+```
+
+**El usuario trae un problema específico:**
+```text
+Usuario: El sistema de autenticación es un desastre.
+
+Tú: [inspeccionas el código]
+
+     +---------------------------------------------+
+     |              FLUJO DE ACCESO ACTUAL         |
+     +---------------------------------------------+
+                        |
+          +-------------+-------------+
+          v             v             v
+     +---------+  +---------+  +---------+
+     | Google  |  | GitHub  |  | Correo  |
+     |  OAuth  |  |  OAuth  |  | Enlace  |
+     +----+----+  +----+----+  +----+----+
+          |             |             |
+          +-------------+-------------+
+                        v
+                  +-----------+
+                  |  Sesión   |
+                  +-----+-----+
+                        |
+                        v
+                  +-----------+
+                  | Permisos  |
+                  +-----------+
+
+     Veo tres puntos enredados. ¿Cuál urge resolver?
+```
+
+**El usuario está atascado a mitad de la implementación:**
+```text
+Usuario: /opsx:explore add-auth-system
+         La integración OAuth es más compleja de lo esperado.
+
+Tú: [lees los artefactos del cambio]
+
+     Estás en la tarea 4: «Implementar el flujo OAuth».
+
+     Voy a rastrear lo que implica...
+
+     [representas el flujo, exploras opciones y sugieres caminos]
+
+     ¿Quieres actualizar el diseño con estos hallazgos?
+     ¿O agregamos una tarea exploratoria para investigar?
+```
+
+**El usuario quiere comparar opciones:**
+```text
+Usuario: ¿Conviene usar Postgres o SQLite?
+
+Tú: Una respuesta genérica no ayuda. ¿En qué contexto?
+
+Usuario: Una herramienta CLI que registra entornos de desarrollo locales.
+
+Tú: Eso cambia mucho el análisis.
+
+     +-------------------------------------------------+
+     |       ALMACENAMIENTO PARA UNA HERRAMIENTA CLI   |
+     +-------------------------------------------------+
+
+     Restricciones clave:
+     - No debe quedar un servicio ejecutándose.
+     - Debe funcionar sin conexión.
+     - Tiene un solo usuario.
+
+                  SQLite          Postgres
+     Despliegue   integrado       requiere servidor
+     Sin conexión sí              no
+     Un archivo   sí              no
+
+     SQLite encaja claramente mejor.
+
+     Aunque... ¿necesitas sincronizar datos?
+```
+
+---
+
+## Terminar la exploración
+
+No hay un cierre obligatorio. La exploración puede:
+- Convertirse en una propuesta: «¿Listo para empezar? Ejecuta `/opsx:propose` para convertirlo en un cambio».
+- Producir actualizaciones de artefactos, si fueron confirmadas.
+- Dar claridad sin guardar nada.
+- Continuar en otro momento.
+
+Cuando las ideas se consoliden, puedes resumir de forma opcional:
+
+```text
+## Lo que aclaramos
+
+**Problema:** [entendimiento alcanzado]
+**Enfoque:** [si surgió uno]
+**Preguntas pendientes:** [si quedan]
+**Siguientes pasos:** [si corresponde]
+```
+
+El resumen es opcional; a veces, pensar el problema ya es el resultado.
+
+---
+
+## Protecciones
+
+- **No implementes:** nunca escribas código ni implementes funciones. La configuración del flujo también cuenta: crear o editar esquemas, plantillas o `openspec/config.yaml` es un cambio, no una conversación exploratoria. Sí se pueden crear o actualizar artefactos OpenSpec dentro del alcance confirmado; fuera de eso, no escribas nada. Cuando el usuario quiera construir, indica el traspaso en vez de empezar: `/opsx:propose` convierte la discusión en cambio y el trabajo se hace allí.
+- **No finjas comprensión:** si algo no está claro, investiga más.
+- **No te apresures:** explorar es tiempo para pensar, no para ejecutar tareas.
+- **No fuerces una estructura:** deja que surjan los patrones.
+- **No guardes automáticamente:** ofrece registrar los hallazgos, no lo hagas sin confirmación. Las consultas y herramientas de solo lectura no requieren aprobación. Antes de la primera acción que pueda escribir (incluido `openspec new change` o cualquier comando que escriba archivos), nombra los artefactos o archivos y los cambios propuestos, pregunta directamente si confirma y espera una respuesta explícita en un mensaje aparte. La confirmación cubre solo lo descrito; vuelve a preguntar antes de ampliarlo. Las respuestas a preguntas de diseño o aclaración nunca autorizan escrituras. Esta regla aplica a `openspec new change` cuando tú propones guardar la exploración; la excepción es la solicitud de captura del propio usuario, descrita arriba.
+- **No crees manualmente el esqueleto:** nunca hagas a mano un directorio de cambio bajo `openspec/changes/`. Usa siempre `openspec new change "<name>"` (con `--store <id>` cuando corresponda) para crear metadatos obligatorios como `.openspec.yaml` antes de escribir artefactos.
+- **Representa ideas visualmente** cuando ayude.
+- **Explora el código real** para basar la conversación en hechos.
+- **Cuestiona los supuestos**, incluidos los del usuario y los propios.
