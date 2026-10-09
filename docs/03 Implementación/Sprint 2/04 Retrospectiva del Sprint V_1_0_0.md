@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.14.0 |
+| Versión | 1.15.0 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026; revisión 09/10/2026) |
 | Fecha de la retrospectiva | 02/10/2026 (corte de mitad de sprint; se confirma en la reunión del 09/10) |
 | Facilitador | Alex Zorrilla |
@@ -24,6 +24,8 @@
 > **Resultado posterior del E2E de aceptación (09/10/2026):** se ejecutaron los cinco criterios funcionales de flota en navegador y los cinco aprobaron, incluida la regla de elegibilidad de unidades en Mantenimiento/Inactivo y la persistencia tras reiniciar la API. El ensayo se hizo con cuentas y PostGIS temporales aislados, luego retirados. La retrospectiva original del 02/10 no se reescribe ni se afirma que se haya celebrado la reunión formal de revisión; el resultado técnico queda registrado en la [revisión del Sprint 2](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md).
 
 > **Estado Jira posterior (09/10/2026, 13:30 hora de Lima):** Jira ya refleja la rebase de Sprint 2 a flota. ECO-12 y ECO-19 están en `Listo` y constituyen las 2 incidencias actuales del sprint (10 puntos estimados). ECO-9 y ECO-15 conservan su asociación histórica al Sprint 1 cerrado; ECO-16 y ECO-20 están completadas en el backlog, fuera del Sprint 2. ECO-15 sigue pendiente de replanificación posterior. El Sprint 2 está activo y la revisión está programada para las 15:40; esta actualización no anticipa el resultado de la reunión.
+
+> **Aprobación del incremento (09/10/2026):** el usuario confirmó que el incremento de flota del Sprint 2 está aprobado. No se comunicaron acuerdos adicionales ni detalles de asistencia; las acciones retrospectivas existentes conservan su estado y seguimiento. Jira mantiene Sprint 2 activo hasta su cierre administrativo.
 
 ## Historial de cambios
 
@@ -45,6 +47,7 @@
 | 1.12.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza el estado de Jira tras el rebase: Sprint 2 queda con ECO-12 y ECO-19 en `Listo`; las observaciones siguientes conservan el corte del 02/10. |
 | 1.13.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza A9 tras corregir las categorías de `En revisión / QA` y `Finalizada`. |
 | 1.14.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se verifica el tablero Jira normalizado y se corrige la ubicación actual de ECO-9, ECO-15, ECO-16 y ECO-20; IMP-003 permanece abierto solo por la versión de entrega ausente. |
+| 1.15.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se añade la aprobación del incremento confirmada por el usuario sin alterar los acuerdos retrospectivos existentes. |
 
 ## Seguimiento de las acciones del Sprint 1
 
@@ -59,7 +62,7 @@
 | A7 — Prototipo del motor y benchmark | No cumplida | Sin código de optimización |
 | A8 — Registro de decisiones técnicas (ADR) | Parcial | La ratificación del stack quedó registrada en el historial del documento 10, no como ADR independiente |
 | A9 — Releases y tablero de 4 columnas en Jira | Parcial | El tablero ya tiene cuatro columnas en español, con sus categorías verificadas. Jira todavía no tiene versión de entrega, por lo que A9 no está completa e IMP-003 sigue abierto por ese punto. |
-| A10 — Validar el backlog con el docente | Sin evidencia | Pendiente de la revisión programada para el 09/10 a las 15:40, hora de Lima. |
+| A10 — Validar el backlog con el docente | Sin evidencia | La aprobación del incremento de flota quedó comunicada; no se recibieron detalles que evidencien una validación del backlog. Mantener el seguimiento de A10 hasta registrar esa actividad. |
 
 **Balance al corte previo a la revisión:** 3 de 10 acciones cumplidas, 3 parciales, 3 no cumplidas y 1 sin evidencia. Las cumplidas son justamente las que desbloquearon la entrega de software.
 

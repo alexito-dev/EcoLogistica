@@ -8,6 +8,8 @@ Esta auditoría contrasta la documentación versionada, el código y las depende
 
 > **Verificación en vivo posterior (09/10/2026, 13:30–13:35, hora de Lima):** se volvieron a consultar el repositorio, las suites, la interfaz local y Jira. Backend: 107 pruebas aprobadas; frontend: 39; compilación de producción aprobada. `http://localhost:3000/`, FastAPI `/openapi.json` y `/docs` devolvieron HTTP 200; el esquema enumera las rutas de autenticación, pedidos y flota. El contenedor PostGIS está saludable. Esta comprobación HTTP no repitió el flujo autenticado; la E2E manual previamente documentada aprobó 5/5 criterios de flota en una base aislada. Jira muestra Sprint 1 cerrado con 1/2 incidencias en su métrica dinámica (ECO-9 `Listo`, ECO-15 `Por hacer`), Sprint 2 activo con ECO-12 y ECO-19 en `Listo` (2/2; 10 puntos), tablero de cuatro columnas en español y cero versiones de entrega. El resultado 0/2 del corte original de Sprint 1 se conserva. La revisión del Product Owner de Sprint 2 aún está programada para hoy a las 15:40; no se registra aceptación formal antes de que ocurra.
 
+> **Actualización posterior a la revisión (09/10/2026):** el usuario confirmó que el incremento de flota del Sprint 2 está aprobado. La meta de Jira (sprint 37) se actualizó para registrar esa aprobación; el sprint sigue activo, ECO-12 y ECO-19 siguen en `Listo` (2/2; 10 puntos), y no se comunicaron acuerdos adicionales. La verificación de las 13:30–13:35 que precede a esta nota es un corte histórico y no representa el estado posterior de aceptación.
+
 ## Auditoría integral alineada con la línea base vigente
 
 **Corte de verificación: 09/10/2026.** Se revisaron los **56 archivos Markdown presentes** en el árbol de trabajo: 55 versionados y la nueva especificación principal de flota; el desglose es README (1), Inicio (13), Planificación (5), Implementación/Sprints (9), OpenSpec y archivos archivados (12), instrucciones `.claude/` (12), plantillas `.github/` (3) y guía de fuentes (1). Se comprobaron los enlaces Markdown locales de los 56 archivos; el resultado es **0 enlaces rotos**. Las especificaciones archivadas y los informes de cortes anteriores se mantienen como evidencia histórica; las notas posteriores indican cuándo cambió el contexto.
@@ -137,13 +139,13 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 
 ## Acciones abiertas
 
-- Después de la revisión prevista para el 09/10 a las 15:40, registrar sus decisiones, actualizar el estado y cerrar el Sprint 2 el 12/10.
+- Cerrar administrativamente el Sprint 2 el 12/10; la aprobación del incremento ya está registrada y no se informaron acuerdos adicionales.
 - Confirmar con el equipo si se archivan las ramas remotas `developer` y `docs/semana-3-entregables`, teniendo en cuenta sus desfases y el único commit propio de esta última.
 - Crear y verificar una versión de entrega en Jira; el tablero de cuatro columnas ya quedó normalizado.
 - Aplicar el flujo de ramas acordado, retirar la rama `developer` desactualizada cuando el equipo confirme la migración, y configurar revisión y CI para `main`.
 - Definir si las cuatro iteraciones del Acta son periodos macro o si corresponden uno a uno con sprints; luego calendarizar Sprint 3 y 4 sin alterar las fechas históricas.
 - Completar las tarjetas faltantes, confirmar estimaciones y decidir cuándo crear la versión `v1.0.0-MVP`.
-- Después de la revisión del Sprint 2 y de confirmar los acuerdos del equipo, actualizar su informe, revisión y retrospectiva con resultados y evidencia final.
+- La aprobación del incremento del Sprint 2 quedó registrada. Mantener como pendiente solo la validación específica del backlog (A10), pues no se comunicó evidencia de esa actividad.
 - Completar la persistencia de cuentas y rutas; implementar y verificar los recorridos de mapas, optimización, dashboard y CI según el plan funcional. La persistencia de flota ya quedó implementada y comprobada.
 
 ## Historial de cambios
@@ -197,3 +199,4 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 | 1.42.0 | 09/10/2026 | Se corrigen y verifican las categorías de los estados de Jira; lectura viva confirma Sprint 1 en 1/2 dinámico, Sprint 2 en 2/2 y cero versiones de entrega. |
 | 1.43.0 | 09/10/2026 | Se registra la normalización del tablero a cuatro columnas y la última lectura Jira; se precisa la pertenencia de ECO-15 a sprints cerrados y las pruebas/regresión verificadas. |
 | 1.44.0 | 09/10/2026 | Se corrigen los registros de impedimentos para reflejar que ECO-15 conserva asociaciones históricas a sprints cerrados y no está en el backlog actual. |
+| 1.45.0 | 09/10/2026 | Se registra la aprobación comunicada del incremento de flota, se actualiza Jira y se sincronizan los estados actuales de documentación; A10 sigue pendiente solo por falta de evidencia de validación del backlog. |

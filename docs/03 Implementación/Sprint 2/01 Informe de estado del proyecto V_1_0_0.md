@@ -15,7 +15,7 @@
 | Campo | Valor |
 |---|---|
 | Código del proyecto | PFA-TP2-ECOLOG-2026 |
-| Versión | 1.8.0 |
+| Versión | 1.9.0 |
 | Iteración reportada | ECO Sprint 2 |
 | Objetivo replanificado del sprint | "Que Planificación inicie sesión con MFA, registre y consulte pedidos, y los conserve después de reiniciar la API." |
 | Fuentes | Historial Git (`main`), cambios OpenSpec `registro-pedidos` y `autenticacion-mfa`, resultados de pruebas automatizadas, [Retrospectiva del Sprint 1](../04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
@@ -28,11 +28,13 @@
 
 > **Rebase funcional posterior (09/10/2026):** el alcance vigente conserva en Sprint 1 el incremento de MFA/roles y pedidos persistentes; asigna a Sprint 2 la gestión de flota y a Sprint 3 la generación y consulta de rutas; el propósito de Sprint 4 sigue siendo la ejecución de rutas por Conducción. Este informe conserva el corte original; las metas y tarjetas de Jira ya se actualizaron para Sprint 2, sin reescribir el historial del Sprint 1 ni el resultado al 28/09. La decisión no equivale a una aceptación formal del Product Owner.
 
-> **Evidencia posterior de Sprint 1 y 2 (09/10/2026):** la API, la migración PostgreSQL/PostGIS y la pantalla de flota implementan alta y consulta de vehículos para Administración, además de disponibilidad por fecha y elegibilidad para Planificación. La E2E web comprobó MFA, estos flujos de flota y el ciclo de registrar, buscar y abrir el detalle de un pedido, que siguió disponible tras reiniciar la API. Las cuentas de usuario continúan en archivo local; la persistencia de rutas y la protección de secretos TOTP quedan pendientes. La prueba usó una base aislada; los datos temporales se retiraron y la base local queda sin pedidos ni vehículos de prueba. La aceptación formal de Sprint 2 sigue pendiente.
+> **Evidencia posterior de Sprint 1 y 2 (09/10/2026):** la API, la migración PostgreSQL/PostGIS y la pantalla de flota implementan alta y consulta de vehículos para Administración, además de disponibilidad por fecha y elegibilidad para Planificación. La E2E web comprobó MFA, estos flujos de flota y el ciclo de registrar, buscar y abrir el detalle de un pedido, que siguió disponible tras reiniciar la API. Las cuentas de usuario continúan en archivo local; la persistencia de rutas y la protección de secretos TOTP quedan pendientes. La prueba usó una base aislada; los datos temporales se retiraron y la base local queda sin pedidos ni vehículos de prueba. Al momento de esta comprobación, la aceptación formal de Sprint 2 aún no se había registrado; posteriormente, el usuario confirmó la aprobación del incremento el 09/10/2026.
 
 > **Regresión técnica posterior (09/10/2026):** la suite del backend recolecta y aprueba 107 pruebas; la suite existente del frontend aprueba 39 y la compilación de producción termina correctamente. El lint termina con dos advertencias de actualización de estado dentro de efectos, una en Pedidos y otra en Flota; la compilación también advierte que los cuatro archivos Codec Pro no están incluidos. La E2E manual complementa las suites, que no incluyen pruebas de componente específicas para Flota.
 
-> **E2E funcional de flota de Sprint 2 (09/10/2026):** se completaron en navegador los cinco criterios del plan: alta/edición, normalización y duplicados; rechazo de capacidades/consumo no positivos y turno invertido; motivo obligatorio al declarar no disponible; exclusión de unidades en Mantenimiento e Inactivo aun con turno registrado; y persistencia después de reiniciar la API. Resultado: **5/5 criterios aprobados**. Se usó PostGIS temporal aislado; tras el reinicio y una recarga web reaparecieron los tres vehículos y turnos, y solo el vehículo Disponible con disponibilidad activa resultó elegible. La cuenta, el contenedor y los registros se retiraron; la base local no recibió datos E2E. Jira refleja ECO-12 y ECO-19 en `Listo`. La revisión del Product Owner sigue programada para las 15:40 y no se registra antes de que ocurra.
+> **E2E funcional de flota de Sprint 2 (09/10/2026):** se completaron en navegador los cinco criterios del plan: alta/edición, normalización y duplicados; rechazo de capacidades/consumo no positivos y turno invertido; motivo obligatorio al declarar no disponible; exclusión de unidades en Mantenimiento e Inactivo aun con turno registrado; y persistencia después de reiniciar la API. Resultado: **5/5 criterios aprobados**. Se usó PostGIS temporal aislado; tras el reinicio y una recarga web reaparecieron los tres vehículos y turnos, y solo el vehículo Disponible con disponibilidad activa resultó elegible. La cuenta, el contenedor y los registros se retiraron; la base local no recibió datos E2E. Jira refleja ECO-12 y ECO-19 en `Listo`. Esta nota describe el estado al corte de la comprobación; la aprobación fue confirmada posteriormente por el usuario el 09/10/2026 y quedó registrada en Jira.
+
+> **Decisión de revisión (09/10/2026):** el usuario confirmó que el incremento de flota del Sprint 2 está aprobado. Jira registra la aprobación en la meta del sprint; ECO-12 y ECO-19 permanecen en `Listo` y el sprint sigue activo hasta el cierre administrativo. No se comunicaron acuerdos adicionales ni datos de asistencia.
 
 ## Historial de cambios
 
@@ -57,12 +59,13 @@
 | 1.6.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra el E2E completo de aceptación funcional de flota: 5/5 criterios aprobados, incluida persistencia tras reinicio. |
 | 1.7.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea el estado vigente de Jira con la rebase: ECO-12 y ECO-19 en `Listo`, 2/2; se preservan los cortes históricos previos. |
 | 1.8.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza el corte Jira, se precisa la ubicación de ECO-15 y se registra la normalización del tablero a cuatro columnas. |
+| 1.9.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se añade la aprobación del incremento confirmada por el usuario y se mantiene abierto el sprint hasta su cierre administrativo. |
 
 ## Resumen ejecutivo
 
 **Resumen del corte histórico al 02/10/2026:** el Sprint 2 corrigió el desvío del Sprint 1, priorizó HU-001 e incorporó MFA. Las cifras, el resumen y las decisiones de esta sección describen aquel corte; la línea base vigente se reordenó el 09/10 a MFA/pedidos para Sprint 1 y flota para Sprint 2, con rutas para Sprint 3.
 
-En el sistema, Planificación puede iniciar sesión con MFA, registrar un pedido y luego buscarlo, filtrarlo o abrir su detalle. Los pedidos y sus coordenadas ya quedan en PostgreSQL/PostGIS y siguen disponibles tras reiniciar la API. Las cuentas son de demostración local, no están conectadas al correo institucional. La revisión de Sprint 2 sigue pendiente y la métrica de Jira no equivale a aceptación formal.
+En el sistema, Planificación puede iniciar sesión con MFA, registrar un pedido y luego buscarlo, filtrarlo o abrir su detalle. Los pedidos y sus coordenadas ya quedan en PostgreSQL/PostGIS y siguen disponibles tras reiniciar la API. Las cuentas son de demostración local, no están conectadas al correo institucional. El usuario confirmó la aprobación del incremento de Sprint 2; Jira conserva sus historias en `Listo` y el sprint activo hasta el cierre administrativo.
 
 Al inicio del sprint también se **ratificó el stack React + FastAPI** (Alternativa A, 93 % en la matriz), revirtiendo una propuesta no evaluada, y se alinearon cinco documentos de la línea base. En el corte histórico inicial, el alcance original del roadmap para este sprint (flota, geocodificación y motor de optimización) **no se había iniciado**. La rebase funcional posterior asigna flota a este Sprint 2 y rutas al Sprint 3; el motor se integra como parte del recorrido de rutas según la capacidad acordada.
 

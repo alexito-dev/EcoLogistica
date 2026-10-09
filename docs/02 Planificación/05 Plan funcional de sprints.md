@@ -7,7 +7,7 @@
 | Campo | Valor |
 |---|---|
 | Proyecto | EcoLogística Huancayo |
-| Versión | 1.12.0 |
+| Versión | 1.13.0 |
 | Fecha | 09/10/2026 |
 | Enfoque | Cada sprint debe dejar una tarea real que una persona pueda completar en el sistema. |
 
@@ -26,7 +26,7 @@ La distribución funcional vigente queda así: Sprint 1 reúne acceso MFA y role
 | Sprint | Acción que se busca habilitar | Estado con evidencia al 09/10/2026 |
 |---|---|---|
 | **Sprint 1** · 14/09–28/09; cerrado 09/10 | Que Planificación entre con MFA y roles, registre pedidos, los consulte y conserve los datos tras reiniciar la API. | El incremento funcional está implementado y comprobado. El corte original del 28/09 queda en 0/2 historias: ECO-15 sigue pendiente y el trabajo incorporado por la rebase posterior no se cuenta como velocidad histórica. ECO-9 sigue mostrando su historial de asignación original; ECO-16 y ECO-20 quedaron completadas en el backlog porque Jira no permite añadirlas al sprint cerrado. |
-| **Sprint 2** · 29/09–13/10, alcance reordenado | Que Administración mantenga vehículos y que Planificación configure disponibilidad y turno por fecha para determinar unidades elegibles. | **Criterios E2E de flota aprobados el 09/10/2026** en navegador con MFA, API y PostGIS temporales: alta/edición y unicidad, validaciones, disponibilidad con motivo, exclusión de mantenimiento/inactivos y persistencia tras reiniciar. Jira ya refleja ECO-12 y ECO-19 en `Listo` (2/2 historias, 10 puntos). El sprint sigue activo hasta su cierre administrativo y la revisión del Product Owner está programada para el 09/10 a las 15:40. |
+| **Sprint 2** · 29/09–13/10, alcance reordenado | Que Administración mantenga vehículos y que Planificación configure disponibilidad y turno por fecha para determinar unidades elegibles. | **Criterios E2E de flota aprobados el 09/10/2026** en navegador con MFA, API y PostGIS temporales: alta/edición y unicidad, validaciones, disponibilidad con motivo, exclusión de mantenimiento/inactivos y persistencia tras reiniciar. Jira ya refleja ECO-12 y ECO-19 en `Listo` (2/2 historias, 10 puntos). El usuario confirmó el 09/10 la aprobación del incremento; Jira mantiene el sprint activo hasta su cierre administrativo. |
 | **Sprint 3** · siguiente alcance, fechas por acordar | Que Planificación genere una ruta guardada a partir de pedidos pendientes y vehículos elegibles, y vuelva a consultar el orden de paradas, cargas y ventanas horarias. | Requiere persistir rutas y paradas, aplicar capacidades y turnos de la flota de Sprint 2 y generar una secuencia factible. El optimizador y la medición de rendimiento forman parte del recorrido; no se cuentan como entrega aparte. Alcance, estimación y fechas se acuerdan en Jira. |
 | **Sprint 4** · propósito conservado | Que una persona conductora consulte su ruta, marque el avance de las entregas y reporte incidencias para que Planificación pueda actuar. | Se mantiene el propósito anterior: ejecución de ruta por Conducción y visibilidad de estados/incidencias para Planificación. Mapa y re-enrutamiento se incorporan según el alcance acordado para completar el recorrido. |
 
@@ -156,3 +156,4 @@ Esta definición sirve para juzgar el incremento de un sprint. No significa que 
 | 1.11.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se completa E2E navegador y se aprueban los cinco criterios funcionales de flota de Sprint 2. |
 | 1.11.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra el E2E navegador de los cinco criterios de aceptación de flota y la persistencia después de reiniciar la API. |
 | 1.12.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se enlaza la especificación principal OpenSpec de flota desde el resultado y alcance de Sprint 2. |
+| 1.13.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la aprobación confirmada del incremento y se mantiene Sprint 2 activo hasta el cierre administrativo. |

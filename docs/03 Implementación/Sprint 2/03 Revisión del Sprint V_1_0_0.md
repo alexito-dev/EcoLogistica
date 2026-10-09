@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.8.0 |
+| Versión | 1.9.0 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026) |
 | Objetivo vigente tras el rebase | "Administración gestiona vehículos; Planificación configura su disponibilidad y turnos por fecha." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
@@ -21,9 +21,9 @@
 
 > **Nota de rebase funcional (09/10/2026):** el incremento de MFA y pedidos persistentes corresponde a la línea base funcional de Sprint 1; flota corresponde a Sprint 2 y rutas a Sprint 3. Se actualizaron las metas de Jira y Sprint 2 quedó con ECO-12 y ECO-19 en `Listo`. El Sprint 1 cerrado conserva sus fechas y el resultado histórico de su compromiso original; ECO-16 y ECO-20 permanecen completadas en el backlog porque no se pueden añadir a un sprint cerrado.
 
-> **Comprobación posterior del alcance reordenado (09/10/2026):** en la aplicación local se completó MFA, alta/listado de vehículos con rol de Administración, disponibilidad por fecha con Planificación, y alta, búsqueda y detalle de un pedido. Se recargaron los datos tras reiniciar la API. La evidencia es de una E2E manual en una base PostGIS aislada, con datos temporales retirados al terminar; la base local conserva la migración `20261009_02` y no contiene los registros de prueba. Esta comprobación no reemplaza la decisión de aceptación que debe registrarse en la tabla de la reunión.
+> **Comprobación posterior del alcance reordenado (09/10/2026):** en la aplicación local se completó MFA, alta/listado de vehículos con rol de Administración, disponibilidad por fecha con Planificación, y alta, búsqueda y detalle de un pedido. Se recargaron los datos tras reiniciar la API. La evidencia es de una E2E manual en una base PostGIS aislada, con datos temporales retirados al terminar; la base local conserva la migración `20261009_02` y no contiene los registros de prueba. Esta comprobación describe la evidencia técnica; la decisión posterior de aceptación queda registrada en la sección de revisión.
 
-> **E2E funcional de flota (09/10/2026):** se completaron en navegador, con acceso MFA de Administración y Planificación y PostGIS temporal, los cinco criterios de Sprint 2 (**5/5 aprobados**). Tras reiniciar la API se verificó la persistencia de los tres vehículos y sus turnos; Mantenimiento e Inactivo siguieron excluidos de elegibilidad. Las cuentas, el contenedor y los datos temporales se retiraron al terminar. Jira refleja ECO-12 y ECO-19 en `Listo` (2/2). El sprint sigue activo hasta el cierre administrativo previsto y la revisión del Product Owner está programada para las 15:40; no se registra esa reunión ni una decisión formal antes de que ocurran.
+> **E2E funcional de flota (09/10/2026):** se completaron en navegador, con acceso MFA de Administración y Planificación y PostGIS temporal, los cinco criterios de Sprint 2 (**5/5 aprobados**). Tras reiniciar la API se verificó la persistencia de los tres vehículos y sus turnos; Mantenimiento e Inactivo siguieron excluidos de elegibilidad. Las cuentas, el contenedor y los datos temporales se retiraron al terminar. Jira refleja ECO-12 y ECO-19 en `Listo` (2/2). En una actualización posterior del mismo día, el usuario confirmó la aprobación del incremento; el Sprint 2 sigue activo hasta su cierre administrativo.
 
 > **Corte Jira actualizado (09/10/2026, 12:57 hora de Lima):** Sprint 2 tiene ECO-12 y ECO-19 en `Listo` (10 puntos estimados; 100 % de sus incidencias). Sprint 1 conserva 1/2 incidencias en su métrica dinámica histórica: ECO-9 `Listo` y ECO-15 `Por hacer`. El informe del corte original (28/09) sigue mostrando 0/2. La funcionalidad MFA/pedidos/persistencia está comprobada en el producto, pero no se suma retroactivamente a la velocidad de aquel corte.
 
@@ -50,10 +50,11 @@
 | 1.6.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se añade evidencia E2E posterior de pedidos y flota, manteniendo pendiente la aceptación formal. |
 | 1.7.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se ejecuta y registra el E2E de los cinco criterios de aceptación del alcance de flota; 5/5 aprobados. La reunión/decisión del Product Owner queda diferenciada del resultado E2E. |
 | 1.8.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea Jira con la rebase funcional: Sprint 2 contiene ECO-12 y ECO-19 en `Listo` (2/2); se actualizan la meta y el estado administrativo observado sin atribuir una reunión futura. |
+| 1.9.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la aprobación comunicada del incremento de flota y se actualiza la meta Jira, sin inventar asistentes ni acuerdos adicionales. |
 
-## Criterios E2E de flota aprobados; registro de reunión pendiente
+## Aceptación del incremento de flota
 
-El ensayo histórico de la demostración descrito abajo se hizo el 02/10. Para el alcance funcional reordenado, el E2E de flota ejecutado el 09/10 aprobó los cinco criterios del plan. Jira muestra ECO-12 y ECO-19 en `Listo`; Sprint 2 sigue activo hasta el cierre administrativo. La reunión de revisión está programada para las 15:40 del 09/10 y la tabla de decisión se conserva pendiente hasta registrar lo que ocurra.
+El E2E de flota ejecutado el 09/10 aprobó los cinco criterios del plan. El usuario confirmó el 09/10/2026 que el incremento del Sprint 2 está aprobado. Esta confirmación se registró en Jira. No se proporcionaron nombres de asistentes, hora efectiva de la reunión ni acuerdos adicionales, por lo que no se atribuyen. Jira conserva el sprint activo hasta el cierre administrativo previsto.
 
 ### Evidencia de aceptación E2E del alcance vigente: flota
 
@@ -65,7 +66,7 @@ El ensayo histórico de la demostración descrito abajo se hizo el 02/10. Para e
 | Mantenimiento o Inactivo impiden elegibilidad aunque haya turno guardado. | Aprobado | `S2-E2E-B2` con turno 08:00–17:00 pasó a Mantenimiento y `S2-E2E-C3` con el mismo turno pasó a Inactivo; la cuenta Planificación mostró ambos estados sin etiqueta “Apto para planificar”. |
 | Vehículo y disponibilidad persisten tras reiniciar la API. | Aprobado | Se detuvo y volvió a iniciar la API contra la misma base PostGIS E2E; al recargar Flota reaparecieron tres vehículos, todos los turnos y un único vehículo elegible (`S2-E2E-A1`). |
 
-**Resultado:** 5/5 criterios aprobados. Las pruebas se ejecutaron el 09/10/2026 en `http://localhost:3000/`, con una API y PostGIS temporales aislados. Los datos no pertenecían a operaciones reales y fueron retirados al concluir. Jira se actualizó para dejar ECO-12 y ECO-19 en `Listo`; esto refleja la evidencia funcional y no atribuye aceptación formal al Product Owner.
+**Resultado E2E:** 5/5 criterios aprobados. Las pruebas se ejecutaron el 09/10/2026 en `http://localhost:3000/`, con una API y PostGIS temporales aislados. Los datos no pertenecían a operaciones reales y fueron retirados al concluir. **Aceptación del incremento:** aprobada, según confirmación del usuario recibida el 09/10/2026. ECO-12 y ECO-19 siguen en `Listo`; el Sprint 2 permanece activo hasta su cierre administrativo.
 
 ### HU-001 / ECO-9 — Registrar pedido con ventana horaria (5 pts) · **Implementada; aceptación pendiente**
 
@@ -149,9 +150,9 @@ Demostración a las *partes interesadas* de las funcionalidades implementadas. G
 
 Lo que validan las partes interesadas: que el despachador registra pedidos válidos y que el sistema rechaza los incoherentes antes de que lleguen al optimizador; y que solo entran personas autorizadas, con dos factores y según su rol.
 
-## Registro para la reunión de revisión (pendiente)
+## Pauta histórica de demostración de pedidos (HU-001)
 
-La reunión está prevista para el 09/10 a las 15:40, hora de Lima. Este registro se completa durante la sesión; el ensayo del 02/10 y el estado `Listo` de Jira no reemplazan lo que decida el Product Owner.
+La tabla siguiente conserva la pauta previa de revisión del flujo de pedidos, correspondiente a HU-001. Sus estados pendientes no corresponden al alcance vigente de flota ni cambian la aprobación del incremento del Sprint 2 registrada arriba. No se recibieron anotaciones sobre esta pauta.
 
 Antes de mostrar el flujo, confirmar que el equipo tiene a mano una cuenta de Planificación y su app autenticadora. No anotar contraseñas, códigos TOTP ni secretos en este documento. Si se usa un pedido de prueba, identificarlo como tal y no presentarlo como una operación real de DistriRápido.
 
@@ -163,14 +164,15 @@ Antes de mostrar el flujo, confirmar que el equipo tiene a mano una cuenta de Pl
 | Encontrar el pedido en la lista, buscarlo o filtrarlo y abrir su detalle. | Pendiente | — |
 | Reiniciar la API y confirmar que el pedido conserva código, estado y detalle. | Pendiente | El flujo ya se comprobó en una base temporal aislada; repetirlo durante la revisión y registrar comentarios del Product Owner. |
 
-| Decisión del Product Owner sobre el incremento | Pendiente de registrar |
+| Campo | Registro |
 |---|---|
-| Aceptado / aceptado con pendientes / no aceptado | — |
-| Cambios o incidencias que se crearán en Jira | — |
+| Decisión sobre el incremento del Sprint 2 | Aprobado según confirmación del usuario, 09/10/2026 |
+| Acuerdos adicionales comunicados | Ninguno informado |
+| Cambios o incidencias adicionales en Jira | No se comunicaron |
 | Responsable y fecha acordada para cada acción | — |
 | Comentarios de las personas que participaron | — |
 
-Hasta que se complete esta tabla con lo que ocurra en la reunión, la aceptación formal y la retroalimentación siguen pendientes; no se atribuyen acuerdos al docente ni al equipo.
+La aprobación del incremento queda registrada según la confirmación recibida. No se comunicaron acuerdos adicionales ni comentarios específicos de asistentes, por lo que esos detalles no se atribuyen.
 
 ## Pendientes
 
