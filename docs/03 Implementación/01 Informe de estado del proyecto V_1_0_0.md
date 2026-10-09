@@ -21,6 +21,8 @@
 | Fuentes | Jira `ECO` (evidencias 1–4 en [02 Artefactos Jira](../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md)), historial Git, [Registro de riesgos](../02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md), [Presupuesto](../02%20Planificaci%C3%B3n/04%20Presupuesto%20del%20proyecto%20V_1_0_0.md) |
 | Documentos hermanos | [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [04 Retrospectiva del Sprint](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 
+> **Actualización operativa (09/10/2026):** la fecha planificada de cierre fue el 28/09; Jira mantuvo activo el sprint id. 36 hasta su cierre administrativo el 09/10. ECO-9 y ECO-15 estaban en `Por hacer` al cerrarlo, con **0 de 10 puntos entregados**. ECO-9 se completó después y quedó en el Sprint 2; ECO-15 continúa pendiente. Este informe conserva la evaluación histórica del Sprint 1.
+
 ## Historial de cambios
 
 | Versión | Fecha | Autor | Cambio |
@@ -79,7 +81,7 @@ HU-001 pasa al Sprint 2 como primera prioridad; HU-006 se reprograma detrás del
 | --- | --- |
 | **Alcance** | 🔴 **0 de 2 historias comprometidas completadas (0 de 10 puntos de historia).** Velocidad del Sprint 1 = 0. Sí se completaron 17 de 17 entregables documentales de Inicio y Planificación (13 + 4) y la estructura base del repositorio. Alcance total del PMV: 0 de 11 historias de usuario del backlog terminadas (0 %). |
 | **Cronograma** | 🔴 **Atrasados respecto de lo planificado en entrega de software.** Al 28/09 habían transcurrido 5 de 15 semanas del proyecto (≈ 33 % del tiempo) y el avance funcional es 0 %. El avance de documentación y gobierno es ≈ 100 % de lo previsto para las fases 01 y 02. Recuperación: reordenar el backlog por dependencias y priorizar HU-001 al inicio del Sprint 2 (ver *Próximos avances*). |
-| **Costos** | 🟢 **Sin sobrecosto.** Presupuesto aprobado: S/ 54,538.40 (S/ 48,695 + 12 % de contingencia S/ 5,843.40). Infraestructura cloud contratada y facturada a la fecha: **S/ 0** (el entorno de despliegue aún no se provisiona; OPEX planificado S/ 2,220 para 4 meses). El único licenciamiento activo es Jira (S/ 35 por usuario/mes dentro de los S/ 1,155 de licencias planificados). El esfuerzo del equipo corresponde a horas académicas no facturadas, dentro de los S/ 45,320 de recursos humanos planificados. La contingencia no se ha utilizado. |
+| **Costos** | 🟢 **Sin sobrecosto.** El Acta autoriza un techo máximo de S/ 500,000; el presupuesto detallado estima S/ 54,538.40 (S/ 48,695 más una reserva estimada de S/ 5,843.40, calculada al 12 %). Infraestructura cloud contratada y facturada: **S/ 0**. El único licenciamiento activo es Jira; el esfuerzo corresponde a horas académicas no facturadas. No se ha utilizado la reserva estimada. |
 | **Calidad** | 🟡 **0 defectos registrados** (no existe código ejecutable que probar; un valor de cero no indica ausencia de riesgo). Actividades de calidad realizadas: revisión de entregables vía *Pull Request* (PR #1 `developer` → `main`), plantillas de PR e incidencias en `.github/`, convención *Conventional Commits* aplicada en el historial, `.gitignore` y `.env.example` definidos para evitar versionar secretos y dependencias, criterios de aceptación BDD (Gherkin) para HU-001 y HU-006, y configuración de OpenSpec (`openspec/config.yaml`) con reglas de idioma y trazabilidad RF/RNF/RN. Pendiente: pruebas unitarias, CI/CD (EN-006 / ECO-17) y base PostGIS (EN-005 / ECO-16). |
 
 Leyenda: 🟢 en control · 🟡 atención · 🔴 fuera de lo planificado.
@@ -122,11 +124,11 @@ Lo documental se cumplió al 100 %; el software, al 0 %.
 | Infraestructura en la nube | 2,220.00 | 0.00 | Aún no se contrata: todo corre en local |
 | **Subtotal** | **48,695.00** | | |
 | Reserva de contingencia (12 %) | 5,843.40 | 0.00 | Intacta |
-| **Total aprobado** | **54,538.40** | | |
+| **Total estimado** | **54,538.40** | | |
 
 ```mermaid
 pie showData
-    title Distribución del presupuesto aprobado (S/)
+    title Distribución del presupuesto detallado estimado (S/)
     "Recursos humanos" : 45320
     "Reserva de contingencia" : 5843.40
     "Infraestructura en la nube" : 2220

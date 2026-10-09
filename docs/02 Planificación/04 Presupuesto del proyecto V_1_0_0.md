@@ -9,10 +9,12 @@
 | Proyecto | EcoLogística Huancayo |
 | Horizonte | 14 semanas de desarrollo + 1 semana de cierre |
 | Moneda | Soles peruanos (S/) |
-| Versión | 1.0.0 |
-| Fecha | 11 de septiembre de 2026 |
+| Versión | 1.1.0 |
+| Fecha | 09 de octubre de 2026 |
 
 > Presupuesto académico referencial para el PMV. Las horas y tarifas son supuestos de planificación, no pagos ejecutados. La reserva se calcula sobre el subtotal y se libera solo mediante control de cambios.
+
+> **Relación con el Acta:** el Acta de constitución fija un techo de autorización de S/ 500,000 y una reserva máxima de S/ 35,000. Este documento calcula un presupuesto detallado estimado de S/ 54,538.40, con una reserva estimada de S/ 5,843.40. El estimado detallado se mantiene dentro del techo; no representa gasto ejecutado ni modifica la autorización máxima.
 
 > **Nota sobre moneda:** el presupuesto se expresa en soles peruanos (S/) porque DistriRápido S.A.C., la empresa patrocinadora, opera y factura en Huancayo, Perú. La plantilla de la consigna en USD es referencial; se mantiene la moneda local para que las tarifas y subtotales sean auditables frente al contexto real del proyecto.
 

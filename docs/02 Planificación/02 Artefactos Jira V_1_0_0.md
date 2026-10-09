@@ -8,11 +8,11 @@
 |---|---|
 | Proyecto | EcoLogística Huancayo |
 | Herramienta | Atlassian Jira Software — Scrum |
-| Versión del entregable | 1.2.0 (sin versión de entrega creada en Jira al 09/10/2026) |
+| Versión del entregable | 1.3.0 (sin versión de entrega creada en Jira al 09/10/2026) |
 | Fecha de actualización | 09 de octubre de 2026 |
 | Responsable de configuración | Isidro Casio, Jose Luis |
 | Clave del proyecto en Jira | `ECO` |
-| Estado observado | Jira contiene 8 épicas y 10 historias/tareas. El tablero `ECO board` (id. 2) tiene dos sprints con el nombre `ECO Sprint 1`, uno cerrado y otro activo con fecha de fin 28/09; no hay Sprint 2 ni versiones de entrega. |
+| Estado observado | Jira contiene 8 épicas y 11 historias/tareas. `ECO board` (id. 2) tiene el Sprint 1 oficial cerrado, un sprint inicial renombrado como duplicado y el Sprint 2 activo (id. 37); no hay versión de entrega. |
 
 ## 1. Configuración observada en Jira al 09/10/2026
 
@@ -20,13 +20,13 @@
 |---|---|
 | Proyecto / tablero | `EcoLogística Huancayo` / `ECO board` (id. 2; tablero administrado por el equipo) |
 | Jerarquía | Epic → Story / Task → Sub-task; Bug para incidencias |
-| Columnas del tablero | 5: `Por hacer`, `En curso`, `Listo`, `In Review / QA`, `Done`. Jira mapea `Listo` al estado de categoría completada; `Done` apunta a `Finalizada`, cuya categoría figura como nueva. No coincide con el flujo definido en la planificación. |
+| Columnas del tablero | 5: `Por hacer`, `En curso`, `Listo`, `In Review / QA`, `Done`. Jira mapea `Listo` al estado de categoría completada; `Done` apunta a `Finalizada`, cuya categoría figura como nueva. Persisten la mezcla de idiomas y el mapeo incoherente. |
 | Versiones de entrega | Ninguna: la consulta de versiones de `ECO` devolvió 0 resultados el 09/10/2026. |
-| Sprints | ECO Sprint 1 (id. 3, cerrado el 18/09 con una meta de alcance amplio) y ECO Sprint 1 (id. 36, aún activo, 14/09–28/09, con la meta de registrar pedidos y reenrutar). No existe un sprint llamado ECO Sprint 2. |
-| Historias que Jira devuelve para el sprint id. 36 | ECO-9 y ECO-15; ambas figuran `Listo` al 09/10. El campo de Sprint conserva también el sprint cerrado id. 3. |
-| Sprint 2 según la replanificación del repositorio | 29/09–12/10, meta de entregar HU-001 con autenticación MFA. Está documentado y desarrollado, pero no se creó en Jira. Ver [Informe de estado del Sprint 2](../03%20Implementaci%C3%B3n/Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md). |
+| Sprints | Sprint id. 3, cerrado y renombrado `ECO Sprint 1 (duplicado)`; Sprint 1 oficial id. 36, cerrado administrativamente el 09/10 con fechas de trabajo 14/09–28/09; Sprint 2 id. 37, activo del 29/09 al 12/10 (hora de Lima). |
+| Resultado del Sprint 1 (id. 36) | 0 puntos entregados al cierre. ECO-9 / HU-001 y ECO-15 / HU-006 quedaron fuera de `Listo` al cerrar; ECO-9 se completó y se asignó al Sprint 2. ECO-15 permanece `Por hacer`. |
+| Sprint 2 (id. 37) | Meta: entregar HU-001 con acceso seguro por roles y MFA. Incluye ECO-9 / HU-001 (5 puntos) y ECO-20 / MFA (sin estimación aprobada); ambas están `Listo`. El sprint continúa activo hasta el 12/10. Ver [Informe de estado del Sprint 2](../03%20Implementaci%C3%B3n/Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md). |
 
-La consulta es una fotografía del sistema Jira; las etiquetas `Listo` no demuestran por sí solas que exista el incremento de software. La evidencia de código y pruebas está en el repositorio. En particular, ECO-15 aparece `Listo`, pero al 09/10 no hay implementación de reenrutamiento en `backend/` ni `frontend/`.
+La evidencia actual de sprints se consultó y regularizó en Jira el 09/10/2026. El estado `Listo` se contrastó con el código: ECO-9 y ECO-20 tienen implementación y pruebas; ECO-15 volvió a `Por hacer` porque no hay implementación de re-enrutamiento en `backend/` ni `frontend/`.
 
 ## 2. Épicas y backlog priorizado
 
@@ -58,10 +58,11 @@ La consulta es una fotografía del sistema Jira; las etiquetas `Listo` no demues
 | 22 | Epic | EP-07 | ECO-8 | Plataforma técnica y calidad | — | ✅ |
 | 23 | Task | EN-005 | ECO-16 | Configurar PostgreSQL y PostGIS | 3 | ✅ |
 | 24 | Task | EN-006 | ECO-17 | Configurar CI/CD, pruebas y documentación OpenAPI | 5 | ✅ |
+| 25 | Historia técnica | RF-11.1 | ECO-20 | Autenticación MFA y autorización por rol | — | ✅ |
 
 Jira devuelve ocho tarjetas de tipo Epic, pero `ECO-7` repite la épica de re-enrutamiento registrada como `ECO-6`. La línea base del proyecto contiene siete épicas lógicas (EP-01–EP-07); `ECO-7` no se cuenta como una épica adicional hasta que se aclare o corrija en Jira.
 
-Los puntos de los ítems marcados ✅ corresponden a los valores consultados en Jira el 09/10/2026; para EN-005 y EN-006 son 3 y 5, respectivamente. Los ítems ⬜ no están creados en Jira; sus puntos son estimaciones de planificación, no compromisos del equipo. La prioridad combina valor de negocio, dependencia y riesgo técnico; los criterios BDD están en [01 Transformando a ágil](01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md).
+Los puntos de los ítems con estimación marcada corresponden a los valores consultados en Jira; EN-005 y EN-006 tienen 3 y 5 puntos. ECO-20 existe en Jira, pero no tiene estimación aprobada. Los ítems ⬜ no están creados; sus puntos son propuestas de planificación, no compromisos del equipo. La prioridad combina valor de negocio, dependencia y riesgo técnico; los criterios BDD están en [01 Transformando a ágil](01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md).
 
 > **Resuelto el 18 de septiembre de 2026:** `ECO-18` y `ECO-19` habían sido creados como duplicados literales de `ECO-11` y `ECO-12` (mismo título y misma épica EP-01). Se renombraron en Jira a HU-008 "Importar pedidos por plantilla" y HU-009 "Parametrizar restricciones vehiculares" respectivamente, completando así los 8 épicas + 10 historias/tareas reales del backlog.
 >
@@ -71,13 +72,14 @@ Los puntos de los ítems marcados ✅ corresponden a los valores consultados en 
 
 | Sprint / periodo | Compromiso o replanificación | Resultado / estado |
 |---|---|---|
-| Sprint 1 — 14/09 a 28/09/2026 | ECO-9 / HU-001 y ECO-15 / HU-006; 10 puntos. Meta registrada en Jira: registrar pedidos con ventana horaria y reenrutar ante incidencia. | Al cierre, 0 de 2 historias cumplieron la Definición de Hecho, según el informe del sprint. Jira ahora las muestra `Listo`, estado que no debe retrotraerse como evidencia de que se completaron dentro del Sprint 1. |
-| Sprint 2 — 29/09 a 12/10/2026 | Replanificación documentada: HU-001 (5 puntos) y autenticación/autorización MFA como precondición para el primer incremento demostrable. | HU-001 y MFA están implementadas en `main`; backend: 100 pruebas aprobadas y 99 % de cobertura; frontend: 39 pruebas aprobadas al 09/10. Jira no contiene este sprint ni una tarjeta para MFA. El sprint sigue dentro de su periodo. |
-| Sprint 3 — plan de trabajo | Persistencia PostgreSQL/PostGIS, gestión de flota, prototipo y benchmark de optimización, y CI. | Planificado en la retrospectiva del Sprint 2; requiere estimar y formalizar las tarjetas faltantes en Jira. |
-| Sprints 4–5 / cierre | Visor cartográfico, dashboard, seguridad, disponibilidad, integración y aceptación, conforme al roadmap funcional y a EP-01–EP-07. | Alcance futuro; no se presenta como compromiso de sprint ni como trabajo realizado mientras no se apruebe un plan detallado. |
+| Sprint 1 — 14/09 a 28/09/2026 | ECO-9 / HU-001 y ECO-15 / HU-006; 10 puntos. | 0 de 2 historias cumplieron la Definición de Hecho. Jira cerró administrativamente el sprint el 09/10 con ECO-9 y ECO-15 pendientes; después ECO-9 pasó al Sprint 2 y ECO-15 quedó en `Por hacer`. |
+| Sprint 2 — 29/09 a 12/10/2026 | Replanificación: HU-001 (5 puntos) y autenticación/autorización MFA como precondición del primer incremento demostrable. | Jira id. 37 está activo con ECO-9 (5 puntos) y ECO-20 (MFA, sin estimación); ambas están `Listo`. El 09/10 se verificaron 100 pruebas de backend aprobadas con 99 % de cobertura, 39 de frontend aprobadas y compilación de producción correcta. La revisión del sprint está prevista para las 15:40, hora de Lima; falta documentar su resultado. |
+| Sprint 3 — plan de trabajo propuesto | Persistencia PostgreSQL/PostGIS, gestión de flota, prototipo y benchmark de optimización, y CI. | Acciones propuestas en la retrospectiva intermedia; requieren Planning Poker, capacidad confirmada y aprobación antes de crear el sprint en Jira. |
+| Sprint 4 — alcance por definir | Visor cartográfico, dashboard, seguridad, disponibilidad, integración y aceptación, conforme al roadmap funcional y a EP-01–EP-07. | El proyecto tiene cuatro iteraciones; el detalle y las prioridades de la última todavía no están aprobados. No se asignan fechas ni resultados no verificados. |
+| Cierre — semana 15 | Entrega y sustentación del PMV. | Hito planificado para la semana de cierre; sin evidencia de aceptación a la fecha de esta actualización. |
 | Release `v1.0.0-MVP` | Integración y aceptación del PMV. | No existe una versión de Jira con este nombre al 09/10/2026. |
 
-La planificación de Sprint 2 anterior a la retrospectiva del Sprint 1 asignaba flota y optimización. Esa línea base se replanificó para entregar HU-001 y MFA primero; flota y motor pasan al plan de Sprint 3. Este documento distingue la planificación actualizada del contenido que todavía permanece configurado en Jira.
+La planificación de Sprint 2 anterior a la retrospectiva del Sprint 1 asignaba flota y optimización. La replanificación priorizó HU-001 y MFA; flota y motor pasan al plan de Sprint 3. Jira ya refleja el Sprint 2 activo y ECO-20, creado el 09/10 sin puntos porque no hay estimación de equipo verificable.
 
 ## 4. Evidencias del proyecto Jira `ECO`
 
@@ -103,16 +105,16 @@ Las imágenes 01–04 son capturas históricas del 18/09/2026 y describen el est
 
 ![Resumen analítico histórico del proyecto ECO](../../assets/jira/05-resumen-analitico-historico.png)
 
-La configuración leída del tablero todavía muestra cinco columnas y un mapeo inconsistente: `Listo` está asociado a categoría completada, mientras `Done` está asociado a un estado cuya categoría Jira informa como nueva. La consulta de solo lectura no permite determinar si la cuenta tiene permisos para corregirlo.
+La configuración actual todavía muestra cinco columnas con idiomas mezclados y un mapeo inconsistente: `Listo` está asociado a categoría completada, mientras `Done` está asociado a `Finalizada`, cuya categoría Jira informa como nueva. Este pendiente se mantiene separado de la regularización de sprints.
 
 ## 5. Checklist de configuración
 
-- [x] Proyecto ECO, ocho épicas y diez historias/tareas existentes consultados el 09/10/2026.
+- [x] Proyecto ECO, ocho épicas, nueve historias y dos tareas consultadas el 09/10/2026.
 - [ ] Aclarar o corregir `ECO-7`, que duplica la tarjeta de épica `ECO-6`; conservar siete épicas lógicas EP-01–EP-07.
 - [x] HU-009 / ECO-19 asociada a EP-02 y HU-003 / ECO-12 asociada a EP-02.
-- [ ] Resolver la duplicidad de sprints y el Sprint 1 que Jira mantiene activo pese a haber terminado el 28/09.
-- [ ] Crear y cargar el Sprint 2 de acuerdo con la replanificación aprobada en la documentación; registrar en Jira la historia técnica de autenticación/MFA.
-- [ ] Revisar ECO-15: figura `Listo` en Jira, pero la revisión del repositorio no encuentra la implementación de re-enrutamiento.
+- [x] Resolver la duplicidad de sprints: cerrar el Sprint 1 id. 36 el 09/10 y renombrar el sprint id. 3 como duplicado.
+- [x] Crear y cargar el Sprint 2 id. 37; registrar la historia técnica ECO-20 para MFA, sin inventar una estimación.
+- [x] Revisar ECO-15: devolverla a `Por hacer` por falta de implementación de re-enrutamiento demostrable.
 - [ ] Completar las historias y tareas ausentes: HU-004, HU-010, HU-011 y EN-001 a EN-004; confirmar prioridades y puntos con el equipo.
 - [ ] Corregir el flujo de cinco columnas y validar las categorías de los estados `Listo` y `Done`.
 - [ ] Crear y documentar la versión `v1.0.0-MVP` cuando el alcance de aceptación esté acordado.
@@ -125,4 +127,5 @@ La configuración leída del tablero todavía muestra cinco columnas y un mapeo 
 | 1.0.0 | 11/09/2026 | Primera emisión del backlog y configuración de Jira. |
 | 1.0.1 | 18/09/2026 | Verificación en el proyecto real, resolución de duplicados `ECO-18`/`ECO-19`, recreación del Sprint 1 y evidencias 1–4. |
 | 1.1.0 | 02/10/2026 | Registro del cierre del Sprint 1 (28/09) y de las correcciones comunicadas ese día para `ECO-19` y la configuración de Jira. |
-| 1.2.0 | 09/10/2026 | Auditoría de solo lectura del tablero, sprints, estados, puntos, versiones y descripciones; se registra que Jira carece de Sprint 2 y mantiene discrepancias con el código y la replanificación. |
+| 1.2.0 | 09/10/2026 | Auditoría inicial de solo lectura del tablero, sprints, estados, puntos, versiones y descripciones. |
+| 1.3.0 | 09/10/2026 | Cierre administrativo del Sprint 1, identificación del duplicado, creación del Sprint 2 y ECO-20, corrección de ECO-15 y lectura posterior para verificar el estado final. |

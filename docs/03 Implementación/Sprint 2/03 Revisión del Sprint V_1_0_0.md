@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.0.0 |
+| Versión | 1.1.0 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026) |
 | Objetivo replanificado | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
@@ -24,6 +24,7 @@
 | Versión | Fecha | Autor | Cambio |
 |---|---|---|---|
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión con el trabajo completado al 02/10 y el guion de demostración ensayado. |
+| 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se incorpora ECO-20 en Jira sin estimación aprobada y se actualiza el Sprint 1 como cerrado administrativamente. La reunión de revisión del Sprint 2 sigue pendiente. |
 
 ## Historias de Usuario completadas en este Sprint
 
@@ -45,7 +46,7 @@ Alcance entregado (especificado en el cambio OpenSpec `registro-pedidos`, 9 requ
 
 ### Historia técnica — Autenticación con verificación en dos pasos y autorización por rol (RF-11.1) · **Completada**
 
-Incorporada al sprint como precondición de HU-001 y como actividad de la semana 6. **Pendiente de registrarse y estimarse en Jira** ([IMP-008](02%20Registro%20de%20Impedimentos%20V_1_0_0.md)).
+Incorporada al sprint como precondición de HU-001 y como actividad de la semana 6. Registrada el 09/10 en Jira como [ECO-20 — Autenticación MFA y autorización por rol](https://continental-team-ecologistica.atlassian.net/browse/ECO-20), vinculada a EP-07. No tiene puntos: no se encontró una estimación aprobada por el equipo ([IMP-008](02%20Registro%20de%20Impedimentos%20V_1_0_0.md)).
 
 | Escenario clave de la especificación `autenticacion` | Resultado |
 |---|---|
@@ -100,13 +101,13 @@ Lo que valida el *stakeholder*: que el despachador registra pedidos válidos y q
 
 ### Retroalimentación de los stakeholders
 
-Se registrará en la reunión del 09/10 y se trasladará al backlog de Jira. Los cambios que pida el docente se reflejarán en la versión 1.1.0 de este documento.
+Se registrará después de la reunión prevista para el 09/10 a las 15:40, hora de Lima, y se trasladará al backlog de Jira. A las 07:42 de Lima la reunión todavía no había ocurrido; no se atribuyen al docente acuerdos ni aceptación. Los resultados se incorporarán en una versión posterior.
 
 ## Pendientes
 
 | # | Pendiente | Tipo | Origen | Responsable | Destino |
 |---:|---|---|---|---|---|
-| 1 | Registrar y estimar en Jira la historia de autenticación y las 7 tarjetas faltantes | Gestión | [IMP-008](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jose Luis Isidro Casio · equipo | Antes del 09/10 |
+| 1 | La historia técnica se registró como ECO-20, sin puntos aprobados; faltan Planning Poker y crear las 7 tarjetas HU-004, HU-010, HU-011 y EN-001 a EN-004 | Gestión | [IMP-008](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jose Luis Isidro Casio · equipo | Antes del Planning del Sprint 3 |
 | 2 | PostgreSQL + PostGIS con migraciones y adaptadores reales (EN-005 / ECO-16) | Habilitador | [IMP-011](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Anco Porras, Jhean Pier Julio | Sprint 3 |
 | 3 | Gestión de flota y restricciones vehiculares (HU-003, HU-009) | Historia | Roadmap del Sprint 2, no iniciado | Anco Porras, Jhean Pier Julio | Sprint 3 |
 | 4 | Prototipo del motor VRPTW y benchmark EN-001 (desbloquea HU-004 y HU-006) | Historia / habilitador | Roadmap; [IMP-006](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Alexander Daniel Hilario Talavera | Sprint 3 |

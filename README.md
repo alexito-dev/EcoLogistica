@@ -59,10 +59,10 @@ El código disponible entrega autenticación con verificación TOTP y roles, ade
 
 | Sprint | Plan comprometido | Resultado documentado |
 |---|---|---|
-| Sprint 1 · 14/09–28/09 | ECO-9 / HU-001 y ECO-15 / HU-006 (10 puntos) | 0 de 2 historias cumplieron la Definición de Hecho al cierre. HU-001 se terminó después, durante el Sprint 2; HU-006 sigue sin implementación demostrable. |
-| Sprint 2 · 29/09–12/10 | Replanificación: primer incremento demostrable de HU-001 con autenticación y autorización MFA | HU-001 (5 puntos) y la autenticación quedaron implementadas en `main` al corte del 02/10. El sprint sigue abierto hasta el 12/10; la revisión prevista para el 09/10 aún no se ha celebrado a la hora de esta actualización. |
+| Sprint 1 · 14/09–28/09 | ECO-9 / HU-001 y ECO-15 / HU-006 (10 puntos) | 0 de 2 historias cumplieron la Definición de Hecho al cierre. Jira cerró administrativamente el sprint el 09/10 y registró 0 entregados; HU-001 se completó después, durante el Sprint 2. HU-006 sigue pendiente, sin implementación demostrable. |
+| Sprint 2 · 29/09–12/10 | Replanificación: primer incremento demostrable de HU-001 con autenticación y autorización MFA | HU-001 (5 puntos) y MFA están implementadas en `main` y registradas como ECO-9 y ECO-20 en Jira; ECO-20 no tiene estimación aprobada. Jira mantiene el Sprint 2 activo. La revisión está prevista para el 09/10 a las 15:40, hora de Lima; este estado tiene corte previo a esa reunión. |
 
-El estado operativo de Jira no refleja este plan: el tablero tiene dos sprints llamados **ECO Sprint 1** (uno cerrado y otro activo con fecha de fin 28/09) y no tiene Sprint 2. Además, muestra ECO-15 como `Listo` aunque el repositorio no contiene una implementación de re-enrutamiento. El detalle y la evidencia de consulta están en [02. Artefactos Jira](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md); no se trata el estado de Jira como prueba de código.
+Jira ya refleja el Sprint 1 cerrado, el Sprint 2 activo y la historia ECO-20 de MFA. ECO-15 está en `Por hacer` porque el repositorio no contiene re-enrutamiento. Sigue pendiente normalizar los nombres y el mapeo de las columnas del tablero; el detalle está en [02. Artefactos Jira](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md). Los estados de Jira se contrastan con el código y sus pruebas.
 
 ---
 

@@ -15,18 +15,21 @@
 | Campo | Valor |
 |---|---|
 | Código del proyecto | PFA-TP2-ECOLOG-2026 |
-| Versión | 1.0.0 |
+| Versión | 1.1.0 |
 | Iteración reportada | ECO Sprint 2 |
 | Objetivo replanificado del sprint | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
 | Fuentes | Historial Git (`main`), cambios OpenSpec `registro-pedidos` y `autenticacion-mfa`, resultados de pruebas automatizadas, [Retrospectiva del Sprint 1](../04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 | Documentos hermanos | [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [04 Retrospectiva del Sprint](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 | Sprint anterior | [Informe de estado del Sprint 1](../01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) |
 
+> **Actualización al 09/10/2026, antes de la revisión:** Jira quedó regularizado con el Sprint 2 id. 37 activo (29/09–12/10). Incluye ECO-9 / HU-001 (5 puntos) y ECO-20 / autenticación MFA (sin estimación aprobada); ambas están `Listo`. El Sprint 1 id. 36 se cerró administrativamente el 09/10 con 0 puntos entregados. La revisión del Sprint 2 está prevista para hoy a las 15:40, hora de Lima; sus acuerdos y aceptación todavía están pendientes.
+
 ## Historial de cambios
 
 | Versión | Fecha | Autor | Cambio |
 |---|---|---|---|
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión con el corte al 02/10/2026. Si hay avances hasta la revisión del 09/10, se publicará la versión 1.1.0. |
+| 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza la evidencia de Jira, se registra ECO-20 sin puntos y se distingue el cierre administrativo del Sprint 1 de su periodo planificado. Se conserva pendiente la revisión del Sprint 2. |
 
 ## Resumen ejecutivo
 
@@ -38,7 +41,7 @@ Al inicio del sprint también se **ratificó el stack React + FastAPI** (Alterna
 
 | Variables de control | Descripción del estado |
 | --- | --- |
-| **Alcance** | 🟡 **1 historia de usuario completada: HU-001 / ECO-9 (5 pts), arrastrada del Sprint 1.** Además, la historia técnica de **autenticación y autorización (RF-11.1)** completada, pendiente de registrarse y estimarse en Jira. Avance del PMV: 1 de 11 historias (9 %). Del roadmap previsto para este sprint (EP-02 flota y EP-03 motor: HU-003, HU-009, HU-004, EN-001) no se inició ningún ítem. |
+| **Alcance** | 🟡 **1 historia de usuario completada: HU-001 / ECO-9 (5 pts), arrastrada del Sprint 1.** La historia técnica de **autenticación y autorización (RF-11.1)** también está completada y se registró como ECO-20 el 09/10, sin estimación de puntos. Avance del PMV: 1 de 11 historias de usuario originales (9 %). Del roadmap previsto (flota y motor) no se inició ningún ítem. |
 | **Cronograma** | 🟡 **Recuperando, con atraso respecto del roadmap.** Al 02/10 han transcurrido 5,6 de 15 semanas (37 % del tiempo) y el avance funcional es del 9 % de las historias. La velocidad pasó de 0 a 5 puntos. El motor de optimización (camino crítico de HU-004 y HU-006) aún no empieza; es el principal riesgo de plazo. |
 | **Costos** | 🟢 **Sin sobrecosto.** Gasto en infraestructura cloud a la fecha: S/ 0 (todo se ejecuta en local). Licencias: solo Jira, dentro de lo previsto. Las nuevas dependencias son de código abierto y sin costo (FastAPI, React, Argon2, PyOTP, PyJWT, Lucide y qrcode). Contingencia sin usar: S/ 5,843.40. |
 | **Calidad** | 🟢 **139 pruebas automatizadas en verde: 100 de backend (cobertura del 99 %) y 39 de frontend.** 4 defectos detectados por las pruebas y la verificación, y corregidos dentro del sprint (ver [Revisión](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)). Auditoría de la especificación de seguridad con 13 hallazgos, todos resueltos o declarados fuera de alcance. Validación estricta de OpenSpec, compilación de producción y linter correctos. |
@@ -72,7 +75,7 @@ Leyenda: 🟢 en control · 🟡 atención · 🔴 fuera de lo planificado.
 
 ## Próximos avances
 
-1. **Hasta la revisión del 09/10:** registrar en Jira la historia de autenticación, agregar la tipografía Codec Pro y cerrar el sprint con el incremento demostrado.
+1. **Para la revisión del 09/10:** confirmar el incremento y registrar los acuerdos; ECO-20 ya está en Jira sin puntos aprobados. Los archivos licenciados de Codec Pro siguen pendientes. El Sprint 2 se cerrará en Jira al finalizar su periodo el 12/10.
 2. **Sprint 3:** PostgreSQL + PostGIS con migraciones (EN-005) y adaptadores de repositorio reales para pedidos y usuarios.
 3. **Sprint 3:** gestión de flota (HU-003 y HU-009) como cambio OpenSpec, asignado al responsable de backend.
 4. **Sprint 3:** prototipo del motor de optimización y benchmark EN-001, prerrequisito de HU-004 y HU-006.
@@ -80,7 +83,7 @@ Leyenda: 🟢 en control · 🟡 atención · 🔴 fuera de lo planificado.
 
 ## Notas
 
-- Este informe refleja el estado verificable en el repositorio al 02/10/2026; las cifras de pruebas y cobertura provienen de la última ejecución de `pytest --cov` y `vitest`.
+- El corte original del informe es 02/10/2026. La actualización del 09/10 añade el estado de Jira y conserva las cifras de pruebas del corte inicial; la ejecución local de backend, frontend y compilación del 09/10 se registra también en la auditoría de coherencia.
 - La historia de autenticación responde a la actividad de la semana 6 del Taller (especificación auditada con el prompt "Auditor Senior de Arquitectura"); su evidencia está en `openspec/changes/archive/2026-10-02-autenticacion-mfa/`.
 - Trazabilidad: [06 Requisitos funcionales](../../01%20Inicio/06.%20Requisitos%20funcionales%20V_1_0_0.md), [07 Requisitos no funcionales](../../01%20Inicio/07.%20Requisitos%20no%20funcionales%20V_1_0_0.md), [08 Usuarios](../../01%20Inicio/08.%20Usuarios%20V_1_0_0.md) y [10 Stack tecnológico](../../01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md).
 - Nomenclatura de versionado: *Semantic Versioning* `MAYOR.MENOR.PARCHE`, escrita en el nombre del archivo como `V_M_m_p`.

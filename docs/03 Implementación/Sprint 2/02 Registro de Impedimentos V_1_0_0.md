@@ -14,7 +14,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.0.0 |
+| Versión | 1.1.0 |
 | Formato de fechas | DD/MM/AAAA |
 | Escala de prioridad | Alta · Media · Baja |
 | Estados válidos | Abierto · En Espera · Cerrado |
@@ -27,6 +27,7 @@
 | Versión | Fecha | Autor | Cambio |
 |---|---|---|---|
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión del Sprint 2: 3 impedimentos arrastrados y 5 nuevos, con impacto, prioridad, responsable y trazabilidad de estado. |
+| 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza IMP-008: ECO-20 ya está registrada; siguen pendientes la estimación de MFA y siete tarjetas de backlog. |
 
 ## Registro
 
@@ -34,7 +35,7 @@
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | IMP-006 | 28/09/2026 | **(Arrastrado del Sprint 1) Dependencia técnica entre HU-006 y HU-004.** Reenrutar ante incidencia (ECO-15) requiere el motor de optimización, que aún no existe. **Impacto:** HU-006 (5 pts) no puede planificarse; el valor diferencial del producto (reoptimización) sigue bloqueado. | Alta | Alex Zorrilla | 23/10/2026 | Abierto | — | HU-006 se mantiene detrás de HU-004 y EN-001 en el backlog. El motor se inicia en el Sprint 3 (R-S2-01 del [Informe](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md)). |
 | IMP-007 | 18/09/2026 | **(Arrastrado del Sprint 1) Sin código base ejecutable y decisión de stack inestable.** `backend/` y `frontend/` estaban vacíos. **Impacto:** impedía demostrar cualquier historia. | Alta | Anco Porras, Jhean Pier Julio | 12/10/2026 | Cerrado | 02/10/2026 | Proyecto FastAPI (`backend/src/app`) y React + Vite (`frontend/src`) creados con scripts de ejecución y prueba; HU-001 y autenticación implementadas y publicadas en `main`. |
-| IMP-008 | 18/09/2026 | **(Arrastrado del Sprint 1) Backlog de Jira incompleto y estimaciones sin validar.** Faltan HU-004, HU-010, HU-011 y EN-001 a EN-004, y ahora también la historia de autenticación. **Impacto:** la velocidad y la capacidad del Sprint 3 no pueden calcularse con certeza. | Media | Jose Luis Isidro Casio | 09/10/2026 | En Espera | — | Pendiente de la sesión de *Planning Poker* del equipo. En el repositorio no hay evidencia de que se haya realizado; se verificará en la revisión del 09/10. |
+| IMP-008 | 18/09/2026 | **(Arrastrado del Sprint 1) Backlog de Jira incompleto y estimaciones sin validar.** Faltan HU-004, HU-010, HU-011 y EN-001 a EN-004. La historia técnica de autenticación ya se registró como ECO-20, pero no tiene estimación. **Impacto:** la velocidad y la capacidad del Sprint 3 no pueden calcularse con certeza. | Media | Jose Luis Isidro Casio | 12/10/2026 | En Espera | — | La regularización de Sprint 2 creó ECO-20 y mantuvo su estimación vacía para no inventar puntos. Falta Planning Poker para ECO-20 y las siete tarjetas no creadas; no hay evidencia de que la sesión ya haya ocurrido. |
 | IMP-009 | 29/09/2026 | **Propuesta de stack aplicada sin evaluación.** El commit `3565685` (18/09) cambió en `main` la arquitectura a Next.js + Nest.js sin puntuarla en la matriz del documento de stack, que favorecía React + FastAPI (93 %). **Impacto:** cinco documentos de la línea base se contradecían con la matriz; no se podía empezar a programar sin saber el stack. | Alta | Alex Zorrilla | 02/10/2026 | Cerrado | 02/10/2026 | El líder ratificó la Alternativa A. Se revirtieron el Acta, RES-06, el Modelo C4, las Restricciones y el Stack (versión 1.1.0 con historial). Regla nueva: todo cambio de stack exige ADR y nueva matriz (sección 12 del documento 10). |
 | IMP-010 | 02/10/2026 | **Git Flow no aplicado de forma completa.** Los cambios del sprint se integraron directamente en `main` y la rama `developer` quedó desactualizada desde el 18/09. **Impacto:** se pierde la revisión por *pull request* exigida por RES-17 y aumenta el riesgo de integrar defectos. | Media | Alex Zorrilla | 16/10/2026 | Abierto | — | Sincronizar `developer` con `main`, proteger `main` en GitHub y exigir *pull request* con CI desde el Sprint 3 (acción A6 de la [Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)). |
 | IMP-011 | 02/10/2026 | **Sin base de datos PostgreSQL/PostGIS (EN-005).** Los pedidos se guardan en memoria y los usuarios en un archivo local. **Impacto:** los pedidos se pierden al reiniciar, los secretos TOTP no se cifran en reposo (RNF-06) y no se cumplen RNF-04 ni RNF-11; además, impide el visor cartográfico con consultas espaciales. | Alta | Anco Porras, Jhean Pier Julio | 23/10/2026 | Abierto | — | Los adaptadores ya están detrás de puertos de repositorio, así que la migración no toca el dominio. Planificado como primer cambio OpenSpec del Sprint 3, con `docker compose` y migraciones Alembic. |
