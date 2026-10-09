@@ -18,7 +18,7 @@ La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mi
 - El árbol del README se contrastó con el repositorio: `database/` aún no existe. `docs/04 Seguimiento y Control/` y `docs/05 Cierre/` sí existen, pero solo tienen `.gitkeep` y no contienen entregables; el README ahora distingue los directorios reservados de la documentación pendiente.
 - El diagrama de módulos del README queda etiquetado como alcance objetivo y enumera por separado los módulos implementados y los pendientes al 09/10.
 - `.env.example` y las instrucciones de instalación se contrastaron con `backend/src/app/config.py`, `frontend/vite.config.ts` y `frontend/package-lock.json`: se eliminaron variables de base de datos, mapas y optimización que el código actual ignora, se documentaron solo variables operativas y se actualizaron los comandos de PowerShell y el requisito real de Node para Vite 8.
-- El flujo de ramas se armonizó en README, OpenSpec, RES-17 y RST-ACA-02: ramas breves `feature/*` desde `main`, PR hacia `main`, sin `develop` obligatoria. La rama remota `developer` está desactualizada; protección de `main`, revisión obligatoria y CI siguen pendientes de configuración.
+- El flujo de ramas se armonizó en README, OpenSpec, RES-17 y RST-ACA-02: ramas breves `feature/*` desde `main`, PR hacia `main`, sin `develop` obligatoria. La consulta Git del 09/10 muestra `developer` 29 commits detrás de `main` y sin commits propios; `docs/semana-3-entregables` está 45 commits detrás y 1 por delante, con un commit del 04/09 que añadió versiones iniciales de ocho documentos de Inicio ahora presentes y revisados en `main`. No se integran ni eliminan ramas remotas sin confirmar su destino con el equipo. La protección de `main`, revisión obligatoria y CI siguen pendientes; `gh auth status` indica que esta sesión no está autenticada y no permitió leer la configuración de protección.
 - Las referencias a `develop` en actas y retrospectivas de Sprint 1 se conservan como acuerdos históricos de esa fecha; las tareas futuras de los documentos de Sprint 2 ya apuntan al flujo actualizado. No se deben interpretar esas referencias antiguas como configuración vigente.
 
 ## Plan y resultado hasta el Sprint 2
@@ -66,6 +66,7 @@ La documentación histórica de cada sprint conserva su fecha de corte original.
 ## Acciones abiertas
 
 - Después de la revisión prevista para el 09/10 a las 15:40, registrar sus decisiones, actualizar el estado y cerrar el Sprint 2 el 12/10.
+- Confirmar con el equipo si se archivan las ramas remotas `developer` y `docs/semana-3-entregables`, teniendo en cuenta sus desfases y el único commit propio de esta última.
 - Corregir la mezcla de idiomas y el mapeo de las cinco columnas del tablero Jira; mantener `Listo` como único estado de categoría completada.
 - Aplicar el flujo de ramas acordado, retirar la rama `developer` desactualizada cuando el equipo confirme la migración, y configurar revisión y CI para `main`.
 - Definir si las cuatro iteraciones del Acta son periodos macro o si corresponden uno a uno con sprints; luego calendarizar Sprint 3 y 4 sin alterar las fechas históricas.
@@ -86,3 +87,4 @@ La documentación histórica de cada sprint conserva su fecha de corte original.
 | 1.6.0 | 09/10/2026 | Se alinea `.env.example` y la guía de instalación con las variables y herramientas realmente consumidas por el código. |
 | 1.7.0 | 09/10/2026 | Se aclara que el diagrama de módulos del README representa el alcance objetivo y se identifica el subconjunto implementado al corte. |
 | 1.8.0 | 09/10/2026 | Se detalla la secuencia de estados de ECO-9 y se incorpora IMP-003 reabierto; el Sprint 2 permanece pendiente de revisión y cierre formal. |
+| 1.9.0 | 09/10/2026 | Se comparan las ramas remotas con `main`; se registra el límite de autenticación de GitHub CLI para verificar protección y se deja pendiente la disposición de las ramas antiguas. |
