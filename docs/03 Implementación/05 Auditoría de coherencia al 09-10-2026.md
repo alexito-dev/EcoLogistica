@@ -19,7 +19,7 @@ La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mi
 
 | Iteración | Plan registrado | Resultado comprobado al 09/10/2026 |
 |---|---|---|
-| Sprint 1 · 14/09–28/09 | ECO-9 / HU-001 y ECO-15 / HU-006; 10 puntos. | 0 de 2 historias y 0 puntos cumplieron la Definición de Hecho. Jira cerró el sprint id. 36 administrativamente el 09/10, con ambas historias en `Por hacer`; ECO-9 se terminó después en Sprint 2. HU-006 sigue sin implementación. |
+| Sprint 1 · 14/09–28/09 | ECO-9 / HU-001 y ECO-15 / HU-006; 10 puntos. | El informe del Sprint 1 registra 0 de 2 al corte planificado del 28/09. Jira mantuvo el sprint id. 36 activo hasta el 09/10; ECO-9 quedó `Listo` el 02/10 y conserva ambos sprints en su historial, mientras ECO-15 está `Por hacer`. La métrica dinámica actual de Jira muestra 1 de 2 y no reconstruye la velocidad al 28/09. |
 | Sprint 2 · 29/09–12/10 | Replanificación para entregar el primer incremento: HU-001 con autenticación y autorización MFA. | Jira sprint id. 37 activo: ECO-9 (5 puntos) y ECO-20 (MFA, sin estimación aprobada), ambas `Listo`. En la ejecución local del 09/10: 100 pruebas de backend aprobadas, 99 % de cobertura, 39 pruebas de frontend aprobadas y compilación de producción completada. Falta la revisión del sprint y su cierre. |
 | Sprint 3 | El plan de trabajo de la retrospectiva contempla PostgreSQL/PostGIS, gestión de flota, prototipo y benchmark del motor, y CI. | Trabajo futuro; las historias/tareas faltantes y su capacidad aún deben confirmarse y estimarse en Jira. |
 | Sprint 4 y cierre | El horizonte aprobado contempla cuatro iteraciones y una semana de cierre; el roadmap conserva dashboard, visor, seguridad, disponibilidad e integración/aceptación. | Alcance futuro de alto nivel; prioridades, compromisos y fechas detalladas del Sprint 4 aún no están aprobados. |
@@ -35,9 +35,9 @@ El backend registra **tres advertencias deprecadas** durante `pytest`. La compil
 
 El tablero consultado fue `ECO board` (id. 2). Jira devuelve 8 tarjetas de tipo Epic, 9 historias y 2 tareas; `ECO-7` duplica la épica de re-enrutamiento `ECO-6`, por lo que el backlog tiene 7 épicas lógicas EP-01–EP-07. La historia técnica ECO-20 se registró el 09/10 sin puntos aprobados.
 
-1. El sprint id. 36 es el Sprint 1 oficial; se cerró administrativamente el 09/10 después de su fecha final del 28/09. El sprint id. 3 se renombró `ECO Sprint 1 (duplicado)` y su objetivo aclara que no es el sprint oficial.
+1. El sprint id. 36 es el Sprint 1 oficial; se cerró administrativamente el 09/10 después de su fecha final del 28/09. El sprint id. 3 se renombró `ECO Sprint 1 (duplicado)` y su objetivo aclara que no es el sprint oficial. El informe dinámico actual cuenta a ECO-9 como completada en ese sprint por su estado actual; el conector no expone el reporte histórico al 28/09.
 2. Se creó el Sprint 2 id. 37 con fechas 29/09–12/10 y la meta de HU-001 con MFA. ECO-9 / HU-001 (5 puntos) y ECO-20 / autenticación MFA están en el sprint y en estado `Listo`; ECO-20 permanece sin estimación de puntos.
-3. ECO-15 / HU-006 volvió a `Por hacer`: no se encontró implementación de re-enrutamiento en el repositorio. El historial de Sprint conserva la asignación previa al Sprint 1 para trazabilidad.
+3. ECO-15 / HU-006 está en `Por hacer`: no se encontró implementación de re-enrutamiento en el repositorio. Su historial de Sprint conserva la asignación al Sprint 1.
 4. El backlog no contiene HU-004, HU-010, HU-011 ni EN-001–EN-004. ECO-16 está estimada en 3 puntos y ECO-17 en 5.
 5. El tablero conserva cinco columnas (`Por hacer`, `En curso`, `Listo`, `In Review / QA`, `Done`). `Listo` está mapeado a una categoría completada; `Done` está mapeado al estado `Finalizada`, que la configuración devuelve con categoría nueva.
 6. La consulta de versiones del proyecto devuelve cero; `v1.0.0-MVP` no existe como versión Jira.
@@ -71,3 +71,4 @@ La documentación histórica de cada sprint conserva su fecha de corte original.
 |---|---|---|
 | 1.0.0 | 09/10/2026 | Contraste inicial de idioma, stack, implementación, sprints y Jira; evidencia local de pruebas y compilación. |
 | 1.1.0 | 09/10/2026 | Se actualiza con la regularización de sprints e incidencias de Jira, la distinción entre techo y estimado presupuestario, y la ambigüedad pendiente entre iteración y sprint. |
+| 1.2.0 | 09/10/2026 | Se actualiza con la métrica dinámica de Sprint 1 y su diferencia respecto del corte planificado, además de la regularización de sprints e incidencias de Jira, la distinción entre techo y estimado presupuestario, y la ambigüedad pendiente entre iteración y sprint. |

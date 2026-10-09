@@ -15,21 +15,22 @@
 | Campo | Valor |
 |---|---|
 | Código del proyecto | PFA-TP2-ECOLOG-2026 |
-| Versión | 1.1.0 |
+| Versión | 1.1.1 |
 | Iteración reportada | ECO Sprint 2 |
 | Objetivo replanificado del sprint | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
 | Fuentes | Historial Git (`main`), cambios OpenSpec `registro-pedidos` y `autenticacion-mfa`, resultados de pruebas automatizadas, [Retrospectiva del Sprint 1](../04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 | Documentos hermanos | [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [04 Retrospectiva del Sprint](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 | Sprint anterior | [Informe de estado del Sprint 1](../01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) |
 
-> **Actualización al 09/10/2026, antes de la revisión:** Jira quedó regularizado con el Sprint 2 id. 37 activo (29/09–12/10). Incluye ECO-9 / HU-001 (5 puntos) y ECO-20 / autenticación MFA (sin estimación aprobada); ambas están `Listo`. El Sprint 1 id. 36 se cerró administrativamente el 09/10 con 0 puntos entregados. La revisión del Sprint 2 está prevista para hoy a las 15:40, hora de Lima; sus acuerdos y aceptación todavía están pendientes.
+> **Actualización al 09/10/2026, antes de la revisión:** Jira quedó regularizado con el Sprint 2 id. 37 activo (29/09–12/10). Incluye ECO-9 / HU-001 (5 puntos) y ECO-20 / autenticación MFA (sin estimación aprobada); ambas están `Listo`. El informe del Sprint 1 registra 0 de 2 al corte planificado del 28/09; Jira permaneció activo hasta el 09/10 y su métrica dinámica actual cuenta ECO-9 como completada por su estado `Listo` desde el 02/10. La revisión del Sprint 2 está prevista para hoy a las 15:40, hora de Lima; sus acuerdos y aceptación todavía están pendientes.
 
 ## Historial de cambios
 
 | Versión | Fecha | Autor | Cambio |
 |---|---|---|---|
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión con el corte al 02/10/2026. Si hay avances hasta la revisión del 09/10, se publicará la versión 1.1.0. |
-| 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza la evidencia de Jira, se registra ECO-20 sin puntos y se distingue el cierre administrativo del Sprint 1 de su periodo planificado. Se conserva pendiente la revisión del Sprint 2. |
+| 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza la evidencia de Jira, se registra ECO-20 sin puntos, se distingue la métrica dinámica del Sprint 1 de su corte planificado y se conserva pendiente la revisión del Sprint 2. |
+| 1.1.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se aclara que la métrica dinámica actual de Sprint 1 cuenta a ECO-9 por su estado posterior al 28/09; no se usa como velocidad histórica del corte planificado. |
 
 ## Resumen ejecutivo
 

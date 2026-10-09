@@ -15,13 +15,13 @@
 | Campo | Valor |
 |---|---|
 | Código del proyecto | PFA-TP2-ECOLOG-2026 |
-| Versión | 1.1.1 |
+| Versión | 1.1.2 |
 | Iteración reportada | ECO Sprint 1 |
 | Sprint Goal | "Registrar pedidos con ventana horaria y permitir reenrutar una ruta ante incidencia." |
 | Fuentes | Jira `ECO` (evidencias 1–4 en [02 Artefactos Jira](../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md)), historial Git, [Registro de riesgos](../02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md), [Presupuesto](../02%20Planificaci%C3%B3n/04%20Presupuesto%20del%20proyecto%20V_1_0_0.md) |
 | Documentos hermanos | [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [04 Retrospectiva del Sprint](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 
-> **Actualización operativa (09/10/2026):** la fecha planificada de cierre fue el 28/09; Jira mantuvo activo el sprint id. 36 hasta su cierre administrativo el 09/10. ECO-9 y ECO-15 estaban en `Por hacer` al cerrarlo, con **0 de 10 puntos entregados**. ECO-9 se completó después y quedó en el Sprint 2; ECO-15 continúa pendiente. Este informe conserva la evaluación histórica del Sprint 1.
+> **Actualización operativa (09/10/2026):** la fecha planificada de cierre fue el 28/09; Jira mantuvo activo el sprint id. 36 hasta el 09/10. El informe del Sprint 1 registra 0 de 2 al corte planificado. Jira marcó ECO-9 como `Listo` el 02/10, después de ese corte, y conserva la historia de la incidencia en Sprint 1 y Sprint 2; por eso la métrica dinámica actual de Sprint 1 muestra 1 de 2. El conector no expone un reporte histórico del sprint al 28/09; no se presenta esa métrica actual como velocidad histórica. ECO-15 permanece pendiente.
 
 ## Historial de cambios
 
@@ -30,6 +30,7 @@
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión del informe de estado del Sprint 1. |
 | 1.1.0 | 02/10/2026 | Alex Zorrilla | Se agregan diagramas Mermaid y tablas de análisis con los mismos datos; el contenido no cambia. |
 | 1.1.1 | 02/10/2026 | Alex Zorrilla | Se agregan las secciones de la plantilla de la consigna (historias completadas, demostración y pendientes). |
+| 1.1.2 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se aclara el corte planificado del Sprint 1 frente a la métrica dinámica actual de Jira y su cierre administrativo tardío. |
 
 ## Resumen ejecutivo
 
