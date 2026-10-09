@@ -15,7 +15,7 @@
 | Campo | Valor |
 |---|---|
 | Código del proyecto | PFA-TP2-ECOLOG-2026 |
-| Versión | 1.1.6 |
+| Versión | 1.1.8 |
 | Iteración reportada | ECO Sprint 2 |
 | Objetivo replanificado del sprint | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
 | Fuentes | Historial Git (`main`), cambios OpenSpec `registro-pedidos` y `autenticacion-mfa`, resultados de pruebas automatizadas, [Retrospectiva del Sprint 1](../04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
@@ -37,6 +37,7 @@
 | 1.1.5 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se limita la lectura de los 5 puntos al estado de Jira observado al corte del 02/10; no se presentan como velocidad aceptada antes de la revisión del sprint. |
 | 1.1.6 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se precisa que ECO-20 no tiene persona asignada en Jira al corte previo a la revisión. |
 | 1.1.7 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se explica el recorrido que ya puede completar Planificación en el sistema y se anotan sus límites de persistencia y acceso de demostración. |
+| 1.1.8 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se ordenan los próximos pasos como un flujo completo de generación de rutas, con datos persistentes, flota y optimización como partes que lo habilitan. |
 
 ## Resumen ejecutivo
 
@@ -75,8 +76,8 @@ Leyenda: 🟢 en control · 🟡 atención · 🔴 fuera de lo planificado.
 
 | **Riesgo** | **Responsable** | **Mitigación** |
 | -- | -- | -- |
-| **R-S2-01 — Motor de optimización sin iniciar** (RSK-02, exposición 15, Alta). HU-004 y HU-006 dependen de él y es el núcleo del valor del producto (VRPTW/Green VRP). | Alexander Daniel Hilario Talavera | Iniciar en el Sprint 3 un prototipo con OR-Tools y el benchmark EN-001 (50/100/150 pedidos); entregar resultados parciales antes que nada. |
-| **R-S2-02 — Concentración del trabajo de implementación en una persona.** Al corte inicial del 02/10, los primeros 8 commits del Sprint 2 en `main` eran de Alex Zorrilla. El historial consultado el 09/10 contenía 20 commits desde el 29/09: 12 de Alex y 8 de Anco Porras, Jhean Pier Julio, estos últimos de documentación; no se verificaron commits de implementación de los demás roles. | Alex Zorrilla | Asignar en el Sprint 3 un cambio OpenSpec por integrante (flota a backend, motor a optimización, mapa a frontend) con revisión cruzada por *pull request*. |
+| **R-S2-01 — Motor de optimización sin iniciar** (RSK-02, exposición 15, Alta). HU-004 y HU-006 dependen de él y es el núcleo del valor del producto (VRPTW/Green VRP). | Alexander Daniel Hilario Talavera | Incluir el motor y su benchmark EN-001 en la función de generar y guardar una ruta para Planificación; una optimización aislada no cuenta como flujo entregado. |
+| **R-S2-02 — Concentración del trabajo de implementación en una persona.** Al corte inicial del 02/10, los primeros 8 commits del Sprint 2 en `main` eran de Alex Zorrilla. El historial consultado el 09/10 contenía 20 commits desde el 29/09: 12 de Alex y 8 de Anco Porras, Jhean Pier Julio, estos últimos de documentación; no se verificaron commits de implementación de los demás roles. | Alex Zorrilla | Repartir en el Sprint 3 las partes del flujo funcional de generar una ruta (persistencia, flota, optimización e interfaz), integrarlas en una misma demo y revisarlas entre integrantes. |
 | **R-S2-03 — Persistencia en memoria y en archivo local.** Los pedidos se pierden al reiniciar y los secretos TOTP no están cifrados en reposo (RNF-04, RNF-06, RNF-11). | Anco Porras, Jhean Pier Julio | PostgreSQL + PostGIS con migraciones (EN-005) en el Sprint 3; los adaptadores ya están aislados detrás de puertos de repositorio. |
 | **R-S2-04 — Integración sin CI.** Las pruebas solo se ejecutan en local; una regresión podría llegar a `main` (RSK-07). | Jose Luis Isidro Casio | GitHub Actions con pruebas de backend y frontend obligatorias en cada *pull request* (EN-006). |
 | **R-S2-05 — Pérdida del autenticador.** Un usuario sin su teléfono no puede entrar; no existe restablecimiento del segundo factor. | Alex Zorrilla | Cambio OpenSpec posterior para restablecimiento por administrador con auditoría; mientras tanto, procedimiento manual documentado en el README. |
@@ -85,10 +86,9 @@ Leyenda: 🟢 en control · 🟡 atención · 🔴 fuera de lo planificado.
 ## Próximos avances
 
 1. **Para la revisión del 09/10:** confirmar el incremento y registrar los acuerdos; ECO-20 ya está en Jira sin puntos aprobados. Los archivos licenciados de Codec Pro siguen pendientes. El Sprint 2 se cerrará en Jira al finalizar su periodo el 12/10.
-2. **Sprint 3:** PostgreSQL + PostGIS con migraciones (EN-005) y adaptadores de repositorio reales para pedidos y usuarios.
-3. **Sprint 3:** gestión de flota (HU-003 y HU-009) como cambio OpenSpec, asignado al responsable de backend.
-4. **Sprint 3:** prototipo del motor de optimización y benchmark EN-001, prerrequisito de HU-004 y HU-006.
-5. **Sprint 3:** CI en GitHub Actions (EN-006) y aplicación del flujo acordado de ramas `feature/*` con PR hacia `main`; retirar `developer` cuando el equipo confirme la migración.
+2. **Propuesta para Sprint 3, aún sin aprobar:** que Planificación elija pedidos pendientes, los asigne a vehículos disponibles y genere una ruta guardada que pueda volver a consultar. Para lograr ese recorrido, el equipo tendría que combinar persistencia (EN-005), flota y restricciones (HU-003 y HU-009), generación de rutas y su benchmark (HU-004 y EN-001), además del trabajo de integración. La capacidad, los puntos y la división final se confirman en el Planning; no se cuentan piezas técnicas aisladas como incremento terminado.
+3. **Trabajo de calidad que acompaña ese flujo:** acordar cómo aplicar CI (EN-006), revisión cruzada y ramas breves en los PR; confirmar con el equipo la disposición de la rama `developer` antes de retirarla.
+4. El alcance propuesto para Sprint 4 y sus historias se revisa después de estimar Sprint 3; ver el [Plan funcional de sprints](../../02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md).
 
 ## Notas
 
