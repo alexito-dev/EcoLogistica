@@ -68,6 +68,8 @@ Jira ya refleja el Sprint 1 cerrado, el Sprint 2 activo y la historia ECO-20 de 
 
 ## 3. Capacidades y Módulos Funcionales
 
+El diagrama muestra el alcance objetivo del producto, no funcionalidades ya entregadas. Al 09/10/2026 están implementados la autenticación con MFA/roles y el registro y consulta de pedidos; flota, optimización, mapa, dashboard y re-enrutamiento siguen pendientes.
+
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
 │                      MÓDULOS DE ECOLogística HUANCAYO                  │
