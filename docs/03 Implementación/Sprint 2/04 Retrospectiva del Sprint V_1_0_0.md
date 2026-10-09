@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.6.0 |
+| Versión | 1.7.0 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026; revisión 09/10/2026) |
 | Fecha de la retrospectiva | 02/10/2026 (corte de mitad de sprint; se confirma en la reunión del 09/10) |
 | Facilitador | Alex Zorrilla |
@@ -29,6 +29,7 @@
 | 1.4.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza el estado de ECO-20: además de no tener estimación aprobada, Jira aún no muestra una persona asignada. |
 | 1.5.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se centra la acción de Sprint 3 en completar un recorrido de Planificación y se deja la tecnología como trabajo que habilita esa tarea. |
 | 1.6.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra que pedidos y ubicaciones ya sobreviven al reinicio con PostGIS; EN-005 sigue pendiente para usuarios, flota y rutas. |
+| 1.7.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea A10 con ECO-21 y se separa la persistencia de pedidos ya completada en ECO-16 del trabajo futuro. |
 
 ## Seguimiento de las acciones del Sprint 1
 
@@ -105,7 +106,7 @@
 | A7 | Registrar en Jira la historia de autenticación y estimar las 7 tarjetas faltantes con *Planning Poker*; actualizar el roadmap | Procesos | Jose Luis Isidro Casio | 09/10/2026 | Backlog completo y estimado; roadmap del Sprint 3 publicado |
 | A8 | Convertir el guion de demostración en pruebas extremo a extremo automatizadas (Playwright, previsto en el documento de stack) | Procesos | Jose Luis Isidro Casio | 23/10/2026 | Guion de 12 pasos ejecutándose en CI |
 | A9 | Configurar GitHub Actions con las pruebas de backend y frontend, el lint y la compilación en cada PR (EN-006) | Herramientas | Jose Luis Isidro Casio | 16/10/2026 | Pipeline en verde obligatorio para fusionar |
-| A10 | Completar EN-005 con PostgreSQL + PostGIS, `docker compose` y migraciones Alembic; ampliar los adaptadores de pedidos a usuarios, flota y rutas | Herramientas | Anco Porras, Jhean Pier Julio | 23/10/2026 | Pedidos y ubicaciones ya sobreviven al reinicio; verificar usuarios, flota y rutas y agregar comprobaciones de integración para esos flujos |
+| A10 | Completar EN-005 bajo ECO-21: persistir cuentas y proteger TOTP; guardar flota y rutas con migraciones | Herramientas | Anco Porras, Jhean Pier Julio | 23/10/2026 | ECO-16 guarda pedidos y ubicaciones tras reiniciar; ECO-21 sigue sin estimación ni sprint. Verificar los flujos pendientes y añadir sus comprobaciones de integración |
 | A11 | Agregar al README una sección de solución de problemas (caché de Vite, contraseña de demostración, puertos) | Herramientas | Jhoanna Hade Vera Zea | 12/10/2026 | Un integrante nuevo levanta la app sin ayuda |
 | A12 | Prototipo del motor con OR-Tools y benchmark EN-001 con 50, 100 y 150 pedidos | Procesos | Alexander Daniel Hilario Talavera | 23/10/2026 | Informe de tiempos y factibilidad publicado en `docs/` |
 
@@ -113,4 +114,4 @@
 
 ### Seguimiento de acuerdos
 
-El avance de estas acciones se revisa en el Daily y se reporta en el Informe de estado del Sprint 3. Las acciones vinculadas a impedimentos se cierran también en el registro: A6 → IMP-010; A7 → IMP-008; A10 → IMP-011; A12 → IMP-006.
+El avance de estas acciones se revisa en el Daily y se reporta en el Informe de estado del Sprint 3. Las acciones vinculadas a impedimentos se cierran también en el registro: A6 → IMP-010; A7 → IMP-008; A10 → IMP-011 y ECO-21; A12 → IMP-006.

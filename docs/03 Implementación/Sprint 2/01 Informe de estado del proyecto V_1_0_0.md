@@ -15,14 +15,14 @@
 | Campo | Valor |
 |---|---|
 | Código del proyecto | PFA-TP2-ECOLOG-2026 |
-| Versión | 1.1.8 |
+| Versión | 1.2.0 |
 | Iteración reportada | ECO Sprint 2 |
-| Objetivo replanificado del sprint | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
+| Objetivo replanificado del sprint | "Que Planificación inicie sesión con MFA, registre y consulte pedidos, y los conserve después de reiniciar la API." |
 | Fuentes | Historial Git (`main`), cambios OpenSpec `registro-pedidos` y `autenticacion-mfa`, resultados de pruebas automatizadas, [Retrospectiva del Sprint 1](../04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 | Documentos hermanos | [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [04 Retrospectiva del Sprint](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 | Sprint anterior | [Informe de estado del Sprint 1](../01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) |
 
-> **Actualización al 09/10/2026, antes de la revisión:** Jira mantiene el Sprint 2 id. 37 activo (29/09–12/10). Incluye ECO-9 / HU-001 (5 puntos) y ECO-20 / autenticación MFA (sin estimación aprobada ni persona asignada); ambas están `Listo`. La métrica dinámica actual cuenta 2/2 incidencias completadas (100 %); no representa aceptación del producto ni cierre del sprint. El informe del Sprint 1 registra 0 de 2 al corte planificado del 28/09. El historial muestra ECO-9 en `Listo` el 02/10, su paso a `Por hacer` al cerrar Sprint 1 a las 07:42 del 09/10 y su retorno a `Listo` a las 07:43 al añadirse también al Sprint 2; la métrica dinámica actual del Sprint 1 cuenta 1/2 por su estado vigente y la asociación doble. La revisión del Sprint 2 está prevista para hoy a las 15:40, hora de Lima; sus acuerdos y aceptación todavía están pendientes.
+> **Actualización al 09/10/2026, antes de la revisión:** Jira mantiene el Sprint 2 id. 37 activo (29/09–12/10) y su meta ahora incluye el recorrido completo hasta comprobar la persistencia tras reiniciar la API. Incluye ECO-9 / HU-001 (5 puntos), ECO-16 / persistencia de pedidos y ubicaciones (3 puntos) y ECO-20 / MFA (sin estimación aprobada ni persona asignada); las tres están `Listo`. El conteo dinámico actual es 3/3 incidencias; no representa aceptación del producto ni cierre del sprint. El informe del Sprint 1 registra 0 de 2 al corte planificado del 28/09. El historial muestra ECO-9 en `Listo` el 02/10, su paso a `Por hacer` al cerrar Sprint 1 a las 07:42 del 09/10 y su retorno a `Listo` a las 07:43 al añadirse también al Sprint 2; la métrica dinámica actual del Sprint 1 cuenta 1/2 por su estado vigente y la asociación doble. La revisión del Sprint 2 está prevista para hoy a las 15:40, hora de Lima; sus acuerdos y aceptación todavía están pendientes.
 
 ## Historial de cambios
 
@@ -39,6 +39,7 @@
 | 1.1.7 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se explica el recorrido que ya puede completar Planificación en el sistema y se anotan sus límites de persistencia y acceso de demostración. |
 | 1.1.8 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se ordenan los próximos pasos como un flujo completo de generación de rutas, con datos persistentes, flota y optimización como partes que lo habilitan. |
 | 1.1.9 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se integra y comprueba persistencia PostGIS para pedidos; se actualiza el riesgo y queda pendiente ampliar EN-005 a cuentas, flota y rutas. |
+| 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se incorpora ECO-16 al Sprint 2 con persistencia de pedidos y ubicaciones y se alinea la meta funcional del sprint en Jira; ECO-21 registra la ampliación pendiente de EN-005. |
 
 ## Resumen ejecutivo
 
@@ -52,7 +53,7 @@ Al inicio del sprint también se **ratificó el stack React + FastAPI** (Alterna
 
 | Variables de control | Descripción del estado |
 | --- | --- |
-| **Alcance** | 🟡 **1 historia de usuario completada: HU-001 / ECO-9 (5 pts), arrastrada del Sprint 1.** La historia técnica de **autenticación y autorización (RF-11.1)** también está completada y se registró como ECO-20 el 09/10, sin estimación de puntos. Avance del PMV: 1 de 11 historias de usuario originales (9 %). Del roadmap previsto (flota y motor) no se inició ningún ítem. |
+| **Alcance** | 🟡 **1 historia de usuario completada: HU-001 / ECO-9 (5 pts), arrastrada del Sprint 1.** La autenticación y autorización (ECO-20, sin estimación) y el habilitador de persistencia de pedidos y ubicaciones (ECO-16, 3 pts) también están en `Listo` en Jira. El avance de historias de usuario sigue en 1 de 11 originales (9 %); aún no se inició la flota ni el motor. |
 | **Cronograma** | 🟡 **Recuperando, con atraso respecto del roadmap.** Al 02/10 han transcurrido 5,6 de 15 semanas (37 % del tiempo) y el avance funcional es del 9 % de las historias. Jira mostraba HU-001 (5 puntos) en `Listo` al corte del 02/10; este dato es provisional y no constituye velocidad aceptada en la revisión. El motor de optimización (camino crítico de HU-004 y HU-006) aún no empieza; es el principal riesgo de plazo. |
 | **Costos** | 🟢 **Sin sobrecosto.** Gasto en infraestructura cloud a la fecha: S/ 0 (todo se ejecuta en local). Licencias: solo Jira, dentro de lo previsto. Las nuevas dependencias son de código abierto y sin costo (FastAPI, React, Argon2, PyOTP, PyJWT, Lucide y qrcode). Contingencia sin usar: S/ 5,843.40. |
 | **Calidad** | 🟢 **139 pruebas automatizadas en verde: 100 de backend (cobertura del 99 %) y 39 de frontend.** 4 defectos detectados por las pruebas y la verificación, y corregidos dentro del sprint (ver [Revisión](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)). Auditoría de la especificación de seguridad con 13 hallazgos, todos resueltos o declarados fuera de alcance. Validación estricta de OpenSpec, compilación de producción y linter correctos. |
@@ -79,7 +80,7 @@ Leyenda: 🟢 en control · 🟡 atención · 🔴 fuera de lo planificado.
 | -- | -- | -- |
 | **R-S2-01 — Motor de optimización sin iniciar** (RSK-02, exposición 15, Alta). HU-004 y HU-006 dependen de él y es el núcleo del valor del producto (VRPTW/Green VRP). | Alexander Daniel Hilario Talavera | Incluir el motor y su benchmark EN-001 en la función de generar y guardar una ruta para Planificación; una optimización aislada no cuenta como flujo entregado. |
 | **R-S2-02 — Concentración del trabajo de implementación en una persona.** Al corte inicial del 02/10, los primeros 8 commits del Sprint 2 en `main` eran de Alex Zorrilla. El historial consultado el 09/10 contenía 20 commits desde el 29/09: 12 de Alex y 8 de Anco Porras, Jhean Pier Julio, estos últimos de documentación; no se verificaron commits de implementación de los demás roles. | Alex Zorrilla | Repartir en el Sprint 3 las partes del flujo funcional de generar una ruta (persistencia, flota, optimización e interfaz), integrarlas en una misma demo y revisarlas entre integrantes. |
-| **R-S2-03 — Persistencia parcial y secretos locales.** Los pedidos ya se guardan en PostgreSQL/PostGIS; las cuentas siguen en archivo y los secretos TOTP no están cifrados en reposo (RNF-06). La flota y las rutas todavía no tienen tablas de aplicación. | Anco Porras, Jhean Pier Julio | Se completó el adaptador y la migración para pedidos. En el Sprint 3, ampliar EN-005 a cuentas, flota y rutas y resolver el cifrado de secretos antes de presentar esos datos como protegidos. |
+| **R-S2-03 — Persistencia parcial y secretos locales.** Los pedidos ya se guardan en PostgreSQL/PostGIS; las cuentas siguen en archivo y los secretos TOTP no están cifrados en reposo (RNF-06). La flota y las rutas todavía no tienen tablas de aplicación. | Anco Porras, Jhean Pier Julio | ECO-16 cubre pedidos y ubicaciones. ECO-21 registra la ampliación de EN-005 a cuentas, secretos TOTP, flota y rutas; estimación y sprint destino siguen pendientes. |
 | **R-S2-04 — Integración sin CI.** Las pruebas solo se ejecutan en local; una regresión podría llegar a `main` (RSK-07). | Jose Luis Isidro Casio | GitHub Actions con pruebas de backend y frontend obligatorias en cada *pull request* (EN-006). |
 | **R-S2-05 — Pérdida del autenticador.** Un usuario sin su teléfono no puede entrar; no existe restablecimiento del segundo factor. | Alex Zorrilla | Cambio OpenSpec posterior para restablecimiento por administrador con auditoría; mientras tanto, procedimiento manual documentado en el README. |
 | **R-S2-06 — Ámbito geográfico aproximado** (rectángulo configurable sin validar con el negocio, RF-02.2). | Alex Zorrilla | Validar límites con DistriRápido y migrar a polígono PostGIS con EN-005. |

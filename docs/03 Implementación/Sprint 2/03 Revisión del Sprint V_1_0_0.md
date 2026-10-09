@@ -10,9 +10,9 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.2.8 |
+| Versión | 1.2.9 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026) |
-| Objetivo replanificado | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
+| Objetivo replanificado | "Planificación inicia sesión con MFA, registra y consulta pedidos, y los datos siguen disponibles después de reiniciar la API." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
 | Ensayo de la demostración | 02/10/2026, contra los servidores locales (resultados en la sección *Demostración*) |
 | Participantes previstos | Equipo Scrum: Alex Zorrilla (líder / PM), Anco Porras, Jhean Pier Julio (backend), Alexander Daniel Hilario Talavera (optimización), Jhoanna Hade Vera Zea (frontend/UX), Jose Luis Isidro Casio (QA/DevOps). Docente asesor y *Product Owner* académico: Ing. Job Daniel Gamarra Moreno |
@@ -35,10 +35,11 @@
 | 1.2.6 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se deja lista una pauta para revisar el recorrido funcional, explicar sus límites y registrar la decisión sin adelantarla. |
 | 1.2.7 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se agrega una verificación API aislada de MFA, registro, consulta y rechazo de ventana inválida, separada del ensayo visual y de la aceptación pendiente. |
 | 1.2.8 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la comprobación aislada en PostGIS: el pedido permanece después de reiniciar la API; se ajusta la agenda de revisión y el alcance restante de EN-005. |
+| 1.2.9 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea la pauta con ECO-16 en Sprint 2, se deja EN-005 pendiente bajo ECO-21 y se actualizan los puntos observados en Jira. |
 
 ## Funciones implementadas; aceptación del Sprint 2 pendiente
 
-El ensayo de la demostración descrito abajo se hizo el 02/10. Jira muestra ECO-9 y ECO-20 en `Listo`, pero la reunión prevista para el 09/10 a las 15:40 aún no ocurre a este corte. Aquí, "cumple" describe la evidencia de implementación y pruebas; no significa que el Product Owner ya haya aceptado el sprint.
+El ensayo de la demostración descrito abajo se hizo el 02/10. Jira muestra ECO-9, ECO-16 y ECO-20 en `Listo`, pero la reunión prevista para el 09/10 a las 15:40 aún no ocurre a este corte. Aquí, "cumple" describe la evidencia de implementación y pruebas; no significa que el Product Owner ya haya aceptado el sprint.
 
 ### HU-001 / ECO-9 — Registrar pedido con ventana horaria (5 pts) · **Implementada; aceptación pendiente**
 
@@ -72,11 +73,16 @@ Incorporada al sprint como precondición de HU-001 y como actividad de la semana
 
 La especificación se **auditó antes de programar** con el prompt "Auditor Senior de Arquitectura de Software": 4 ambigüedades, 6 casos de borde y 3 preguntas de arquitectura, todos resueltos ([auditoría](../../../openspec/changes/archive/2026-10-02-autenticacion-mfa/auditoria-especificacion.md)). El cambio está **archivado** en OpenSpec y su especificación vive en `openspec/specs/autenticacion/`.
 
+### Habilitador técnico — Persistir pedidos y ubicaciones (ECO-16, 3 pts) · **Implementado; aceptación pendiente**
+
+ECO-16 se incorporó al Sprint 2 para que el pedido de HU-001 siga disponible después de reiniciar la API. Docker Compose provisiona PostgreSQL/PostGIS, Alembic crea las tablas `pedidos` y `ubicaciones`, y el adaptador de pedidos crea, lista, filtra y consulta los registros. Una comprobación funcional aislada verificó registro, listado, detalle, rechazo de ventana inválida y disponibilidad del mismo pedido después del reinicio. La comprobación fue manual; no hay una suite automatizada de integración para esta capa.
+
 ### Habilitadores completados
 
 | Habilitador | Evidencia |
 |---|---|
 | Base de código del backend (FastAPI por capas) y del frontend (React + Vite + TypeScript), con scripts de ejecución y prueba | `backend/`, `frontend/`, README sección 8 |
+| PostGIS para pedidos y ubicaciones, migración Alembic y comprobación después de reiniciar la API | [ECO-16](https://continental-team-ecologistica.atlassian.net/browse/ECO-16), `docker-compose.yml`, `database/migrations/`, [adaptador PostgreSQL](../../../backend/src/app/pedidos/postgres_repository.py) |
 | Ratificación del stack React + FastAPI y alineación de 5 documentos de la línea base (versión 1.1.0) | [10 Stack tecnológico](../../01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md) |
 | Flujo OpenSpec completo: 2 cambios con propuesta, especificación, diseño y tareas, ambos archivados; sus especificaciones viven en `openspec/specs/pedidos` y `openspec/specs/autenticacion` | `openspec/` |
 | 139 pruebas automatizadas (100 de backend con 99 % de cobertura y 39 de frontend) | `backend/tests/`, `frontend/tests/` |
@@ -143,7 +149,7 @@ Hasta que se complete esta tabla con lo que ocurra en la reunión, la aceptació
 | # | Pendiente | Tipo | Origen | Responsable | Destino |
 |---:|---|---|---|---|---|
 | 1 | La historia técnica se registró como ECO-20, sin puntos aprobados; faltan Planning Poker y crear las 7 tarjetas HU-004, HU-010, HU-011 y EN-001 a EN-004 | Gestión | [IMP-008](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jose Luis Isidro Casio · equipo | Antes del Planning del Sprint 3 |
-| 2 | Completar EN-005 / ECO-16 para persistir usuarios, flota y rutas; pedidos y ubicaciones ya están integrados | Habilitador | [IMP-011](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Anco Porras, Jhean Pier Julio | Sprint 3 |
+| 2 | Completar EN-005 / [ECO-21](https://continental-team-ecologistica.atlassian.net/browse/ECO-21) para persistir cuentas, proteger secretos TOTP, flota y rutas | Habilitador | [IMP-011](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Anco Porras, Jhean Pier Julio | Planning del Sprint 3; sin estimación ni compromiso |
 | 3 | Gestión de flota y restricciones vehiculares (HU-003, HU-009) | Historia | Roadmap del Sprint 2, no iniciado | Anco Porras, Jhean Pier Julio | Sprint 3 |
 | 4 | Prototipo del motor VRPTW y benchmark EN-001 (desbloquea HU-004 y HU-006) | Historia / habilitador | Roadmap; [IMP-006](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Alexander Daniel Hilario Talavera | Sprint 3 |
 | 5 | CI en GitHub Actions y ramas breves `feature/*` con *pull requests* hacia `main` (EN-006); retirar `developer` tras confirmar la migración | Habilitador | [IMP-010](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jose Luis Isidro Casio | Sprint 3 |
@@ -154,8 +160,9 @@ Hasta que se complete esta tabla con lo que ocurra en la reunión, la aceptació
 
 | Métrica | Sprint 1 al corte planificado | Sprint 2 al 09/10, antes de la revisión |
 |---|---:|---:|
-| Puntos de historias que alcanzaron la Definición de Hecho / están en `Listo` en Jira | 0 | 5 (estado de Jira; revisión pendiente) |
-| Historias técnicas en `Listo` en Jira | 0 | 1 (ECO-20; sin estimación aprobada) |
+| Puntos de historias que alcanzaron la Definición de Hecho / están en `Listo` en Jira | 0 | 5 (ECO-9; estado de Jira, revisión pendiente) |
+| Tareas técnicas en `Listo` en Jira | 0 | 2 (ECO-16: 3 pts; ECO-20: sin estimación aprobada) |
+| Puntos estimados en `Listo` en Jira | 0 | 8 (5 de ECO-9 + 3 de ECO-16; no es velocidad oficial) |
 | Velocidad oficial del Sprint 2 | 0 | Pendiente de revisión y cierre |
 
-El Sprint 2 continúa activo y su revisión está programada para el 09/10 a las 15:40, hora de Lima; por ello, el dato de 5 puntos en `Listo` todavía no es velocidad oficial ni aceptación del producto. No se calcula una velocidad promedio con un sprint pendiente de cierre y ECO-20 sin estimación aprobada. La proyección se actualizará en el Planning del Sprint 3 con el backlog estimado y la capacidad confirmada del equipo (ver [Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)).
+El Sprint 2 continúa activo y su revisión está programada para el 09/10 a las 15:40, hora de Lima; por ello, los 8 puntos estimados en `Listo` todavía no son velocidad oficial ni aceptación del producto. No se calcula una velocidad promedio con un sprint pendiente de cierre y ECO-20 sin estimación aprobada. La proyección se actualizará en el Planning del Sprint 3 con el backlog estimado y la capacidad confirmada del equipo (ver [Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)).

@@ -7,7 +7,7 @@
 | Campo | Valor |
 |---|---|
 | Proyecto | EcoLogística Huancayo |
-| Versión | 1.6.0 |
+| Versión | 1.7.0 |
 | Fecha | 09/10/2026 |
 | Enfoque | Cada sprint debe dejar una tarea real que una persona pueda completar en el sistema. |
 
@@ -22,7 +22,7 @@ Este plan ordena lo que ya ocurrió y propone cómo continuar. Los compromisos f
 | Sprint | Acción que se busca habilitar | Estado con evidencia al 09/10/2026 |
 |---|---|---|
 | **Sprint 1** · 14/09–28/09 | Que Planificación registre pedidos y atienda incidencias que cambian una ruta. | El informe del corte del 28/09 registró 0 de 2 historias terminadas. ECO-15, sobre re-enrutamiento, continúa pendiente. ECO-9 se completó después y se incorporó también al Sprint 2; ese avance posterior no cambia el resultado histórico del Sprint 1. |
-| **Sprint 2** · 29/09–12/10 | Que Planificación entre con contraseña y código de verificación, registre pedidos y luego pueda encontrarlos y consultar su detalle, incluso después de reiniciar la API. | La aplicación permite iniciar sesión con MFA y rol, registrar pedidos válidos, consultarlos y encontrarlos en la lista. Pedidos y coordenadas quedan en PostgreSQL/PostGIS; el recorrido se comprobó después de reiniciar la API en un entorno temporal aislado. Jira muestra ECO-9 y ECO-20 en `Listo`. El sprint sigue activo y su revisión todavía está pendiente; la aceptación formal no se da por hecha. Las cuentas de demostración siguen en el archivo local. |
+| **Sprint 2** · 29/09–12/10 | Que Planificación entre con contraseña y código de verificación, registre pedidos y luego pueda encontrarlos y consultar su detalle, incluso después de reiniciar la API. | La aplicación permite iniciar sesión con MFA y rol, registrar pedidos válidos, consultarlos y encontrarlos en la lista. Pedidos y coordenadas quedan en PostgreSQL/PostGIS; el recorrido se comprobó después de reiniciar la API en un entorno temporal aislado. Jira muestra ECO-9 (5 pts), ECO-16 (3 pts) y ECO-20 (sin estimación aprobada) en `Listo`. El sprint sigue activo y su revisión todavía está pendiente; la aceptación formal no se da por hecha. Las cuentas de demostración siguen en el archivo local. |
 | **Sprint 3** · propuesta, sin compromiso aprobado | Que Planificación registre su flota disponible, asigne pedidos pendientes y obtenga una ruta guardada para revisar. | El guardado de pedidos ya está resuelto. Para cerrar esta tarea faltan gestionar y persistir vehículos, completar las reglas de flota y generar una primera secuencia de paradas. EN-005 todavía debe cubrir las entidades que faltan; el optimizador se integra como parte de la ruta. Estimar y acordar el alcance con el equipo antes de comprometerlo en Jira. |
 | **Sprint 4** · propuesta, sin alcance detallado aprobado | Que una persona conductora consulte su ruta, marque una entrega y reporte una incidencia para que Planificación pueda revisar el cambio. | Confirmar flujo y prioridades con el equipo. El mapa, el cálculo de rutas y el re-enrutamiento se suman si son necesarios para completar esa tarea, no como entregables aislados. No hay fechas ni resultados aprobados para esta propuesta. |
 
@@ -48,14 +48,14 @@ La consulta de Jira del 09/10 muestra los ítems siguientes en `Por hacer`; ning
 
 | Parte del flujo | Historia o tarea | Estado en Jira | Puntos observados | Nota |
 |---|---|---|---:|---|
-| Persistir vehículos y rutas; ampliar EN-005 | EN-005 / ECO-16 | Por hacer | 3 | El guardado de pedidos ya se integró; falta cubrir las entidades que se usarán para planificar rutas. |
+| Completar EN-005 para cuentas, flota y rutas | EN-005 / [ECO-21](https://continental-team-ecologistica.atlassian.net/browse/ECO-21) | Por hacer | Sin estimación | ECO-16 ya cubre pedidos y ubicaciones. ECO-21 es nueva, todavía no estimada ni asignada a un sprint. |
 | Registrar vehículos y su disponibilidad | HU-003 / ECO-12 | Por hacer | 5 | Existe en Jira. |
 | Configurar límites y restricciones de la flota | HU-009 / ECO-19 | Por hacer | 5 | Existe en Jira. |
 | Generar la ruta | HU-004 | No creada | 8 propuestos | El puntaje aparece en el backlog documental; el equipo aún no lo aprueba. |
 | Medir el tiempo de generación | EN-001 | No creada | 5 propuestos | El puntaje es propuesta documental, no estimación acordada. |
 | Ejecutar CI en cada cambio | EN-006 / ECO-17 | Por hacer | 5 | Ayuda a revisar el incremento, pero no es por sí misma la función de Planificación. |
 
-La función de ruta suma **26 puntos candidatos** (13 observados en Jira y 13 todavía propuestos); si se incluye EN-006 en la misma iteración, serían 31. Estas cifras no son velocidad disponible ni compromiso de Sprint 3. Jira aún no tiene un Sprint 3 futuro, y la velocidad oficial de Sprint 2 depende de la revisión pendiente. En el Planning el equipo debe contrastar la capacidad real y acordar una meta que quepa. Si el flujo completo no cabe, hay que reordenar el alcance para que cada sprint termine con una acción útil en la aplicación; no cerrar solo la base de datos o el benchmark y llamarlo incremento funcional.
+La función de ruta suma **23 puntos candidatos** (10 observados en Jira y 13 todavía propuestos); si se incluye EN-006 en la misma iteración, serían 28. ECO-21 aún no tiene estimación y no está incluido en esa suma. Estas cifras no son velocidad disponible ni compromiso de Sprint 3. Jira aún no tiene un Sprint 3 futuro, y la velocidad oficial de Sprint 2 depende de la revisión pendiente. En el Planning el equipo debe contrastar la capacidad real y acordar una meta que quepa. Si el flujo completo no cabe, hay que reordenar el alcance para que cada sprint termine con una acción útil en la aplicación; no cerrar solo la base de datos o el benchmark y llamarlo incremento funcional.
 
 ## Qué tendría que poder hacerse al terminar Sprint 4
 
@@ -125,3 +125,4 @@ Esta definición sirve para juzgar el incremento de un sprint. No significa que 
 | 1.4.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se vincula cada paso que ya ofrece Sprint 2 con sus archivos de implementación y con la evidencia histórica de revisión. |
 | 1.5.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se incorpora una comprobación API actual y aislada del flujo MFA, registro y consulta de pedidos, distinguiéndola de la demo visual y de la aceptación del sprint. |
 | 1.6.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se integra PostgreSQL/PostGIS para pedidos, se comprueba que sobreviven al reinicio y se actualiza la propuesta de Sprint 3 para completar la persistencia de flota y rutas. |
+| 1.7.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea el Sprint 2 con ECO-16 y la persistencia verificada; ECO-21 registra el trabajo que queda para cuentas, flota y rutas. |

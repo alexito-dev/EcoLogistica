@@ -10,6 +10,8 @@ La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mi
 
 > **Actualización posterior de implementación (09/10/2026):** después de redactar los hallazgos iniciales de esta auditoría, se integraron PostgreSQL/PostGIS, una migración Alembic y el repositorio de pedidos y ubicaciones. Una comprobación aislada confirmó que un pedido sigue disponible después de reiniciar la API. Por eso, las frases siguientes que describen PostgreSQL, Docker Compose o `database/` como pendientes corresponden al corte de la auditoría inicial; el estado vigente se detalla en el [informe del Sprint 2](Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) y el [plan funcional](../02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md). Persistencia de cuentas, flota y rutas continúa pendiente. La aceptación formal del Sprint 2 permanece pendiente.
 
+> **Alineación posterior con Jira (09/10/2026, antes de la reunión):** se actualizó la meta del Sprint 2 para incluir el recorrido de registro y consulta de pedidos después de reiniciar la API. ECO-9 añadió ese criterio; ECO-16 se acotó a pedidos y ubicaciones, se agregó al Sprint 2 con 3 puntos y quedó en `Listo`. ECO-21 deja las cuentas, secretos TOTP, flota y rutas como trabajo pendiente, sin estimación ni sprint asignado. Jira muestra ahora 3/3 incidencias en `Listo` y 8 puntos estimados más ECO-20 sin puntos; esto no equivale a aceptación del Product Owner ni al cierre del sprint.
+
 > **Verificación de ejecución (09/10/2026, 08:51, hora de Lima):** el frontend en http://localhost:3000/ respondió HTTP 200 con HTML en español; la API en http://localhost:8000/openapi.json respondió HTTP 200 y entregó el esquema OpenAPI.
 
 - Se unifican al español las etiquetas de roles y las menciones genéricas a partes interesadas en README y artefactos afectados; se mantienen los nombres propios de herramientas, tecnologías y estándares.
@@ -34,7 +36,7 @@ La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mi
 | Iteración | Plan registrado | Resultado comprobado al 09/10/2026 |
 |---|---|---|
 | Sprint 1 · 14/09–28/09 | ECO-9 / HU-001 y ECO-15 / HU-006; 10 puntos. | El informe del Sprint 1 registra 0 de 2 al corte planificado del 28/09. Jira mantuvo el sprint id. 36 activo hasta el 09/10 a las 07:42. El historial de ECO-9 muestra `Listo` el 02/10, `Por hacer` al cerrarse el Sprint 1 y nuevamente `Listo` a las 07:43 al añadirse al Sprint 2; ECO-15 sigue `Por hacer`. La métrica dinámica actual de Jira muestra 1 de 2 y no reconstruye la velocidad al 28/09. |
-| Sprint 2 · 29/09–12/10 | Replanificación para entregar el primer incremento: HU-001 con autenticación y autorización MFA. | Jira sprint id. 37 activo: ECO-9 (5 puntos) y ECO-20 (MFA, sin estimación aprobada ni persona asignada), ambas `Listo`; la métrica dinámica cuenta 2/2 incidencias (100 %), no aceptación del producto. En la ejecución local del 09/10: 100 pruebas de backend aprobadas, 99 % de cobertura, 39 pruebas de frontend aprobadas y compilación de producción completada. Al corte anterior a la reunión de las 15:40, la revisión, la velocidad oficial y el cierre formal siguen pendientes. |
+| Sprint 2 · 29/09–12/10 | Replanificación para entregar el primer incremento: HU-001 con autenticación MFA y persistencia de pedidos. | Jira sprint id. 37 activo: ECO-9 (5 puntos), ECO-16 (persistencia, 3 puntos) y ECO-20 (MFA, sin estimación ni persona asignada), las tres `Listo`; la métrica dinámica cuenta 3/3 incidencias, no aceptación del producto. Al corte anterior a la reunión de las 15:40, la revisión, la velocidad oficial y el cierre formal siguen pendientes. |
 | Sprint 3 | Propuesta funcional: Planificación asigna pedidos pendientes a vehículos y revisa una ruta guardada. | Persistencia, flota y primera secuencia de paradas habilitan ese flujo; falta acordar y estimar las historias en Jira. No es un compromiso aprobado. |
 | Sprint 4 y cierre | El horizonte aprobado contempla cuatro iteraciones y una semana de cierre; el roadmap conserva dashboard, visor, seguridad, disponibilidad e integración/aceptación. | Alcance futuro de alto nivel; prioridades, compromisos y fechas detalladas del Sprint 4 aún no están aprobados. |
 
@@ -61,17 +63,18 @@ El backend registra **tres advertencias deprecadas** durante `pytest`. La compil
 
 ## Estado real de Jira `ECO`
 
-El tablero consultado fue `ECO board` (id. 2). Jira devuelve 8 tarjetas de tipo Epic, 9 historias y 2 tareas; `ECO-7` duplica la épica de re-enrutamiento `ECO-6`, por lo que el backlog tiene 7 épicas lógicas EP-01–EP-07. La historia técnica ECO-20 se registró el 09/10 sin puntos aprobados y continúa sin persona asignada al corte de esta auditoría.
+El tablero consultado fue `ECO board` (id. 2). En el corte inicial Jira devolvía 8 tarjetas de tipo Epic, 9 historias y 2 tareas; `ECO-7` duplica la épica de re-enrutamiento `ECO-6`, por lo que el backlog tiene 7 épicas lógicas EP-01–EP-07. Después se creó ECO-21, que eleva a 3 las tareas. ECO-20 continúa sin puntos aprobados ni persona asignada.
 
 1. El sprint id. 36 es el Sprint 1 oficial; se cerró administrativamente el 09/10 después de su fecha final del 28/09. El sprint id. 3 se renombró `ECO Sprint 1 (duplicado)` y su objetivo aclara que no es el sprint oficial. El historial de ECO-9 registra `Listo` el 02/10, `Por hacer` al cierre del Sprint 1 y `Listo` otra vez después de añadirse al Sprint 2. El informe dinámico actual cuenta la incidencia en Sprint 1 por el estado vigente y la asociación doble; el conector no expone el reporte histórico al 28/09.
-2. Se creó el Sprint 2 id. 37 con fechas 29/09–12/10 y la meta de HU-001 con MFA. ECO-9 / HU-001 (5 puntos) y ECO-20 / autenticación MFA están en el sprint y en estado `Listo`; ECO-20 permanece sin estimación y sin persona asignada.
+2. Se creó el Sprint 2 id. 37 con fechas 29/09–12/10. Después se actualizó su meta para incluir el registro/consulta persistente de pedidos. ECO-9 / HU-001 (5 puntos), ECO-16 / PostGIS para pedidos y ubicaciones (3 puntos) y ECO-20 / autenticación MFA están en el sprint y en estado `Listo`; ECO-20 permanece sin estimación ni persona asignada.
 3. ECO-15 / HU-006 está en `Por hacer`: no se encontró implementación de re-enrutamiento en el repositorio. Su historial de Sprint conserva la asignación al Sprint 1.
-4. El backlog no contiene HU-004, HU-010, HU-011 ni EN-001–EN-004. ECO-16 está estimada en 3 puntos y ECO-17 en 5.
+4. El backlog no contiene HU-004, HU-010, HU-011 ni EN-001–EN-004. ECO-17 está estimada en 5 puntos. ECO-21 se creó sin estimación para cuentas, TOTP, flota y rutas.
 5. El tablero conserva cinco columnas (`Por hacer`, `En curso`, `Listo`, `In Review / QA`, `Done`). `Listo` está mapeado a una categoría completada; `Done` está mapeado al estado `Finalizada`, que la configuración devuelve con categoría nueva.
 6. La consulta de versiones del proyecto devuelve cero; `v1.0.0-MVP` no existe como versión Jira.
 7. ECO-20 se creó el 09/10 bajo EP-07 para registrar autenticación MFA; quedó sin estimación ni persona asignada y en `Listo`, con criterios vinculados a RF-11.1.
 8. Las descripciones de ECO-16 y ECO-17 mencionaban Next.js/Nest.js. Se actualizaron el 09/10 para indicar React/Vite y FastAPI, documentar el estado real y mantener PostgreSQL/CI como pendientes.
 9. La verificación del 09/10 mostró que la configuración de cinco columnas y la ausencia de versiones de entrega persisten, pese a la confirmación comunicada el 02/10. Se reabrió IMP-003 y se incorporó al registro del Sprint 2.
+10. En la actualización posterior del 09/10, ECO-16 se reespecificó y agregó al Sprint 2 como persistencia funcional de pedidos y ubicaciones; ECO-21 separa el trabajo restante de EN-005. La meta de Sprint 2 ya pide comprobar los datos después de reiniciar la API.
 
 La imagen histórica que antes se llamaba `05-releases.png` muestra un resumen analítico del proyecto, no una versión de Jira. Se renombró a `05-resumen-analitico-historico.png`; la evidencia actual de versiones sigue pendiente.
 
@@ -142,3 +145,4 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 | 1.29.0 | 09/10/2026 | Se añade trazabilidad desde el flujo funcional de Sprint 2 hacia su código y la evidencia del ensayo histórico. |
 | 1.30.0 | 09/10/2026 | Se documenta la comprobación API aislada de Sprint 2 y se distingue del ensayo visual histórico y de la aceptación formal pendiente. |
 | 1.31.0 | 09/10/2026 | Se actualiza el corte de implementación: pedidos y ubicaciones ya se persisten en PostgreSQL/PostGIS; se corrigen referencias que aún lo marcaban pendiente. |
+| 1.32.0 | 09/10/2026 | Se actualizan Jira y los documentos de Sprint 2: ECO-16 entra en el sprint para persistencia de pedidos, y ECO-21 registra el alcance pendiente de EN-005. |
