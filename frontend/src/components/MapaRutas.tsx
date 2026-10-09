@@ -1,9 +1,9 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import type { VistaPrevia } from '../api/rutas'
 import { COLORES_RUTA } from '../lib/colores'
-
+import { trazarPorCalles, type Punto } from '../lib/trazado'
 
 const TILES = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
 const ATRIBUCION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -13,6 +13,18 @@ interface Props {
   /** Índice de la ruta resaltada; null muestra todas por igual. */
   seleccion: number | null
   onSeleccion: (indice: number | null) => void
+}
+
+/** Recorrido de cada ruta, con las paradas en orden y el regreso al depósito. */
+function recorridos(vista: VistaPrevia): Punto[][] {
+  const deposito: Punto = [vista.deposito.latitud, vista.deposito.longitud]
+  return vista.rutas.map((ruta) => [deposito, ...ruta.paradas.map((p): Punto => [p.latitud, p.longitud]), deposito])
+}
+
+/** Trazos por calles de una vista; `lineas[i]` es null si esa ruta se dibuja en línea recta. */
+interface Trazado {
+  para: VistaPrevia
+  lineas: (Punto[] | null)[]
 }
 
 function escapar(texto: string): string {
@@ -25,6 +37,18 @@ export default function MapaRutas({ vista, seleccion, onSeleccion }: Props) {
   const mapa = useRef<L.Map | null>(null)
   const capa = useRef<L.LayerGroup | null>(null)
   const encuadrada = useRef<VistaPrevia | null>(null)
+  const [trazado, setTrazado] = useState<Trazado | null>(null)
+
+  // Pide a OSRM el camino por calles de cada ruta; mientras llega (o si falla) se ven líneas rectas.
+  useEffect(() => {
+    const cancelar = new AbortController()
+    Promise.all(recorridos(vista).map((puntos) => trazarPorCalles(puntos, cancelar.signal))).then((lineas) => {
+      if (!cancelar.signal.aborted) setTrazado({ para: vista, lineas })
+    })
+    return () => cancelar.abort()
+  }, [vista])
+  const lineas = trazado?.para === vista ? trazado.lineas : null
+  const porCalles = lineas !== null && lineas.length > 0 && lineas.every((l) => l !== null)
 
   useEffect(() => {
     if (!contenedor.current) return
@@ -47,12 +71,12 @@ export default function MapaRutas({ vista, seleccion, onSeleccion }: Props) {
 
     const deposito: L.LatLngTuple = [vista.deposito.latitud, vista.deposito.longitud]
     const limites = L.latLngBounds([deposito])
+    const rectas = recorridos(vista)
 
     vista.rutas.forEach((ruta, i) => {
       const color = COLORES_RUTA[i % COLORES_RUTA.length]
       const activa = seleccion === null || seleccion === i
-      const puntos: L.LatLngTuple[] = [deposito, ...ruta.paradas.map((p) => [p.latitud, p.longitud] as L.LatLngTuple), deposito]
-      L.polyline(puntos, {
+      L.polyline(lineas?.[i] ?? rectas[i], {
         color,
         weight: activa ? 5 : 3,
         opacity: activa ? 0.9 : 0.2,
@@ -96,14 +120,21 @@ export default function MapaRutas({ vista, seleccion, onSeleccion }: Props) {
       m.fitBounds(limites, { padding: [36, 36], maxZoom: 15 })
       encuadrada.current = vista
     }
-  }, [vista, seleccion, onSeleccion])
+  }, [vista, seleccion, onSeleccion, lineas])
 
   return (
-    <div
-      ref={contenedor}
-      className="mapa"
-      role="region"
-      aria-label={`Mapa con ${vista.rutas.length} rutas propuestas desde ${vista.deposito.nombre}`}
-    />
+    <div className="mapa-envoltura">
+      <div
+        ref={contenedor}
+        className="mapa"
+        role="region"
+        aria-label={`Mapa con ${vista.rutas.length} rutas propuestas desde ${vista.deposito.nombre}`}
+      />
+      {vista.rutas.length > 0 && (
+        <p className="mapa__trazado" role="status">
+          {lineas === null ? 'Trazando por calles…' : porCalles ? 'Recorrido por calles · OSRM' : 'Líneas rectas: servicio de calles no disponible'}
+        </p>
+      )}
+    </div>
   )
 }

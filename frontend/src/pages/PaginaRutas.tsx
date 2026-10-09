@@ -143,8 +143,9 @@ export default function PaginaRutas() {
               </summary>
               <p>
                 Es una vista previa: agrupa los pedidos en los vehículos según su capacidad y busca el orden que cumple
-                las ventanas horarias con menos emisiones. El motor de optimización completo llegará en una próxima
-                iteración.
+                las ventanas horarias con menos emisiones. El dibujo sigue las calles con OSRM (código abierto sobre
+                OpenStreetMap); los kilómetros todavía se estiman en línea recta. El motor de optimización completo
+                llegará en una próxima iteración.
               </p>
               <ul>
                 {vista.supuestos.map((s) => (

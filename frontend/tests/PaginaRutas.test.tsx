@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import PaginaRutas from '../src/pages/PaginaRutas'
 import * as api from '../src/api/rutas'
+import * as trazado from '../src/lib/trazado'
 
 const parada: api.Parada = {
   orden: 1,
@@ -51,6 +52,8 @@ const vista: api.VistaPrevia = {
   supuestos: ['Velocidad media urbana de 25 km/h para estimar las llegadas.'],
 }
 
+// Sin red en las pruebas: el trazado por calles no responde y el mapa usa líneas rectas.
+beforeEach(() => vi.spyOn(trazado, 'trazarPorCalles').mockResolvedValue(null))
 afterEach(() => vi.restoreAllMocks())
 
 describe('PaginaRutas', () => {
@@ -64,6 +67,14 @@ describe('PaginaRutas', () => {
     expect(screen.getByText('1 parada(s) llegarían fuera de su ventana.')).toBeInTheDocument()
     expect(screen.getByText(/DR-1009/)).toBeInTheDocument()
     expect(screen.getByText('¿Cómo se calcula?')).toBeInTheDocument()
+    expect(await screen.findByText('Líneas rectas: servicio de calles no disponible')).toBeInTheDocument()
+  })
+
+  it('indica cuando el recorrido sigue las calles', async () => {
+    vi.spyOn(api, 'obtenerVistaPrevia').mockResolvedValue(vista)
+    vi.mocked(trazado.trazarPorCalles).mockResolvedValue([[-12.0651, -75.2049], [-12.07, -75.21]])
+    render(<PaginaRutas />)
+    expect(await screen.findByText('Recorrido por calles · OSRM')).toBeInTheDocument()
   })
 
   it('permite resaltar una ruta', async () => {
