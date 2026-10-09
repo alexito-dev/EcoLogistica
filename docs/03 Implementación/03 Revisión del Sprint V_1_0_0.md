@@ -10,24 +10,25 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.2.2 |
+| Versión | Fecha | Autor | Cambio |
 | Sprint | ECO Sprint 1 (14/09/2026 – 28/09/2026) |
 | Sprint Goal | "Registrar pedidos con ventana horaria y permitir reenrutar una ruta ante incidencia." |
 | Reunión de revisión | Inspección 2 — Sprint 01, 02/10/2026, 17:40–18:00 |
 | Asistentes | Equipo Scrum: Alex Zorrilla (líder / PM), Anco Porras, Jhean Pier Julio (backend), Alexander Daniel Hilario Talavera (optimización), Jhoanna Hade Vera Zea (frontend/UX), Jose Luis Isidro Casio (QA/DevOps). Docente asesor y *Product Owner* académico: Ing. Job Daniel Gamarra Moreno |
 | Documentos hermanos | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [04 Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 
-> **Vigencia del repositorio y del flujo (09/10/2026):** la estructura con database/ y Git Flow con main/developer descritos en la evidencia de esta revisión pertenecen al corte presentado el 02/10. En el árbol actual no existe database/, la persistencia PostgreSQL/PostGIS sigue pendiente y el flujo vigente usa ramas breves feature/* desde main con PR hacia main. Ver la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
+> **Vigencia del repositorio y del flujo (09/10/2026):** la evidencia de esta revisión del Sprint 1 corresponde al corte presentado el 02/10. Desde entonces existe `database/migrations/` y se integró persistencia PostgreSQL/PostGIS para pedidos y ubicaciones; usuarios, flota y rutas siguen pendientes. El flujo vigente usa ramas breves `feature/*` desde `main` con PR hacia `main`. Ver la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
 
 ## Historial de cambios
 
-| Versión | Fecha | Autor | Cambio |
+| Versión | 1.2.3 |
 |---|---|---|---|
 | 1.0.0 | 02/10/2026 | Alex Zorrilla | Primera emisión de la revisión del Sprint 1. |
 | 1.1.0 | 02/10/2026 | Alex Zorrilla | Se agregan diagramas Mermaid y tablas de análisis con los mismos datos; el contenido no cambia. |
 | 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se distingue la estructura y el flujo históricos de Sprint 1 de la configuración vigente del repositorio. |
 | 1.2.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se traducen las referencias narrativas a partes interesadas. |
 | 1.2.2 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se corrige la concordancia de género en las referencias a las partes interesadas. |
+| 1.2.3 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza la nota de vigencia para reflejar la persistencia parcial incorporada después de la revisión histórica. |
 
 ## Historias de Usuario completadas en este Sprint
 

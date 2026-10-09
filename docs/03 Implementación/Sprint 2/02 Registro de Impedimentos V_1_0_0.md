@@ -31,6 +31,7 @@
 | 1.1.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | IMP-010 adopta ramas breves `feature/*` desde `main` y PR hacia `main`; `developer`, la protección de rama y CI permanecen pendientes. |
 | 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se incorpora IMP-003 reabierto tras comprobar la configuración actual del tablero y la ausencia de versiones de entrega en Jira. |
 | 1.2.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se precisa que ECO-20 sigue sin estimación aprobada ni persona asignada al corte previo a la revisión. |
+| 1.2.2 | 09/10/2026 | Anco Porras, Jhean Pier Julio | IMP-011 pasa a En curso: pedidos y ubicaciones ya están en PostGIS; siguen pendientes usuarios, flota, rutas y cifrado de TOTP. |
 | 1.2.2 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se localiza en español la etiqueta del rol de facilitación del sprint. |
 
 ## Registro
@@ -43,7 +44,7 @@
 | IMP-008 | 18/09/2026 | **(Arrastrado del Sprint 1) Backlog de Jira incompleto y estimaciones sin validar.** Faltan HU-004, HU-010, HU-011 y EN-001 a EN-004. La historia técnica de autenticación ya se registró como ECO-20, sin estimación aprobada ni persona asignada al corte. **Impacto:** la velocidad y la capacidad del Sprint 3 no pueden calcularse con certeza. | Media | Jose Luis Isidro Casio | 12/10/2026 | En Espera | — | La regularización de Sprint 2 creó ECO-20 y mantuvo su estimación vacía y su asignación pendiente, sin inventar puntos ni responsable. Falta Planning Poker para ECO-20 y las siete tarjetas no creadas; no hay evidencia de que la sesión ya haya ocurrido. |
 | IMP-009 | 29/09/2026 | **Propuesta de stack aplicada sin evaluación.** El commit `3565685` (18/09) cambió en `main` la arquitectura a Next.js + Nest.js sin puntuarla en la matriz del documento de stack, que favorecía React + FastAPI (93 %). **Impacto:** cinco documentos de la línea base se contradecían con la matriz; no se podía empezar a programar sin saber el stack. | Alta | Alex Zorrilla | 02/10/2026 | Cerrado | 02/10/2026 | El líder ratificó la Alternativa A. Se revirtieron el Acta, RES-06, el Modelo C4, las Restricciones y el Stack (versión 1.1.0 con historial). Regla nueva: todo cambio de stack exige ADR y nueva matriz (sección 12 del documento 10). |
 | IMP-010 | 02/10/2026 | **Flujo de ramas sin aplicar de forma uniforme.** Los cambios del sprint se integraron directamente en `main` y la rama remota `developer` quedó desactualizada desde el 18/09. **Impacto:** falta revisión por *pull request* conforme a RES-17 y aumenta el riesgo de integrar defectos. | Media | Alex Zorrilla | 16/10/2026 | Abierto | — | Retirar `developer` como rama de integración y adoptar ramas breves `feature/*` desde `main`, con PR hacia `main`; configurar protección de rama y CI. Seguimiento en la acción A6 de la [Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md). |
-| IMP-011 | 02/10/2026 | **Sin base de datos PostgreSQL/PostGIS (EN-005).** Los pedidos se guardan en memoria y los usuarios en un archivo local. **Impacto:** los pedidos se pierden al reiniciar, los secretos TOTP no se cifran en reposo (RNF-06) y no se cumplen RNF-04 ni RNF-11; además, impide el visor cartográfico con consultas espaciales. | Alta | Anco Porras, Jhean Pier Julio | 23/10/2026 | Abierto | — | Los adaptadores ya están detrás de puertos de repositorio, así que la migración no toca el dominio. Planificado como primer cambio OpenSpec del Sprint 3, con `docker compose` y migraciones Alembic. |
+| IMP-011 | 02/10/2026 | **Persistencia parcial de datos (EN-005).** Pedidos y ubicaciones ya se guardan en PostgreSQL/PostGIS; las cuentas siguen en archivo, los secretos TOTP no se cifran en reposo y flota/rutas aún no tienen tablas de aplicación. **Impacto pendiente:** falta completar RNF-06 y guardar el resto de los datos operativos antes de usarlos para planificar. | Alta | Anco Porras, Jhean Pier Julio | 23/10/2026 | En curso | — | Se integraron `docker compose`, migración Alembic y adaptador PostgreSQL para pedidos/ubicaciones; la comprobación aislada confirmó que el pedido sigue al reiniciar la API. Completar EN-005 para usuarios, flota y rutas, y atender el almacenamiento seguro de TOTP en el flujo acordado. |
 | IMP-012 | 02/10/2026 | **Eventos de auditoría invisibles en ejecución real.** Durante la verificación extremo a extremo se detectó que los eventos de acceso no aparecían en la consola: las pruebas pasaban porque capturaban el registro internamente. **Impacto:** se habría incumplido el requisito de trazabilidad de accesos (base de RF-11.2) sin que las pruebas lo detectaran. | Alta | Alex Zorrilla | 02/10/2026 | Cerrado | 02/10/2026 | Se configuró el registro de la aplicación al arrancar y se agregó una prueba que lo verifica. Comprobado en el servidor real: los eventos salen en formato JSON y sin contraseñas ni tokens. |
 | IMP-013 | 02/10/2026 | **Tipografía Codec Pro sin archivos con licencia.** La guía visual exige Codec Pro, una fuente comercial que no está en el repositorio. **Impacto:** la interfaz usa la fuente del sistema; la identidad visual queda incompleta en la demostración. | Baja | Jhoanna Hade Vera Zea | 09/10/2026 | Abierto | — | Las reglas `@font-face` ya están listas; falta obtener la licencia y colocar los 4 archivos `.woff2` según `frontend/public/fonts/LEEME.md`. Alternativa: usar una fuente libre equivalente si no se consigue la licencia. |
 
@@ -52,7 +53,8 @@
 | Estado | Cantidad | Impedimentos |
 |---|---:|---|
 | Cerrado | 3 | IMP-007, IMP-009, IMP-012 |
-| Abierto | 5 | IMP-003, IMP-006, IMP-010, IMP-011, IMP-013 |
+| Abierto | 4 | IMP-003, IMP-006, IMP-010, IMP-013 |
+| En curso | 1 | IMP-011 |
 | En Espera | 1 | IMP-008 |
 | **Total** | **9** | |
 
@@ -70,7 +72,7 @@
 | IMP-006 | RSK-02 (rendimiento del motor) y RSK-04 (alcance y fechas) | RSK-02 se mantiene en exposición 15 (Alta) hasta tener el benchmark EN-001 |
 | IMP-009 | RSK-04 (cambios de requisitos) | Se agrega control: ADR obligatorio para cambios de arquitectura |
 | IMP-010 | RSK-07 (defectos de integración) | Se adelanta EN-006 (CI) al Sprint 3 |
-| IMP-011 | RSK-10 (pérdida de datos) y RSK-06 (exposición de datos) | Se adelanta EN-005 al Sprint 3 |
+| IMP-011 | RSK-10 (pérdida de datos) y RSK-06 (exposición de datos) | Se cerró la pérdida de pedidos al reiniciar; completar EN-005 para cuentas, flota y rutas en el Sprint 3. |
 
 ## Reglas de gestión
 

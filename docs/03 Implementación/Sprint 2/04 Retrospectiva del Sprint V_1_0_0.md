@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.5.0 |
+| Versión | 1.6.0 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026; revisión 09/10/2026) |
 | Fecha de la retrospectiva | 02/10/2026 (corte de mitad de sprint; se confirma en la reunión del 09/10) |
 | Facilitador | Alex Zorrilla |
@@ -28,6 +28,7 @@
 | 1.3.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se aclara el corte histórico de autoría de commits y se actualiza el dato con el historial de Git hasta el 09/10. |
 | 1.4.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza el estado de ECO-20: además de no tener estimación aprobada, Jira aún no muestra una persona asignada. |
 | 1.5.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se centra la acción de Sprint 3 en completar un recorrido de Planificación y se deja la tecnología como trabajo que habilita esa tarea. |
+| 1.6.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra que pedidos y ubicaciones ya sobreviven al reinicio con PostGIS; EN-005 sigue pendiente para usuarios, flota y rutas. |
 
 ## Seguimiento de las acciones del Sprint 1
 
@@ -87,7 +88,7 @@
 ### Herramientas
 
 - **Sin integración continua:** las 139 pruebas solo corren en la máquina de quien las ejecuta.
-- **Sin base de datos real:** la persistencia en memoria y en archivo local limita la demostración y la seguridad (IMP-011).
+- **La persistencia quedó a medias al cierre de esta actualización:** pedidos y ubicaciones ya se guardan en PostGIS, pero las cuentas siguen en archivo local y la flota/rutas aún no tienen tablas de aplicación (IMP-011).
 - **Las herramientas de desarrollo no están documentadas para todos:** el servidor de Vite conservó una versión vacía de los estilos y hubo que reiniciarlo. Hace falta una guía de solución de problemas en el README.
 - **Recursos de diseño incompletos:** falta la tipografía Codec Pro con licencia (IMP-013).
 
@@ -104,7 +105,7 @@
 | A7 | Registrar en Jira la historia de autenticación y estimar las 7 tarjetas faltantes con *Planning Poker*; actualizar el roadmap | Procesos | Jose Luis Isidro Casio | 09/10/2026 | Backlog completo y estimado; roadmap del Sprint 3 publicado |
 | A8 | Convertir el guion de demostración en pruebas extremo a extremo automatizadas (Playwright, previsto en el documento de stack) | Procesos | Jose Luis Isidro Casio | 23/10/2026 | Guion de 12 pasos ejecutándose en CI |
 | A9 | Configurar GitHub Actions con las pruebas de backend y frontend, el lint y la compilación en cada PR (EN-006) | Herramientas | Jose Luis Isidro Casio | 16/10/2026 | Pipeline en verde obligatorio para fusionar |
-| A10 | PostgreSQL + PostGIS con `docker compose` y migraciones Alembic; adaptadores de repositorio para pedidos y usuarios (EN-005) | Herramientas | Anco Porras, Jhean Pier Julio | 23/10/2026 | Los datos sobreviven al reinicio; pruebas de integración contra la base |
+| A10 | Completar EN-005 con PostgreSQL + PostGIS, `docker compose` y migraciones Alembic; ampliar los adaptadores de pedidos a usuarios, flota y rutas | Herramientas | Anco Porras, Jhean Pier Julio | 23/10/2026 | Pedidos y ubicaciones ya sobreviven al reinicio; verificar usuarios, flota y rutas y agregar comprobaciones de integración para esos flujos |
 | A11 | Agregar al README una sección de solución de problemas (caché de Vite, contraseña de demostración, puertos) | Herramientas | Jhoanna Hade Vera Zea | 12/10/2026 | Un integrante nuevo levanta la app sin ayuda |
 | A12 | Prototipo del motor con OR-Tools y benchmark EN-001 con 50, 100 y 150 pedidos | Procesos | Alexander Daniel Hilario Talavera | 23/10/2026 | Informe de tiempos y factibilidad publicado en `docs/` |
 

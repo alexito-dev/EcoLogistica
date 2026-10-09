@@ -10,6 +10,7 @@ from fastapi.responses import JSONResponse
 from app.auth.dependencias import get_repositorio_usuarios
 from app.auth.router import router as auth_router
 from app.config import get_settings
+from app.database_health import verificar_base_de_datos
 from app.errors import registrar_manejadores
 from app.pedidos.router import router as pedidos_router
 
@@ -31,6 +32,8 @@ async def ciclo_de_vida(app: FastAPI):
     # Carga el almacén de usuarios al arrancar (y siembra los de demostración si está vacío),
     # para que la contraseña generada aparezca en la consola apenas se inicia el servidor.
     get_repositorio_usuarios()
+    if get_settings().database_url:
+        verificar_base_de_datos()
     yield
 
 

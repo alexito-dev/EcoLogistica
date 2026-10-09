@@ -8,6 +8,8 @@ Esta auditoría contrasta la documentación versionada, el código y las depende
 
 La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mismo día, se regularizaron los sprints y la historia de autenticación en Jira y se verificó el resultado. Las pruebas y la compilación local también se ejecutaron el 09/10. El Sprint 2 continúa activo (29/09–12/10); la revisión de las 15:40, hora de Lima, aún está pendiente al corte de esta actualización.
 
+> **Actualización posterior de implementación (09/10/2026):** después de redactar los hallazgos iniciales de esta auditoría, se integraron PostgreSQL/PostGIS, una migración Alembic y el repositorio de pedidos y ubicaciones. Una comprobación aislada confirmó que un pedido sigue disponible después de reiniciar la API. Por eso, las frases siguientes que describen PostgreSQL, Docker Compose o `database/` como pendientes corresponden al corte de la auditoría inicial; el estado vigente se detalla en el [informe del Sprint 2](Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) y el [plan funcional](../02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md). Persistencia de cuentas, flota y rutas continúa pendiente. La aceptación formal del Sprint 2 permanece pendiente.
+
 > **Verificación de ejecución (09/10/2026, 08:51, hora de Lima):** el frontend en http://localhost:3000/ respondió HTTP 200 con HTML en español; la API en http://localhost:8000/openapi.json respondió HTTP 200 y entregó el esquema OpenAPI.
 
 - Se unifican al español las etiquetas de roles y las menciones genéricas a partes interesadas en README y artefactos afectados; se mantienen los nombres propios de herramientas, tecnologías y estándares.
@@ -19,9 +21,9 @@ La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mi
 - El nombre del integrante se normaliza en la documentación como **Anco Porras, Jhean Pier Julio**.
 - Las cuentas `@ecologistica.test` descritas para el acceso son solo de demostración local; no representan conexión con el correo institucional. El inicio de sesión aclara ahora que se usa una cuenta de acceso del sistema.
 - La línea base vigente es **React + Vite + TypeScript** en el frontend y **FastAPI + Python** en la API. La propuesta de Next.js/Nest.js se revirtió el 02/10/2026 y no es una alternativa vigente.
-- PostgreSQL/PostGIS, Leaflet/OpenStreetMap y el motor Python de optimización pertenecen a la arquitectura objetivo. No deben presentarse como componentes ya ejecutados.
-- Las herramientas de seguimiento y entrega son Jira (`ECO`) para backlog y sprints, GitHub para el repositorio y OpenSpec para especificaciones y cambios. PostgreSQL/PostGIS, mapas, optimización, Docker Compose y CI no forman parte del stack ejecutable actual.
-- El árbol del README se contrastó con el repositorio: `database/` aún no existe. `docs/04 Seguimiento y Control/` y `docs/05 Cierre/` sí existen, pero solo tienen `.gitkeep` y no contienen entregables; el README ahora distingue los directorios reservados de la documentación pendiente.
+- En el corte inicial de esta auditoría, PostgreSQL/PostGIS, Docker Compose, Leaflet/OpenStreetMap y el motor Python de optimización figuraban como pendientes. La actualización posterior incorporó PostgreSQL/PostGIS y Docker Compose solo para pedidos y ubicaciones; mapas y optimización continúan pendientes.
+- Jira (ECO), GitHub y OpenSpec cubren seguimiento, repositorio y especificaciones. PostgreSQL/PostGIS y Docker Compose ejecutan la persistencia parcial de pedidos y ubicaciones; mapas, optimización y CI continúan pendientes.
+- En el corte inicial, database/ aún no existía. Después se añadió database/migrations/ para pedidos y ubicaciones. docs/04 Seguimiento y Control/ y docs/05 Cierre/ siguen reservados y sin entregables; el README distingue esas carpetas de la documentación pendiente.
 - El diagrama de módulos del README queda etiquetado como alcance objetivo y enumera por separado los módulos implementados y los pendientes al 09/10.
 - `.env.example` y las instrucciones de instalación se contrastaron con `backend/src/app/config.py`, `frontend/vite.config.ts` y `frontend/package-lock.json`: se eliminaron variables de base de datos, mapas y optimización que el código actual ignora, se documentaron solo variables operativas y se actualizaron los comandos de PowerShell y el requisito real de Node para Vite 8.
 - El flujo de ramas se armonizó en README, OpenSpec, RES-17 y RST-ACA-02: ramas breves `feature/*` desde `main`, PR hacia `main`, sin `develop` obligatoria. La consulta Git del 09/10 muestra `developer` 29 commits detrás de `main` y sin commits propios; `docs/semana-3-entregables` está 45 commits detrás y 1 por delante, con un commit del 04/09 que añadió versiones iniciales de ocho documentos de Inicio ahora presentes y revisados en `main`. No se integran ni eliminan ramas remotas sin confirmar su destino con el equipo. La protección de `main`, revisión obligatoria y CI siguen pendientes; `gh auth status` indica que esta sesión no está autenticada y no permitió leer la configuración de protección.
@@ -42,7 +44,7 @@ El plan funcional ahora incluye criterios de revisión ligados a HU-003, HU-004,
 
 El [informe del Sprint 2](Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) también deja los siguientes pasos bajo la meta de generar una ruta que Planificación pueda consultar. La persistencia, la flota, el optimizador y la integración figuran como partes necesarias de ese recorrido, sujetas a la capacidad del equipo.
 
-La [revisión del Sprint 2](Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) tiene ahora una pauta para comprobar acceso MFA, registro y consulta de pedidos, explicar la pérdida de datos al reiniciar y anotar la decisión del Product Owner cuando ocurra la reunión. La aceptación sigue marcada como pendiente.
+La [revisión del Sprint 2](Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) tiene ahora una pauta para comprobar acceso MFA, registro y consulta de pedidos, reiniciar la API y verificar que el pedido siga disponible y anotar la decisión del Product Owner cuando ocurra la reunión. La aceptación sigue marcada como pendiente.
 
 El 09/10 se verificó el recorrido API de Sprint 2 en una instancia temporal separada: MFA, registro, consulta y rechazo de una ventana inválida. La cuenta y el pedido de prueba se eliminaron con el almacenamiento aislado. El resultado no se presenta como validación visual del frontend ni como aceptación formal.
 
@@ -102,7 +104,7 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 - Definir si las cuatro iteraciones del Acta son periodos macro o si corresponden uno a uno con sprints; luego calendarizar Sprint 3 y 4 sin alterar las fechas históricas.
 - Completar las tarjetas faltantes, confirmar estimaciones y decidir cuándo crear la versión `v1.0.0-MVP`.
 - Después de la revisión del Sprint 2 y de confirmar los acuerdos del equipo, actualizar su informe, revisión y retrospectiva con resultados y evidencia final.
-- Mantener PostgreSQL/PostGIS, optimización, mapa, dashboard y CI como pendientes hasta implementar y verificar cada incremento.
+- Completar la persistencia de cuentas, flota y rutas; implementar y verificar los recorridos de mapas, optimización, dashboard y CI según el plan funcional.
 
 ## Historial de cambios
 
@@ -139,3 +141,4 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 | 1.28.0 | 09/10/2026 | Se actualiza el plan funcional con el estado y el tamaño observado del backlog candidato de Sprint 4, manteniendo pendiente su Planning. |
 | 1.29.0 | 09/10/2026 | Se añade trazabilidad desde el flujo funcional de Sprint 2 hacia su código y la evidencia del ensayo histórico. |
 | 1.30.0 | 09/10/2026 | Se documenta la comprobación API aislada de Sprint 2 y se distingue del ensayo visual histórico y de la aceptación formal pendiente. |
+| 1.31.0 | 09/10/2026 | Se actualiza el corte de implementación: pedidos y ubicaciones ya se persisten en PostgreSQL/PostGIS; se corrigen referencias que aún lo marcaban pendiente. |

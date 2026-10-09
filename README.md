@@ -53,9 +53,9 @@ Desarrollar e implementar un PMV web que optimice las rutas de distribución urb
 
 ### 2.4. Estado verificado del proyecto al 09/10/2026
 
-La línea base tecnológica vigente es **React + Vite + TypeScript** para la interfaz y **FastAPI + Python** para la API. El modelo objetivo incorpora PostgreSQL/PostGIS, Leaflet/OpenStreetMap y un motor Python de optimización; esos tres componentes todavía no están implementados en el repositorio. La matriz y el alcance están en [10. Stack tecnológico](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md).
+La línea base tecnológica vigente es **React + Vite + TypeScript** para la interfaz, **FastAPI + Python** para la API y **PostgreSQL/PostGIS** para pedidos y ubicaciones. Todavía faltan persistir usuarios, flota y rutas, además de Leaflet/OpenStreetMap y el motor de optimización. La matriz y el alcance están en [10. Stack tecnológico](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md).
 
-El código disponible entrega autenticación con verificación TOTP y roles, además del registro, consulta y listado de pedidos. La ejecución del 09/10/2026 registró **100 pruebas de backend aprobadas, 99 % de cobertura y 39 pruebas de frontend aprobadas**; la compilación de producción terminó correctamente, con avisos porque los archivos de la fuente Codec Pro no están incluidos. Este estado no implica persistencia PostgreSQL, optimización de rutas ni despliegue continuo.
+El sistema permite entrar con TOTP y roles, registrar pedidos, volver a encontrarlos y consultar su detalle. Los pedidos y sus coordenadas se guardan en PostgreSQL/PostGIS y se comprobó que siguen ahí tras reiniciar la API. La ejecución anterior del 09/10/2026 registró **100 pruebas de backend aprobadas, 99 % de cobertura y 39 pruebas de frontend aprobadas**; la compilación de producción terminó correctamente, con avisos porque faltan los archivos de la fuente Codec Pro. Aún no hay optimización de rutas ni despliegue continuo.
 
 | Sprint | Plan comprometido | Resultado documentado |
 |---|---|---|
@@ -151,7 +151,7 @@ EcoLogistica/
 ├── assets/                        # Logotipo y evidencias de Jira
 ├── backend/
 │   ├── src/app/auth/              # Autenticación, MFA, roles y auditoría
-│   ├── src/app/pedidos/           # Dominio, API y repositorio en memoria
+│   ├── src/app/pedidos/           # Dominio, API y repositorios en memoria y PostgreSQL/PostGIS
 │   └── tests/                     # Pruebas de API, servicios y dominio
 ├── docs/
 │   ├── 01 Inicio/                 # Acta, alcance, requisitos y arquitectura
@@ -221,18 +221,24 @@ En PowerShell, desde la raíz del repositorio:
 Copy-Item .env.example .env
 ```
 
-El archivo contiene solo variables leídas por la implementación actual: CORS, ámbito geográfico, autenticación y URL de la API. No configures una base de datos aquí: PostgreSQL/PostGIS aún no está integrado.
+El archivo incluye CORS, ámbito geográfico, autenticación y conexión local a PostgreSQL/PostGIS. Antes de levantar la base, reemplaza `REEMPLAZAR_POR_UN_SECRETO_ALEATORIO` por una clave aleatoria en `POSTGRES_PASSWORD` y `DATABASE_URL`. `.env` está ignorado por Git; no subas ese archivo.
 
 ### 8.3. Despliegue Local
 
-Requisitos: Python 3.10+ y Node.js 20.19+ o 22.12+ (requisito de Vite 8 según `frontend/package-lock.json`).
+Requisitos: Python 3.10+, Node.js 20.19+ o 22.12+ (requisito de Vite 8 según `frontend/package-lock.json`) y Docker Desktop.
 
 ```powershell
-# Backend (FastAPI): http://localhost:8000; OpenAPI: http://localhost:8000/docs
+# Desde la raíz, una vez configurados POSTGRES_PASSWORD y DATABASE_URL en .env:
+docker compose up -d database
+
+# Backend: crea/actualiza el esquema y arranca FastAPI
 Set-Location backend
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\alembic.exe -c alembic.ini upgrade head
 .\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir src --reload --port 8000
+
+# API y OpenAPI: http://localhost:8000 y http://localhost:8000/docs
 
 # Frontend (React + Vite), en otra terminal: http://localhost:3000
 Set-Location frontend
@@ -287,8 +293,7 @@ Requiere sesión (`401`) y rol (`403`). Errores: `400` formato o tipo inválido,
 
 Implementado con OpenSpec en los cambios `registro-pedidos` (registrar, consultar y listar pedidos) y `autenticacion-mfa` (acceso con verificación en dos pasos y permisos por rol; incluye la auditoría de su especificación en `openspec/changes/archive/2026-10-02-autenticacion-mfa/auditoria-especificacion.md`). Límites conocidos, pendientes de otros cambios:
 
-- Persistencia **en memoria** (se pierde al reiniciar); el adaptador PostgreSQL/PostGIS llegará con EN-005.
-- Usuarios en un archivo local (`backend/.data/`) y secretos TOTP sin cifrar en reposo hasta EN-005; sin recuperación del segundo factor ni consulta de la auditoría desde la interfaz.
+- Pedidos y ubicaciones se guardan en PostgreSQL/PostGIS. Las cuentas de demostración siguen en `backend/.data/` y los secretos TOTP aún no se cifran en reposo; tampoco hay recuperación del segundo factor ni consulta de auditoría desde la interfaz. Esa parte de EN-005 sigue pendiente.
 - El ámbito geográfico es un rectángulo de aproximación configurable en `.env` (`AMBITO_*`), por validar con el negocio.
 - La fuente **Codec Pro** es comercial: ver `frontend/public/fonts/LEEME.md`; sin ella se usa la fuente del sistema.
 

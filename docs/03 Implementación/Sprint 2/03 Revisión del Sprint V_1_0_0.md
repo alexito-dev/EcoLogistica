@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.2.7 |
+| Versión | 1.2.8 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026) |
 | Objetivo replanificado | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
@@ -34,6 +34,7 @@
 | 1.2.5 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se aclara que `Listo` y las pruebas documentadas respaldan la implementación, mientras la aceptación del Sprint 2 sigue pendiente de su reunión. |
 | 1.2.6 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se deja lista una pauta para revisar el recorrido funcional, explicar sus límites y registrar la decisión sin adelantarla. |
 | 1.2.7 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se agrega una verificación API aislada de MFA, registro, consulta y rechazo de ventana inválida, separada del ensayo visual y de la aceptación pendiente. |
+| 1.2.8 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la comprobación aislada en PostGIS: el pedido permanece después de reiniciar la API; se ajusta la agenda de revisión y el alcance restante de EN-005. |
 
 ## Funciones implementadas; aceptación del Sprint 2 pendiente
 
@@ -95,6 +96,8 @@ Demostración a las *partes interesadas* de las funcionalidades implementadas. G
 
 **Comprobación API del 09/10, 09:34 (hora de Lima):** en una instancia temporal aparte, sin alterar el servidor local ni sus cuentas, se completó el ingreso con MFA, el registro de un pedido válido (201), su listado por estado y consulta por identificador (200), y el rechazo de una ventana inválida (422). La cuenta y el pedido eran datos de prueba aislados; el archivo temporal se eliminó al terminar. Esto verifica el recorrido de la API, no la interfaz React en un navegador ni la aceptación del Product Owner.
 
+**Comprobación de persistencia del 09/10:** en una segunda base PostGIS temporal, sin volumen y separada de los datos locales, se inició sesión con MFA, se registró y consultó un pedido, se rechazó una ventana inválida y se reinició FastAPI. Después del reinicio, el mismo pedido volvió a aparecer en el listado y en su detalle. El contenedor y la cuenta temporal se retiraron al terminar. Esta comprobación cubre API y base de datos, no la vista del navegador ni la aceptación del Product Owner.
+
 | # | Paso de la demostración | Resultado esperado | Resultado del ensayo |
 |---:|---|---|---|
 | 1 | Abrir la app sin sesión | Pantalla "Iniciar sesión" | Correcto |
@@ -124,7 +127,7 @@ Antes de mostrar el flujo, confirmar que el equipo tiene a mano una cuenta de Pl
 | Registrar un pedido válido y ver el código de confirmación. | Pendiente | — |
 | Mostrar cómo se rechaza una ventana horaria inválida. | Pendiente | — |
 | Encontrar el pedido en la lista, buscarlo o filtrarlo y abrir su detalle. | Pendiente | — |
-| Explicar que, por ahora, los pedidos se pierden al reiniciar la API. | Pendiente | Acordar si este límite se acepta para el incremento de demostración o requiere trabajo antes de darlo por aceptado. |
+| Reiniciar la API y confirmar que el pedido conserva código, estado y detalle. | Pendiente | El flujo ya se comprobó en una base temporal aislada; repetirlo durante la revisión y registrar comentarios del Product Owner. |
 
 | Decisión del Product Owner sobre el incremento | Pendiente de registrar |
 |---|---|
@@ -140,7 +143,7 @@ Hasta que se complete esta tabla con lo que ocurra en la reunión, la aceptació
 | # | Pendiente | Tipo | Origen | Responsable | Destino |
 |---:|---|---|---|---|---|
 | 1 | La historia técnica se registró como ECO-20, sin puntos aprobados; faltan Planning Poker y crear las 7 tarjetas HU-004, HU-010, HU-011 y EN-001 a EN-004 | Gestión | [IMP-008](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jose Luis Isidro Casio · equipo | Antes del Planning del Sprint 3 |
-| 2 | PostgreSQL + PostGIS con migraciones y adaptadores reales (EN-005 / ECO-16) | Habilitador | [IMP-011](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Anco Porras, Jhean Pier Julio | Sprint 3 |
+| 2 | Completar EN-005 / ECO-16 para persistir usuarios, flota y rutas; pedidos y ubicaciones ya están integrados | Habilitador | [IMP-011](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Anco Porras, Jhean Pier Julio | Sprint 3 |
 | 3 | Gestión de flota y restricciones vehiculares (HU-003, HU-009) | Historia | Roadmap del Sprint 2, no iniciado | Anco Porras, Jhean Pier Julio | Sprint 3 |
 | 4 | Prototipo del motor VRPTW y benchmark EN-001 (desbloquea HU-004 y HU-006) | Historia / habilitador | Roadmap; [IMP-006](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Alexander Daniel Hilario Talavera | Sprint 3 |
 | 5 | CI en GitHub Actions y ramas breves `feature/*` con *pull requests* hacia `main` (EN-006); retirar `developer` tras confirmar la migración | Habilitador | [IMP-010](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) | Jose Luis Isidro Casio | Sprint 3 |
