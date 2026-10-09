@@ -7,7 +7,7 @@
 | Campo | Valor |
 |---|---|
 | Proyecto | EcoLogística Huancayo |
-| Versión | 1.0.0 |
+| Versión | 1.1.0 |
 | Fecha | 09/10/2026 |
 | Enfoque | Cada sprint debe dejar una tarea real que una persona pueda completar en el sistema. |
 
@@ -25,6 +25,38 @@ Este plan ordena lo que ya ocurrió y propone cómo continuar. Los compromisos f
 | **Sprint 2** · 29/09–12/10 | Que Planificación entre con contraseña y código de verificación, registre pedidos y luego pueda encontrarlos y consultar su detalle. | La aplicación ya permite iniciar sesión con MFA y rol, registrar pedidos válidos y consultar, buscar, filtrar y abrir pedidos. La API y la interfaz respondieron localmente; Jira muestra ECO-9 y ECO-20 en `Listo`. El sprint sigue activo y su revisión todavía está pendiente: no se afirma aceptación formal. Los pedidos se guardan en memoria y se pierden al reiniciar la API. |
 | **Sprint 3** · propuesta, sin compromiso aprobado | Que Planificación asigne pedidos pendientes a vehículos y obtenga una ruta guardada para revisar. | Para que esa tarea funcione de principio a fin harán falta persistencia, datos de flota y una primera secuencia de paradas. Evaluar PostGIS y el optimizador como parte de esa entrega, según la solución acordada. Preparar y estimar las historias con el equipo antes de cargarlas como compromiso en Jira. |
 | **Sprint 4** · propuesta, sin alcance detallado aprobado | Que una persona conductora consulte su ruta, marque una entrega y reporte una incidencia para que Planificación pueda revisar el cambio. | Confirmar flujo y prioridades con el equipo. El mapa, el cálculo de rutas y el re-enrutamiento se suman si son necesarios para completar esa tarea, no como entregables aislados. No hay fechas ni resultados aprobados para esta propuesta. |
+
+## Qué tendría que poder hacerse al terminar Sprint 3
+
+**Meta propuesta:** Planificación registra la flota disponible, elige pedidos pendientes y genera una ruta que después puede volver a abrir.
+
+Para lograrlo, el equipo tendría que trabajar juntas las historias ya definidas para configurar vehículos y restricciones (HU-003 y HU-009), generar una ruta (HU-004), y el habilitador de persistencia (EN-005). El benchmark del motor (EN-001) ayuda a saber si esa ruta se puede generar dentro del tiempo acordado. La base de datos, el optimizador y las migraciones son parte del recorrido porque sin ellos no se puede guardar ni calcular la ruta; no son el resultado que se le muestra a quien planifica.
+
+**Criterios para revisar la propuesta:**
+
+1. Planificación puede registrar un vehículo disponible con su capacidad y restricciones, y volver a consultar esos datos.
+2. Con pedidos pendientes y vehículos disponibles, Planificación solicita una ruta y el sistema muestra el vehículo elegido, el orden de las paradas, la carga y las ventanas horarias que tuvo en cuenta.
+3. La ruta queda guardada y sigue apareciendo después de reiniciar la aplicación.
+4. Si no hay una combinación posible, el sistema explica qué pedido, ventana o capacidad impide crearla; no asigna una ruta parcial como si estuviera lista.
+5. La generación se mide contra el objetivo de tiempo del backlog (≤45 segundos) usando el volumen y los casos que el equipo acuerde para EN-001. No se publica un resultado de rendimiento hasta medirlo.
+
+En la demo se empieza con pedidos reales ingresados durante la revisión o con datos claramente identificados como datos de prueba; no se presentan ejemplos ficticios como operaciones de DistriRápido. Esta propuesta todavía necesita estimación, capacidad y aprobación del equipo antes de convertirse en compromiso de Jira.
+
+## Qué tendría que poder hacerse al terminar Sprint 4
+
+**Meta propuesta:** Conducción abre su ruta asignada, marca el avance de cada entrega y reporta una incidencia; Planificación puede ver el cambio y actuar.
+
+El flujo reúne la consulta de la ruta en el mapa (HU-005), el registro de estados de entrega (HU-010) y, si el equipo confirma su alcance, el re-enrutamiento ante una incidencia (HU-006). Son propuestas basadas en el backlog existente, no historias ya aceptadas para el Sprint 4.
+
+**Criterios para revisar la propuesta:**
+
+1. La persona conductora solo ve la ruta que tiene asignada y puede consultar sus paradas en orden.
+2. Puede marcar el estado permitido para cada entrega —`En ruta`, `Entregado`, `Incidencia` o `Cancelado`, según la HU-010— y el cambio se conserva.
+3. Al reportar una incidencia en una ruta activa, Planificación ve cuál fue el problema. Si se habilita el re-enrutamiento, el sistema presenta la nueva secuencia y conserva el historial de lo ya entregado.
+4. Un pedido o una ruta que no se pueden reasignar se muestran con una explicación; el sistema no oculta la incidencia ni cambia silenciosamente el plan.
+5. Los indicadores de puntualidad, distancia o emisiones solo se muestran como resultados cuando se calculan con datos y reglas acordados; no se rellenan con cifras inventadas.
+
+La decisión de incluir mapa, re-enrutamiento y comparación de rutas debe tomarse en el Planning después de estimar HU-005, HU-006, HU-010 y HU-011 y revisar las dependencias con lo entregado en Sprint 3.
 
 ## Qué incluye hoy el incremento del Sprint 2
 
@@ -47,3 +79,4 @@ Esta definición sirve para juzgar el incremento de un sprint. No significa que 
 | Versión | Fecha | Autor | Cambio |
 |---|---|---|---|
 | 1.0.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se ordenan los sprints por la tarea que la persona podrá completar y se distingue el estado comprobado de las propuestas futuras. |
+| 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se detallan los flujos propuestos para Sprint 3 y 4 con criterios de revisión ligados a las historias del backlog, sin inventar fechas ni estimaciones. |

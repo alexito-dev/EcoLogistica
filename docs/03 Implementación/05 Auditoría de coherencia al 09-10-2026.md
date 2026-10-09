@@ -38,6 +38,8 @@ La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mi
 
 Para mantener el trabajo futuro centrado en lo que alguien podrá hacer en la aplicación, se añadió el [Plan funcional de sprints](../02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md). Allí se distingue el Sprint 1 histórico, el recorrido que ya ofrece Sprint 2 y las propuestas de Sprint 3 y 4, que todavía deben acordarse. La definición de cierre de sprint ya no exige desplegar cada historia a staging; la salida operativa del PMV mantiene sus propios requisitos.
 
+El plan funcional ahora incluye criterios de revisión ligados a HU-003, HU-004, HU-005, HU-006, HU-009, HU-010 y EN-001/EN-005. Así, el trabajo de persistencia, flota, optimización y mapa queda dentro de recorridos de usuario, sin tratar esos componentes como entregas de valor por separado. La capacidad y el alcance de Sprint 3 y 4 siguen por estimar y aprobar.
+
 El backend registra **tres advertencias deprecadas** durante `pytest`. La compilación frontend concluye, pero avisa que los archivos licenciados Codec Pro `.woff2` no están disponibles. La compilación y las pruebas no prueban una revisión visual extremo a extremo ni despliegue continuo.
 
 ## Consistencia de calendario y presupuesto
@@ -119,3 +121,4 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 | 1.20.0 | 09/10/2026 | Se completa el historial de cambios de tres documentos de Inicio y Planificación y se actualiza la verificación de los 54 archivos Markdown versionados. |
 | 1.21.0 | 09/10/2026 | Se alinea la planificación futura a recorridos de usuario, se documentan los límites funcionales del Sprint 2 y se registra el plan funcional de sprints; la revisión del Sprint 2 sigue pendiente. |
 | 1.22.0 | 09/10/2026 | Se alinea la acción de planificación del Sprint 3 y su fila de auditoría al flujo completo propuesto para Planificación. |
+| 1.23.0 | 09/10/2026 | Se amplían los criterios funcionales de las propuestas de Sprint 3 y 4 y se los enlaza con las historias existentes del backlog. |
