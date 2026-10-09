@@ -11,7 +11,7 @@ La auditoría inicial de Jira fue de solo lectura el 09/10/2026. Después, el mi
 > **Verificación de ejecución (09/10/2026, 08:51, hora de Lima):** el frontend en http://localhost:3000/ respondió HTTP 200 con HTML en español; la API en http://localhost:8000/openapi.json respondió HTTP 200 y entregó el esquema OpenAPI.
 
 - Se unifican al español las etiquetas de roles y las menciones genéricas a partes interesadas en README y artefactos afectados; se mantienen los nombres propios de herramientas, tecnologías y estándares.
-- Se corrige la concordancia gramatical en nueve referencias a partes interesadas detectadas en los informes y revisiones de Sprint 1 y Sprint 2.
+- Se corrige la concordancia gramatical en ocho referencias a partes interesadas detectadas en los informes y revisiones de Sprint 1 y Sprint 2.
 
 ## Idioma, identidad y stack comunes
 
@@ -109,4 +109,4 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 | 1.16.0 | 09/10/2026 | Se identifican como históricos los planes de rama develop y estructura database/ del Sprint 1, manteniendo la descripción vigente del proyecto y del repositorio. |
 | 1.17.0 | 09/10/2026 | Se añade evidencia HTTP del frontend y la API levantados en local a las 08:51, hora de Lima. |
 | 1.18.0 | 09/10/2026 | Se unifican al español las etiquetas de roles y las menciones genéricas a partes interesadas, preservando nombres propios y términos técnicos. |
-| 1.19.0 | 09/10/2026 | Se corrigen nueve referencias con concordancia gramatical incorrecta a las partes interesadas en los informes y revisiones de Sprint 1 y Sprint 2. |
+| 1.19.0 | 09/10/2026 | Se corrigen ocho referencias con concordancia gramatical incorrecta a las partes interesadas en los informes y revisiones de Sprint 1 y Sprint 2. |
