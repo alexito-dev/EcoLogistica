@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.3.0 |
+| Versión | 1.4.0 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026) |
 | Objetivo replanificado | "Planificación inicia sesión con MFA, registra y consulta pedidos, y los datos siguen disponibles después de reiniciar la API." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
@@ -37,6 +37,7 @@
 | 1.2.8 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la comprobación aislada en PostGIS: el pedido permanece después de reiniciar la API; se ajusta la agenda de revisión y el alcance restante de EN-005. |
 | 1.2.9 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea la pauta con ECO-16 en Sprint 2, se deja EN-005 pendiente bajo ECO-21 y se actualizan los puntos observados en Jira. |
 | 1.3.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se vuelven a ejecutar las suites de backend y frontend después de incorporar PostGIS; se aclara que no cubren automáticamente ese adaptador. |
+| 1.4.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la revisión visual compartida, la sesión real de Planificación y el listado vacío; se deja sin conclusión una solicitud manual que devolvió 400 y se contrasta con las 28 pruebas existentes de API. |
 
 ## Funciones implementadas; aceptación del Sprint 2 pendiente
 
@@ -104,6 +105,8 @@ Demostración a las *partes interesadas* de las funcionalidades implementadas. G
 **Comprobación API del 09/10, 09:34 (hora de Lima):** en una instancia temporal aparte, sin alterar el servidor local ni sus cuentas, se completó el ingreso con MFA, el registro de un pedido válido (201), su listado por estado y consulta por identificador (200), y el rechazo de una ventana inválida (422). La cuenta y el pedido eran datos de prueba aislados; el archivo temporal se eliminó al terminar. Esto verifica el recorrido de la API, no la interfaz React en un navegador ni la aceptación del Product Owner.
 
 **Comprobación de persistencia del 09/10:** en una segunda base PostGIS temporal, sin volumen y separada de los datos locales, se inició sesión con MFA, se registró y consultó un pedido, se rechazó una ventana inválida y se reinició FastAPI. Después del reinicio, el mismo pedido volvió a aparecer en el listado y en su detalle. El contenedor y la cuenta temporal se retiraron al terminar. Esta comprobación cubre API y base de datos, no la vista del navegador ni la aceptación del Product Owner.
+
+**Comprobación local en navegador y API del 09/10, antes de la revisión:** la captura compartida muestra a Planificación dentro de la pantalla de Pedidos; los indicadores y la lista muestran cero pedidos. En la misma sesión de comprobación, el ingreso por API aceptó contraseña y TOTP para el rol `PLANIFICADOR`, y `GET /api/v1/pedidos` respondió 200 con `total=0`. La consulta se hizo en modo lectura y no se crearon registros. Una solicitud manual de ventana invertida enviada desde PowerShell devolvió 400, pero no se guardó su cuerpo y no se puede determinar si el rechazo se debió al formato de esa solicitud. Las 28 pruebas existentes de `tests/pedidos/test_api.py` pasaron; entre ellas, las ventanas que terminan antes de empezar se rechazan con 422. Esta evidencia no reemplaza la revisión del Product Owner.
 
 | # | Paso de la demostración | Resultado esperado | Resultado del ensayo |
 |---:|---|---|---|

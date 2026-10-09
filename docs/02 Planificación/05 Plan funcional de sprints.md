@@ -7,7 +7,7 @@
 | Campo | Valor |
 |---|---|
 | Proyecto | EcoLogística Huancayo |
-| Versión | 1.7.0 |
+| Versión | 1.8.0 |
 | Fecha | 09/10/2026 |
 | Enfoque | Cada sprint debe dejar una tarea real que una persona pueda completar en el sistema. |
 
@@ -98,9 +98,11 @@ Una persona de Planificación puede abrir la aplicación, autenticarse con contr
 
 El [informe de revisión del Sprint 2](../03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) recoge los criterios, el ensayo manual y sus resultados. El ensayo se hizo el 02/10; no se debe presentar como una demostración nueva ni como aceptación formal de la reunión prevista para el 09/10.
 
-La verificación local del 09/10 confirmó que la interfaz responde en `http://localhost:3000/`, que la API publica sus rutas en `http://localhost:8000/openapi.json` y que `/api/v1/auth/sesion` devuelve 401 si no hay una sesión.
+La comprobación local del 09/10 confirmó que la interfaz responde en `http://localhost:3000/` y la API en `http://localhost:8000/openapi.json`. La captura compartida durante esta comprobación muestra la sesión de Planificación en la pantalla de Pedidos, con la lista vacía. Al autenticar por API con contraseña y TOTP, la lista respondió 200 con 0 pedidos; la ruta de sesión sin cookie sigue respondiendo 401, como debe.
 
-La comprobación de persistencia se hizo en una base PostGIS temporal y aislada. El flujo pidió MFA, registró un pedido, lo encontró en la lista y abrió su detalle; rechazó una ventana horaria inválida (422), reinició la API y volvió a encontrar el mismo pedido. Después se detuvo y retiró el contenedor temporal junto con la cuenta de prueba. Esta comprobación cubre la API y la base; no es una prueba visual en el navegador ni reemplaza la revisión del Product Owner.
+La comprobación de persistencia se hizo en una base PostGIS temporal y aislada. El flujo pidió MFA, registró un pedido, lo encontró en la lista y abrió su detalle; rechazó una ventana horaria inválida (422), reinició la API y volvió a encontrar el mismo pedido. Después se detuvo y retiró el contenedor temporal junto con la cuenta de prueba. En la comprobación actual no se agregó ningún pedido: la base local sigue con 0 registros.
+
+Una solicitud manual de ventana invertida enviada desde PowerShell devolvió 400 y no guardó nada. No se conservó el cuerpo del error, así que ese intento no permite confirmar un defecto del endpoint. Las 28 pruebas existentes de la API pasaron e incluyen el rechazo 422 para una ventana que termina antes de empezar. Si se vuelve a probar ese caso en vivo, hay que guardar el cuerpo de la respuesta para identificar con certeza el origen del 400.
 
 Las pruebas automatizadas y la compilación anotadas en los informes corresponden a ejecuciones anteriores; no volví a ejecutar la suite en esta verificación.
 
@@ -126,3 +128,4 @@ Esta definición sirve para juzgar el incremento de un sprint. No significa que 
 | 1.5.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se incorpora una comprobación API actual y aislada del flujo MFA, registro y consulta de pedidos, distinguiéndola de la demo visual y de la aceptación del sprint. |
 | 1.6.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se integra PostgreSQL/PostGIS para pedidos, se comprueba que sobreviven al reinicio y se actualiza la propuesta de Sprint 3 para completar la persistencia de flota y rutas. |
 | 1.7.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea el Sprint 2 con ECO-16 y la persistencia verificada; ECO-21 registra el trabajo que queda para cuentas, flota y rutas. |
+| 1.8.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la pantalla autenticada y la consulta real de la lista vacía; también se aclara el resultado inconcluso de una solicitud manual inválida y la cobertura de las pruebas existentes. |
