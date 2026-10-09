@@ -1,6 +1,6 @@
 # Informe de estado del proyecto
 
-[← Volver al README Principal](../../README.md)
+[← Volver al README Principal](../../../README.md)
 
 **Nombre del Proyecto:** EcoLogística Huancayo — Plataforma de Optimización de Rutas Sostenibles de Última Milla
 
@@ -18,12 +18,12 @@
 | Versión | 1.1.6 |
 | Iteración reportada | ECO Sprint 1 |
 | Sprint Goal | "Registrar pedidos con ventana horaria y permitir reenrutar una ruta ante incidencia." |
-| Fuentes | Jira `ECO` (evidencias 1–4 en [02 Artefactos Jira](../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md)), historial Git, [Registro de riesgos](../02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md), [Presupuesto](../02%20Planificaci%C3%B3n/04%20Presupuesto%20del%20proyecto%20V_1_0_0.md) |
+| Fuentes | Jira `ECO` (evidencias 1–4 en [02 Artefactos Jira](../../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md)), historial Git, [Registro de riesgos](../../02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md), [Presupuesto](../../02%20Planificaci%C3%B3n/04%20Presupuesto%20del%20proyecto%20V_1_0_0.md) |
 | Documentos hermanos | [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [04 Retrospectiva del Sprint](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 
 > **Actualización operativa (09/10/2026):** la fecha planificada de cierre fue el 28/09; Jira mantuvo activo el sprint id. 36 hasta las 07:42 del 09/10. El informe del Sprint 1 registra 0 de 2 al corte planificado. El historial de ECO-9 muestra que pasó a `Listo` el 02/10, volvió a `Por hacer` al cerrarse el Sprint 1 y volvió a `Listo` a las 07:43 al añadirse también al Sprint 2; por eso la métrica dinámica actual del Sprint 1 muestra 1 de 2. El conector no expone un reporte histórico del sprint al 28/09; no se presenta esa métrica actual como velocidad histórica. ECO-15 permanece `Por hacer`.
 
-> **Vigencia del flujo de trabajo (09/10/2026):** las referencias a integrar en develop en este informe son propuestas del corte del Sprint 1. El flujo vigente usa ramas breves feature/* desde main y PR hacia main; develop no es obligatoria. Ver la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
+> **Vigencia del flujo de trabajo (09/10/2026):** las referencias a integrar en develop en este informe son propuestas del corte del Sprint 1. El flujo vigente usa ramas breves feature/* desde main y PR hacia main; develop no es obligatoria. Ver la [auditoría de coherencia](../05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
 
 > **Rebase funcional posterior (09/10/2026):** el producto conserva como Sprint 1 el incremento hoy implementado: acceso MFA/roles, gestión y consulta de pedidos y persistencia PostgreSQL/PostGIS. Esta clasificación es una línea base funcional acordada después del periodo reportado; el resultado histórico de 0/2 al corte del 28/09 y la falta de código durante esa iteración no cambian. Jira conserva ECO-15 como pendiente del compromiso original; ECO-16 y ECO-20 están completadas en el backlog con descripciones alineadas a la línea base Sprint 1, porque no se pueden agregar al sprint cerrado. ECO-20 lleva además la etiqueta `sprint1`.
 
@@ -148,7 +148,7 @@ pie showData
 
 ## Riesgos
 
-Los riesgos del sprint se ubican según la probabilidad y el impacto de su riesgo base en el [Registro de riesgos](../02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md) (escala de 1 a 5):
+Los riesgos del sprint se ubican según la probabilidad y el impacto de su riesgo base en el [Registro de riesgos](../../02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md) (escala de 1 a 5):
 
 ```mermaid
 quadrantChart
@@ -176,7 +176,7 @@ quadrantChart
 | **R-S1-02 — Rendimiento del motor:** no entregar solución en ≤ 45 s con 150 pedidos (RSK-02, exposición 15, Alta). | Alexander Hilario Talavera | Iniciar benchmark (EN-001) en el Sprint 2 con prototipo mínimo del solver y límites de tiempo por tamaño de instancia. |
 | **R-S1-03 — Integración tardía frontend/backend:** al no existir código aún, los defectos de integración se postergan (RSK-07, exposición 12, Media). | Jose Luis Isidro Casio | Definir contrato OpenAPI desde el primer cambio OpenSpec; levantar CI con lint y pruebas (EN-006) antes de mergear a `develop`. |
 | **R-S1-04 — Inestabilidad de la decisión de stack:** el 18/09 se propuso en `main` Next.js + Nest.js (commit `3565685`), sin puntuarlo en la matriz del documento de stack; el 02/10 el líder ratificó la Alternativa A (React + FastAPI, 93 %) y se revirtieron los documentos. Retrasó el inicio de la construcción. | Alex Zorrilla | Stack congelado hasta el Sprint 3; cualquier cambio exige ADR y nueva matriz (sección 12 del documento de stack); plantilla de arranque (scaffold) compartida. |
-| **R-S1-05 — Dependencia de administrador de Jira** para habilitar Releases y ajustar el tablero (RSK-04). | Jose Luis Isidro Casio | Solicitud formal al administrador; evidencia 5 pendiente en [Artefactos Jira](../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md); no bloquea el desarrollo. |
+| **R-S1-05 — Dependencia de administrador de Jira** para habilitar Releases y ajustar el tablero (RSK-04). | Jose Luis Isidro Casio | Solicitud formal al administrador; evidencia 5 pendiente en [Artefactos Jira](../../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md); no bloquea el desarrollo. |
 | **R-S1-06 — Disponibilidad parcial del equipo** (5 integrantes a tiempo parcial) limita la velocidad. | Alex Zorrilla | Estimar con capacidad real (puntos por persona), tareas ≤ 8 h y revisión de carga en cada Daily. |
 
 ## Próximos avances
@@ -192,5 +192,5 @@ quadrantChart
 
 - Este informe refleja el estado real verificado en el repositorio y en Jira; no se declara como completado ningún trabajo que no esté respaldado por una evidencia revisable.
 - El detalle de lo completado y lo pendiente por historia está en [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md); los obstáculos, en [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md); las lecciones y acciones, en [04 Retrospectiva del Sprint](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md).
-- Para la trazabilidad con el alcance, ver [06 Requisitos funcionales](../01%20Inicio/06.%20Requisitos%20funcionales%20V_1_0_0.md) y [09 Reglas de negocio](../01%20Inicio/09.%20Reglas%20de%20negocio%20V_1_0_0.md).
+- Para la trazabilidad con el alcance, ver [06 Requisitos funcionales](../../01%20Inicio/06.%20Requisitos%20funcionales%20V_1_0_0.md) y [09 Reglas de negocio](../../01%20Inicio/09.%20Reglas%20de%20negocio%20V_1_0_0.md).
 - Nomenclatura de versionado: *Semantic Versioning* `MAYOR.MENOR.PARCHE`, escrita en el nombre del archivo como `V_M_m_p`.

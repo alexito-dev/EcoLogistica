@@ -17,7 +17,7 @@
 | Ensayo de la demostración | 02/10/2026, contra los servidores locales (resultados en la sección *Demostración*) |
 | Participantes previstos | Equipo Scrum: Alex Zorrilla (líder / PM), Anco Porras, Jhean Pier Julio (backend), Alexander Daniel Hilario Talavera (optimización), Jhoanna Hade Vera Zea (frontend/UX), Jose Luis Isidro Casio (QA/DevOps). Docente asesor y *Product Owner* académico: Ing. Job Daniel Gamarra Moreno |
 | Documentos hermanos | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [04 Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
-| Sprint anterior | [Revisión del Sprint 1](../03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) |
+| Sprint anterior | [Revisión del Sprint 1](../Sprint%201/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) |
 
 > **Nota de rebase funcional (09/10/2026):** el incremento de MFA y pedidos persistentes corresponde a la línea base funcional de Sprint 1; flota corresponde a Sprint 2 y rutas a Sprint 3. Se actualizaron las metas de Jira y Sprint 2 quedó con ECO-12 y ECO-19 en `Listo`. El Sprint 1 cerrado conserva sus fechas y el resultado histórico de su compromiso original; ECO-16 y ECO-20 permanecen completadas en el backlog porque no se pueden añadir a un sprint cerrado.
 

@@ -1,6 +1,6 @@
 # Revisión del sprint
 
-[← Volver al README Principal](../../README.md)
+[← Volver al README Principal](../../../README.md)
 
 **Nombre del Proyecto:** EcoLogística Huancayo — Plataforma de Optimización de Rutas Sostenibles de Última Milla
 
@@ -17,7 +17,7 @@
 | Asistentes | Equipo Scrum: Alex Zorrilla (líder / PM), Anco Porras, Jhean Pier Julio (backend), Alexander Daniel Hilario Talavera (optimización), Jhoanna Hade Vera Zea (frontend/UX), Jose Luis Isidro Casio (QA/DevOps). Docente asesor y *Product Owner* académico: Ing. Job Daniel Gamarra Moreno |
 | Documentos hermanos | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [04 Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 
-> **Vigencia del repositorio (09/10/2026):** la evidencia de aceptación de esta revisión corresponde al corte del 02/10. Después se integraron la persistencia de pedidos y la gestión persistente de flota en PostgreSQL/PostGIS; usuarios y rutas siguen pendientes. El flujo vigente usa ramas breves `feature/*` desde `main` con PR hacia `main`. El resultado histórico de la revisión y el rebase funcional posterior se describen por separado abajo y en la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
+> **Vigencia del repositorio (09/10/2026):** la evidencia de aceptación de esta revisión corresponde al corte del 02/10. Después se integraron la persistencia de pedidos y la gestión persistente de flota en PostgreSQL/PostGIS; usuarios y rutas siguen pendientes. El flujo vigente usa ramas breves `feature/*` desde `main` con PR hacia `main`. El resultado histórico de la revisión y el rebase funcional posterior se describen por separado abajo y en la [auditoría de coherencia](../05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
 
 > **Rebase funcional posterior (09/10/2026):** Sprint 1 conserva como alcance funcional MFA/roles y pedidos persistentes, entregados y comprobados después del corte original. La revisión histórica sigue registrando 0/2 historias aceptadas al 28/09; la nueva línea base no cambia ese resultado ni afirma que el código se entregó durante ese periodo. Jira no permite agregar ECO-16 y ECO-20 al Sprint 1 cerrado, por lo que están `Listo` en el backlog; ECO-15 queda `Por hacer` y con su pertenencia histórica.
 
@@ -74,9 +74,9 @@ Aunque no son historias de valor para el usuario final, son prerrequisitos verif
 
 | Artefacto | Evidencia verificable | Resultado |
 |---|---|---|
-| Backlog priorizado: 8 épicas, 11 historias y 6 tareas habilitadoras, con criterios BDD | [01 Transformando a ágil](../02%20Planificaci%C3%B3n/01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md) | Completo |
-| Proyecto Scrum `ECO` en Jira con roadmap, backlog, planificación y tablero | Evidencias 1–4 en [02 Artefactos Jira](../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md) (`assets/jira/01…04`) | Completo |
-| Decisión de arquitectura: React + Vite + TypeScript, FastAPI, motor de optimización Python, PostgreSQL + PostGIS, modelo físico de BD | [10 Stack tecnológico](../01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md), [11 Base de datos](../01%20Inicio/11.%20Base%20de%20datos%20V_1_0_0.md), [12 Modelo C4](../01%20Inicio/12.%20Modelo%20C4%20V_1_0_0.md) | Completo |
+| Backlog priorizado: 8 épicas, 11 historias y 6 tareas habilitadoras, con criterios BDD | [01 Transformando a ágil](../../02%20Planificaci%C3%B3n/01%20Transformando%20a%20%C3%A1gil%20V_1_0_0.md) | Completo |
+| Proyecto Scrum `ECO` en Jira con roadmap, backlog, planificación y tablero | Evidencias 1–4 en [02 Artefactos Jira](../../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md) (`assets/jira/01…04`) | Completo |
+| Decisión de arquitectura: React + Vite + TypeScript, FastAPI, motor de optimización Python, PostgreSQL + PostGIS, modelo físico de BD | [10 Stack tecnológico](../../01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md), [11 Base de datos](../../01%20Inicio/11.%20Base%20de%20datos%20V_1_0_0.md), [12 Modelo C4](../../01%20Inicio/12.%20Modelo%20C4%20V_1_0_0.md) | Completo |
 | Estructura del repositorio por capas (`frontend/`, `backend/`, `database/`, `docs/`, `assets/`), `.gitignore`, `.env.example`, plantillas de PR e issues, Git Flow con ramas `main`/`developer` | Repositorio `alexito-dev/EcoLogistica` | Completo |
 | Inicialización de OpenSpec (`openspec/config.yaml`, comandos `opsx` para Claude Code) con contexto del proyecto en español y trazabilidad RF/RNF/RN | `openspec/`, `.claude/` | Completo (sin cambios archivados aún) |
 | Documentación de Inicio y Planificación (17 entregables) | `docs/01 Inicio`, `docs/02 Planificación` | Completo |

@@ -15,7 +15,7 @@
 | Fecha de la retrospectiva | 02/10/2026 (corte de mitad de sprint; se confirma en la reunión del 09/10) |
 | Facilitador | Alex Zorrilla |
 | Participantes | Alex Zorrilla, Anco Porras, Jhean Pier Julio, Alexander Daniel Hilario Talavera, Jhoanna Hade Vera Zea, Jose Luis Isidro Casio |
-| Entradas | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [Retrospectiva del Sprint 1](../04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
+| Entradas | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [Retrospectiva del Sprint 1](../Sprint%201/04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 
 > **Nota de rebase funcional posterior (09/10/2026):** la línea base vigente mantiene MFA/roles y pedidos persistentes como Sprint 1, asigna flota a Sprint 2 y rutas a Sprint 3, y conserva el propósito de ejecución por Conducción para Sprint 4. Esta retrospectiva conserva su corte del 02/10; los criterios funcionales actuales están en el [plan de sprints](../../02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md).
 

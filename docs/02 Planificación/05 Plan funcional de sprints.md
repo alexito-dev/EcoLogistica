@@ -118,7 +118,7 @@ Una persona de Planificación puede abrir la aplicación, autenticarse con contr
 
 La comprobación de pedidos tras reiniciar API se hizo en una base PostGIS temporal y aislada. Los documentos de seguimiento de Sprint 1 y 2 conservan sus cortes históricos; el cambio de alcance acordado se aplica a esta línea base funcional y a la ejecución actual del proyecto.
 
-El [informe de revisión del Sprint 2](../03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) recoge el ensayo histórico del 02/10 y el E2E actual de los cinco criterios de flota ejecutado el 09/10. Los criterios funcionales de Sprint 2 están aprobados por ese E2E; no se afirma que el ensayo antiguo sea nuevo ni que se haya registrado una decisión de Product Owner en reunión.
+El [informe de revisión del Sprint 2](../03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) recoge el ensayo histórico del 02/10 y el E2E de flota del 09/10, con 5/5 criterios aprobados. El usuario confirmó posteriormente la aprobación del incremento; no se añaden detalles de asistentes o acuerdos que no fueron comunicados.
 
 La comprobación local del 09/10 confirmó que la interfaz responde en `http://localhost:3000/` y la API en `http://localhost:8000/openapi.json`. La captura compartida durante esta comprobación muestra la sesión de Planificación en la pantalla de Pedidos, con la lista vacía. Al autenticar por API con contraseña y TOTP, la lista respondió 200 con 0 pedidos; la ruta de sesión sin cookie sigue respondiendo 401, como debe.
 

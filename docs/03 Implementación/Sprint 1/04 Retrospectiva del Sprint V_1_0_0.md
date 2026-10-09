@@ -1,6 +1,6 @@
 # Retrospectiva del sprint
 
-[← Volver al README Principal](../../README.md)
+[← Volver al README Principal](../../../README.md)
 
 **Nombre del Proyecto:** EcoLogística Huancayo — Plataforma de Optimización de Rutas Sostenibles de Última Milla
 
@@ -17,7 +17,7 @@
 | Participantes | Alex Zorrilla, Anco Porras, Jhean Pier Julio, Alexander Daniel Hilario Talavera, Jhoanna Hade Vera Zea, Jose Luis Isidro Casio |
 | Entradas | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) |
 
-> **Vigencia del flujo de trabajo (09/10/2026):** las referencias a develop en las acciones de esta retrospectiva son acuerdos históricos del corte del Sprint 1. Para el trabajo vigente se usan ramas breves feature/* desde main y PR hacia main; develop no es obligatoria. Ver la [auditoría de coherencia](05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
+> **Vigencia del flujo de trabajo (09/10/2026):** las referencias a develop en las acciones de esta retrospectiva son acuerdos históricos del corte del Sprint 1. Para el trabajo vigente se usan ramas breves feature/* desde main y PR hacia main; develop no es obligatoria. Ver la [auditoría de coherencia](../05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
 
 > **Rebase funcional posterior (09/10/2026):** el incremento de MFA/roles y pedidos persistentes se conserva como alcance funcional de Sprint 1. Esta rebase posterior no altera las observaciones ni las acciones registradas en la retrospectiva del corte del 02/10.
 
