@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.13.0 |
+| Versión | 1.14.0 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026; revisión 09/10/2026) |
 | Fecha de la retrospectiva | 02/10/2026 (corte de mitad de sprint; se confirma en la reunión del 09/10) |
 | Facilitador | Alex Zorrilla |
@@ -23,7 +23,7 @@
 
 > **Resultado posterior del E2E de aceptación (09/10/2026):** se ejecutaron los cinco criterios funcionales de flota en navegador y los cinco aprobaron, incluida la regla de elegibilidad de unidades en Mantenimiento/Inactivo y la persistencia tras reiniciar la API. El ensayo se hizo con cuentas y PostGIS temporales aislados, luego retirados. La retrospectiva original del 02/10 no se reescribe ni se afirma que se haya celebrado la reunión formal de revisión; el resultado técnico queda registrado en la [revisión del Sprint 2](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md).
 
-> **Estado Jira posterior (09/10/2026, 13:00 hora de Lima):** Jira ya refleja la rebase de Sprint 2 a flota. ECO-12 y ECO-19 están en `Listo` y constituyen las 2 incidencias actuales del sprint (10 puntos estimados). ECO-9, ECO-16 y ECO-20 se retiraron del sprint activo y permanecen completadas en el backlog, conservando su historia de asignación; ECO-15 queda pendiente en el backlog para trabajo posterior. El Sprint 2 está activo y la revisión está programada para las 15:40; esta actualización no anticipa el resultado de la reunión.
+> **Estado Jira posterior (09/10/2026, 13:30 hora de Lima):** Jira ya refleja la rebase de Sprint 2 a flota. ECO-12 y ECO-19 están en `Listo` y constituyen las 2 incidencias actuales del sprint (10 puntos estimados). ECO-9 y ECO-15 conservan su asociación histórica al Sprint 1 cerrado; ECO-16 y ECO-20 están completadas en el backlog, fuera del Sprint 2. ECO-15 sigue pendiente de replanificación posterior. El Sprint 2 está activo y la revisión está programada para las 15:40; esta actualización no anticipa el resultado de la reunión.
 
 ## Historial de cambios
 
@@ -43,7 +43,8 @@
 | 1.10.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea el trabajo candidato de Sprint 3 y EN-005 con la flota ya implementada en Sprint 2. |
 | 1.11.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se agrega el resultado posterior: 5/5 criterios E2E de aceptación funcional de flota aprobados. |
 | 1.12.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza el estado de Jira tras el rebase: Sprint 2 queda con ECO-12 y ECO-19 en `Listo`; las observaciones siguientes conservan el corte del 02/10. |
-| 1.13.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza A9 tras corregir las categorías de `En revisión / QA` y `Finalizada`; continúan pendientes la normalización a cuatro columnas y la versión de Jira. |
+| 1.13.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza A9 tras corregir las categorías de `En revisión / QA` y `Finalizada`. |
+| 1.14.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se verifica el tablero Jira normalizado y se corrige la ubicación actual de ECO-9, ECO-15, ECO-16 y ECO-20; IMP-003 permanece abierto solo por la versión de entrega ausente. |
 
 ## Seguimiento de las acciones del Sprint 1
 
@@ -57,7 +58,7 @@
 | A6 — *Planning Poker* y backlog completo en Jira | Parcial | ECO-20 se creó el 09/10 sin puntos ni persona asignada; faltan siete tarjetas de backlog y evidencia de *Planning Poker*. |
 | A7 — Prototipo del motor y benchmark | No cumplida | Sin código de optimización |
 | A8 — Registro de decisiones técnicas (ADR) | Parcial | La ratificación del stack quedó registrada en el historial del documento 10, no como ADR independiente |
-| A9 — Releases y tablero de 4 columnas en Jira | No cumplida al corte del 09/10 | Jira aún no tiene versiones y mantiene cinco columnas con mezcla de idiomas; las categorías de `En revisión / QA` y `Finalizada` se corrigieron después del corte y se documentan en la auditoría. IMP-003 sigue abierto. |
+| A9 — Releases y tablero de 4 columnas en Jira | Parcial | El tablero ya tiene cuatro columnas en español, con sus categorías verificadas. Jira todavía no tiene versión de entrega, por lo que A9 no está completa e IMP-003 sigue abierto por ese punto. |
 | A10 — Validar el backlog con el docente | Sin evidencia | Pendiente de la revisión programada para el 09/10 a las 15:40, hora de Lima. |
 
 **Balance al corte previo a la revisión:** 3 de 10 acciones cumplidas, 3 parciales, 3 no cumplidas y 1 sin evidencia. Las cumplidas son justamente las que desbloquearon la entrega de software.
@@ -98,7 +99,7 @@
 - **El flujo de ramas acordado no se aplicó de forma uniforme:** se trabajó directamente sobre `main` y la rama remota `developer` quedó atrás (IMP-010). El estándar queda simplificado a ramas breves `feature/*` desde `main` y PR hacia `main`; no se requiere `develop`.
 - **Al corte original, el backlog de Jira no reflejaba todo el trabajo real:** el 02/10 no existía la historia de autenticación; ECO-20 se creó el 09/10 sin estimación aprobada. Ese hallazgo se conserva como histórico. En la actualización del 13:00 se alineó Sprint 2 con ECO-12 y ECO-19, ambas en `Listo`; todavía faltan siete tarjetas y la actualización/estimación formal del roadmap futuro (IMP-008).
 - **Las verificaciones extremo a extremo fueron manuales:** se ensayaron a mano en lugar de quedar como prueba automatizada repetible.
-- **Pendiente de planificación posterior:** Sprint 2 ya refleja flota en Jira y ECO-12/ECO-19 están terminadas. Jira aún no tiene un Sprint 3 aprobado; el Planning debe estimar y acordar el recorrido de rutas usando la flota ya implementada. La columna `Done` del tablero sigue mapeada a un estado cuya categoría no es completada.
+- **Pendiente de planificación posterior:** Sprint 2 ya refleja flota en Jira y ECO-12/ECO-19 están terminadas. Jira aún no tiene un Sprint 3 aprobado; el Planning debe estimar y acordar el recorrido de rutas usando la flota ya implementada. La configuración del tablero se normalizó a cuatro columnas en español; sigue pendiente crear una versión de entrega.
 
 ### Herramientas
 

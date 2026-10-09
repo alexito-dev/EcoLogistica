@@ -15,14 +15,14 @@
 | Campo | Valor |
 |---|---|
 | Código del proyecto | PFA-TP2-ECOLOG-2026 |
-| Versión | 1.7.0 |
+| Versión | 1.8.0 |
 | Iteración reportada | ECO Sprint 2 |
 | Objetivo replanificado del sprint | "Que Planificación inicie sesión con MFA, registre y consulte pedidos, y los conserve después de reiniciar la API." |
 | Fuentes | Historial Git (`main`), cambios OpenSpec `registro-pedidos` y `autenticacion-mfa`, resultados de pruebas automatizadas, [Retrospectiva del Sprint 1](../04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 | Documentos hermanos | [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [04 Retrospectiva del Sprint](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 | Sprint anterior | [Informe de estado del Sprint 1](../01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) |
 
-> **Actualización al 09/10/2026, 13:00 hora de Lima:** la rebase funcional se reflejó en Jira. El Sprint 2 id. 37 tiene como meta la gestión de flota y contiene ECO-12 (5 puntos) y ECO-19 (5 puntos), ambas en `Listo` (2/2; 10 puntos estimados). ECO-9, ECO-16 y ECO-20 ya no cuentan en el sprint activo; conservan su estado completado en el backlog y la historia de asignación previa. El Sprint 1 se mantiene cerrado: su métrica dinámica es 1/2 por ECO-9 completada y ECO-15 pendiente, mientras el corte original del 28/09 permanece en 0/2. La E2E de flota aprobó 5/5 criterios; la revisión del Product Owner está prevista para hoy a las 15:40 y el sprint continúa activo hasta el cierre administrativo.
+> **Actualización Jira al 09/10/2026, 13:30 hora de Lima:** el Sprint 2 id. 37 tiene como meta la gestión de flota y contiene ECO-12 (5 puntos) y ECO-19 (5 puntos), ambas en `Listo` (2/2; 10 puntos estimados). ECO-9 y ECO-15 conservan su asociación histórica al Sprint 1 cerrado; ECO-16 y ECO-20 están completas en el backlog, fuera del Sprint 2 activo. La métrica dinámica de Sprint 1 es 1/2 (ECO-9 lista, ECO-15 pendiente), mientras el corte original del 28/09 permanece en 0/2. La E2E de flota aprobó 5/5 criterios; la revisión del Product Owner está prevista para hoy a las 15:40 y el Sprint 2 continúa activo.
 
 > **Regresión local más reciente (09/10/2026):** se recolectaron y aprobaron 107 pruebas de backend y 39 de frontend; la compilación de producción terminó correctamente. El lint dejó dos advertencias de `set-state-in-effect`; el build avisó que faltan los cuatro archivos Codec Pro. No hay una suite automatizada de integración para los adaptadores PostgreSQL; la persistencia tras reiniciar se comprobó manualmente en una base aislada.
 
@@ -56,6 +56,7 @@
 | 1.5.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la regresión actual de backend, frontend y compilación, con las advertencias de lint y tipografía pendientes. |
 | 1.6.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra el E2E completo de aceptación funcional de flota: 5/5 criterios aprobados, incluida persistencia tras reinicio. |
 | 1.7.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea el estado vigente de Jira con la rebase: ECO-12 y ECO-19 en `Listo`, 2/2; se preservan los cortes históricos previos. |
+| 1.8.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza el corte Jira, se precisa la ubicación de ECO-15 y se registra la normalización del tablero a cuatro columnas. |
 
 ## Resumen ejecutivo
 

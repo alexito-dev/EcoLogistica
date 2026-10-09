@@ -14,7 +14,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.5.0 |
+| Versión | 1.7.0 |
 | Formato de fechas | DD/MM/AAAA |
 | Escala de prioridad | Alta · Media · Baja |
 | Estados válidos | Abierto · En Espera · Cerrado |
@@ -38,14 +38,16 @@
 | 1.2.4 | 09/10/2026 | Anco Porras, Jhean Pier Julio | ECO-16 se cierra con persistencia de pedidos y ubicaciones en Sprint 2; ECO-21 deja trazado el trabajo restante de EN-005. |
 | 1.3.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza IMP-011 con la persistencia de flota y se documenta la rebase funcional posterior. |
 | 1.4.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se delimita EN-005 restante a cuentas, secretos TOTP y rutas; la E2E confirmó Flota y quedó activa la API vigente en IPv6. |
-| 1.5.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registran las correcciones de categoría de `En revisión / QA` y `Finalizada`; IMP-003 permanece abierto por las cinco columnas mixtas y la ausencia de release. |
+| 1.5.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registran las correcciones de categoría de `En revisión / QA` y `Finalizada`. |
+| 1.6.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se verifica que Jira quedó con cuatro columnas en español; IMP-003 continúa abierto únicamente por la ausencia de una versión de entrega. |
+| 1.7.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se aclara la pertenencia histórica de ECO-15 y se actualiza la secuencia de replanificación de HU-006. |
 
 ## Registro
 
 | Impedimento # | Fecha de Registro | Descripción del Impedimento así como el Impacto en el Proyecto | Prioridad | Reportado por | Fecha tope de Resolución | Estado | Fecha de Resolución | Resolución/Comentarios |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| IMP-003 | 18/09/2026 | **(Reabierto del Sprint 1 el 09/10) Configuración de releases y columnas de Jira sin regularizar.** El tablero conserva cinco columnas con etiquetas mezcladas y no hay una versión de entrega. **Impacto:** flujo visual distinto al estándar acordado y evidencia 5 incompleta. | Media | Jose Luis Isidro Casio | Pendiente de confirmar | Abierto | Pendiente | En la consulta inicial del 09/10, `En revisión / QA` y `Finalizada` tenían categoría `new`. Después se corrigieron a `indeterminate` y `done`; `getJiraBoardConfig` confirma que las cinco categorías ahora corresponden a sus estados. Siguen cinco columnas y `getJiraProjectVersions` devuelve cero versiones (ver [Artefactos Jira](../../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md)). |
-| IMP-006 | 28/09/2026 | **(Arrastrado del Sprint 1) Dependencia técnica entre HU-006 y HU-004.** Reenrutar ante incidencia (ECO-15) requiere el motor de optimización, que aún no existe. **Impacto:** HU-006 (5 pts) no puede planificarse; el valor diferencial del producto (reoptimización) sigue bloqueado. | Alta | Alex Zorrilla | 23/10/2026 | Abierto | — | HU-006 se mantiene detrás de HU-004 y EN-001 en el backlog. El motor se inicia en el Sprint 3 (R-S2-01 del [Informe](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md)). |
+| IMP-003 | 18/09/2026 | **(Reabierto del Sprint 1 el 09/10) Falta crear una versión de entrega en Jira.** **Impacto:** no hay una versión de producto a la cual asociar el incremento y la evidencia de release sigue incompleta. | Media | Jose Luis Isidro Casio | Pendiente de confirmar | Abierto | Pendiente | La configuración del tablero ya se normalizó: `Por hacer`, `En curso`, `En revisión / QA` y `Listo`, con categorías alineadas. Se retiraron la antigua columna `Done` y el estado duplicado `Finalizada`; no había incidencias en ese estado. `getJiraProjectVersions` todavía devuelve cero versiones; por ese pendiente continúa abierto (ver [Artefactos Jira](../../02%20Planificación/02%20Artefactos%20Jira%20V_1_0_0.md)). |
+| IMP-006 | 28/09/2026 | **(Arrastrado del Sprint 1) Dependencia técnica entre HU-006 y HU-004.** Reenrutar ante incidencia (ECO-15) requiere el motor de optimización, que aún no existe. **Impacto:** HU-006 (5 pts) no puede planificarse; el valor diferencial del producto (reoptimización) sigue bloqueado. | Alta | Alex Zorrilla | 23/10/2026 | Abierto | — | ECO-15 conserva la asociación histórica a sprints cerrados, permanece Por hacer y no tiene sprint futuro asignado. La replanificación se hará detrás de HU-004 y EN-001, como parte del alcance posterior de re-enrutamiento. |
 | IMP-007 | 18/09/2026 | **(Arrastrado del Sprint 1) Sin código base ejecutable y decisión de stack inestable.** `backend/` y `frontend/` estaban vacíos. **Impacto:** impedía demostrar cualquier historia. | Alta | Anco Porras, Jhean Pier Julio | 12/10/2026 | Cerrado | 02/10/2026 | Proyecto FastAPI (`backend/src/app`) y React + Vite (`frontend/src`) creados con scripts de ejecución y prueba; HU-001 y autenticación implementadas y publicadas en `main`. |
 | IMP-008 | 18/09/2026 | **(Arrastrado del Sprint 1) Backlog de Jira incompleto y estimaciones sin validar.** Faltan HU-004, HU-010, HU-011 y EN-001 a EN-004. La historia técnica de autenticación ya se registró como ECO-20, sin estimación aprobada ni persona asignada al corte. **Impacto:** la velocidad y la capacidad del Sprint 3 no pueden calcularse con certeza. | Media | Jose Luis Isidro Casio | 12/10/2026 | En Espera | — | La regularización de Sprint 2 creó ECO-20 y mantuvo su estimación vacía y su asignación pendiente, sin inventar puntos ni responsable. Falta Planning Poker para ECO-20 y las siete tarjetas no creadas; no hay evidencia de que la sesión ya haya ocurrido. |
 | IMP-009 | 29/09/2026 | **Propuesta de stack aplicada sin evaluación.** El commit `3565685` (18/09) cambió en `main` la arquitectura a Next.js + Nest.js sin puntuarla en la matriz del documento de stack, que favorecía React + FastAPI (93 %). **Impacto:** cinco documentos de la línea base se contradecían con la matriz; no se podía empezar a programar sin saber el stack. | Alta | Alex Zorrilla | 02/10/2026 | Cerrado | 02/10/2026 | El líder ratificó la Alternativa A. Se revirtieron el Acta, RES-06, el Modelo C4, las Restricciones y el Stack (versión 1.1.0 con historial). Regla nueva: todo cambio de stack exige ADR y nueva matriz (sección 12 del documento 10). |
@@ -74,7 +76,7 @@
 
 | Impedimento | Riesgo materializado | Ajuste |
 |---|---|---|
-| IMP-003 | RSK-04 (configuración y métricas de Jira) | Mantener abierto hasta corregir las columnas y verificar la versión de entrega |
+| IMP-003 | RSK-04 (configuración y métricas de Jira) | Tablero normalizado; mantener abierto hasta crear/verificar la versión de entrega |
 | IMP-006 | RSK-02 (rendimiento del motor) y RSK-04 (alcance y fechas) | RSK-02 se mantiene en exposición 15 (Alta) hasta tener el benchmark EN-001 |
 | IMP-009 | RSK-04 (cambios de requisitos) | Se agrega control: ADR obligatorio para cambios de arquitectura |
 | IMP-010 | RSK-07 (defectos de integración) | Se adelanta EN-006 (CI) al Sprint 3 |
