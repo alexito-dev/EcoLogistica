@@ -7,7 +7,7 @@
 | Campo | Valor |
 |---|---|
 | Proyecto | EcoLogística Huancayo |
-| Versión | 1.4.0 |
+| Versión | 1.5.0 |
 | Fecha | 09/10/2026 |
 | Enfoque | Cada sprint debe dejar una tarea real que una persona pueda completar en el sistema. |
 
@@ -98,7 +98,11 @@ Una persona de Planificación puede abrir la aplicación, autenticarse con contr
 
 El [informe de revisión del Sprint 2](../03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) recoge los criterios, el ensayo manual y sus resultados. El ensayo se hizo el 02/10; no se debe presentar como una demostración nueva ni como aceptación formal de la reunión prevista para el 09/10.
 
-La verificación local del 09/10 confirmó que la interfaz responde en `http://localhost:3000/`, que el módulo de inicio de sesión se sirve con el texto de acceso actualizado y que la API publica sus rutas en `http://localhost:8000/openapi.json`. Sin una sesión, `/api/v1/auth/sesion` responde 401, como corresponde. Las pruebas automatizadas y la compilación anotadas en los informes corresponden a ejecuciones anteriores documentadas allí; esta actualización no las vuelve a ejecutar.
+La verificación local del 09/10 confirmó que la interfaz responde en `http://localhost:3000/`, que la API publica sus rutas en `http://localhost:8000/openapi.json` y que `/api/v1/auth/sesion` devuelve 401 si no hay una sesión.
+
+A las 09:34, hora de Lima, recorrí la API en una segunda instancia temporal y aislada para no tocar la cuenta ni los datos del servidor que ya estaba levantado. El flujo pidió MFA, permitió registrar un pedido, encontrarlo en la lista de pendientes y consultar su detalle; también rechazó una ventana horaria inválida (422) y el total de pedidos quedó igual. Usé una cuenta y un pedido de prueba, detuve esa instancia y eliminé su archivo temporal. Esta comprobación cubre la API; no es una prueba visual en el navegador ni reemplaza la revisión del Product Owner.
+
+Las pruebas automatizadas y la compilación anotadas en los informes corresponden a ejecuciones anteriores; no volví a ejecutar la suite en esta verificación.
 
 Todavía no se puede guardar pedidos entre reinicios, gestionar vehículos, generar o guardar rutas, verlas en un mapa ni registrar el avance de entregas. La autenticación usa cuentas de demostración locales y requiere configurar el acceso y el código TOTP; no es inicio de sesión institucional conectado a un proveedor de identidad.
 
@@ -119,3 +123,4 @@ Esta definición sirve para juzgar el incremento de un sprint. No significa que 
 | 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se contrasta el backlog candidato de Sprint 3 con Jira y se documenta su capacidad pendiente de revisión. |
 | 1.3.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se añade el estado y tamaño observado del backlog candidato de Sprint 4, sin presentarlo como un sprint aprobado. |
 | 1.4.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se vincula cada paso que ya ofrece Sprint 2 con sus archivos de implementación y con la evidencia histórica de revisión. |
+| 1.5.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se incorpora una comprobación API actual y aislada del flujo MFA, registro y consulta de pedidos, distinguiéndola de la demo visual y de la aceptación del sprint. |

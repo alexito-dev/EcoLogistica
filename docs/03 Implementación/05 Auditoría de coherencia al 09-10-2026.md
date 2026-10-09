@@ -44,6 +44,8 @@ El [informe del Sprint 2](Sprint%202/01%20Informe%20de%20estado%20del%20proyecto
 
 La [revisión del Sprint 2](Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) tiene ahora una pauta para comprobar acceso MFA, registro y consulta de pedidos, explicar la pérdida de datos al reiniciar y anotar la decisión del Product Owner cuando ocurra la reunión. La aceptación sigue marcada como pendiente.
 
+El 09/10 se verificó el recorrido API de Sprint 2 en una instancia temporal separada: MFA, registro, consulta y rechazo de una ventana inválida. La cuenta y el pedido de prueba se eliminaron con el almacenamiento aislado. El resultado no se presenta como validación visual del frontend ni como aceptación formal.
+
 La consulta de Jira del 09/10 no encontró incidencias asignadas a un sprint futuro. El plan funcional registra el tamaño observado y el aún propuesto del flujo de rutas, y advierte que el conjunto podría exceder la capacidad: el equipo debe revisar esa cifra en el Planning antes de fijar Sprint 3.
 
 El plan también deja enlazados el acceso MFA, el formulario de pedidos, su API, la lista y el detalle con los archivos donde viven. La demostración anotada sigue siendo el ensayo del 02/10; la reunión y su aceptación se mantienen pendientes.
@@ -136,3 +138,4 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 | 1.27.0 | 09/10/2026 | Se contrasta el backlog candidato de Sprint 3 con Jira y se deja explícito que su estimación total aún no es un compromiso de equipo. |
 | 1.28.0 | 09/10/2026 | Se actualiza el plan funcional con el estado y el tamaño observado del backlog candidato de Sprint 4, manteniendo pendiente su Planning. |
 | 1.29.0 | 09/10/2026 | Se añade trazabilidad desde el flujo funcional de Sprint 2 hacia su código y la evidencia del ensayo histórico. |
+| 1.30.0 | 09/10/2026 | Se documenta la comprobación API aislada de Sprint 2 y se distingue del ensayo visual histórico y de la aceptación formal pendiente. |

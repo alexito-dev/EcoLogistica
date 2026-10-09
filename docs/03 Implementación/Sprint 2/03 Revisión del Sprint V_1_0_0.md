@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.2.6 |
+| Versión | 1.2.7 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026) |
 | Objetivo replanificado | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
@@ -33,6 +33,7 @@
 | 1.2.4 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se corrige la concordancia de género en las referencias a las partes interesadas. |
 | 1.2.5 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se aclara que `Listo` y las pruebas documentadas respaldan la implementación, mientras la aceptación del Sprint 2 sigue pendiente de su reunión. |
 | 1.2.6 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se deja lista una pauta para revisar el recorrido funcional, explicar sus límites y registrar la decisión sin adelantarla. |
+| 1.2.7 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se agrega una verificación API aislada de MFA, registro, consulta y rechazo de ventana inválida, separada del ensayo visual y de la aceptación pendiente. |
 
 ## Funciones implementadas; aceptación del Sprint 2 pendiente
 
@@ -91,6 +92,8 @@ La especificación se **auditó antes de programar** con el prompt "Auditor Seni
 ## Demostración del trabajo completado
 
 Demostración a las *partes interesadas* de las funcionalidades implementadas. Guion para la revisión del 09/10, **ensayado el 02/10** contra los servidores locales (backend `http://localhost:8000`, frontend `http://localhost:3000`):
+
+**Comprobación API del 09/10, 09:34 (hora de Lima):** en una instancia temporal aparte, sin alterar el servidor local ni sus cuentas, se completó el ingreso con MFA, el registro de un pedido válido (201), su listado por estado y consulta por identificador (200), y el rechazo de una ventana inválida (422). La cuenta y el pedido eran datos de prueba aislados; el archivo temporal se eliminó al terminar. Esto verifica el recorrido de la API, no la interfaz React en un navegador ni la aceptación del Product Owner.
 
 | # | Paso de la demostración | Resultado esperado | Resultado del ensayo |
 |---:|---|---|---|
