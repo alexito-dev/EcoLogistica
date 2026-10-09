@@ -9,8 +9,15 @@
 | Proyecto | EcoLogística Huancayo |
 | Código | PFA-TP2-ECOLOG-2026 |
 | Equipo | Zorrilla Apumayta, Alex Jesus; Anco Porras, Jhean Pier Julio; Hilario Talavera, Alexander Daniel; Vera Zea, Jhoanna Hade; Isidro Casio, Jose Luis |
-| Versión | 1.0.0 |
+| Versión | 1.1.0 |
 | Fecha | 11 de septiembre de 2026 |
+
+## Historial de cambios
+
+| Versión | Fecha | Autor | Cambio |
+|---|---|---|---|
+| 1.0.0 | 11/09/2026 | No consignado en la fuente original | Primera emisión de la transformación del backlog a épicas, historias de usuario y habilitadores. |
+| 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se incorpora el historial de cambios para mantener la trazabilidad de versiones del documento. |
 
 ## 1. Método de transformación
 

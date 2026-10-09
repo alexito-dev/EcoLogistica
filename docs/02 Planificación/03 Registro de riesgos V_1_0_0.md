@@ -7,9 +7,16 @@
 | Campo | Valor |
 |---|---|
 | Proyecto | EcoLogística Huancayo |
-| Versión | 1.0.0 |
+| Versión | 1.1.0 |
 | Fecha | 11 de septiembre de 2026 |
 | Escala | Probabilidad e impacto de 1 a 5; exposición = P × I |
+
+## Historial de cambios
+
+| Versión | Fecha | Autor | Cambio |
+|---|---|---|---|
+| 1.0.0 | 11/09/2026 | No consignado en la fuente original | Primera emisión del registro de riesgos del proyecto. |
+| 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se incorpora el historial de cambios para mantener la trazabilidad de versiones del documento. |
 
 ## 1. Criterios
 

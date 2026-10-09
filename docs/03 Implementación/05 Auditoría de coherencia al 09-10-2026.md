@@ -67,7 +67,7 @@ La imagen histórica que antes se llamaba `05-releases.png` muestra un resumen a
 - `backend/requirements.txt`, `frontend/package.json`, fuentes actuales, scripts de pruebas y estructura de `.github/`.
 - Tablero, sprints, backlog, configuración de columnas, versiones y tarjetas ECO-16/ECO-17 en Jira.
 
-En la revisión estática del repositorio se recorrieron 39 archivos Markdown: no se encontraron enlaces locales rotos ni caracteres de reemplazo. El control de versiones de los documentos de `docs/` tampoco encontró discrepancias entre el metadato y la última entrada de historial.
+En la revisión estática se recorrieron los 54 archivos Markdown versionados: no se encontraron enlaces locales rotos ni caracteres de reemplazo. La primera comprobación detectó que tres documentos versionados de Inicio y Planificación no tenían historial de cambios; se incorporó la trazabilidad sin atribuir autoría a sus primeras emisiones. Después de esa regularización, todos los documentos de `docs/` con número de versión tienen una entrada de historial coincidente con sus metadatos.
 
 La documentación histórica de cada sprint conserva su fecha de corte original. Este documento resume las comprobaciones posteriores sin reescribir los resultados de fechas anteriores.
 
@@ -110,3 +110,4 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 | 1.17.0 | 09/10/2026 | Se añade evidencia HTTP del frontend y la API levantados en local a las 08:51, hora de Lima. |
 | 1.18.0 | 09/10/2026 | Se unifican al español las etiquetas de roles y las menciones genéricas a partes interesadas, preservando nombres propios y términos técnicos. |
 | 1.19.0 | 09/10/2026 | Se corrigen ocho referencias con concordancia gramatical incorrecta a las partes interesadas en los informes y revisiones de Sprint 1 y Sprint 2. |
+| 1.20.0 | 09/10/2026 | Se completa el historial de cambios de tres documentos de Inicio y Planificación y se actualiza la verificación de los 54 archivos Markdown versionados. |
