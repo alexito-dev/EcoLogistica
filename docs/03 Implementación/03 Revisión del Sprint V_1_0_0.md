@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.2.1 |
+| Versión | 1.2.2 |
 | Sprint | ECO Sprint 1 (14/09/2026 – 28/09/2026) |
 | Sprint Goal | "Registrar pedidos con ventana horaria y permitir reenrutar una ruta ante incidencia." |
 | Reunión de revisión | Inspección 2 — Sprint 01, 02/10/2026, 17:40–18:00 |
@@ -27,6 +27,7 @@
 | 1.1.0 | 02/10/2026 | Alex Zorrilla | Se agregan diagramas Mermaid y tablas de análisis con los mismos datos; el contenido no cambia. |
 | 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se distingue la estructura y el flujo históricos de Sprint 1 de la configuración vigente del repositorio. |
 | 1.2.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se traducen las referencias narrativas a partes interesadas. |
+| 1.2.2 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se corrige la concordancia de género en las referencias a las partes interesadas. |
 
 ## Historias de Usuario completadas en este Sprint
 
@@ -77,9 +78,9 @@ Aunque no son historias de valor para el usuario final, son prerrequisitos verif
 
 ## Demostración del trabajo completado
 
-Demostración a los *partes interesadas* de las funcionalidades implementadas: **no existe una funcionalidad de software que demostrar en el Sprint 1**. En la Inspección 2 se presenta y se explica, en este orden, la evidencia real del sprint:
+Demostración dirigida a las *partes interesadas* sobre las funcionalidades implementadas: **no existe una funcionalidad de software que demostrar en el Sprint 1**. En la Inspección 2 se presenta y se explica, en este orden, la evidencia real del sprint:
 
-| # | Elemento demostrado | Qué se muestra | Qué valida el *parte interesada* |
+| # | Elemento demostrado | Qué se muestra | Qué validan las partes interesadas |
 |---:|---|---|---|
 | 1 | Roadmap, backlog y tablero Scrum de Jira (`ECO`) | Épicas EP-01…EP-07, historias con puntos, Sprint 1 con su objetivo y las 2 historias cargadas | Que el alcance del sprint y la priorización responden a la visión del producto |
 | 2 | Estructura del repositorio y convenciones | Árbol de carpetas, `.gitignore`, ramas, *Conventional Commits*, plantillas de PR/issue | Que el código futuro se organizará de forma modular y sin versionar secretos ni dependencias |
@@ -98,14 +99,14 @@ flowchart TB
         E5["5 · Criterios de aceptación vs RN-001 y RN-005"]
         E6["6 · Registro de impedimentos"]
     end
-    EVID --> V{"Validación de los partes interesadas"}
+    EVID --> V{"Validación de las partes interesadas"}
     V --> R1["Alcance alineado con la visión"]
     V --> R2["Código organizado y sin secretos"]
     V --> R3["Soporta 1,000 pedidos/día y 2G/3G"]
     V --> R4["Transparencia del desvío y plan"]
 ```
 
-### Retroalimentación esperada de los partes interesadas
+### Retroalimentación esperada de las partes interesadas
 
 Los puntos de validación del demo se registran en la reunión y se trasladan al backlog en Jira. Cualquier comentario del docente asesor sobre alcance o prioridad se refleja en la siguiente versión de este documento (1.0.1 o superior).
 
