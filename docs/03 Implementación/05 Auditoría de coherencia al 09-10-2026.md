@@ -62,6 +62,8 @@ La imagen histórica que antes se llamaba `05-releases.png` muestra un resumen a
 - `backend/requirements.txt`, `frontend/package.json`, fuentes actuales, scripts de pruebas y estructura de `.github/`.
 - Tablero, sprints, backlog, configuración de columnas, versiones y tarjetas ECO-16/ECO-17 en Jira.
 
+En la revisión estática del repositorio se recorrieron 39 archivos Markdown: no se encontraron enlaces locales rotos ni caracteres de reemplazo. El control de versiones de los documentos de `docs/` tampoco encontró discrepancias entre el metadato y la última entrada de historial.
+
 La documentación histórica de cada sprint conserva su fecha de corte original. Este documento resume las comprobaciones posteriores sin reescribir los resultados de fechas anteriores.
 
 En la revisión documental del 09/10 se corrigió el uso de “velocidad” para el Sprint 2: antes de la reunión y del cierre, los 5 puntos de ECO-9 son estado observado en Jira (`Listo`), no velocidad aceptada. También se acotó la afirmación sobre concentración de commits al corte del 02/10 y se incorporó el historial verificado hasta el 09/10.
@@ -96,3 +98,4 @@ La comprobación del control de versiones detectó cuatro documentos cuyo campo 
 | 1.10.0 | 09/10/2026 | Se traducen al español los comandos y habilidades OpenSpec de `.claude/`, conservando sus nombres ejecutables, campos de datos y contratos estructurales. |
 | 1.11.0 | 09/10/2026 | Se corrige la presentación de los 5 puntos del Sprint 2 como velocidad, se deja la velocidad oficial pendiente de revisión y cierre, y se acota al corte correspondiente el análisis de autoría de commits. |
 | 1.12.0 | 09/10/2026 | Se alinean los metadatos de versión de cuatro documentos con su historial de cambios y se registra el control de consistencia documental. |
+| 1.13.0 | 09/10/2026 | Se documenta la revisión estática de los 39 archivos Markdown: cero enlaces locales rotos, cero caracteres de reemplazo y metadatos de versión alineados. |
