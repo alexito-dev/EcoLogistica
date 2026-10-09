@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.2.1 |
+| Versión | 1.2.2 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026) |
 | Objetivo replanificado | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
@@ -28,6 +28,7 @@
 | 1.1.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea la acción futura de CI y ramas con el flujo de ramas breves y PR hacia `main`; la aceptación del Sprint 2 sigue pendiente de la reunión. |
 | 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se añade el historial de cambios de estado de ECO-9 y se confirma que la reunión aún no ocurrió al corte de esta actualización. |
 | 1.2.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se distingue el estado provisional de Jira de la velocidad y aceptación oficiales del Sprint 2, que siguen pendientes de la revisión y del cierre. |
+| 1.2.2 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra que ECO-20 aparece sin persona asignada ni estimación aprobada en Jira al corte previo a la revisión. |
 
 ## Historias de Usuario completadas en este Sprint
 
@@ -49,7 +50,7 @@ Alcance entregado (especificado en el cambio OpenSpec `registro-pedidos`, 9 requ
 
 ### Historia técnica — Autenticación con verificación en dos pasos y autorización por rol (RF-11.1) · **Completada**
 
-Incorporada al sprint como precondición de HU-001 y como actividad de la semana 6. Registrada el 09/10 en Jira como [ECO-20 — Autenticación MFA y autorización por rol](https://continental-team-ecologistica.atlassian.net/browse/ECO-20), vinculada a EP-07. No tiene puntos: no se encontró una estimación aprobada por el equipo ([IMP-008](02%20Registro%20de%20Impedimentos%20V_1_0_0.md)).
+Incorporada al sprint como precondición de HU-001 y como actividad de la semana 6. Registrada el 09/10 en Jira como [ECO-20 — Autenticación MFA y autorización por rol](https://continental-team-ecologistica.atlassian.net/browse/ECO-20), vinculada a EP-07. Al corte previo a la revisión no tiene puntos ni persona asignada: no se encontró una estimación aprobada por el equipo ni una asignación en Jira ([IMP-008](02%20Registro%20de%20Impedimentos%20V_1_0_0.md)).
 
 | Escenario clave de la especificación `autenticacion` | Resultado |
 |---|---|

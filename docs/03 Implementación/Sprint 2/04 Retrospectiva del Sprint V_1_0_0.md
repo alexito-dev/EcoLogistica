@@ -10,7 +10,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.3.0 |
+| Versión | 1.4.0 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026; revisión 09/10/2026) |
 | Fecha de la retrospectiva | 02/10/2026 (corte de mitad de sprint; se confirma en la reunión del 09/10) |
 | Facilitador | Alex Zorrilla |
@@ -26,6 +26,7 @@
 | 1.1.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza A6 al flujo de ramas breves desde `main` y PR hacia `main`; la retrospectiva continúa como intermedia hasta la reunión del Sprint 2. |
 | 1.2.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se corrigen el seguimiento de las acciones, el estado de Jira y el balance al corte previo a la revisión; se registra IMP-003 reabierto. |
 | 1.3.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se aclara el corte histórico de autoría de commits y se actualiza el dato con el historial de Git hasta el 09/10. |
+| 1.4.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza el estado de ECO-20: además de no tener estimación aprobada, Jira aún no muestra una persona asignada. |
 
 ## Seguimiento de las acciones del Sprint 1
 
@@ -36,7 +37,7 @@
 | A3 — Base de código de backend y frontend | Cumplida | `backend/` (FastAPI) y `frontend/` (React + Vite) con scripts de ejecución y prueba |
 | A4 — Primer cambio OpenSpec completo | Cumplida | `registro-pedidos` y `autenticacion-mfa` implementados, verificados y archivados |
 | A5 — CI mínimo | No cumplida | Sin GitHub Actions; las pruebas solo se ejecutan en local |
-| A6 — *Planning Poker* y backlog completo en Jira | Parcial | ECO-20 se creó el 09/10 sin puntos; faltan siete tarjetas de backlog y evidencia de *Planning Poker*. |
+| A6 — *Planning Poker* y backlog completo en Jira | Parcial | ECO-20 se creó el 09/10 sin puntos ni persona asignada; faltan siete tarjetas de backlog y evidencia de *Planning Poker*. |
 | A7 — Prototipo del motor y benchmark | No cumplida | Sin código de optimización |
 | A8 — Registro de decisiones técnicas (ADR) | Parcial | La ratificación del stack quedó registrada en el historial del documento 10, no como ADR independiente |
 | A9 — Releases y tablero de 4 columnas en Jira | No cumplida al 09/10 | Jira aún no tiene versiones y mantiene cinco columnas con mezcla de idiomas y mapeos inconsistentes; IMP-003 se reabrió. |

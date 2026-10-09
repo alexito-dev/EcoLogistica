@@ -15,14 +15,14 @@
 | Campo | Valor |
 |---|---|
 | Código del proyecto | PFA-TP2-ECOLOG-2026 |
-| Versión | 1.1.5 |
+| Versión | 1.1.6 |
 | Iteración reportada | ECO Sprint 2 |
 | Objetivo replanificado del sprint | "Entregar el primer incremento demostrable: registro de pedidos (HU-001) con acceso seguro por roles y verificación en dos pasos." |
 | Fuentes | Historial Git (`main`), cambios OpenSpec `registro-pedidos` y `autenticacion-mfa`, resultados de pruebas automatizadas, [Retrospectiva del Sprint 1](../04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 | Documentos hermanos | [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [04 Retrospectiva del Sprint](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 | Sprint anterior | [Informe de estado del Sprint 1](../01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) |
 
-> **Actualización al 09/10/2026, antes de la revisión:** Jira mantiene el Sprint 2 id. 37 activo (29/09–12/10). Incluye ECO-9 / HU-001 (5 puntos) y ECO-20 / autenticación MFA (sin estimación aprobada); ambas están `Listo`. La métrica dinámica actual cuenta 2/2 incidencias completadas (100 %); no representa aceptación del producto ni cierre del sprint. El informe del Sprint 1 registra 0 de 2 al corte planificado del 28/09. El historial muestra ECO-9 en `Listo` el 02/10, su paso a `Por hacer` al cerrar Sprint 1 a las 07:42 del 09/10 y su retorno a `Listo` a las 07:43 al añadirse también al Sprint 2; la métrica dinámica actual del Sprint 1 cuenta 1/2 por su estado vigente y la asociación doble. La revisión del Sprint 2 está prevista para hoy a las 15:40, hora de Lima; sus acuerdos y aceptación todavía están pendientes.
+> **Actualización al 09/10/2026, antes de la revisión:** Jira mantiene el Sprint 2 id. 37 activo (29/09–12/10). Incluye ECO-9 / HU-001 (5 puntos) y ECO-20 / autenticación MFA (sin estimación aprobada ni persona asignada); ambas están `Listo`. La métrica dinámica actual cuenta 2/2 incidencias completadas (100 %); no representa aceptación del producto ni cierre del sprint. El informe del Sprint 1 registra 0 de 2 al corte planificado del 28/09. El historial muestra ECO-9 en `Listo` el 02/10, su paso a `Por hacer` al cerrar Sprint 1 a las 07:42 del 09/10 y su retorno a `Listo` a las 07:43 al añadirse también al Sprint 2; la métrica dinámica actual del Sprint 1 cuenta 1/2 por su estado vigente y la asociación doble. La revisión del Sprint 2 está prevista para hoy a las 15:40, hora de Lima; sus acuerdos y aceptación todavía están pendientes.
 
 ## Historial de cambios
 
@@ -35,6 +35,7 @@
 | 1.1.3 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la métrica actual de Jira (2/2 incidencias en `Listo`) y se aclara que no sustituye la aceptación ni el cierre formal del Sprint 2. |
 | 1.1.4 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se precisa el historial de estados de ECO-9 al cerrar Sprint 1 y al incorporarla a Sprint 2. |
 | 1.1.5 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se limita la lectura de los 5 puntos al estado de Jira observado al corte del 02/10; no se presentan como velocidad aceptada antes de la revisión del sprint. |
+| 1.1.6 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se precisa que ECO-20 no tiene persona asignada en Jira al corte previo a la revisión. |
 
 ## Resumen ejecutivo
 
