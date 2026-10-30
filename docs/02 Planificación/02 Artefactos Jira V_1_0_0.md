@@ -8,14 +8,18 @@
 
 Como equipo, reconciliamos el tablero [ECO board](https://continental-team-ecologistica.atlassian.net/jira/software/projects/ECO/boards/2/backlog) (id 2) con [GitHub](https://github.com/alexito-dev/EcoLogistica), rama `main`. El [PR #3](https://github.com/alexito-dev/EcoLogistica/pull/3) quedó fusionado el **30/10/2026** (commit `3375602`), y el [pipeline sobre main](https://github.com/alexito-dev/EcoLogistica/actions/runs/41117477415) aprobó las comprobaciones de backend, frontend, OpenSpec, migraciones e integración PostGIS. Estas pruebas **no cubren** toda la aceptación funcional, el despliegue continuo, la seguridad en producción ni la conformidad WCAG.
 
+### Actuación administrativa autorizada — 30/10/2026
+
+Con autorización expresa del usuario, **cerramos ECO Sprint 2 (id 37)** en Jira el 30/10/2026 a las 19:58:02 UTC (14:58:02 en Lima), preservando su fecha original de fin 12/10. **Iniciamos ECO Sprint 3 (id 38)** con fecha 30/10/2026 14:59 (Lima) y cierre previsto para el 13/11/2026 14:59 (Lima). Esta ventana de dos semanas se usó exclusivamente para la **regularización administrativa** y no pretende presentar trabajo anterior como realizado entre esas fechas. El sprint tiene cinco incidencias: ECO-22, ECO-23 y ECO-17 en revisión/QA; ECO-14 y ECO-24 en curso. Ninguna consta como Listo al inicio. Conservamos pruebas, actas, estimaciones y fechas históricas.
+
 ### Sprints registrados
 
 | Sprint Jira | ID | Estado verificado | Criterio de interpretación |
 |---|---:|---|---|
 | ECO Sprint 1 (duplicado) | 3 | Cerrado | Entrada histórica accidental, no usar como Sprint 1 oficial |
 | ECO Sprint 1 | 36 | Cerrado (09/10) | Conservar compromiso y velocidad del corte 28/09; los habilitadores posteriores ECO-16 y ECO-20 quedan fuera del sprint |
-| ECO Sprint 2 | 37 | Activo; 2 de 2 historias en Listo, 10 puntos | El incremento de flota fue aceptado según constancia del 09/10; el **cierre administrativo sigue pendiente** y no se ha efectuado de forma automática |
-| ECO Sprint 3 | 38 | Futuro; creado para regularización el 30/10 | **No es ejecución histórica retroactiva:** el incremento técnico ya se documentó; la aceptación y la velocidad no se reconstruyen después |
+| ECO Sprint 2 | 37 | **Cerrado administrativamente el 30/10/2026 a las 14:58:02 (Lima)**; 2/2 historias en Listo, 10 puntos | Conservamos las fechas originales (29/09–12/10) y la aprobación funcional del 09/10; el cierre fue posterior al periodo del sprint |
+| ECO Sprint 3 | 38 | **Activo** desde el 30/10/2026, hasta el 13/11/2026 | Periodo **administrativo nuevo** de regularización (30/10–13/11), distinto del incremento técnico previamente documentado (09/10–30/10); no reconstruimos velocidad histórica |
 
 ### Matriz de control Jira–código
 
@@ -47,7 +51,7 @@ Como equipo, usamos la matriz de responsabilidades vigente, no un reparto arbitr
 1. Actualizamos estados sobre criterios verificables: `En revisión / QA` no equivale a aceptación y `Listo` exige evidencia vinculada.
 2. Vinculamos código, pruebas, commit, CI, documento y decisión de revisión. No creamos versiones de entrega publicadas antes de la decisión del equipo.
 3. Distinguimos estimaciones de métricas reales: la distancia usa aproximaciones y los indicadores calculan un escenario, no la reducción observada en DistriRápido.
-4. Para cerrar Sprint 2 y comenzar/cerrar Sprint 3 requerimos la decisión administrativa correspondiente; estas acciones afectan los informes de Jira y no se ejecutaron en la regularización.
+4. La autorización del usuario permitió cerrar Sprint 2 e iniciar Sprint 3 el 30/10/2026. Para cerrar Sprint 3 y aceptar historias todavía requerimos las verificaciones y decisiones correspondientes; no anticipamos resultados.
 5. No asignamos puntos nuevos. Ajustamos los responsables de ECO-17, ECO-22, ECO-23, ECO-24 y las épicas ECO-3 y ECO-4 siguiendo la matriz de responsabilidades registrada en README; el equipo deberá confirmar carga y disponibilidad en Planning. Las historias creadas a posteriori no computan como velocidad original.
 
 [Consulta del Sprint 3 en Jira](https://continental-team-ecologistica.atlassian.net/jira/software/projects/ECO/boards/2/backlog) · [Plan funcional vigente](05%20Plan%20funcional%20de%20sprints.md) · [Revisión del Sprint 3](../03%20Implementaci%C3%B3n/Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
