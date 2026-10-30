@@ -6,7 +6,7 @@
 ### Plataforma de Optimización de Rutas Sostenibles de Última Milla
 
 [![Estado](https://img.shields.io/badge/Estado-Implementaci%C3%B3n%20%C2%B7%20Sprint%203-2ea44f?style=flat-square)](docs/03%20Implementaci%C3%B3n/Sprint%2003)
-[![Quality Gate](https://img.shields.io/badge/SonarQube-Quality%20Gate%20PASSED-4c9a2a?style=flat-square)](docs/03%20Implementaci%C3%B3n/Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)
+[![SonarQube (análisis histórico 9b31dd0)](https://img.shields.io/badge/SonarQube%209b31dd0-PASSED%20hist%C3%B3rico-4c9a2a?style=flat-square)](docs/03%20Implementaci%C3%B3n/Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)
 [![Versión](https://img.shields.io/badge/Versión-En%20desarrollo-blue?style=flat-square)](README.md)
 [![Stack](https://img.shields.io/badge/Stack-React%20%2B%20FastAPI-025B29?style=flat-square)](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md)
 [![Metodología](https://img.shields.io/badge/Metodología-Scrum%20%2B%20ramas%20cortas-6f42c1?style=flat-square)](docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20V_1_0_0.md)
@@ -20,6 +20,8 @@
 </div>
 
 ---
+
+**SonarQube:** el análisis documentado como PASSED corresponde al commit histórico `9b31dd0`, no a todos los cambios posteriores. Consultar la [validación de vigencia y guía de reanálisis](docs/03%20Implementaci%C3%B3n/Sprint%2003/20261030%20Validaci%C3%B3n%20del%20reporte%20SonarQube%20y%20rean%C3%A1lisis.md). El CI del repositorio todavía no ejecuta SonarScanner.
 
 ## 1. Ficha Técnica del Proyecto
 
