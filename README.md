@@ -73,7 +73,17 @@ La línea base funcional acordada para Sprint 1–4 está en [05. Plan funcional
 
 ---
 
-## 3. Capacidades y Módulos Funcionales
+## ## Regularización técnica de Sprint 1–3 (30/10/2026)
+
+Como equipo, estamos conciliando los incrementos técnicos de los tres primeros sprints con los criterios de Jira. **Esta actividad no constituye un cierre retroactivo ni una certificación de producción.** Hemos registrado correcciones de durabilidad en los repositorios JSON temporales de autenticación y rutas, así como pruebas de regresión frente a errores de escritura. Estas medidas no sustituyen la migración definitiva a PostgreSQL/PostGIS y el cifrado en reposo de los secretos TOTP, aún pendientes en [ECO-21](https://continental-team-ecologistica.atlassian.net/browse/ECO-21).
+
+Conservamos los cortes originales del 09/10 y 30/10; cuando el texto siguiente se refiere a un corte anterior no debe interpretarse como estado final de esta regularización. En Jira se han creado [ECO-22](https://continental-team-ecologistica.atlassian.net/browse/ECO-22) (generación/recuperación de rutas) y [ECO-23](https://continental-team-ecologistica.atlassian.net/browse/ECO-23) (benchmark). Actualizamos [ECO-17](https://continental-team-ecologistica.atlassian.net/browse/ECO-17) para reconocer GitHub Actions, manteniendo pendientes E2E/Playwright y pruebas de integración de PostGIS. [ECO-13](https://continental-team-ecologistica.atlassian.net/browse/ECO-13) y [ECO-14](https://continental-team-ecologistica.atlassian.net/browse/ECO-14) permanecen abiertas por criterios de aceptación no acreditados íntegramente.
+
+Toda modificación se entrega mediante [PR #3](https://github.com/alexito-dev/EcoLogistica/pull/3), sujeto a CI y revisión; no publicamos información de autenticación ni alteramos velocidades históricas. Consultar el [plan transversal de regularización](docs/03%20Implementaci%C3%B3n/Regularizacion%20Sprints%2001-03%20-%2020261030.md) y los complementos de cada sprint.
+
+---
+
+3. Capacidades y Módulos Funcionales
 
 El diagrama muestra el alcance objetivo del producto, no funcionalidades ya entregadas. Al 09/10/2026 están implementados la autenticación con MFA/roles, el registro y consulta persistente de pedidos y la gestión de flota con los criterios E2E de Sprint 2 aprobados. Generación de rutas, optimización, mapa, dashboard y re-enrutamiento siguen pendientes.
 
