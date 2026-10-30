@@ -78,6 +78,7 @@ def main() -> None:
     settings = get_settings()
     deposito = Punto(settings.deposito_lat, settings.deposito_lon)
     print(f"{'Pedidos':>8} {'Vehículos':>10} {'Asignados':>10} {'Tiempo (s)':>11}  Objetivo <= {OBJETIVO_S:g} s")
+    fuera_de_objetivo = False
     for n in volumenes:
         pedidos = pedidos_sinteticos(n, random.Random(2026))
         flota = flota_sintetica(n)
@@ -85,7 +86,11 @@ def main() -> None:
         propuesta = planificar(FECHA, deposito, pedidos, flota)
         segundos = perf_counter() - inicio
         asignados = sum(len(r.paradas) for r in propuesta.rutas)
-        print(f"{n:>8} {len(flota):>10} {asignados:>10} {segundos:>11.2f}  {'cumple' if segundos <= OBJETIVO_S else 'NO cumple'}")
+        cumple = segundos <= OBJETIVO_S
+        fuera_de_objetivo = fuera_de_objetivo or not cumple
+        print(f"{n:>8} {len(flota):>10} {asignados:>10} {segundos:>11.2f}  {'cumple' if cumple else 'NO cumple'}")
+    if fuera_de_objetivo:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
