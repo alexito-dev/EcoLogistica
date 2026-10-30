@@ -24,3 +24,10 @@ Como equipo, registramos ECO Sprint 3 (id 38) como sprint **futuro de regulariza
 
 [Artefactos Jira actualizados](../../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md#actualización-de-gestión-verificada--30102026).
 
+## Registro posterior de inicio administrativo — 30/10/2026
+
+Con autorización expresa, **iniciamos ECO Sprint 3 (id 38)** en Jira el **30/10/2026 a las 14:59 (Lima)**. Establecimos un periodo de regularización administrativa hasta el **13/11/2026 a las 14:59 (Lima)**. No es una recreación retrospectiva del trabajo documentado del 09/10 al 30/10, ni altera actas, objetivos o velocidad histórica.
+
+Asignamos cinco incidencias al sprint: **ECO-22, ECO-23 y ECO-17** (En revisión / QA) y **ECO-14 y ECO-24** (En curso). El sprint inicia con **0 de 5 historias/tareas en Listo**, aunque existe código y evidencia técnica previa. La aceptación de cada criterio todavía debe revisarse. El texto anterior que lo describía como «futuro» corresponde a la instantánea previa al inicio autorizado.
+
+Evidencia: [tablero de Jira](https://continental-team-ecologistica.atlassian.net/jira/software/projects/ECO/boards/2/backlog).
