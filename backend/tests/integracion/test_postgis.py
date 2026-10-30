@@ -104,3 +104,95 @@ def test_vehiculo_y_disponibilidad_persisten_entre_instancias(engine_postgis):
                 {"id": vehiculo.id},
             )
             conexion.execute(text("DELETE FROM vehiculos WHERE id=:id"), {"id": vehiculo.id})
+
+
+def test_postgis_pedidos_filtrado_paginacion_duplicados_y_correlativo(engine_postgis):
+    """Verificamos filtros, ausencia, paginación y atomicidad ante código repetido."""
+    from dataclasses import replace
+    from app.pedidos.domain import CodigoDuplicadoError
+
+    repo = PedidosPostgresRepository(engine_postgis)
+    ambito = Ambito(-12.20, -11.95, -75.35, -75.10, ("Huancayo",))
+    pedido = Pedido.crear(
+        codigo=f"INTEG-{uuid4().hex[:12].upper()}",
+        ubicacion=Ubicacion("Av. Giráldez 456", "Huancayo", -12.065, -75.205),
+        demanda_kg=18, demanda_m3=0.7, tiempo_servicio_min=12,
+        ventana_inicio=datetime(2026, 10, 30, 8, tzinfo=timezone.utc),
+        ventana_fin=datetime(2026, 10, 30, 14, tzinfo=timezone.utc),
+        prioridad=3, ambito=ambito,
+    )
+    try:
+        repo.guardar(pedido)
+        assert repo.obtener(uuid4()) is None
+        assert repo.obtener_por_codigo(f"AUSENTE-{uuid4().hex}") is None
+        pendientes, total = repo.listar(EstadoPedido.PENDIENTE, pagina=1, limite=100)
+        assert total >= 1
+        assert any(p.id == pedido.id for p in pendientes)
+        entregados, _ = repo.listar(EstadoPedido.ENTREGADO, pagina=1, limite=100)
+        assert all(p.estado == EstadoPedido.ENTREGADO for p in entregados)
+        todos, _ = repo.listar(None, pagina=1, limite=100)
+        assert any(p.id == pedido.id for p in todos)
+        assert repo.siguiente_correlativo() > 0
+        repetido = replace(pedido, id=uuid4())
+        with pytest.raises(CodigoDuplicadoError):
+            repo.guardar(repetido)
+        assert repo.obtener(repetido.id) is None
+    finally:
+        with engine_postgis.begin() as conexion:
+            conexion.execute(text("DELETE FROM pedidos WHERE id=:id"), {"id": pedido.id})
+            conexion.execute(text("DELETE FROM ubicaciones WHERE id=:id"), {"id": pedido.id})
+
+
+def test_postgis_flota_actualizacion_duplicados_y_upsert_de_turno(engine_postgis):
+    """Comprobamos restricciones SQL y el cambio persistente de turno de la misma fecha."""
+    from dataclasses import replace
+    from app.flota.domain import PlacaDuplicadaError
+
+    repo = FlotaPostgresRepository(engine_postgis)
+    primero = Vehiculo(
+        id=uuid4(), placa=f"T{uuid4().hex[:6].upper()}", tipo="Camión",
+        capacidad_kg=Decimal("800"), capacidad_m3=Decimal("9"),
+        combustible=Combustible.DIESEL, consumo_base_por_100km=Decimal("14"),
+        factor_emision_kgco2e_unidad=None, anio=2023,
+        estado=EstadoVehiculo.DISPONIBLE, creado_en=None, actualizado_en=None,
+    )
+    segundo = replace(primero, id=uuid4(), placa=f"T{uuid4().hex[:6].upper()}")
+    fecha = date(2026, 10, 30)
+    try:
+        repo.crear(primero)
+        repo.crear(segundo)
+        assert repo.obtener(uuid4()) is None
+        assert repo.actualizar(replace(primero, id=uuid4())) is None
+        assert repo.guardar_disponibilidad(
+            uuid4(), DisponibilidadVehiculo(fecha, time(8), time(17), True, None)
+        ) is None
+        with pytest.raises(PlacaDuplicadaError):
+            repo.crear(replace(primero, id=uuid4()))
+        with pytest.raises(PlacaDuplicadaError):
+            repo.actualizar(replace(segundo, placa=primero.placa))
+
+        modificado = repo.actualizar(replace(primero, tipo="Furgón", capacidad_kg=Decimal("950")))
+        assert modificado is not None
+        assert modificado.tipo == "Furgón"
+        assert modificado.capacidad_kg == Decimal("950")
+        assert modificado.actualizado_en is not None
+
+        inicial = DisponibilidadVehiculo(fecha, time(8), time(17), True, None)
+        repo.guardar_disponibilidad(primero.id, inicial)
+        nuevo = DisponibilidadVehiculo(fecha, time(9), time(16), False, "Revisión técnica")
+        repo.guardar_disponibilidad(primero.id, nuevo)
+        almacenado = FlotaPostgresRepository(engine_postgis).obtener(primero.id, fecha)
+        assert almacenado is not None
+        assert almacenado.disponibilidad is not None
+        assert almacenado.disponibilidad.turno_inicio == time(9)
+        assert almacenado.disponibilidad.disponible is False
+        assert almacenado.disponibilidad.restriccion_circulacion == "Revisión técnica"
+        assert any(v.id == primero.id for v in repo.listar())
+    finally:
+        with engine_postgis.begin() as conexion:
+            for vehiculo in (primero, segundo):
+                conexion.execute(
+                    text("DELETE FROM disponibilidad_vehiculos WHERE vehiculo_id=:id"),
+                    {"id": vehiculo.id},
+                )
+                conexion.execute(text("DELETE FROM vehiculos WHERE id=:id"), {"id": vehiculo.id})
