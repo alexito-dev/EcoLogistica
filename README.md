@@ -73,7 +73,9 @@ La línea base funcional acordada para Sprint 1–4 está en [05. Plan funcional
 
 ---
 
-## ## Regularización técnica de Sprint 1–3 (30/10/2026)
+## > **Conciliación de Jira (30/10/2026):** El código de los Sprint 1–3 y sus pruebas están más avanzado que el control administrativo. En Jira, Sprint 1 (id 36) permanece cerrado con historia preservada; Sprint 2 (id 37) sigue activo administrativamente aunque ECO-12 y ECO-19 están Listo; creamos Sprint 3 (id 38) como **futuro de regularización**, con ECO-22/23/14/17/24 bajo control y sin velocidad reconstruida. No confundimos emisiones estimadas con reducciones observadas. La [matriz de conciliación](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md#actualización-de-gestión-verificada--30102026) establece qué falta aceptar y por qué.
+
+## Regularización técnica de Sprint 1–3 (30/10/2026)
 
 Como equipo, estamos conciliando los incrementos técnicos de los tres primeros sprints con los criterios de Jira. **Esta actividad no constituye un cierre retroactivo ni una certificación de producción.** Hemos registrado correcciones de durabilidad en los repositorios JSON temporales de autenticación y rutas, así como pruebas de regresión frente a errores de escritura. Estas medidas no sustituyen la migración definitiva a PostgreSQL/PostGIS y el cifrado en reposo de los secretos TOTP, aún pendientes en [ECO-21](https://continental-team-ecologistica.atlassian.net/browse/ECO-21).
 
