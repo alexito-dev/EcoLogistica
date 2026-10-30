@@ -78,8 +78,16 @@ class UsuariosArchivoRepository:
 
     def guardar(self, usuario: Usuario) -> None:
         with self._lock:
+            anterior = self._usuarios.get(usuario.id)
             self._usuarios[usuario.id] = usuario
-            self._persistir()
+            try:
+                self._persistir()
+            except BaseException:
+                if anterior is None:
+                    self._usuarios.pop(usuario.id, None)
+                else:
+                    self._usuarios[usuario.id] = anterior
+                raise
 
     def contar(self) -> int:
         return len(self._usuarios)
@@ -90,10 +98,23 @@ class UsuariosArchivoRepository:
 
     def guardar_intentos(self, correo: str, registro: RegistroIntentos) -> None:
         with self._lock:
+            anterior = self._intentos.get(correo)
             self._intentos[correo] = registro
-            self._persistir()
+            try:
+                self._persistir()
+            except BaseException:
+                if anterior is None:
+                    self._intentos.pop(correo, None)
+                else:
+                    self._intentos[correo] = anterior
+                raise
 
     def limpiar_intentos(self, correo: str) -> None:
         with self._lock:
-            if self._intentos.pop(correo, None) is not None:
-                self._persistir()
+            anterior = self._intentos.pop(correo, None)
+            if anterior is not None:
+                try:
+                    self._persistir()
+                except BaseException:
+                    self._intentos[correo] = anterior
+                    raise
