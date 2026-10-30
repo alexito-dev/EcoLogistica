@@ -38,13 +38,17 @@ Como equipo, reconciliamos el tablero [ECO board](https://continental-team-ecolo
 
 **Duplicidad detectada:** ECO-7 reproduce el alcance de ECO-6. Conservamos ECO-7 con señalización de duplicidad y usamos ECO-6 como referencia canónica; no eliminamos la épica ni alteramos la historia de ECO-15.
 
+### Responsabilidad funcional alineada al equipo
+
+Como equipo, usamos la matriz de responsabilidades vigente, no un reparto arbitrario: **Alexander Hilario** lleva optimización (ECO-3, ECO-22 y ECO-23), **Hade Vera** interfaz/cartografía y accesibilidad (ECO-4 y ECO-24), y **Jose Luis Isidro Casio** calidad/CI (ECO-17). Conservamos los responsables de pedidos, flota y restantes historias cuando no hay evidencia suficiente para modificarlos. La asignación indica responsabilidad operativa propuesta; todavía no acredita capacidad disponible ni aceptación del compromiso.
+
 ### Reglas para conservar la calidad de Jira
 
 1. Actualizamos estados sobre criterios verificables: `En revisión / QA` no equivale a aceptación y `Listo` exige evidencia vinculada.
 2. Vinculamos código, pruebas, commit, CI, documento y decisión de revisión. No creamos versiones de entrega publicadas antes de la decisión del equipo.
 3. Distinguimos estimaciones de métricas reales: la distancia usa aproximaciones y los indicadores calculan un escenario, no la reducción observada en DistriRápido.
 4. Para cerrar Sprint 2 y comenzar/cerrar Sprint 3 requerimos la decisión administrativa correspondiente; estas acciones afectan los informes de Jira y no se ejecutaron en la regularización.
-5. No asignamos puntos nuevos ni cambiamos responsables existentes sin acuerdo del equipo. Las historias creadas a posteriori no computan como velocidad original.
+5. No asignamos puntos nuevos. Ajustamos los responsables de ECO-17, ECO-22, ECO-23, ECO-24 y las épicas ECO-3 y ECO-4 siguiendo la matriz de responsabilidades registrada en README; el equipo deberá confirmar carga y disponibilidad en Planning. Las historias creadas a posteriori no computan como velocidad original.
 
 [Consulta del Sprint 3 en Jira](https://continental-team-ecologistica.atlassian.net/jira/software/projects/ECO/boards/2/backlog) · [Plan funcional vigente](05%20Plan%20funcional%20de%20sprints.md) · [Revisión del Sprint 3](../03%20Implementaci%C3%B3n/Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
 
