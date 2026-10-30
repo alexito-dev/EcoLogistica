@@ -196,3 +196,24 @@ def test_persistencia_en_archivo(repo_usuarios, servicio, reloj, tmp_path):
     _acceder(servicio, reloj)
     recargado = UsuariosArchivoRepository(tmp_path / "usuarios.json")
     assert recargado.obtener_por_correo(CORREO).mfa_secreto
+
+
+def test_fallo_escritura_no_deja_archivo_temporal(tmp_path, monkeypatch):
+    """Ante un fallo del reemplazo, conservamos el archivo anterior y limpiamos el temporal."""
+    from app.auth.archivo_repository import UsuariosArchivoRepository
+    from app.auth import archivo_repository
+
+    ruta = tmp_path / "usuarios.json"
+    repositorio = UsuariosArchivoRepository(ruta)
+    sembrar_usuarios_demo(repositorio, CLAVE_DEMO)
+    antes = ruta.read_bytes()
+
+    def reemplazo_fallido(_origen, _destino):
+        raise OSError("fallo simulado de disco")
+
+    monkeypatch.setattr(archivo_repository.os, "replace", reemplazo_fallido)
+    with pytest.raises(OSError, match="fallo simulado"):
+        repositorio._persistir()
+
+    assert ruta.read_bytes() == antes
+    assert not list(tmp_path.glob("*.tmp"))
