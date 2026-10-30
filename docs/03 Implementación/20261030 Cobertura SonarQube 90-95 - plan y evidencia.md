@@ -15,6 +15,29 @@ C_{CI}=100\,\frac{L_{cubiertas}+R_{cubiertas}}{L_{totales}+R_{totales}}
 
 Este indicador explicita tanto la cobertura de líneas como la de ramas. Puede diferir del cálculo oficial de SonarQube según cómo se instrumenten y clasifiquen condiciones, por lo que no sustituimos uno por el otro.
 
+
+## Segunda medición verificable: después de ampliar pruebas Python y Vitest
+
+En la [ejecución de CI #41124453799](https://github.com/alexito-dev/EcoLogistica/actions/runs/41124453799), correspondiente a la rama `quality/coverage-90-sonarqube-20261030` en el commit `a11c0af9` (el contexto de prueba de PR identificó `722ad649`), **los cinco jobs terminaron correctamente**. Los datos medidos desde los XML y LCOV fueron:
+
+| Área | Líneas cubiertas | Líneas | Ramas cubiertas | Ramas | Cobertura combinada |
+|---|---:|---:|---:|---:|---:|
+| Backend Python | 1652/1719 | **96,10 %** | 206/240 | **85,83 %** | **94,84 %** |
+| Frontend TypeScript | 654/700 | **93,43 %** | 525/610 | **86,07 %** | **90,00 %** |
+| **Global ponderado** | **2306/2419** | **95,33 %** | **731/850** | **86,00 %** | **92,90 %** |
+
+**Avance medido:** de la primera línea base de CI **84,74 %** a **92,90 %**, aumento de **8,16 puntos porcentuales**. Mejoramos la cobertura de ramas en 13,76 puntos, de **72,24 % a 86,00 %**. No se añadieron exclusiones de código de producción. La diferencia respecto del 95 % combinado deseado sigue siendo de **2,10 puntos porcentuales**, y necesitamos validar el cálculo oficial de SonarQube.
+
+La puerta de calidad posterior se ha activado con `python scripts/reporte_cobertura.py --min 90`. El resultado del run anterior aún no incluía el parámetro obligatorio, por lo que **debemos comprobar una nueva ejecución en verde antes de fusionar**.
+
+El backend añadió pruebas de reglas y casos negativos de flota, consistencia de turnos, placas duplicadas y fallo de validación PostgreSQL/PostGIS. El frontend incorporó suites nuevas para flota, clientes HTTP/autenticación/rutas/indicadores y preferencias de movimiento reducido, además de ampliar casos de errores y estados vacíos. Esto explica una mayor proporción de decisiones realmente ejecutadas, sin modificar artificialmente el código medido.
+
+### Pendiente para declarar la meta oficial SonarQube
+
+El servidor SonarQube del proyecto sigue documentado como instancia local en `http://localhost:9000`, inaccesible desde este flujo. La medición **92,90 % es la cifra auditable de CI, no el Quality Gate de un nuevo análisis SonarQube**. ECO-28 seguirá en curso hasta ejecutar el Scanner sobre el mismo SHA y comprobar que la cobertura **oficial de SonarQube** alcanza al menos 90 %. El 95 % permanece como objetivo de mejora, no como resultado ya alcanzado.
+
+---
+
 ## Situación real de partida
 
 El escaneo histórico de SonarQube del commit `9b31dd0` (30/10) reportó **82,8 % global**, **86,0 % líneas** y **69,3 % ramas**. No corresponde al `main` actual.
