@@ -2,6 +2,54 @@
 
 [← Volver al README Principal](../../README.md)
 
+## Actualización de gestión verificada — 30/10/2026
+
+> **Esta sección es el estado de Jira posterior al corte histórico del 09/10.** Conservamos los números y las fechas de los registros anteriores; no modificamos retrospectivamente el cumplimiento del Sprint 1 ni simulamos un Sprint Planning que no consta.
+
+Como equipo, reconciliamos el tablero [ECO board](https://continental-team-ecologistica.atlassian.net/jira/software/projects/ECO/boards/2/backlog) (id 2) con [GitHub](https://github.com/alexito-dev/EcoLogistica), rama `main`. El [PR #3](https://github.com/alexito-dev/EcoLogistica/pull/3) quedó fusionado el **30/10/2026** (commit `3375602`), y el [pipeline sobre main](https://github.com/alexito-dev/EcoLogistica/actions/runs/41117477415) aprobó las comprobaciones de backend, frontend, OpenSpec, migraciones e integración PostGIS. Estas pruebas **no cubren** toda la aceptación funcional, el despliegue continuo, la seguridad en producción ni la conformidad WCAG.
+
+### Sprints registrados
+
+| Sprint Jira | ID | Estado verificado | Criterio de interpretación |
+|---|---:|---|---|
+| ECO Sprint 1 (duplicado) | 3 | Cerrado | Entrada histórica accidental, no usar como Sprint 1 oficial |
+| ECO Sprint 1 | 36 | Cerrado (09/10) | Conservar compromiso y velocidad del corte 28/09; los habilitadores posteriores ECO-16 y ECO-20 quedan fuera del sprint |
+| ECO Sprint 2 | 37 | Activo; 2 de 2 historias en Listo, 10 puntos | El incremento de flota fue aceptado según constancia del 09/10; el **cierre administrativo sigue pendiente** y no se ha efectuado de forma automática |
+| ECO Sprint 3 | 38 | Futuro; creado para regularización el 30/10 | **No es ejecución histórica retroactiva:** el incremento técnico ya se documentó; la aceptación y la velocidad no se reconstruyen después |
+
+### Matriz de control Jira–código
+
+| Elemento | Estado en Jira tras conciliación | Sprint real / destino | Evidencia y condición abierta |
+|---|---|---|---|
+| ECO-9 · Pedidos | Listo | Sprint 1 cerrado | Historia con trazabilidad histórica; no atribuir nuevos puntos |
+| ECO-16 · PostGIS pedidos | Listo | Línea base Sprint 1, fuera de histórico | Migraciones y pruebas de persistencia real en CI |
+| ECO-20 · MFA/RBAC | Listo | Línea base Sprint 1, fuera de histórico | MFA/TOTP y permisos verificados; secretos JSON pendientes en ECO-21 |
+| ECO-11 · Consultar destinos | En revisión / QA | Backlog por rebase Sprint 1 | Coordenadas manuales disponibles; aclarar geocodificación automática y E2E de corrección |
+| ECO-12 / ECO-19 · Flota | Listo / Listo | Sprint 2 (id 37) | Cinco criterios E2E reportados, PostGIS comprobado |
+| ECO-22 · Rutas guardadas | En revisión / QA | Sprint 3 (id 38) | Rutas por fecha, archivo local; resolver la selección manual de pedidos del criterio |
+| ECO-23 · Benchmark | En revisión / QA | Sprint 3 (id 38) | 150 pedidos / 12 vehículos en 1,13 s según evidencia sintética; falta benchmark continuo trazable |
+| ECO-14 · Indicadores | En curso | Sprint 3 (id 38) | CO₂e y puntualidad estimados; faltan datos de entregas reales y aceptación del estado vacío |
+| ECO-17 · CI/OpenAPI | En revisión / QA | Sprint 3 (id 38) | CI y PostGIS correctos; Playwright, contratos y revisión de ramas pendientes |
+| ECO-24 · WCAG | En curso | Sprint 3 (id 38) | Auditoría 88,9 % frente a 90 % interno, aún sin cierre |
+| ECO-13 · Mapa para repartidor | En curso | Backlog posterior (Sprint 4 candidato) | Mapa de Planificación adelantado en Sprint 3; Conducción sin vista autorizada |
+| ECO-15 · Reenrutamiento | Por hacer | Histórico Sprint 1, replanificar posteriormente | No mover retroactivamente; sin implementación |
+| ECO-18 · Importación | Por hacer | Backlog sin compromiso | No declarar terminada sin implementación |
+| ECO-21 · Persistencia cuentas/rutas | Por hacer | Backlog prioritario del Sprint 4 | Migrar JSON a PostgreSQL y cifrar TOTP |
+
+**Duplicidad detectada:** ECO-7 reproduce el alcance de ECO-6. Conservamos ECO-7 con señalización de duplicidad y usamos ECO-6 como referencia canónica; no eliminamos la épica ni alteramos la historia de ECO-15.
+
+### Reglas para conservar la calidad de Jira
+
+1. Actualizamos estados sobre criterios verificables: `En revisión / QA` no equivale a aceptación y `Listo` exige evidencia vinculada.
+2. Vinculamos código, pruebas, commit, CI, documento y decisión de revisión. No creamos versiones de entrega publicadas antes de la decisión del equipo.
+3. Distinguimos estimaciones de métricas reales: la distancia usa aproximaciones y los indicadores calculan un escenario, no la reducción observada en DistriRápido.
+4. Para cerrar Sprint 2 y comenzar/cerrar Sprint 3 requerimos la decisión administrativa correspondiente; estas acciones afectan los informes de Jira y no se ejecutaron en la regularización.
+5. No asignamos puntos nuevos ni cambiamos responsables existentes sin acuerdo del equipo. Las historias creadas a posteriori no computan como velocidad original.
+
+[Consulta del Sprint 3 en Jira](https://continental-team-ecologistica.atlassian.net/jira/software/projects/ECO/boards/2/backlog) · [Plan funcional vigente](05%20Plan%20funcional%20de%20sprints.md) · [Revisión del Sprint 3](../03%20Implementaci%C3%B3n/Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
+
+---
+
 ## Metadatos
 
 | Campo | Valor |
