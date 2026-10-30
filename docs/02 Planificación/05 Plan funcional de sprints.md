@@ -11,6 +11,14 @@
 | Fecha | 30/10/2026 |
 | Enfoque | Cada sprint debe dejar una tarea real que una persona pueda completar en el sistema. |
 
+## Estado final de los tres primeros incrementos — 30/10/2026
+
+Como equipo, **cerramos administrativamente en Jira los Sprint 1, 2 y 3** con el alcance de software realmente desarrollado hasta el 30/10/2026. La aceptación de Sprint 3 comprende ECO-22, ECO-23, ECO-17 y ECO-25 (**4/4 en Listo**). Registramos ECO-14 y ECO-24, que requieren trabajo adicional, en el backlog posterior junto con las tareas de Conducción, persistencia definitiva y Playwright/CD.
+
+No recalculamos velocidad original con las historias creadas a posteriori: el Sprint 1 mantiene su corte original, el Sprint 2 conserva **10 puntos** y Sprint 3 tiene **cuatro entregables sin una estimación histórica completa**. [Acta consolidada con pruebas y riesgos](../03%20Implementaci%C3%B3n/20261030%20Acta%20consolidada%20de%20cierre%20Sprints%2001-03.md).
+
+---
+
 ## Cierre funcional del tercer incremento: alcance validable al 30/10/2026
 
 La entrega del Sprint 3 consiste en **planificar automáticamente rutas por fecha, consultar vehículos y paradas, guardar y recuperar propuestas, medir el rendimiento de cálculo y visualizar indicadores estimados**. Conservamos las pruebas y la demostración del 30/10, así como los límites explícitos de la heurística. El Sprint 3 **no** equivale a que una persona conductora registre entregas, a re-enrutamiento operativo o a métricas observadas de la empresa.
