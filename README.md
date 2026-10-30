@@ -21,7 +21,7 @@
 
 ---
 
-**Cobertura de pruebas — mejora posterior al Sprint 3:** nuestro [control de cobertura en CI](https://github.com/alexito-dev/EcoLogistica/actions/runs/41124453799) midió **92,90 % global**, **95,33 % en líneas** y **86,00 % en ramas**, con backend, frontend y PostGIS aislado. Establecimos el mínimo obligatorio del **90 % combinado** (meta ampliada 95 %) mediante `scripts/reporte_cobertura.py --min 90`. **No es un escaneo nuevo de SonarQube**: la medición oficial sigue pendiente de la instancia local. [Plan, evidencias y criterios](docs/03%20Implementaci%C3%B3n/20261030%20Cobertura%20SonarQube%2090-95%20-%20plan%20y%20evidencia.md).
+**Cobertura de pruebas — mejora posterior al Sprint 3:** nuestro [control de cobertura en CI](https://github.com/alexito-dev/EcoLogistica/actions/runs/41125601203) midió **95,14 % global**, **97,31 % en líneas** y **88,94 % en ramas**, con backend, frontend y PostGIS aislado. Establecimos el mínimo obligatorio del **90 % combinado** y alcanzamos la **meta ampliada del 95 %** en el indicador CI mediante `scripts/reporte_cobertura.py --min 90`. **No es un escaneo nuevo de SonarQube**: la medición oficial sigue pendiente de la instancia local. [Plan, evidencias y criterios](docs/03%20Implementaci%C3%B3n/20261030%20Cobertura%20SonarQube%2090-95%20-%20plan%20y%20evidencia.md).
 
 **SonarQube:** el análisis documentado como PASSED corresponde al commit histórico `9b31dd0`, no a todos los cambios posteriores. Consultar la [validación de vigencia y guía de reanálisis](docs/03%20Implementaci%C3%B3n/Sprint%2003/20261030%20Validaci%C3%B3n%20del%20reporte%20SonarQube%20y%20rean%C3%A1lisis.md). El CI del repositorio todavía no ejecuta SonarScanner.
 
