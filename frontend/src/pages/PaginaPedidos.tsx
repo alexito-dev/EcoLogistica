@@ -24,23 +24,28 @@ export default function PaginaPedidos({ puedeRegistrar }: Props) {
   const [aviso, setAviso] = useState<string | null>(null)
   const [nuevoId, setNuevoId] = useState<string | null>(null)
 
-  const cargar = useCallback(async () => {
+  // El estado se actualiza al resolver la promesa: el efecto inicial no provoca renders en cascada.
+  const consultar = useCallback(
+    () =>
+      listarPedidos(1, 100)
+        .then((listado) => {
+          setPedidos(listado.items)
+          setTotal(listado.total)
+        })
+        .catch((e: unknown) => setError(e instanceof ApiError ? e.message : 'No se pudo cargar el listado de pedidos.'))
+        .finally(() => setCargando(false)),
+    [],
+  )
+
+  const cargar = useCallback(() => {
     setCargando(true)
     setError(null)
-    try {
-      const listado = await listarPedidos(1, 100)
-      setPedidos(listado.items)
-      setTotal(listado.total)
-    } catch (e) {
-      setError(e instanceof ApiError ? e.message : 'No se pudo cargar el listado de pedidos.')
-    } finally {
-      setCargando(false)
-    }
-  }, [])
+    return consultar()
+  }, [consultar])
 
   useEffect(() => {
-    void cargar()
-  }, [cargar])
+    void consultar()
+  }, [consultar])
 
   const resumen = useMemo(() => {
     const pendientes = pedidos.filter((p) => p.estado === 'PENDIENTE').length

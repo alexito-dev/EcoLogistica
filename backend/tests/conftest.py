@@ -8,6 +8,9 @@ _TMP = Path(tempfile.mkdtemp(prefix="eco-tests-"))
 os.environ["USUARIOS_ARCHIVO"] = str(_TMP / "usuarios.json")
 os.environ["JWT_SECRET"] = "clave-de-pruebas-suficientemente-larga-0123456789"
 os.environ["DEMO_CLAVE"] = "clave-de-pruebas-demo"
+# Aislado del .env local: sin base de datos real ni datos de demostración.
+os.environ["DATABASE_URL"] = ""
+os.environ["DEMO_PEDIDOS"] = "false"
 
 import pytest  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
