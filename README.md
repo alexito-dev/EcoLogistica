@@ -73,7 +73,7 @@ La línea base funcional acordada para Sprint 1–4 está en [05. Plan funcional
 
 ---
 
-## > **Conciliación de Jira (30/10/2026):** El código de los Sprint 1–3 y sus pruebas están más avanzado que el control administrativo. En Jira, Sprint 1 (id 36) permanece cerrado con historia preservada; Sprint 2 (id 37) sigue activo administrativamente aunque ECO-12 y ECO-19 están Listo; creamos Sprint 3 (id 38) como **futuro de regularización**, con ECO-22/23/14/17/24 bajo control y sin velocidad reconstruida. No confundimos emisiones estimadas con reducciones observadas. La [matriz de conciliación](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md#actualización-de-gestión-verificada--30102026) establece qué falta aceptar y por qué.
+## > **Conciliación de Jira (30/10/2026):** El código de los Sprint 1–3 y sus pruebas están más avanzado que el control administrativo. En Jira, Sprint 1 (id 36) permanece cerrado con historia preservada; **cerramos Sprint 2 (id 37) administrativamente el 30/10** con ECO-12 y ECO-19 en Listo (10/10 puntos); **iniciamos Sprint 3 (id 38) el 30/10**, con término previsto el 13/11 como periodo actual de regularización. Sus cinco tareas ECO-22/23/14/17/24 mantienen su estado individual (ninguna aceptada como Listo aún). La ventana administrativa nueva no representa retrospectivamente el trabajo del 09/10–30/10 y no reconstruye velocidad histórica. No confundimos emisiones estimadas con reducciones observadas. La [matriz de conciliación](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md#actualización-de-gestión-verificada--30102026) establece qué falta aceptar y por qué.
 
 ## Regularización técnica de Sprint 1–3 (30/10/2026)
 
