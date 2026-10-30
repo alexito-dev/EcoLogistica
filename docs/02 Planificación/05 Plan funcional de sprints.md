@@ -11,6 +11,20 @@
 | Fecha | 30/10/2026 |
 | Enfoque | Cada sprint debe dejar una tarea real que una persona pueda completar en el sistema. |
 
+## Control vigente de los tres primeros sprints — actualización 30/10/2026
+
+Como equipo, **no sustituimos los resultados originales de cada iteración**. Registramos el estado actual de ejecución y las correcciones de trazabilidad de manera separada:
+
+- **Sprint 1 (id 36):** cerrado, histórico del 28/09 preservado. MFA, pedidos y PostGIS se completaron como línea base funcional reordenada después, pero no aumentan la velocidad del corte. ECO-11 está en revisión QA del recorrido de destino; ECO-15 sigue pendiente de reenrutamiento y conserva la asociación histórica.
+- **Sprint 2 (id 37):** flota y turnos con ECO-12 y ECO-19 en Listo (10/10 puntos). El incremento dispone de aceptación funcional documentada; el sprint aún está activo **administrativamente** y su cierre es una decisión pendiente.
+- **Sprint 3 (id 38):** **creado en Jira el 30/10 como sprint futuro de regularización**, no como evidencia de un Planning realizado antes. Alineamos ECO-22 (generación y guardado), ECO-23 (benchmark), ECO-14 (indicadores), ECO-17 (CI/OpenAPI) y ECO-24 (accesibilidad). Separamos funcionalidad implementada de historias aún bajo QA.
+
+**Importante:** aunque las cinco condiciones de demostración del Sprint 3 se documentaron como cumplidas con datos sintéticos, la aceptación completa de Jira no se deduce de ese ensayo: ECO-22 toma todos los pedidos del día, no una selección manual; ECO-14 calcula previsiones, no indicadores de entregas ejecutadas; ECO-17 requiere Playwright y verificación contractual; ECO-24 está por debajo del objetivo interno de accesibilidad. El visor para el rol repartidor de ECO-13 sigue pendiente y **no está asignado retroactivamente al Sprint 3**, aunque adelantamos el mapa para Planificación.
+
+No inventamos estimaciones para las nuevas ECO-22, ECO-23 y ECO-24 ni alteramos las de las historias antiguas. El detalle vigente está en [Artefactos Jira](02%20Artefactos%20Jira%20V_1_0_0.md#actualización-de-gestión-verificada--30102026); las secciones fechadas previamente explican la situación que existía en su corte.
+
+---
+
 ## Para qué sirve este plan
 
 La meta de cada sprint se escribe como una acción que alguien podrá hacer en la aplicación. La base de datos, los mapas, el motor de rutas y la automatización son parte del trabajo cuando hacen falta para completar esa acción; por sí solos no cuentan como resultado funcional del sprint.
