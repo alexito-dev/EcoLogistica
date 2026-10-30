@@ -8,7 +8,7 @@
 |---|---|
 | Proyecto | EcoLogística Huancayo |
 | Herramienta | Atlassian Jira Software — Scrum |
-| Versión del entregable | 1.13.0 (sin versión de entrega creada en Jira al 09/10/2026) |
+| Versión del entregable | 1.14.0 (sin versión de entrega creada en Jira al 09/10/2026) |
 | Fecha de actualización | 09 de octubre de 2026, tras la confirmación de aprobación |
 | Responsable de configuración | Isidro Casio, Jose Luis |
 | Clave del proyecto en Jira | `ECO` |
@@ -77,7 +77,7 @@ Los puntos de los ítems con estimación marcada corresponden a los valores cons
 |---|---|---|
 | Sprint 1 — 14/09 a 28/09/2026 | Compromiso histórico: ECO-9 / HU-001 y ECO-15 / HU-006; 10 puntos. Alcance funcional vigente: MFA/roles y pedidos persistentes. | El informe del sprint registra 0 de 2 historias al corte del 28/09. Jira lo mantuvo activo hasta el 09/10; el historial de ECO-9 registra `Listo` el 02/10, `Por hacer` al cerrar el Sprint 1 y `Listo` otra vez tras añadirla al Sprint 2. La métrica dinámica actual la cuenta en ambos sprints y no equivale a la del corte original. ECO-15 está `Por hacer`. |
 | Sprint 2 — 29/09 a 12/10/2026 | Meta actualizada en Jira el 09/10: administración de vehículos y disponibilidad diaria para Planificación. | Jira id. 37 permanece activo con ECO-12 y ECO-19 en `Listo` (2/2 incidencias, 10 puntos). Los cinco criterios de flota aprobaron el E2E del 09/10 y el usuario confirmó la aprobación del incremento. El sprint permanece activo hasta el cierre administrativo. |
-| Sprint 3 — propuesta funcional, sin compromiso aprobado | Que Planificación asigne pedidos pendientes a vehículos elegibles y obtenga una ruta factible, guardada y consultable con sus paradas. | Flota y su persistencia ya son entrada disponible desde Sprint 2. Quedan persistencia de rutas/paradas, generación, integración y medición; falta estimar y acordar las historias antes de cargarlas como compromiso en Jira. |
+| Sprint 3 — propuesta funcional, sin compromiso aprobado | Que Planificación asigne pedidos pendientes a vehículos elegibles y obtenga una ruta factible, guardada y consultable con sus paradas. | Flota y su persistencia ya son entrada disponible desde Sprint 2. Quedan persistencia de rutas/paradas, generación, integración y medición; falta estimar y acordar las historias antes de cargarlas como compromiso en Jira. Al 30/10/2026 existe una vista previa de rutas con mapa e indicadores; ver la [Revisión del Sprint 03](../03%20Implementaci%C3%B3n/Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md). |
 | Sprint 4 — propuesta, sin alcance detallado aprobado | Que Conducción consulte su ruta, marque una entrega y reporte una incidencia para revisión de Planificación. | Confirmar el flujo con el equipo. Mapa y re-enrutamiento se incorporan si hacen falta para completar la tarea. No se asignan fechas ni resultados no aprobados. |
 | Cierre — semana 15 | Entrega y sustentación del PMV. | Hito planificado para la semana de cierre; sin evidencia de aceptación a la fecha de esta actualización. |
 | Release `v1.0.0-MVP` | Integración y aceptación del PMV. | No existe una versión de Jira con este nombre al 09/10/2026. |
@@ -145,3 +145,4 @@ Las imágenes 01–04 son capturas históricas del 18/09/2026 y describen el est
 | 1.11.0 | 09/10/2026 | Se actualiza el estado vivo del tablero: categorías de `En revisión / QA` y `Finalizada` corregidas y mapeos verificados; permanecen cinco columnas mixtas y cero versiones de entrega. |
 | 1.12.0 | 09/10/2026 | Se verifica el tablero normalizado a cuatro columnas en español y el retiro de `Finalizada`; Sprint 1 dinámico 1/2, Sprint 2 activo 2/2 y cero versiones de entrega. |
 | 1.13.0 | 09/10/2026 | Se actualiza la meta del Sprint 2 con la aprobación del incremento comunicada por el usuario; sigue activo hasta su cierre. |
+| 1.14.0 | 30/10/2026 | Se anota el avance del Sprint 3 (vista previa de rutas, mapa e indicadores) y se enlaza su revisión. |

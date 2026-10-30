@@ -10,12 +10,12 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.15.0 |
+| Versión | 1.16.0 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026; revisión 09/10/2026) |
 | Fecha de la retrospectiva | 02/10/2026 (corte de mitad de sprint; se confirma en la reunión del 09/10) |
 | Facilitador | Alex Zorrilla |
 | Participantes | Alex Zorrilla, Anco Porras, Jhean Pier Julio, Alexander Daniel Hilario Talavera, Jhoanna Hade Vera Zea, Jose Luis Isidro Casio |
-| Entradas | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [Retrospectiva del Sprint 1](../Sprint%201/04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
+| Entradas | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [Retrospectiva del Sprint 1](../Sprint%2001/04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
 
 > **Nota de rebase funcional posterior (09/10/2026):** la línea base vigente mantiene MFA/roles y pedidos persistentes como Sprint 1, asigna flota a Sprint 2 y rutas a Sprint 3, y conserva el propósito de ejecución por Conducción para Sprint 4. Esta retrospectiva conserva su corte del 02/10; los criterios funcionales actuales están en el [plan de sprints](../../02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md).
 
@@ -48,6 +48,7 @@
 | 1.13.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se actualiza A9 tras corregir las categorías de `En revisión / QA` y `Finalizada`. |
 | 1.14.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se verifica el tablero Jira normalizado y se corrige la ubicación actual de ECO-9, ECO-15, ECO-16 y ECO-20; IMP-003 permanece abierto solo por la versión de entrega ausente. |
 | 1.15.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se añade la aprobación del incremento confirmada por el usuario sin alterar los acuerdos retrospectivos existentes. |
+| 1.16.0 | 30/10/2026 | Hilario Talavera, Alexander Daniel | Se enlaza la Revisión del Sprint 03 (30/10/2026), que recoge la vista previa de rutas, el mapa y los indicadores; el corte histórico del documento no cambia. |
 
 ## Seguimiento de las acciones del Sprint 1
 

@@ -4,6 +4,7 @@ import { AuthProvider } from './auth/AuthContext'
 import { useAuth } from './auth/useAuth'
 import LoginPage from './auth/LoginPage'
 import AppShell from './components/AppShell'
+import AvisoSesion from './components/AvisoSesion'
 import { NAVEGACION, vistasDelRol, type Vista } from './lib/navegacion'
 import PaginaPedidos from './pages/PaginaPedidos'
 
@@ -68,6 +69,7 @@ function Raiz() {
 
   return (
     <AppShell usuario={usuario} onSalir={salir} vista={vista} onVistaChange={setVista}>
+      <AvisoSesion />
       <Suspense fallback={<CargandoVista />}>
         {vista === 'pedidos' && <PaginaPedidos puedeRegistrar={usuario.rol === 'PLANIFICADOR'} />}
         {vista === 'flota' && (

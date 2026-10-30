@@ -62,12 +62,12 @@ El sistema permite entrar con TOTP y roles, registrar pedidos, volver a encontra
 |---|---|---|
 | Sprint 1 · 14/09–28/09; cierre registrado 09/10 | Línea base vigente: acceso MFA/roles y pedidos con persistencia. | El recorrido está implementado y comprobado, incluida la persistencia tras reiniciar la API. El compromiso original conserva su resultado de 0/2 al 28/09; la lectura dinámica actual de Jira es 1/2 (ECO-9 `Listo`, ECO-15 `Por hacer`) y no se cuenta como velocidad histórica. ECO-15 conserva su asociación al Sprint 1 cerrado y sigue pendiente. |
 | Sprint 2 · 29/09–12/10, alcance reordenado | Administración mantiene vehículos; Planificación configura disponibilidad y turnos por fecha. | El E2E web aprobó los cinco criterios funcionales y Jira refleja ECO-12 y ECO-19 en `Listo` (2/2, 10 puntos). Pasaron 107 pruebas de backend, 39 de frontend y la compilación de producción. El usuario confirmó el 09/10 la aprobación del incremento. El sprint permanece activo hasta su cierre administrativo. |
-| Sprint 3 · en revisión (Inspección 03) | Planificación genera, guarda y vuelve a consultar rutas para pedidos pendientes usando vehículos elegibles. | Al 30/10: vista previa de rutas en mapa (Leaflet/OSM + OSRM), indicadores de CO₂e y CI en GitHub Actions. Cumplen 3 de 5 criterios; faltan persistir la ruta (EN-005) y medir el tiempo de generación (EN-001). Calidad, seguridad y accesibilidad evaluadas con SonarQube, OWASP Top 10:2025 y WCAG 2.2 AA. Ver [Sprint 03](#93-fase-03-implementación). |
+| Sprint 3 · en revisión (Inspección 03) | Planificación genera, guarda y vuelve a consultar rutas para pedidos pendientes usando vehículos elegibles. | Al 30/10: rutas en mapa (Leaflet/OSM + OSRM) que se guardan por fecha y se reabren tras reiniciar, indicadores de CO₂e, benchmark del motor y CI en GitHub Actions. Cumplen los 5 criterios; las rutas se guardan en un archivo local y pasan a PostgreSQL en el Sprint 4 (EN-005). Calidad, seguridad y accesibilidad evaluadas con SonarQube, OWASP Top 10:2025 y WCAG 2.2 AA. Ver [Sprint 03](#93-fase-03-implementación). |
 | Sprint 4 · propósito conservado | Conducción consulta una ruta, registra avances e incidencias; Planificación puede revisarlos. | Se mantiene como alcance posterior; se precisa en el plan funcional de sprints. |
 
 Jira ya refleja la rebase funcional: ECO-12 y ECO-19 están en `Listo` dentro del Sprint 2; ECO-16 y ECO-20 constan completadas fuera del Sprint 1 cerrado, sin alterar la velocidad histórica. ECO-15 sigue `Por hacer` y conserva su asociación al Sprint 1 cerrado como compromiso pendiente de replanificar. ECO-21 se limita a persistencia de cuentas y rutas y protección de secretos TOTP. La configuración actual de `ECO board` tiene cuatro columnas en español (`Por hacer`, `En curso`, `En revisión / QA`, `Listo`) con categorías alineadas; el estado duplicado `Finalizada` se retiró y no hay incidencias en ese estado. Jira aún no tiene una versión de entrega. El detalle está en [02. Artefactos Jira](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md).
 
-**Corte del Sprint 3 (30/10/2026).** La rama `sprint-3/calidad-owasp-wcag` integra `feature/rutas-indicadores` y pasa **130 pruebas de backend y 52 de frontend** con una cobertura de **81,3 %**. SonarQube da *Quality Gate* **PASSED**, 0 bugs, 0 vulnerabilidades, 0 *hotspots* y 0,0 % de duplicación. En OWASP Top 10:2025 no quedan vulnerabilidades críticas abiertas, y la auditoría WCAG 2.2 AA alcanza **86,7 %** de los criterios aplicables (meta ≥ 90 %). Detalle en los [documentos del Sprint 03](#93-fase-03-implementación).
+**Corte del Sprint 3 (30/10/2026).** La rama `sprint-3/calidad-owasp-wcag` integra `feature/rutas-indicadores` y pasa **137 pruebas de backend y 58 de frontend** (cobertura de líneas del backend: 92,6 %; SonarQube midió **81,3 %** en su análisis). SonarQube da *Quality Gate* **PASSED**, 0 bugs, 0 vulnerabilidades, 0 *hotspots* y 0,0 % de duplicación. En OWASP Top 10:2025 no quedan vulnerabilidades críticas abiertas, y la auditoría WCAG 2.2 AA alcanza **88,9 %** de los criterios aplicables (meta ≥ 90 %). Detalle en los [documentos del Sprint 03](#93-fase-03-implementación).
 
 La línea base funcional acordada para Sprint 1–4 está en [05. Plan funcional de sprints](docs/02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md), con criterios para flota y rutas y con los cortes históricos preservados.
 
@@ -166,8 +166,9 @@ EcoLogistica/
 │   ├── 01 Inicio/                 # Acta, alcance, requisitos y arquitectura
 │   ├── 02 Planificación/          # Backlog, Jira, riesgos y presupuesto
 │   ├── 03 Implementación/         # Informes, revisión, retrospectiva e impedimentos
-│   │   ├── Sprint 2/              # Artefactos del segundo sprint
-│   │   └── Sprint 03/             # Revisión, retrospectiva, SonarQube, OWASP y WCAG
+│   │   ├── Sprint 01/             # Artefactos del primer sprint
+│   │   ├── Sprint 02/             # Artefactos del segundo sprint
+│   │   └── Sprint 03/             # Revisión, retrospectiva, SonarQube, OWASP, WCAG, informe, impedimentos, minuta, plan, GitFlow y pruebas
 │   ├── 04 Seguimiento y Control/  # Carpeta reservada; aún sin entregables
 │   ├── 05 Cierre/                 # Carpeta reservada; aún sin entregables
 │   └── otros/                     # Reservado para soporte técnico
@@ -203,7 +204,7 @@ gitGraph
 - `main`: rama compartida de integración; no representa un despliegue productivo.
 - `feature/*`: rama temporal creada desde `main` para una tarea y enviada mediante Pull Request.
 - No se usa `develop` ni se mantienen ramas `release/*` permanentes.
-- La revisión por pares, la protección de `main` y CI siguen pendientes de configuración. El historial reciente incluye cambios integrados directamente en `main`, por lo que el flujo descrito aún no está aplicado de forma uniforme.
+- La revisión por pares y la protección de `main` siguen pendientes; el CI se ejecuta en `main`, `sprint-*/**`, `feature/**` y en cada PR. El historial reciente incluye cambios integrados directamente en `main`, por lo que el flujo descrito aún no está aplicado de forma uniforme.
 
 ### 7.2. Convención de Commits (Conventional Commits v1.0.0)
 - `feat:` Nuevas funcionalidades (`feat(pedidos): agregar validacion de ventanas horarias`).
@@ -267,6 +268,11 @@ Pop-Location
 # Frontend (Vitest + Testing Library)
 Push-Location frontend
 npm.cmd test
+Pop-Location
+
+# Benchmark del motor de rutas (EN-001)
+Push-Location backend
+.\.venv\Scripts\python.exe scripts\benchmark_rutas.py
 Pop-Location
 ```
 
@@ -357,18 +363,18 @@ Artefactos de la semana 4: transformación ágil, configuración y evidencias Ji
 
 Entregables del **Sprint 1** (ECO Sprint 1, 14/09/2026 – 28/09/2026):
 
-- [01. Informe de estado del proyecto](docs/03%20Implementaci%C3%B3n/Sprint%201/01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md)
-- [02. Registro de Impedimentos](docs/03%20Implementaci%C3%B3n/Sprint%201/02%20Registro%20de%20Impedimentos%20V_1_0_0.md)
-- [03. Revisión del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%201/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
-- [04. Retrospectiva del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%201/04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
+- [01. Informe de estado del proyecto](docs/03%20Implementaci%C3%B3n/Sprint%2001/01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md)
+- [02. Registro de Impedimentos](docs/03%20Implementaci%C3%B3n/Sprint%2001/02%20Registro%20de%20Impedimentos%20V_1_0_0.md)
+- [03. Revisión del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%2001/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
+- [04. Retrospectiva del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%2001/04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
 
 
 Entregables del **Sprint 2** (ECO Sprint 2, desde el 29/09/2026; revisión el 09/10/2026):
 
-- [01. Informe de estado del proyecto](docs/03%20Implementaci%C3%B3n/Sprint%202/01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md)
-- [02. Registro de Impedimentos](docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_0_0.md)
-- [03. Revisión del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
-- [04. Retrospectiva del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%202/04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
+- [01. Informe de estado del proyecto](docs/03%20Implementaci%C3%B3n/Sprint%2002/01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md)
+- [02. Registro de Impedimentos](docs/03%20Implementaci%C3%B3n/Sprint%2002/02%20Registro%20de%20Impedimentos%20V_1_0_0.md)
+- [03. Revisión del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%2002/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
+- [04. Retrospectiva del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%2002/04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
 
 Entregables del **Sprint 03** (Inspección 03 · semana 11 — SonarQube, WCAG y OWASP; corte del 30/10/2026):
 
@@ -377,6 +383,24 @@ Entregables del **Sprint 03** (Inspección 03 · semana 11 — SonarQube, WCAG y
 - [03. Calidad de código (SonarQube)](docs/03%20Implementaci%C3%B3n/Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)
 - [04. Seguridad OWASP Top 10:2025](docs/03%20Implementaci%C3%B3n/Sprint%2003/04%20OWASP%20V_1_0_0.md)
 - [05. Accesibilidad WCAG 2.2 AA](docs/03%20Implementaci%C3%B3n/Sprint%2003/05%20WCAG%20V_1_0_0.md)
+- [03.2. Informe de estado del proyecto](docs/03%20Implementaci%C3%B3n/Sprint%2003/20261030%2003.2%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md)
+- [03.3. Registro de Impedimentos](docs/03%20Implementaci%C3%B3n/Sprint%2003/20261030%2003.3%20Registro%20de%20Impedimentos%20V_1_0_0.md)
+- [03.1. Minuta de reunión](docs/03%20Implementaci%C3%B3n/Sprint%2003/20261029%2003.1%20Minuta%20de%20reuni%C3%B3n%20V_1_0_0.md)
+- [Plan de trabajo](docs/03%20Implementaci%C3%B3n/Sprint%2003/20261030%20Plan%20de%20trabajo%20V_1_0_0.md)
+- [Flujo de trabajo GitFlow](docs/03%20Implementaci%C3%B3n/Sprint%2003/20261030%20Flujo%20de%20trabajo%20GitFlow%20V_1_0_0.md)
+- [Pruebas de sistema](docs/03%20Implementaci%C3%B3n/Sprint%2003/20261030%20Pruebas%20de%20sistema%20V_1_0_0.md)
+- [Pruebas E2E](docs/03%20Implementaci%C3%B3n/Sprint%2003/20261030%20Pruebas%20E2E%20V_1_0_0.md)
+
+Trazabilidad con la consigna y la Inspección 03:
+
+| Pedido | Archivo |
+|---|---|
+| Consigna Sprint 3, ítems 1 a 5 | `01` a `05` de la carpeta Sprint 03 |
+| 03.1 Minuta de reunión | `20261029 03.1 Minuta de reunión` |
+| 03.2 Informe de estado | `20261030 03.2 Informe de estado del proyecto` |
+| 03.3 Registro de impedimentos | `20261030 03.3 Registro de Impedimentos` |
+| 04.1 Revisión y 04.2 Retrospectiva | `01 Revisión del Sprint` y `02 Retrospectiva del Sprint` |
+| Plan de trabajo, GitFlow, pruebas de sistema y E2E | `20261030 Plan de trabajo`, `Flujo de trabajo GitFlow`, `Pruebas de sistema`, `Pruebas E2E` |
 
 Auditoría transversal: [05. Auditoría de coherencia al 09/10/2026](docs/03%20Implementaci%C3%B3n/05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
 

@@ -52,6 +52,8 @@
 | Frontend (React) | `vitest run --coverage` (`@vitest/coverage-v8`, reporte `lcov`) | 52 aprobadas | 75,6 % de líneas |
 | **Total ponderado por SonarQube** | — | **182** | **81,3 %** |
 
+La cobertura de líneas medida con `pytest --cov=app` el 30/10 fue de 92,6 % tras sumar las pruebas de rutas guardadas.
+
 La cobertura más baja está en los adaptadores PostgreSQL (`flota/postgres_repository.py` 33 %, `pedidos/postgres_repository.py` 38 %) y en `database_health.py` (30 %): las pruebas usan repositorios en memoria y la base real solo se verifica en el job de migraciones del CI. El motor de rutas (`rutas/planificador.py`) tiene 100 %.
 
 ## 2. Métricas Principales
@@ -108,7 +110,7 @@ El 31 % de los code smells (30 de 97) está en archivos de prueba y no afecta el
 
 | Prioridad | Hallazgo | Esfuerzo estimado | Responsable | Destino |
 |---:|---|---|---|---|
-| 1 | `S3776` — complejidad cognitiva 23 de `planificar()` (límite 15): extraer la inserción por vehículo y el cálculo de costo a funciones propias | 30 min de SonarQube; 2–3 h con pruebas | Hilario Talavera, Alexander Daniel | Sprint 4 |
+| 1 | `S3776` — complejidad cognitiva 23 de `planificar()` (límite 15) | **Hecho en el código** (ver «Cambios posteriores al análisis»); el siguiente análisis de SonarQube lo reflejará | Hilario Talavera, Alexander Daniel | Sprint 4 |
 | 2 | `S6819` / `S6845` — usar `<output>`, `<section aria-label>` y `<dialog>` nativos (relacionado con accesibilidad) | ≈ 1 h | Vera Zea, Jhoanna Hade | Sprint 4 |
 | 3 | `S3358` / `S4624` — extraer ternarios y plantillas anidadas | ≈ 1 h | Vera Zea, Jhoanna Hade | Sprint 4 |
 | 4 | `S8409` — quitar `response_model` redundante en 13 endpoints (comprobar que OpenAPI no cambie) | ≈ 30 min | Anco Porras, Jhean Pier Julio | Sprint 4 |
@@ -117,6 +119,12 @@ El 31 % de los code smells (30 de 97) está en archivos de prueba y no afecta el
 | 7 | Cobertura de adaptadores PostgreSQL con pruebas de integración en el job de PostGIS del CI | 4–6 h | Isidro Casio, Jose Luis | Sprint 4 |
 
 **Meta para el próximo análisis:** 0 incidencias de severidad Alta, menos de 60 code smells, cobertura ≥ 85 % y análisis automático en cada PR (acciones 1 y 8 de la [retrospectiva](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md#acciones-a-realizar)).
+
+### Cambios posteriores al análisis
+
+- **`S3776` corregida en el código:** `planificar()` se dividió en `_cabe`, `_mejor_insercion` y `_construir_ruta` ([`planificador.py`](../../../backend/src/app/rutas/planificador.py)), sin cambiar el resultado: las 16 pruebas del planificador siguen pasando.
+- **Pruebas nuevas:** 7 de backend (rutas guardadas) y 6 de frontend (rutas guardadas y aviso de sesión). Total: 137 de backend y 58 de frontend.
+- Las cifras de SonarQube de este documento (81,3 % de cobertura, 97 code smells, 8 h 34 min de deuda) corresponden al análisis descrito arriba; el siguiente análisis incorporará estos cambios.
 
 ## 4. Cómo reproducir el análisis
 

@@ -166,6 +166,55 @@ def _programar(deposito: Punto, vehiculo: Vehiculo, fecha: date, orden: list[Ped
     return paradas, (reloj - salida).total_seconds() / 60
 
 
+Costo = Callable[[Vehiculo, list[Pedido]], tuple[int, float]]
+
+
+def _cabe(vehiculo: Vehiculo, carga: list[float], pedido: Pedido) -> bool:
+    return (
+        carga[0] + pedido.demanda_kg <= float(vehiculo.capacidad_kg)
+        and carga[1] + pedido.demanda_m3 <= float(vehiculo.capacidad_m3)
+    )
+
+
+def _mejor_insercion(
+    pedido: Pedido,
+    flota: list[Vehiculo],
+    rutas: dict[str, list[Pedido]],
+    carga: dict[str, list[float]],
+    costo: Costo,
+) -> tuple[tuple[float, float], Vehiculo, list[Pedido]] | None:
+    """Vehículo y posición donde sumar el pedido cuesta menos (primero ventanas, luego CO2e)."""
+    mejor: tuple[tuple[float, float], Vehiculo, list[Pedido]] | None = None
+    for v in flota:
+        if not _cabe(v, carga[v.placa], pedido):
+            continue
+        actual = costo(v, rutas[v.placa])
+        for i in range(len(rutas[v.placa]) + 1):
+            orden = rutas[v.placa][:i] + [pedido] + rutas[v.placa][i:]
+            nuevo = costo(v, orden)
+            delta = (nuevo[0] - actual[0], nuevo[1] - actual[1])
+            if mejor is None or delta < mejor[0]:
+                mejor = (delta, v, orden)
+    return mejor
+
+
+def _construir_ruta(deposito: Punto, vehiculo: Vehiculo, fecha: date, lote: list[Pedido], carga: list[float], costo: Costo) -> Ruta:
+    """Pulido final con 2-opt desde la inserción y desde el vecino más cercano."""
+    inicios = (lote, _vecino_mas_cercano(deposito, lote))
+    orden = min((_dos_opt(o, lambda o, v=vehiculo: costo(v, o)) for o in inicios), key=lambda o, v=vehiculo: costo(v, o))
+    paradas, duracion = _programar(deposito, vehiculo, fecha, orden)
+    km = longitud_recorrido(deposito, orden)
+    return Ruta(
+        vehiculo=vehiculo,
+        paradas=paradas,
+        distancia_km=km,
+        duracion_min=duracion,
+        carga_kg=carga[0],
+        carga_m3=carga[1],
+        co2_kg=co2_kg(vehiculo, km),
+    )
+
+
 def planificar(fecha: date, deposito: Punto, pedidos: list[Pedido], vehiculos: list[Vehiculo]) -> Propuesta:
     """Asigna pedidos a vehículos respetando capacidad y ordena cada ruta para cumplir ventanas y emitir menos."""
     propuesta = Propuesta(fecha=fecha, deposito=deposito)
@@ -180,20 +229,7 @@ def planificar(fecha: date, deposito: Punto, pedidos: list[Pedido], vehiculos: l
 
     # Inserción más barata: los urgentes y de ventana temprana se ubican primero.
     for pedido in sorted(pedidos, key=lambda p: (-p.prioridad, p.ventana_inicio, p.codigo)):
-        mejor: tuple[tuple[int, float], Vehiculo, list[Pedido]] | None = None
-        for v in flota:
-            if (
-                carga[v.placa][0] + pedido.demanda_kg > float(v.capacidad_kg)
-                or carga[v.placa][1] + pedido.demanda_m3 > float(v.capacidad_m3)
-            ):
-                continue
-            actual = costo(v, rutas[v.placa])
-            for i in range(len(rutas[v.placa]) + 1):
-                orden = rutas[v.placa][:i] + [pedido] + rutas[v.placa][i:]
-                nuevo = costo(v, orden)
-                delta = (nuevo[0] - actual[0], nuevo[1] - actual[1])
-                if mejor is None or delta < mejor[0]:
-                    mejor = (delta, v, orden)
+        mejor = _mejor_insercion(pedido, flota, rutas, carga, costo)
         if mejor is None:
             motivo = "No hay vehículos disponibles para la fecha" if not flota else "Supera la capacidad libre de la flota"
             propuesta.sin_asignar.append(SinAsignar(pedido, motivo))
@@ -203,26 +239,9 @@ def planificar(fecha: date, deposito: Punto, pedidos: list[Pedido], vehiculos: l
         carga[elegido.placa][0] += pedido.demanda_kg
         carga[elegido.placa][1] += pedido.demanda_m3
 
-    for vehiculo in flota:
-        lote = rutas[vehiculo.placa]
-        if not lote:
-            continue
-        # Pulido final con 2-opt desde la inserción y desde el vecino más cercano.
-        inicios = (lote, _vecino_mas_cercano(deposito, lote))
-        orden = min((_dos_opt(o, lambda o, v=vehiculo: costo(v, o)) for o in inicios), key=lambda o, v=vehiculo: costo(v, o))
-        paradas, duracion = _programar(deposito, vehiculo, fecha, orden)
-        km = longitud_recorrido(deposito, orden)
-        propuesta.rutas.append(
-            Ruta(
-                vehiculo=vehiculo,
-                paradas=paradas,
-                distancia_km=km,
-                duracion_min=duracion,
-                carga_kg=carga[vehiculo.placa][0],
-                carga_m3=carga[vehiculo.placa][1],
-                co2_kg=co2_kg(vehiculo, km),
-            )
-        )
+    propuesta.rutas = [
+        _construir_ruta(deposito, v, fecha, rutas[v.placa], carga[v.placa], costo) for v in flota if rutas[v.placa]
+    ]
     propuesta.base = despacho_sin_optimizar(fecha, deposito, pedidos, vehiculos)
     return propuesta
 

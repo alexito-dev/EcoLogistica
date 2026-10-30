@@ -26,6 +26,7 @@ class Settings(BaseSettings):
     demo_clave: str = ""  # vacía: se genera una aleatoria y se muestra una vez en consola
     demo_pedidos: bool = False  # True: carga pedidos y vehículos de demostración al arrancar (solo desarrollo)
     usuarios_archivo: Path = Path(__file__).resolve().parents[2] / ".data" / "usuarios.json"
+    rutas_archivo: Path = Path(__file__).resolve().parents[2] / ".data" / "rutas.json"
     database_url: str | None = None
 
     # Ámbito geográfico configurable (RF-02.2). Rectángulo de aproximación para

@@ -24,6 +24,14 @@ export function alVencerSesion(oyente: Oyente): () => void {
   return () => oyentes401.delete(oyente)
 }
 
+const oyentesActividad = new Set<Oyente>()
+
+/** Suscribe una función que se ejecuta con cada respuesta correcta: el servidor renueva el plazo de inactividad. */
+export function alHaberActividad(oyente: Oyente): () => void {
+  oyentesActividad.add(oyente)
+  return () => oyentesActividad.delete(oyente)
+}
+
 interface Opciones {
   /** false en los pasos de inicio de sesión, donde un 401 es un error esperado del formulario. */
   avisarSesionVencida?: boolean
@@ -42,8 +50,14 @@ export async function solicitar<T>(ruta: string, init?: RequestInit, opciones: O
     throw new ApiError(0, 'No se pudo conectar con el servidor. Verifique su conexión e intente nuevamente.')
   }
 
-  if (respuesta.status === 204) return undefined as T
-  if (respuesta.ok) return (await respuesta.json()) as T
+  if (respuesta.status === 204) {
+    oyentesActividad.forEach((o) => o())
+    return undefined as T
+  }
+  if (respuesta.ok) {
+    oyentesActividad.forEach((o) => o())
+    return (await respuesta.json()) as T
+  }
 
   let cuerpo: { message?: string; errors?: Record<string, string> } = {}
   try {

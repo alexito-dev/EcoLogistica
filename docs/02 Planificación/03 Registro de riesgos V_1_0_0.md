@@ -7,7 +7,7 @@
 | Campo | Valor |
 |---|---|
 | Proyecto | EcoLogística Huancayo |
-| Versión | 1.2.0 |
+| Versión | 1.3.0 |
 | Fecha | 30 de octubre de 2026 (emisión original: 11 de septiembre de 2026) |
 | Escala | Probabilidad e impacto de 1 a 5; exposición = P × I |
 
@@ -18,6 +18,7 @@
 | 1.0.0 | 11/09/2026 | No consignado en la fuente original | Primera emisión del registro de riesgos del proyecto. |
 | 1.1.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se incorpora el historial de cambios para mantener la trazabilidad de versiones del documento. |
 | 1.2.0 | 30/10/2026 | Hilario Talavera, Alexander Daniel | Se agrega el seguimiento del Sprint 3 de RSK-02, RSK-05, RSK-06 y RSK-07 con la evidencia de SonarQube, OWASP y WCAG. |
+| 1.3.0 | 30/10/2026 | Hilario Talavera, Alexander Daniel | Se actualiza el seguimiento de RSK-02 (benchmark ejecutado) y RSK-05 (aviso de sesión implementado). |
 
 ## 1. Criterios
 
@@ -50,7 +51,7 @@ El registro se revisará semanalmente y en cada Sprint Review. Un riesgo pasa a 
 
 | ID | Evidencia del sprint | Efecto en la exposición | Próximo paso |
 |---|---|---|---|
-| RSK-02 | La vista previa de rutas funciona, pero el benchmark EN-001 sigue sin ejecutarse; no hay medición frente a los 45 s. | Sin cambio (15 Alta): no se puede reducir sin medir. | Ejecutar EN-001 en el Sprint 4 ([Revisión del Sprint 03](../03%20Implementaci%C3%B3n/Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md#pendientes)). |
-| RSK-05 | Auditoría WCAG 2.2 AA: 86,7 % de criterios aplicables; 5 defectos corregidos, incluidos contrastes en tema oscuro y bordes de campos ([05 WCAG](../03%20Implementaci%C3%B3n/Sprint%2003/05%20WCAG%20V_1_0_0.md)). | Mitigación en curso; P se mantiene en 3 hasta alcanzar ≥ 90 % y probar con usuarios. | Aviso de vencimiento de sesión (2.2.1) y prueba automática con axe. |
+| RSK-02 | El benchmark EN-001 midió 150 pedidos y 12 vehículos en 1,13 s con datos sintéticos, frente al objetivo de 45 s. | Mitigación en curso (15 Alta): la puntuación se revisa al medir con datos reales. | Repetir el benchmark con el volumen real en el Sprint 4 ([Pruebas de sistema](../03%20Implementaci%C3%B3n/Sprint%2003/20261030%20Pruebas%20de%20sistema%20V_1_0_0.md#6-benchmark-del-motor-de-rutas-en-001)). |
+| RSK-05 | Auditoría WCAG 2.2 AA: 88,9 % de criterios aplicables; 6 defectos corregidos, incluidos contrastes en tema oscuro, bordes de campos y el aviso de vencimiento de sesión ([05 WCAG](../03%20Implementaci%C3%B3n/Sprint%2003/05%20WCAG%20V_1_0_0.md)). | Mitigación en curso; P se mantiene en 3 hasta alcanzar ≥ 90 % y probar con usuarios. | Prueba automática con axe y los 4 criterios por probar. |
 | RSK-06 | SonarQube: 0 vulnerabilidades y 0 *hotspots*; revisión OWASP Top 10:2025 sin vulnerabilidades críticas abiertas; se añadieron cabeceras de seguridad y se actualizó Vite ([04 OWASP](../03%20Implementaci%C3%B3n/Sprint%2003/04%20OWASP%20V_1_0_0.md)). | Mitigación reforzada; se mantiene 10 Media mientras los secretos TOTP no estén cifrados. | Cifrado de secretos TOTP y cuentas en PostgreSQL (EN-005 / ECO-21). |
 | RSK-07 | CI con pruebas de backend y frontend, migraciones y OpenSpec; 182 pruebas en verde; *Quality Gate* PASSED ([03 Calidad](../03%20Implementaci%C3%B3n/Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)). La integración tardía de `feature/rutas-indicadores` generó 4 conflictos documentales. | Mitigación parcial. | Ejecutar el CI en todas las ramas y limitar la vida de las ramas a 5 días hábiles. |

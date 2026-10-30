@@ -162,3 +162,10 @@ class VistaPreviaOut(_Base):
             ),
             supuestos=list(SUPUESTOS),
         )
+
+
+class RutaGuardadaOut(_Base):
+    fecha: date
+    guardada_en: datetime
+    guardada_por: str
+    vista: VistaPreviaOut

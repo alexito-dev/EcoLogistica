@@ -14,12 +14,12 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.7.0 |
+| Versión | 1.8.0 |
 | Formato de fechas | DD/MM/AAAA |
 | Escala de prioridad | Alta · Media · Baja |
 | Estados válidos | Abierto · En Espera · Cerrado |
 | Plantilla base | *Issues Log* del curso (`Registro de Impedimentos.xlsx`) |
-| Continuidad | Se arrastran IMP-006 a IMP-008 del [Registro del Sprint 1](../Sprint%201/02%20Registro%20de%20Impedimentos%20V_1_0_0.md); IMP-003 se incorpora reabierto tras la auditoría de Jira del 09/10. Los nuevos impedimentos se numeran desde IMP-009. |
+| Continuidad | Se arrastran IMP-006 a IMP-008 del [Registro del Sprint 1](../Sprint%2001/02%20Registro%20de%20Impedimentos%20V_1_0_0.md); IMP-003 se incorpora reabierto tras la auditoría de Jira del 09/10. Los nuevos impedimentos se numeran desde IMP-009. |
 | Documentos relacionados | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [03 Revisión del Sprint](03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) · [04 Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) · [Registro de riesgos](../../02%20Planificaci%C3%B3n/03%20Registro%20de%20riesgos%20V_1_0_0.md) |
 
 > **Rebase funcional posterior (09/10/2026):** Sprint 1 conserva MFA/roles y pedidos persistentes; Sprint 2 gestiona flota; Sprint 3 genera rutas. El propósito de Sprint 4 para Conducción se mantiene. Este registro preserva su corte histórico; el estado vigente de implementación se documenta en el [plan de sprints](../../02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md).
@@ -41,6 +41,7 @@
 | 1.5.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registran las correcciones de categoría de `En revisión / QA` y `Finalizada`. |
 | 1.6.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se verifica que Jira quedó con cuatro columnas en español; IMP-003 continúa abierto únicamente por la ausencia de una versión de entrega. |
 | 1.7.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se aclara la pertenencia histórica de ECO-15 y se actualiza la secuencia de replanificación de HU-006. |
+| 1.8.0 | 30/10/2026 | Hilario Talavera, Alexander Daniel | Se enlaza la Revisión del Sprint 03 (30/10/2026), que recoge la vista previa de rutas, el mapa y los indicadores; el corte histórico del documento no cambia. |
 
 ## Registro
 

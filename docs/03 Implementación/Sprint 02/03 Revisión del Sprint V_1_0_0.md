@@ -10,14 +10,14 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.9.0 |
+| Versión | 1.10.0 |
 | Sprint | ECO Sprint 2 (inicio 29/09/2026) |
 | Objetivo vigente tras el rebase | "Administración gestiona vehículos; Planificación configura su disponibilidad y turnos por fecha." |
 | Reunión de revisión | Evaluación Parcial — Sprint 02, viernes 09/10/2026, 15:40–16:00 |
 | Ensayo de la demostración | 02/10/2026, contra los servidores locales (resultados en la sección *Demostración*) |
 | Participantes previstos | Equipo Scrum: Alex Zorrilla (líder / PM), Anco Porras, Jhean Pier Julio (backend), Alexander Daniel Hilario Talavera (optimización), Jhoanna Hade Vera Zea (frontend/UX), Jose Luis Isidro Casio (QA/DevOps). Docente asesor y *Product Owner* académico: Ing. Job Daniel Gamarra Moreno |
 | Documentos hermanos | [01 Informe de estado](01%20Informe%20de%20estado%20del%20proyecto%20V_1_0_0.md) · [02 Registro de Impedimentos](02%20Registro%20de%20Impedimentos%20V_1_0_0.md) · [04 Retrospectiva](04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md) |
-| Sprint anterior | [Revisión del Sprint 1](../Sprint%201/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) |
+| Sprint anterior | [Revisión del Sprint 1](../Sprint%2001/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) |
 
 > **Nota de rebase funcional (09/10/2026):** el incremento de MFA y pedidos persistentes corresponde a la línea base funcional de Sprint 1; flota corresponde a Sprint 2 y rutas a Sprint 3. Se actualizaron las metas de Jira y Sprint 2 quedó con ECO-12 y ECO-19 en `Listo`. El Sprint 1 cerrado conserva sus fechas y el resultado histórico de su compromiso original; ECO-16 y ECO-20 permanecen completadas en el backlog porque no se pueden añadir a un sprint cerrado.
 
@@ -51,6 +51,7 @@
 | 1.7.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se ejecuta y registra el E2E de los cinco criterios de aceptación del alcance de flota; 5/5 aprobados. La reunión/decisión del Product Owner queda diferenciada del resultado E2E. |
 | 1.8.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se alinea Jira con la rebase funcional: Sprint 2 contiene ECO-12 y ECO-19 en `Listo` (2/2); se actualizan la meta y el estado administrativo observado sin atribuir una reunión futura. |
 | 1.9.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la aprobación comunicada del incremento de flota y se actualiza la meta Jira, sin inventar asistentes ni acuerdos adicionales. |
+| 1.10.0 | 30/10/2026 | Hilario Talavera, Alexander Daniel | Se enlaza la Revisión del Sprint 03 (30/10/2026), que recoge la vista previa de rutas, el mapa y los indicadores; el corte histórico del documento no cambia. |
 
 ## Aceptación del incremento de flota
 

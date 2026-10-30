@@ -34,7 +34,7 @@
 | 1.4.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | El tablero de Jira queda normalizado a cuatro columnas en español; IMP-003 sigue abierto solo por la ausencia de una versión de entrega. |
 | 1.5.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se precisa la asociación histórica de ECO-15 en Jira y su estado pendiente, sin describirla como una tarjeta del backlog actual. |
 
-> **Corte histórico:** los estados y el resumen del registro corresponden al 02/10/2026. El seguimiento posterior reabrió IMP-003 el 09/10 tras una nueva consulta de Jira; véase el [Registro de impedimentos del Sprint 2](../Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_0_0.md).
+> **Corte histórico:** los estados y el resumen del registro corresponden al 02/10/2026. El seguimiento posterior reabrió IMP-003 el 09/10 tras una nueva consulta de Jira; véase el [Registro de impedimentos del Sprint 2](../Sprint%2002/02%20Registro%20de%20Impedimentos%20V_1_0_0.md).
 
 ## Registro
 

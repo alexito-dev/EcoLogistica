@@ -37,7 +37,7 @@
 
 | Categoría OWASP 2025 (plantilla) | Categoría oficial 2025 | Estado en Proyecto (Limpio / Vulnerable / Bajo Revisión) | Hallazgos de SonarQube |
 |---|---|---|---|
-| A01:2025-Broken Access Control | **A01:2025** Broken Access Control | **Limpio** | 0 incidencias. Revisión manual: cada router exige sesión (`401`) y rol mediante `requerir_rol(...)` (`403`); los roles sin permiso se prueban en `test_api_auth.py`, `tests/rutas` y `tests/indicadores`. El middleware `verificar_origen` rechaza cambios de estado desde orígenes ajenos (defensa CSRF adicional a `SameSite=Strict`). |
+| A01:2025-Broken Access Control | **A01:2025** Broken Access Control | **Limpio** | 0 incidencias. Revisión manual: cada router exige sesión (`401`) y rol mediante `requerir_rol(...)` (`403`), y los endpoints de rutas guardadas siguen la misma regla (prueba de roles en `tests/rutas/test_guardadas.py`); los roles sin permiso se prueban en `test_api_auth.py`, `tests/rutas` y `tests/indicadores`. El middleware `verificar_origen` rechaza cambios de estado desde orígenes ajenos (defensa CSRF adicional a `SameSite=Strict`). |
 | A02:2025-Cryptographic Failures | **A04:2025** Cryptographic Failures | **Bajo Revisión** | 0 incidencias. Contraseñas con **Argon2id**; JWT HS256 con algoritmo fijado al decodificar y clave aleatoria si `JWT_SECRET` tiene menos de 32 caracteres. **Pendiente:** los secretos TOTP se guardan sin cifrar en `backend/.data/usuarios.json` (fuera de Git) hasta EN-005 / ECO-21; `COOKIE_SECURE=false` es válido solo en desarrollo local sin HTTPS. |
 | A03:2025-Injection | **A05:2025** Injection | **Limpio** | 0 incidencias. Acceso a datos con SQLAlchemy parametrizado; la única consulta textual (`database_health.py`) es una cadena fija sin datos del usuario. Entradas validadas con Pydantic. En el frontend no se usa `dangerouslySetInnerHTML`; los *popups* de Leaflet escapan cada dato con `escapar()` antes de insertarlo. |
 | A04:2025-Insecure Design | **A06:2025** Insecure Design | **Bajo Revisión** | 0 incidencias. A favor: límites de intentos (5 fallos → bloqueo de 15 min, también para correos inexistentes), mensajes genéricos, vista previa de rutas de solo lectura y especificaciones OpenSpec auditadas antes de programar. **Pendiente:** el trazado por calles envía las coordenadas de las paradas al servidor público de demostración de OSRM (privacidad, Ley N.° 29733) y no existe restablecimiento del segundo factor por un administrador. |
@@ -86,8 +86,8 @@ SonarQube **no reportó Security Hotspots** (0) en este análisis. Los dos halla
 
 | Comprobación | Resultado |
 |---|---|
-| `pytest` backend (incluye las 2 pruebas nuevas de cabeceras) | 130 aprobadas |
-| `vitest` frontend tras actualizar Vite | 52 aprobadas (estado final de la rama) |
+| `pytest` backend (incluye las 2 pruebas nuevas de cabeceras y las 7 de rutas guardadas) | 137 aprobadas |
+| `vitest` frontend tras actualizar Vite | 58 aprobadas (estado final de la rama) |
 | `npm run build` y `npm run lint` | Sin errores |
 | SonarQube después de las correcciones | 0 vulnerabilidades · 0 *hotspots* · Quality Gate PASSED |
 | `npm audit --omit=dev` | 0 vulnerabilidades |

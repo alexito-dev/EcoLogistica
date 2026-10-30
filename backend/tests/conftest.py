@@ -24,6 +24,8 @@ from app.flota.router import get_repositorio_flota  # noqa: E402
 from app.main import app  # noqa: E402
 from app.pedidos.memory_repository import PedidosMemoryRepository  # noqa: E402
 from app.pedidos.router import get_repositorio  # noqa: E402
+from app.rutas.guardadas import RutasGuardadasArchivo  # noqa: E402
+from app.rutas.router import get_repositorio_guardadas  # noqa: E402
 
 CLAVE_DEMO = "clave-de-pruebas-demo"
 ORIGEN = "http://localhost:3000"
@@ -34,11 +36,12 @@ def usuario_de_prueba(rol: Rol = Rol.PLANIFICADOR) -> Usuario:
 
 
 @pytest.fixture
-def client():
+def client(tmp_path):
     """Cliente con sesión simulada de PLANIFICADOR y repositorio de pedidos nuevo por prueba."""
     repo = PedidosMemoryRepository()
     app.dependency_overrides[get_repositorio] = lambda: repo
     app.dependency_overrides[get_repositorio_flota] = lambda: FlotaMemoryRepository()
+    app.dependency_overrides[get_repositorio_guardadas] = lambda: RutasGuardadasArchivo(tmp_path / "rutas.json")
     app.dependency_overrides[usuario_actual] = lambda: usuario_de_prueba(Rol.PLANIFICADOR)
     with TestClient(app, raise_server_exceptions=False) as c:
         yield c
@@ -46,12 +49,13 @@ def client():
 
 
 @pytest.fixture
-def cliente_con_rol():
+def cliente_con_rol(tmp_path):
     """Fábrica de clientes con sesión simulada del rol indicado."""
     repo = PedidosMemoryRepository()
     repo_flota = FlotaMemoryRepository()
     app.dependency_overrides[get_repositorio] = lambda: repo
     app.dependency_overrides[get_repositorio_flota] = lambda: repo_flota
+    app.dependency_overrides[get_repositorio_guardadas] = lambda: RutasGuardadasArchivo(tmp_path / "rutas.json")
 
     def _crear(rol: Rol) -> TestClient:
         app.dependency_overrides[usuario_actual] = lambda: usuario_de_prueba(rol)

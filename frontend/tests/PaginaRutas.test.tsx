@@ -53,7 +53,10 @@ const vista: api.VistaPrevia = {
 }
 
 // Sin red en las pruebas: el trazado por calles no responde y el mapa usa líneas rectas.
-beforeEach(() => vi.spyOn(trazado, 'trazarPorCalles').mockResolvedValue(null))
+beforeEach(() => {
+  vi.spyOn(trazado, 'trazarPorCalles').mockResolvedValue(null)
+  vi.spyOn(api, 'obtenerRutasGuardadas').mockResolvedValue(null)
+})
 afterEach(() => vi.restoreAllMocks())
 
 describe('PaginaRutas', () => {
@@ -99,5 +102,35 @@ describe('PaginaRutas', () => {
     fireEvent.change(screen.getByLabelText('Fecha de reparto'), { target: { value: '2026-12-01' } })
     await screen.findByText('ECO-103')
     expect(espia).toHaveBeenLastCalledWith('2026-12-01')
+  })
+
+  it('guarda las rutas y avisa que quedaron guardadas', async () => {
+    vi.spyOn(api, 'obtenerVistaPrevia').mockResolvedValue(vista)
+    const guardar = vi.spyOn(api, 'guardarRutas').mockResolvedValue({ fecha: vista.fecha, guardadaEn: '2026-10-30T15:00:00Z', guardadaPor: 'Ana Plan', vista })
+    render(<PaginaRutas />)
+    await screen.findByText('ECO-103')
+    await userEvent.click(screen.getByRole('button', { name: 'Guardar rutas' }))
+    expect(guardar).toHaveBeenCalledOnce()
+    expect(await screen.findByText(/Rutas guardadas\. Puede volver a abrirlas/)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Ver cálculo actual' })).toBeInTheDocument()
+  })
+
+  it('abre las rutas guardadas de la fecha y permite volver al cálculo actual', async () => {
+    const guardadaVista = { ...vista, rutas: [{ ...vista.rutas[0], vehiculo: { ...vista.rutas[0].vehiculo, placa: 'GUA-001' } }] }
+    vi.spyOn(api, 'obtenerVistaPrevia').mockResolvedValue(vista)
+    vi.spyOn(api, 'obtenerRutasGuardadas').mockResolvedValue({ fecha: vista.fecha, guardadaEn: '2026-10-30T15:00:00Z', guardadaPor: 'Ana Plan', vista: guardadaVista })
+    render(<PaginaRutas />)
+    expect(await screen.findByText('GUA-001')).toBeInTheDocument()
+    expect(screen.getByText(/Hay rutas guardadas el .* por Ana Plan/)).toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: 'Ver cálculo actual' }))
+    expect(screen.getByText('ECO-103')).toBeInTheDocument()
+    expect(screen.queryByText('GUA-001')).not.toBeInTheDocument()
+  })
+
+  it('no permite guardar si no hay rutas', async () => {
+    vi.spyOn(api, 'obtenerVistaPrevia').mockResolvedValue({ ...vista, rutas: [], sinAsignar: [] })
+    render(<PaginaRutas />)
+    await screen.findByText(/declare el turno de los vehículos en Flota/)
+    expect(screen.getByRole('button', { name: 'Guardar rutas' })).toBeDisabled()
   })
 })

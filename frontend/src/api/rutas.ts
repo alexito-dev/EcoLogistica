@@ -1,7 +1,7 @@
 /** Cliente de la vista previa de rutas (RF-04). El backend arma la propuesta; aquí solo se muestra. */
 
 import type { Combustible } from './flota'
-import { solicitar } from './http'
+import { ApiError, solicitar } from './http'
 
 export interface Parada {
   orden: number
@@ -60,4 +60,26 @@ export interface VistaPrevia {
 
 export function obtenerVistaPrevia(fecha: string): Promise<VistaPrevia> {
   return solicitar(`/rutas/vista-previa?fecha=${encodeURIComponent(fecha)}`)
+}
+
+export interface RutaGuardada {
+  fecha: string
+  guardadaEn: string
+  guardadaPor: string
+  vista: VistaPrevia
+}
+
+/** Calcula las rutas de la fecha y las guarda; reemplaza las que hubiera guardadas. */
+export function guardarRutas(fecha: string): Promise<RutaGuardada> {
+  return solicitar(`/rutas/guardar?fecha=${encodeURIComponent(fecha)}`, { method: 'POST' })
+}
+
+/** Rutas guardadas de la fecha, o null si todavía no se guardaron. */
+export async function obtenerRutasGuardadas(fecha: string): Promise<RutaGuardada | null> {
+  try {
+    return await solicitar<RutaGuardada>(`/rutas/guardada?fecha=${encodeURIComponent(fecha)}`)
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 404) return null
+    throw error
+  }
 }

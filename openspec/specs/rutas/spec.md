@@ -123,3 +123,37 @@ La interfaz SHALL mostrar la vista previa en un mapa Leaflet con teselas de Open
 
 - **WHEN** el servicio de rutas no responde o devuelve un error
 - **THEN** el mapa muestra las rutas en línea recta, indica que el servicio no está disponible y el resto de la página funciona igual
+
+### Requirement: Guardar y volver a abrir las rutas de una fecha
+
+El sistema SHALL permitir a Planificación y Administración guardar la propuesta de rutas de una fecha y volver a abrirla después, incluso tras reiniciar la API.
+
+#### Scenario: Guardar las rutas del día
+
+- **WHEN** el planificador guarda las rutas de una fecha con pedidos asignables
+- **THEN** la API responde 201 con la propuesta, la fecha de guardado y quién la guardó, y reemplaza las rutas guardadas anteriores de esa fecha
+
+#### Scenario: Volver a abrir las rutas guardadas
+
+- **WHEN** el planificador consulta las rutas guardadas de una fecha ya guardada, incluso después de reiniciar la API
+- **THEN** la API devuelve la misma propuesta guardada
+
+#### Scenario: Fecha sin rutas guardadas
+
+- **WHEN** se consultan las rutas guardadas de una fecha sin guardado
+- **THEN** la API responde 404
+
+#### Scenario: Nada que guardar
+
+- **WHEN** se intenta guardar una fecha sin rutas
+- **THEN** la API responde 422 indicando que no hay rutas que guardar y no guarda nada
+
+#### Scenario: Roles sin permiso
+
+- **WHEN** un conductor, gerente o auditor guarda o consulta rutas guardadas
+- **THEN** la API responde 403
+
+#### Scenario: Abrir las rutas guardadas en la interfaz
+
+- **WHEN** el planificador abre una fecha con rutas guardadas
+- **THEN** la interfaz muestra las guardadas, indica quién y cuándo las guardó y permite alternar con el cálculo actual

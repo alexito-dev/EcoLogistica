@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, developer]
+    branches: [main, "sprint-*/**", "feature/**"]
   pull_request:
 
 permissions:

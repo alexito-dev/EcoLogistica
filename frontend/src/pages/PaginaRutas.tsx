@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState, type CSSProperties } from 'react'
-import { CircleAlert, Info, Leaf, MapPinned, PackageCheck, RefreshCw, Route, Truck } from 'lucide-react'
+import { CircleAlert, Info, Leaf, MapPinned, PackageCheck, RefreshCw, Route, Save, Truck } from 'lucide-react'
 import { ApiError } from '../api/http'
-import { obtenerVistaPrevia, type Ruta, type VistaPrevia } from '../api/rutas'
+import { guardarRutas, obtenerRutasGuardadas, obtenerVistaPrevia, type Ruta, type RutaGuardada, type VistaPrevia } from '../api/rutas'
 import Hero from '../components/Hero'
 import MapaRutas from '../components/MapaRutas'
 import { COLORES_RUTA } from '../lib/colores'
 import StatCard from '../components/StatCard'
 import { formatoNumero } from '../lib/estados'
-import { fechaCorta, fechaLocal } from '../lib/fechas'
+import { fechaCorta, fechaLocal, isoAHoraLima } from '../lib/fechas'
 
 const hora = new Intl.DateTimeFormat('es-PE', { timeZone: 'America/Lima', hour: '2-digit', minute: '2-digit', hour12: false })
 
@@ -22,6 +22,10 @@ export default function PaginaRutas() {
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
   const [seleccion, setSeleccion] = useState<number | null>(null)
+  const [guardada, setGuardada] = useState<RutaGuardada | null>(null)
+  const [verGuardada, setVerGuardada] = useState(false)
+  const [guardando, setGuardando] = useState(false)
+  const [aviso, setAviso] = useState('')
 
   const consultar = useCallback(
     () =>
@@ -40,15 +44,56 @@ export default function PaginaRutas() {
   useEffect(() => {
     void consultar()
   }, [consultar])
+  // Al abrir una fecha con rutas guardadas, se muestran esas: son las que Planificación dejó listas.
+  useEffect(() => {
+    let activo = true
+    obtenerRutasGuardadas(fecha)
+      .then((g) => {
+        if (!activo) return
+        setGuardada(g)
+        setVerGuardada(g !== null)
+      })
+      .catch(() => {
+        if (!activo) return
+        setGuardada(null)
+        setVerGuardada(false)
+      })
+    return () => {
+      activo = false
+    }
+  }, [fecha])
   const cambiarFecha = (valor: string) => {
     if (!valor) return
     setCargando(true)
     setSeleccion(null)
+    setAviso('')
     setFecha(valor)
   }
+  const recalcular = () => {
+    setVerGuardada(false)
+    setAviso('')
+    return cargar()
+  }
+  const guardar = async () => {
+    setGuardando(true)
+    setError('')
+    try {
+      const g = await guardarRutas(fecha)
+      setGuardada(g)
+      setVerGuardada(true)
+      setSeleccion(null)
+      setAviso('Rutas guardadas. Puede volver a abrirlas más tarde, incluso después de reiniciar el sistema.')
+    } catch (e: unknown) {
+      setError(e instanceof ApiError ? e.message : 'No se pudieron guardar las rutas.')
+    } finally {
+      setGuardando(false)
+    }
+  }
 
-  const r = vista?.resumen
-  const sinDatos = vista && vista.rutas.length === 0 && vista.sinAsignar.length === 0
+  const mostrada = verGuardada && guardada ? guardada.vista : vista
+  const r = mostrada?.resumen
+  const sinDatos = mostrada && mostrada.rutas.length === 0 && mostrada.sinAsignar.length === 0
+  const puedeGuardar = !!vista && vista.rutas.length > 0
 
   return (
     <>
@@ -61,9 +106,13 @@ export default function PaginaRutas() {
               <span>Fecha de reparto</span>
               <input type="date" value={fecha} onChange={(e) => cambiarFecha(e.target.value)} />
             </label>
-            <button type="button" className="boton boton--claro" onClick={() => void cargar()} disabled={cargando}>
+            <button type="button" className="boton boton--claro" onClick={() => void recalcular()} disabled={cargando}>
               <RefreshCw size={18} aria-hidden="true" className={cargando ? 'girando' : undefined} />
               Recalcular
+            </button>
+            <button type="button" className="boton boton--claro" onClick={() => void guardar()} disabled={cargando || guardando || !puedeGuardar}>
+              <Save size={18} aria-hidden="true" />
+              {guardando ? 'Guardando…' : 'Guardar rutas'}
             </button>
           </div>
         }
@@ -75,6 +124,21 @@ export default function PaginaRutas() {
         <StatCard titulo="Distancia" valor={r?.distanciaKm ?? 0} sufijo="km" detalle={r ? `Sin optimizar: ${formatoNumero(r.distanciaBaseKm)} km` : 'Recorrido total'} icono={Route} indice={2} />
         <StatCard titulo="Emisiones" valor={r?.co2Kg ?? 0} sufijo="kg CO₂e" detalle={r && r.ahorroCo2Pct > 0 ? `${formatoNumero(r.ahorroCo2Pct)} % menos que sin optimizar` : 'Estimadas por combustible'} icono={Leaf} indice={3} />
       </section>
+
+      {(guardada || aviso) && (
+        <section className="aviso aviso--info rutas-guardada" aria-label="Rutas guardadas">
+          <p role="status">
+            {aviso ||
+              (guardada && `Hay rutas guardadas el ${isoAHoraLima(guardada.guardadaEn)} por ${guardada.guardadaPor}.`)}{' '}
+            {guardada && (verGuardada ? 'Se muestran las guardadas.' : 'Se muestra el cálculo actual.')}
+          </p>
+          {guardada && (
+            <button type="button" className="boton boton--secundario boton--chico" onClick={() => setVerGuardada(!verGuardada)}>
+              {verGuardada ? 'Ver cálculo actual' : 'Abrir rutas guardadas'}
+            </button>
+          )}
+        </section>
+      )}
 
       {error && (
         <div role="alert" className="aviso aviso--error rutas-aviso">
@@ -98,7 +162,7 @@ export default function PaginaRutas() {
         </section>
       )}
 
-      {vista && !sinDatos && (
+      {mostrada && !sinDatos && (
         <div className="rutas-layout aparecer">
           <section className="tarjeta rutas-mapa" aria-labelledby="titulo-mapa">
             <header className="rutas-mapa__cabecera">
@@ -109,7 +173,7 @@ export default function PaginaRutas() {
                   : `${r?.paradasFueraDeVentana} parada(s) llegarían fuera de su ventana.`}
               </p>
             </header>
-            <MapaRutas vista={vista} seleccion={seleccion} onSeleccion={setSeleccion} />
+            <MapaRutas vista={mostrada} seleccion={seleccion} onSeleccion={setSeleccion} />
             <ul className="rutas-leyenda" aria-label="Leyenda">
               <li><span className="marcador-deposito marcador-deposito--chico" aria-hidden="true" /> Depósito</li>
               <li><span className="marcador-parada marcador-parada--chico" style={{ '--color': COLORES_RUTA[0] } as CSSProperties} aria-hidden="true">1</span> Orden de visita</li>
@@ -118,17 +182,17 @@ export default function PaginaRutas() {
           </section>
 
           <section className="rutas-panel" aria-label="Rutas por vehículo">
-            {vista.rutas.map((ruta, i) => (
+            {mostrada.rutas.map((ruta, i) => (
               <TarjetaRuta key={ruta.vehiculo.id} ruta={ruta} color={COLORES_RUTA[i % COLORES_RUTA.length]} indice={i} activa={seleccion === i} onClick={() => setSeleccion(seleccion === i ? null : i)} />
             ))}
 
-            {vista.sinAsignar.length > 0 && (
+            {mostrada.sinAsignar.length > 0 && (
               <article className="tarjeta rutas-sin-asignar">
                 <h3>
-                  <CircleAlert size={18} aria-hidden="true" /> Sin asignar ({vista.sinAsignar.length})
+                  <CircleAlert size={18} aria-hidden="true" /> Sin asignar ({mostrada.sinAsignar.length})
                 </h3>
                 <ul>
-                  {vista.sinAsignar.map((s) => (
+                  {mostrada.sinAsignar.map((s) => (
                     <li key={s.pedidoId}>
                       <strong>{s.codigo}</strong> · {formatoNumero(s.demandaKg)} kg — {s.motivo}
                     </li>
@@ -148,7 +212,7 @@ export default function PaginaRutas() {
                 llegará en una próxima iteración.
               </p>
               <ul>
-                {vista.supuestos.map((s) => (
+                {mostrada.supuestos.map((s) => (
                   <li key={s}>{s}</li>
                 ))}
               </ul>
