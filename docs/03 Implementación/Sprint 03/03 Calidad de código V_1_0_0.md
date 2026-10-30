@@ -6,6 +6,14 @@
 **Fecha de Análisis:** 2026-10-30  
 **Versión del Análisis:** V_1_0_0  
 
+## Nota de vigencia y validación documental — 30/10/2026
+
+> **Resultado histórico, no escaneo nuevo del último `main`.** Este informe conserva las medidas obtenidas en la instancia local de SonarQube sobre el commit **`9b31dd0`**: Quality Gate **PASSED**, cobertura **82,8 %**, cero vulnerabilidades detectadas, **101 code smells** y fiabilidad **C**. El repositorio se actualizó posteriormente hasta `e7e4a00d` (41 commits adicionales). El pipeline actual de GitHub Actions **no incluye SonarScanner**. No presentamos estas cifras como resultado del commit final sin una nueva ejecución.
+
+Como equipo, verificamos que este informe sí contiene resultados, captura, interpretación, distribución de hallazgos, limitaciones y plan correctivo. Su estado es **apto como evidencia histórica del análisis original**. Para repetirlo sobre el commit actual y registrar resultados de manera verificable, añadimos la [validación de vigencia y procedimiento de reanálisis](20261030%20Validaci%C3%B3n%20del%20reporte%20SonarQube%20y%20rean%C3%A1lisis.md), así como el [script PowerShell de ejecución local](../../../scripts/analizar-sonarqube.ps1). Los nuevos resultados deben publicarse **solo después de correr SonarScanner** y confirmar el Quality Gate de ese mismo commit. El script prepara un reporte separado: `SONARQUBE-ULTIMO-ANALISIS.md`.
+
+---
+
 ## Metadatos del documento
 
 | Campo | Valor |
