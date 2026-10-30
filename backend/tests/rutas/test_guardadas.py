@@ -90,5 +90,6 @@ def test_error_al_reemplazar_conserva_ruta_anterior_y_limpia_temporal(tmp_path, 
         almacen.guardar(fecha, {"estado": "nuevo"})
 
     assert ruta.read_bytes() == antes
+    assert almacen.obtener(fecha) == {"estado": "original"}
     assert RutasGuardadasArchivo(ruta).obtener(fecha) == {"estado": "original"}
     assert list(tmp_path.glob("*.tmp")) == []
