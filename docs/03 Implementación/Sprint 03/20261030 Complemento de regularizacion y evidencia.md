@@ -17,3 +17,17 @@ La validación técnica y la aceptación de producto se registrarán con enlaces
 
 ## Referencias
 [Plan transversal](../Regularizacion%20Sprints%2001-03%20-%2020261030.md) · [Jira](https://continental-team-ecologistica.atlassian.net/jira/software/projects/ECO/boards/2/backlog) · [PR de revisión](https://github.com/alexito-dev/EcoLogistica/pull/3)
+
+## Conciliación actual del tablero (30/10/2026)
+
+Como equipo, registramos ECO Sprint 3 (id 38) como sprint **futuro de regularización**, sin reconstruir velocidad o Planning históricos. Agrupamos ECO-22 y ECO-23 (revisión QA), ECO-17 (revisión QA), ECO-14 (En curso) y ECO-24 (En curso). El mapa de Planificación fue adelantado; ECO-13 mantiene su historia de mapa para Conducción en curso y pertenece al backlog posterior. La nueva rama de corrección etiqueta expresamente estimaciones de puntualidad y CO₂e; no la declaramos fusionada hasta un PR y CI satisfactorios.
+
+[Artefactos Jira actualizados](../../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md#actualización-de-gestión-verificada--30102026).
+
+## Registro posterior de inicio administrativo — 30/10/2026
+
+Con autorización expresa, **iniciamos ECO Sprint 3 (id 38)** en Jira el **30/10/2026 a las 14:59 (Lima)**. Establecimos un periodo de regularización administrativa hasta el **13/11/2026 a las 14:59 (Lima)**. No es una recreación retrospectiva del trabajo documentado del 09/10 al 30/10, ni altera actas, objetivos o velocidad histórica.
+
+Asignamos cinco incidencias al sprint: **ECO-22, ECO-23 y ECO-17** (En revisión / QA) y **ECO-14 y ECO-24** (En curso). El sprint inicia con **0 de 5 historias/tareas en Listo**, aunque existe código y evidencia técnica previa. La aceptación de cada criterio todavía debe revisarse. El texto anterior que lo describía como «futuro» corresponde a la instantánea previa al inicio autorizado.
+
+Evidencia: [tablero de Jira](https://continental-team-ecologistica.atlassian.net/jira/software/projects/ECO/boards/2/backlog).
