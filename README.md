@@ -67,13 +67,13 @@ El sistema permite entrar con TOTP y roles, registrar pedidos, volver a encontra
 
 Jira ya refleja la rebase funcional: ECO-12 y ECO-19 están en `Listo` dentro del Sprint 2; ECO-16 y ECO-20 constan completadas fuera del Sprint 1 cerrado, sin alterar la velocidad histórica. ECO-15 sigue `Por hacer` y conserva su asociación al Sprint 1 cerrado como compromiso pendiente de replanificar. ECO-21 se limita a persistencia de cuentas y rutas y protección de secretos TOTP. La configuración actual de `ECO board` tiene cuatro columnas en español (`Por hacer`, `En curso`, `En revisión / QA`, `Listo`) con categorías alineadas; el estado duplicado `Finalizada` se retiró y no hay incidencias en ese estado. Jira aún no tiene una versión de entrega. El detalle está en [02. Artefactos Jira](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md).
 
-**Corte del Sprint 3 (30/10/2026).** La rama `sprint-3/calidad-owasp-wcag` integra `feature/rutas-indicadores` y pasa **137 pruebas de backend y 58 de frontend** (cobertura de líneas del backend: 92,6 %; SonarQube midió **81,3 %** en su análisis). SonarQube da *Quality Gate* **PASSED**, 0 bugs, 0 vulnerabilidades, 0 *hotspots* y 0,0 % de duplicación. En OWASP Top 10:2025 no quedan vulnerabilidades críticas abiertas, y la auditoría WCAG 2.2 AA alcanza **88,9 %** de los criterios aplicables (meta ≥ 90 %). Detalle en los [documentos del Sprint 03](#93-fase-03-implementación).
+**Corte del Sprint 3 (30/10/2026).** La rama `sprint-3/calidad-owasp-wcag` integra `feature/rutas-indicadores` y pasa **137 pruebas de backend y 58 de frontend** (cobertura de líneas del backend: 92,6 %; SonarQube midió **82,8 %** en su análisis del 30/10 con backend y frontend). SonarQube da *Quality Gate* **PASSED**, 0 bugs, 0 vulnerabilidades, 0 *hotspots* y 0,0 % de duplicación; fiabilidad C por 3 incidencias abiertas (ver [03 Calidad de código](docs/03%20Implementaci%C3%B3n/Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)). En OWASP Top 10:2025 no quedan vulnerabilidades críticas abiertas, y la auditoría WCAG 2.2 AA alcanza **88,9 %** de los criterios aplicables (meta ≥ 90 %). Detalle en los [documentos del Sprint 03](#93-fase-03-implementación).
 
 La línea base funcional acordada para Sprint 1–4 está en [05. Plan funcional de sprints](docs/02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md), con criterios para flota y rutas y con los cortes históricos preservados.
 
 ---
 
-## ## Regularización técnica de Sprint 1–3 (30/10/2026)
+## Regularización técnica de Sprint 1–3 (30/10/2026)
 
 Como equipo, estamos conciliando los incrementos técnicos de los tres primeros sprints con los criterios de Jira. **Esta actividad no constituye un cierre retroactivo ni una certificación de producción.** Hemos registrado correcciones de durabilidad en los repositorios JSON temporales de autenticación y rutas, así como pruebas de regresión frente a errores de escritura. Estas medidas no sustituyen la migración definitiva a PostgreSQL/PostGIS y el cifrado en reposo de los secretos TOTP, aún pendientes en [ECO-21](https://continental-team-ecologistica.atlassian.net/browse/ECO-21).
 
@@ -83,7 +83,7 @@ Toda modificación se entrega mediante [PR #3](https://github.com/alexito-dev/Ec
 
 ---
 
-3. Capacidades y Módulos Funcionales
+## 3. Capacidades y Módulos Funcionales
 
 El diagrama muestra el alcance objetivo del producto, no funcionalidades ya entregadas. Al 09/10/2026 están implementados la autenticación con MFA/roles, el registro y consulta persistente de pedidos y la gestión de flota con los criterios E2E de Sprint 2 aprobados. Generación de rutas, optimización, mapa, dashboard y re-enrutamiento siguen pendientes.
 
