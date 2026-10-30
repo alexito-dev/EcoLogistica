@@ -11,6 +11,36 @@
 | Fecha | 30/10/2026 |
 | Enfoque | Cada sprint debe dejar una tarea real que una persona pueda completar en el sistema. |
 
+## Cierre funcional del tercer incremento: alcance validable al 30/10/2026
+
+La entrega del Sprint 3 consiste en **planificar automáticamente rutas por fecha, consultar vehículos y paradas, guardar y recuperar propuestas, medir el rendimiento de cálculo y visualizar indicadores estimados**. Conservamos las pruebas y la demostración del 30/10, así como los límites explícitos de la heurística. El Sprint 3 **no** equivale a que una persona conductora registre entregas, a re-enrutamiento operativo o a métricas observadas de la empresa.
+
+| Sprint | Entregable acumulado hasta el 30/10 | Identificadores Jira / evidencia |
+|---|---|---|
+| 1 | Acceso MFA/TOTP y permisos por rol, alta/consulta de pedidos y persistencia de puntos en PostGIS | ECO-9, ECO-16 y ECO-20; ECO-11 en revisión de geocodificación automática, fuera de velocidad histórica |
+| 2 | Inventario de vehículos, capacidades, placas normalizadas, estados, turnos y disponibilidad con persistencia PostGIS | ECO-12, ECO-19; sprint cerrado administrativamente el 30/10 |
+| 3 | Vista previa, mapa para Planificación, guardado y reapertura de rutas, indicadores **estimados**, benchmark ≤45 s y CI con contratos OpenAPI | ECO-22, ECO-23, ECO-17, ECO-25; no imputamos puntos nuevos retroactivamente |
+
+Las historias ECO-14 (indicadores de entregas reales), ECO-13 (visor para Conducción), ECO-15 (re-enrutamiento), ECO-21 (persistencia definitiva de cuentas/rutas), ECO-24 (cierre WCAG ≥90 %), ECO-26 (medición observada) y ECO-27 (E2E Playwright/CD) **no se presentan como completadas por estos tres sprints**. Se mantienen como trabajo posterior con sus criterios y dependencias. Esta separación permite declarar entregado el **alcance funcional** de los incrementos 1–3 sin esconder deuda técnica ni alterar las cifras históricas.
+
+El sprint formal id 38 es una regularización creada e iniciada el 30/10; se cerrará en Jira después de verificar el commit integrado. La fecha de fin programada hasta el 13/11 era administrativa, **no una fecha histórica de ejecución técnica**.
+
+---
+
+## Control vigente de los tres primeros sprints — actualización 30/10/2026
+
+Como equipo, **no sustituimos los resultados originales de cada iteración**. Registramos el estado actual de ejecución y las correcciones de trazabilidad de manera separada:
+
+- **Sprint 1 (id 36):** cerrado, histórico del 28/09 preservado. MFA, pedidos y PostGIS se completaron como línea base funcional reordenada después, pero no aumentan la velocidad del corte. ECO-11 está en revisión QA del recorrido de destino; ECO-15 sigue pendiente de reenrutamiento y conserva la asociación histórica.
+- **Sprint 2 (id 37):** flota y turnos con ECO-12 y ECO-19 en Listo (10/10 puntos). Tras la autorización expresa, **cerramos el sprint administrativamente el 30/10/2026**; preservamos las fechas originales del 29/09 al 12/10 y la aceptación funcional documentada.
+- **Sprint 3 (id 38):** **iniciado administrativamente el 30/10/2026** con término previsto el 13/11/2026, por autorización expresa. Lo registramos como período actual de regularización, **no** como evidencia de un Planning anterior ni como reconstrucción histórica de velocidad. Alineamos ECO-22 (generación y guardado), ECO-23 (benchmark), ECO-14 (indicadores), ECO-17 (CI/OpenAPI) y ECO-24 (accesibilidad); ninguno figura todavía en Listo.
+
+**Importante:** aunque las cinco condiciones de demostración del Sprint 3 se documentaron como cumplidas con datos sintéticos, la aceptación completa de Jira no se deduce de ese ensayo: ECO-22 toma todos los pedidos del día, no una selección manual; ECO-14 calcula previsiones, no indicadores de entregas ejecutadas; ECO-17 requiere Playwright y verificación contractual; ECO-24 está por debajo del objetivo interno de accesibilidad. El visor para el rol repartidor de ECO-13 sigue pendiente y **no está asignado retroactivamente al Sprint 3**, aunque adelantamos el mapa para Planificación.
+
+No inventamos estimaciones para las nuevas ECO-22, ECO-23 y ECO-24 ni alteramos las de las historias antiguas. El detalle vigente está en [Artefactos Jira](02%20Artefactos%20Jira%20V_1_0_0.md#actualización-de-gestión-verificada--30102026); las secciones fechadas previamente explican la situación que existía en su corte.
+
+---
+
 ## Para qué sirve este plan
 
 La meta de cada sprint se escribe como una acción que alguien podrá hacer en la aplicación. La base de datos, los mapas, el motor de rutas y la automatización son parte del trabajo cuando hacen falta para completar esa acción; por sí solos no cuentan como resultado funcional del sprint.

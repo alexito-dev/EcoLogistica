@@ -6,6 +6,18 @@
 
 **Líder del Proyecto:** Alex Jesus Zorrilla Apumayta
 
+## Adenda de conciliación Jira–GitHub (30/10/2026)
+
+La evidencia de demostración descrita en esta revisión corresponde al corte **técnico**, no a un cierre de Jira. Como equipo, fusionamos las correcciones del [PR #3](https://github.com/alexito-dev/EcoLogistica/pull/3) a `main`; el [CI del commit `3375602`](https://github.com/alexito-dev/EcoLogistica/actions/runs/41117477415) aprobó backend, frontend, OpenSpec y pruebas de integración con PostgreSQL/PostGIS aislado.
+
+Para recuperar la gestión faltante, creamos **ECO Sprint 3** (id 38) el 30/10 en estado **futuro**, sin reconstruir fechas, estimación ni velocidad histórica. Asociamos ECO-22, ECO-23, ECO-14, ECO-17 y ECO-24. ECO-22, ECO-23 y ECO-17 se encuentran **En revisión / QA**; ECO-14 y ECO-24 siguen **En curso**. La métrica «5 de 5 criterios cumplidos» que aparece más adelante pertenece al ensayo funcional documentado, **no significa que todas las historias estén en Listo o aceptadas formalmente**.
+
+Hay tres diferencias que debemos resolver antes de cerrar toda la aceptación: (a) la selección de pedidos se realiza automáticamente por fecha, sin elegir un subconjunto en pantalla; (b) el dashboard muestra estimaciones de emisiones y puntualidad, no resultados de entregas efectuadas; y (c) el mapa construido para Planificación no constituye el visor por rol Conductor de ECO-13. Además quedan Playwright, validación restante WCAG 2.2 AA y revisión OWASP. Las cuentas/TOTP y rutas todavía se almacenan en JSON local; la migración definitiva sigue en ECO-21 y fue diferida por el plan funcional.
+
+No presentamos esta regularización del 30/10 como una reunión de aceptación adicional. Conservamos todas las fechas y la revisión original para auditoría.
+
+---
+
 ## Metadatos del documento
 
 | Campo | Valor |

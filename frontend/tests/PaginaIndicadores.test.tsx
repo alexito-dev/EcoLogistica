@@ -45,9 +45,12 @@ describe('PaginaIndicadores', () => {
     vi.spyOn(api, 'obtenerIndicadores').mockResolvedValue(datos)
     render(<PaginaIndicadores />)
     expect(screen.getByRole('heading', { name: 'Indicadores', level: 1 })).toBeInTheDocument()
-    expect(await screen.findByText('Emisiones del 10/10/2026')).toBeInTheDocument()
+    expect(await screen.findByText('Emisiones estimadas del 10/10/2026')).toBeInTheDocument()
     expect(screen.getByText('6.08 de 11.32 kg sin optimizar')).toBeInTheDocument()
     expect(screen.getByText('El Tambo')).toBeInTheDocument()
+    expect(screen.getByText('Reducción estimada de CO₂e')).toBeInTheDocument()
+    expect(screen.getByText('Puntualidad prevista')).toBeInTheDocument()
+    expect(screen.getByText(/no representan entregas realizadas ni ahorro ambiental medido/)).toBeInTheDocument()
     expect(screen.getByText('Urgente')).toBeInTheDocument()
     expect(screen.getByText('Eléctrico')).toBeInTheDocument()
     // Los estados sin pedidos no ocupan una fila.
@@ -57,7 +60,7 @@ describe('PaginaIndicadores', () => {
   it('explica cuando la fecha no tiene pedidos', async () => {
     vi.spyOn(api, 'obtenerIndicadores').mockResolvedValue({ ...datos, dia: { ...datos.dia, pedidos: 0, asignados: 0 } })
     render(<PaginaIndicadores />)
-    expect(await screen.findByText('No hay pedidos planificables en esta fecha.')).toBeInTheDocument()
+    expect(await screen.findByText(/No hay pedidos planificables en esta fecha/)).toBeInTheDocument()
   })
 })
 

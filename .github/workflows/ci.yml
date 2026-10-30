@@ -29,6 +29,8 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Pruebas con cobertura
         run: pytest --cov=app --cov-report=term-missing:skip-covered
+      - name: Benchmark EN-001 (semilla 2026, máximo 45 s)
+        run: python scripts/benchmark_rutas.py 25 50 100 150
 
   migraciones:
     name: Migraciones (PostgreSQL + PostGIS)

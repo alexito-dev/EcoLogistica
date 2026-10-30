@@ -72,7 +72,7 @@ export default function PaginaIndicadores() {
     <>
       <Hero
         titulo="Indicadores"
-        subtitulo="Operación y sostenibilidad de la planificación: emisiones, puntualidad y uso de la flota."
+        subtitulo="Estimaciones de planificación: no representan entregas realizadas ni ahorro ambiental medido."
         accion={
           <div className="rutas-filtro">
             <label>
@@ -88,8 +88,8 @@ export default function PaginaIndicadores() {
       />
 
       <section className="stats" aria-label={`Indicadores del ${fechaCorta(fecha)}`}>
-        <StatCard titulo="Ahorro de CO₂e" valor={dia?.ahorroCo2Pct ?? 0} sufijo="%" detalle={dia ? `${formatoNumero(dia.co2Kg)} de ${formatoNumero(dia.co2BaseKg)} kg sin optimizar` : 'Frente al despacho sin optimizar'} icono={Leaf} indice={0} />
-        <StatCard titulo="Puntualidad" valor={dia?.paradasATiempoPct ?? 0} sufijo="%" detalle="Paradas dentro de su ventana" icono={Clock} indice={1} />
+        <StatCard titulo="Reducción estimada de CO₂e" valor={dia?.ahorroCo2Pct ?? 0} sufijo="%" detalle={dia ? `${formatoNumero(dia.co2Kg)} de ${formatoNumero(dia.co2BaseKg)} kg sin optimizar` : 'Frente al despacho sin optimizar'} icono={Leaf} indice={0} />
+        <StatCard titulo="Puntualidad prevista" valor={dia?.paradasATiempoPct ?? 0} sufijo="%" detalle="Llegadas estimadas dentro de su ventana" icono={Clock} indice={1} />
         <StatCard titulo="Uso de capacidad" valor={dia?.usoCapacidadPct ?? 0} sufijo="%" detalle={datos ? `${formatoNumero(dia?.demandaKg ?? 0)} de ${formatoNumero(datos.flota.capacidadAptaKg)} kg` : 'Carga sobre capacidad apta'} icono={Gauge} indice={2} />
         <StatCard titulo="Pedidos del día" valor={dia?.asignados ?? 0} sufijo={dia ? `/ ${dia.pedidos}` : undefined} detalle="Asignados a una ruta" icono={PackageCheck} indice={3} />
       </section>
@@ -109,17 +109,17 @@ export default function PaginaIndicadores() {
       {datos && dia && (
         <div className="indicadores aparecer">
           <article className="tarjeta indicador indicador--ancho">
-            <h2>Emisiones del {fechaCorta(datos.fecha)}</h2>
+            <h2>Emisiones estimadas del {fechaCorta(datos.fecha)}</h2>
             <p className="indicador__nota">
               {dia.pedidos === 0
-                ? 'No hay pedidos planificables en esta fecha.'
+                ? 'No hay pedidos planificables en esta fecha; los porcentajes de la propuesta no representan resultados observados.'
                 : `La propuesta de rutas recorre ${formatoNumero(dia.distanciaKm)} km${ahorroKm > 0 ? `, ${formatoNumero(Math.round(ahorroKm * 100) / 100)} km menos que sin optimizar` : ''}, y prioriza los vehículos que menos emiten.`}
             </p>
             <Barras
               unidad=" kg CO₂e"
               filas={[
-                { etiqueta: 'Sin optimizar', valor: dia.co2BaseKg },
-                { etiqueta: 'Propuesta', valor: dia.co2Kg },
+                { etiqueta: 'Referencia sin optimizar', valor: dia.co2BaseKg },
+                { etiqueta: 'Propuesta estimada', valor: dia.co2Kg },
               ]}
             />
           </article>

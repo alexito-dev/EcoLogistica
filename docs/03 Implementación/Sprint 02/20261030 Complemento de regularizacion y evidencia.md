@@ -14,3 +14,17 @@ Nos falta reforzar la comprobación automatizada de adaptadores PostgreSQL/PostG
 
 ## Referencias
 [Plan transversal](../Regularizacion%20Sprints%2001-03%20-%2020261030.md) · [Jira](https://continental-team-ecologistica.atlassian.net/jira/software/projects/ECO/boards/2/backlog) · [PR de revisión](https://github.com/alexito-dev/EcoLogistica/pull/3)
+
+## Conciliación actual del tablero (30/10/2026)
+
+Como equipo, verificamos que Jira mantiene el Sprint 2 (id 37) **activo administrativamente** con ECO-12 y ECO-19 en Listo (2/2 historias; 10/10 puntos). La capacidad de flota está implementada y las pruebas de persistencia PostGIS también pasaron en el CI de main. **No cerramos** el sprint porque cerrar modifica de manera irreversible su ciclo de vida en Jira; conservamos la aprobación funcional registrada del 09/10 separada de esa acción administrativa.
+
+[Artefactos Jira actualizados](../../02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md#actualización-de-gestión-verificada--30102026).
+
+## Registro posterior de cierre administrativo — 30/10/2026
+
+Como equipo, **cerramos ECO Sprint 2 (id 37) en Jira**, por autorización expresa del usuario, el 30/10/2026 a las 19:58:02 UTC (14:58:02, hora de Lima). Confirmamos las dos historias **ECO-12** y **ECO-19** en `Listo` (2/2, 10/10 puntos), sin cambiar fechas ni estimaciones originales. Las menciones anteriores al sprint «activo» describen el estado inmediatamente **anterior** a esta acción, no el estado vigente.
+
+Separamos el cierre administrativo tardío de la aceptación funcional documentada el 09/10 y de las fechas originales de trabajo (29/09–12/10). Este cierre no acredita una ceremonia Scrum adicional ni nuevos resultados de negocio.
+
+Evidencia: [tablero de Jira](https://continental-team-ecologistica.atlassian.net/jira/software/projects/ECO/boards/2/backlog).
