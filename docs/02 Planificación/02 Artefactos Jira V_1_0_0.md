@@ -2,6 +2,22 @@
 
 [← Volver al README Principal](../../README.md)
 
+## Cierre administrativo verificado de los tres sprints — 30/10/2026
+
+Como equipo, confirmamos el siguiente **estado final** del tablero **ECO board (id 2)**. Esta sección posterior **prevalece sobre las capturas de estado anteriores** que todavía pueden describir Sprint 3 como futuro o activo, o ECO-14/ECO-24 dentro de su alcance provisional.
+
+| Sprint | ID | Estado definitivo | Entregables y métricas |
+|---|---:|---|---|
+| Sprint 1 oficial | 36 | Cerrado el 09/10/2026 | Línea base MFA/roles/pedidos persistentes; compromiso original y velocidad del corte 28/09 preservados |
+| Sprint 2 | 37 | Cerrado el 30/10/2026 a las 14:58:02 (Lima) | ECO-12 y ECO-19 Listo, **2/2 y 10/10 puntos** |
+| Sprint 3 | 38 | Cerrado el 30/10/2026 a las 15:09:55 (Lima) | ECO-22, ECO-23, ECO-17 y ECO-25 Listo, **4/4 elementos**; no se imputan puntos inexistentes |
+
+El periodo técnico del incremento Sprint 3 corresponde a los documentos del 09/10–30/10. La creación/inicio/cierre de su registro en Jira se efectuó **el propio 30/10** para regularizar el seguimiento, con autorización. La fecha administrativa prevista inicialmente para el 13/11 quedó sustituida en la práctica por un cierre anticipado; mantenemos ambos datos en el historial y no inventamos eventos Scrum.
+
+Dejamos **fuera del Sprint 3** el trabajo no ejecutado: ECO-14 (KPIs observados), ECO-24 (completar WCAG), ECO-13 (Conducción), ECO-21 (PostgreSQL/TOTP), ECO-26 (mediciones reales) y ECO-27 (Playwright/CD). No los marcamos como Listo. [Acta de cierre y evidencia](../03%20Implementaci%C3%B3n/20261030%20Acta%20consolidada%20de%20cierre%20Sprints%2001-03.md).
+
+---
+
 ## Conciliación final de alcance del Sprint 3 — 30/10/2026
 
 Como equipo, completamos la conciliación del **incremento efectivamente implementado** a la fecha de corte y separamos las obligaciones de producto que requieren funcionalidades posteriores. Esta delimitación no convierte resultados sintéticos en resultados observados ni modifica los datos históricos de Jira.
