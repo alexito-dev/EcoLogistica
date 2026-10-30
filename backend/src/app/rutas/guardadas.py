@@ -35,7 +35,10 @@ class RutasGuardadasArchivo:
         try:
             with os.fdopen(descriptor, "w", encoding="utf-8") as archivo:
                 json.dump(self._registros, archivo, ensure_ascii=False, indent=2)
+                archivo.flush()
+                os.fsync(archivo.fileno())
             os.replace(temporal, self._ruta)
         except BaseException:
-            os.unlink(temporal)
+            if os.path.exists(temporal):
+                os.unlink(temporal)
             raise
