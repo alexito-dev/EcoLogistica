@@ -22,8 +22,17 @@ class RutasGuardadasArchivo:
 
     def guardar(self, fecha: date, registro: dict) -> None:
         with self._lock:
-            self._registros[fecha.isoformat()] = registro
-            self._persistir()
+            clave = fecha.isoformat()
+            anterior = self._registros.get(clave)
+            self._registros[clave] = registro
+            try:
+                self._persistir()
+            except BaseException:
+                if anterior is None:
+                    self._registros.pop(clave, None)
+                else:
+                    self._registros[clave] = anterior
+                raise
 
     def obtener(self, fecha: date) -> dict | None:
         with self._lock:
