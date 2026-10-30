@@ -147,7 +147,7 @@ jobs:
         working-directory: frontend
         run: npx vitest run --coverage
       - name: Consolidar cobertura y publicar resumen con denominadores
-        run: python scripts/reporte_cobertura.py
+        run: python scripts/reporte_cobertura.py --min 90
       - name: Conservar reportes XML y LCOV por commit
         if: always()
         uses: actions/upload-artifact@v4
