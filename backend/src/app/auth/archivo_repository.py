@@ -59,9 +59,16 @@ class UsuariosArchivoRepository:
             indent=2,
         )
         descriptor, temporal = tempfile.mkstemp(dir=self._ruta.parent, suffix=".tmp")
-        with os.fdopen(descriptor, "w", encoding="utf-8") as archivo:
-            archivo.write(contenido)
-        os.replace(temporal, self._ruta)
+        try:
+            with os.fdopen(descriptor, "w", encoding="utf-8") as archivo:
+                archivo.write(contenido)
+                archivo.flush()
+                os.fsync(archivo.fileno())
+            os.replace(temporal, self._ruta)
+        except BaseException:
+            if os.path.exists(temporal):
+                os.unlink(temporal)
+            raise
 
     def obtener(self, usuario_id: str) -> Usuario | None:
         return self._usuarios.get(usuario_id)
