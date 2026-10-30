@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { ApiError } from '../src/api/http'
 import userEvent from '@testing-library/user-event'
 import PaginaRutas from '../src/pages/PaginaRutas'
 import * as api from '../src/api/rutas'
@@ -132,5 +133,85 @@ describe('PaginaRutas', () => {
     render(<PaginaRutas />)
     await screen.findByText(/declare el turno de los vehículos en Flota/)
     expect(screen.getByRole('button', { name: 'Guardar rutas' })).toBeDisabled()
+  })
+})
+
+
+describe('Rutas: recuperación, fallos de persistencia y decisiones de planificación', () => {
+  it('reintenta la vista previa después de un error temporal', async () => {
+    const recuperar = vi.spyOn(api, 'obtenerVistaPrevia')
+      .mockRejectedValueOnce(new ApiError(503, 'Sin conexión con planificador'))
+      .mockResolvedValue(vista)
+    render(<PaginaRutas />)
+    expect(await screen.findByRole('alert')).toHaveTextContent('Sin conexión con planificador')
+    await userEvent.click(screen.getByRole('button', { name: 'Reintentar' }))
+    expect(await screen.findByText('ECO-103')).toBeInTheDocument()
+    expect(recuperar).toHaveBeenCalledTimes(2)
+  })
+
+  it('mantiene la vista para volver a intentar cuando falla el guardado', async () => {
+    vi.spyOn(api, 'obtenerVistaPrevia').mockResolvedValue(vista)
+    const guardar = vi.spyOn(api, 'guardarRutas').mockRejectedValue(new ApiError(422, 'Sin rutas válidas para guardar'))
+    render(<PaginaRutas />)
+    await screen.findByText('ECO-103')
+    await userEvent.click(screen.getByRole('button', { name: 'Guardar rutas' }))
+    expect(await screen.findByRole('alert')).toHaveTextContent('Sin rutas válidas para guardar')
+    expect(guardar).toHaveBeenCalledOnce()
+    expect(screen.getByRole('button', { name: 'Guardar rutas' })).toBeEnabled()
+    expect(screen.getByText('ECO-103')).toBeInTheDocument()
+  })
+
+  it('recupera la propuesta calculada aun cuando falla consultar rutas guardadas', async () => {
+    vi.spyOn(api, 'obtenerVistaPrevia').mockResolvedValue(vista)
+    vi.mocked(api.obtenerRutasGuardadas).mockRejectedValue(new Error('base temporal desconectada'))
+    render(<PaginaRutas />)
+    expect(await screen.findByText('ECO-103')).toBeInTheDocument()
+    expect(screen.queryByLabelText('Rutas guardadas')).not.toBeInTheDocument()
+  })
+
+  it('recalcula y permite alternar entre las rutas guardadas y el cálculo actual', async () => {
+    const antigua = { ...vista, rutas: [{ ...vista.rutas[0], vehiculo: { ...vista.rutas[0].vehiculo, placa: 'GUA-777' } }] }
+    const vistaActual = { ...vista, rutas: [{ ...vista.rutas[0], vehiculo: { ...vista.rutas[0].vehiculo, placa: 'NUE-123' } }] }
+    const obtener = vi.spyOn(api, 'obtenerVistaPrevia').mockResolvedValue(vistaActual)
+    vi.mocked(api.obtenerRutasGuardadas).mockResolvedValue({
+      fecha: vista.fecha, guardadaEn: '2026-10-30T15:00:00Z', guardadaPor: 'Planificador',
+      vista: antigua,
+    })
+    render(<PaginaRutas />)
+    await screen.findByText('GUA-777')
+    await userEvent.click(screen.getByRole('button', { name: 'Recalcular' }))
+    expect(await screen.findByText('NUE-123')).toBeInTheDocument()
+    expect(obtener).toHaveBeenCalledTimes(2)
+    await userEvent.click(screen.getByRole('button', { name: 'Abrir rutas guardadas' }))
+    expect(screen.getByText('GUA-777')).toBeInTheDocument()
+  })
+
+  it('muestra la condición de llegada puntual de todas las paradas', async () => {
+    vi.spyOn(api, 'obtenerVistaPrevia').mockResolvedValue({
+      ...vista,
+      resumen: { ...vista.resumen, paradasFueraDeVentana: 0, paradasFueraDeVentanaBase: 1 },
+    })
+    render(<PaginaRutas />)
+    expect(await screen.findByText(/Todas las paradas llegan dentro de su ventana/)).toHaveTextContent('sin optimizar: 1 tarde')
+  })
+
+  it('omite la promesa de ahorro si la estimación de emisiones no mejora', async () => {
+    vi.spyOn(api, 'obtenerVistaPrevia').mockResolvedValue({
+      ...vista, resumen: { ...vista.resumen, ahorroCo2Pct: 0 },
+    })
+    render(<PaginaRutas />)
+    await screen.findByText('ECO-103')
+    expect(screen.getByText('Estimadas por combustible')).toBeInTheDocument()
+  })
+
+  it('actualiza el filtro y descarta la selección previa al cambiar de fecha', async () => {
+    const espia = vi.spyOn(api, 'obtenerVistaPrevia').mockResolvedValue(vista)
+    render(<PaginaRutas />)
+    const boton = await screen.findByRole('button', { name: /ECO-103/ })
+    await userEvent.click(boton)
+    expect(boton).toHaveAttribute('aria-pressed', 'true')
+    fireEvent.change(screen.getByLabelText('Fecha de reparto'), { target: { value: '2026-12-01' } })
+    await waitFor(() => expect(espia).toHaveBeenLastCalledWith('2026-12-01'))
+    expect(screen.getByRole('button', { name: /ECO-103/ })).toHaveAttribute('aria-pressed', 'false')
   })
 })

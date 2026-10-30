@@ -20,6 +20,13 @@ if (-not (Get-Command "npm.cmd" -ErrorAction SilentlyContinue)) {
     throw "Instale Node.js y npm."
 }
 
+# Para comparar con CI, incluimos la integración PostgreSQL en una base temporal explícita.
+if ([string]::IsNullOrWhiteSpace($env:ECO_TEST_DATABASE_URL) -or
+    $env:ECO_TEST_DATABASE_URL -notmatch '/[^/?#]+_test(?:[?]|$)') {
+    throw "Configure ECO_TEST_DATABASE_URL hacia una base PostgreSQL/PostGIS de pruebas terminada en _test. Nunca use producción."
+}
+$env:DATABASE_URL = $env:ECO_TEST_DATABASE_URL
+
 $revision = (& git -C $raiz rev-parse HEAD).Trim()
 if ($LASTEXITCODE -ne 0) { throw "No se pudo identificar el commit Git." }
 $modificaciones = & git -C $raiz status --porcelain
@@ -29,7 +36,9 @@ Write-Host "Analizando commit $revision"
 
 Push-Location (Join-Path $raiz "backend")
 try {
-    & $python -m pytest --cov=app --cov-report=xml:coverage.xml
+    & $python -m alembic upgrade head
+    if ($LASTEXITCODE -ne 0) { throw "No se pudieron aplicar migraciones en la base de pruebas." }
+    & $python -m pytest --cov=app --cov-branch --cov-report=xml:coverage.xml
     if ($LASTEXITCODE -ne 0) { throw "Fallaron las pruebas/cobertura de Python." }
 } finally { Pop-Location }
 

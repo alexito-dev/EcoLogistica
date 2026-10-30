@@ -73,6 +73,8 @@ La instancia usada en el informe anterior está configurada en **`http://localho
 
 **Importante:** la medición de cobertura requiere los reportes `backend/coverage.xml` y `frontend/coverage/lcov.info` generados **antes** del scanner. SonarQube los importa, no ejecuta automáticamente las pruebas. Las pruebas PostGIS que viven en otro job de CI no se incluyen por arte de magia en la cobertura local; si queremos medirlas, debemos ejecutarlas contra una base de pruebas y unir sus resultados en el mismo reporte de cobertura, sin contaminar datos productivos.
 
+**Actualización del procedimiento de cobertura (ECO-30):** para que el escaneo local reproduzca la configuración de GitHub Actions, también configuramos `ECO_TEST_DATABASE_URL` hacia una base PostgreSQL/PostGIS **aislada y terminada en `_test`**. El script rechaza bases sin ese sufijo, aplica migraciones y ejecuta pytest con `--cov-branch` antes de importar XML/LCOV. No utilizamos una base productiva. Si falta esa base de pruebas, el script falla sin afirmar que se ejecutó un análisis completo.
+
 ### Procedimiento mínimo en Windows
 
 ```powershell
