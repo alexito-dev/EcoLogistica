@@ -68,3 +68,27 @@ def test_solo_planificacion_y_administracion_guardan_y_abren(cliente_con_rol):
 def test_fecha_invalida_responde_400(cliente_con_rol):
     cliente = cliente_con_rol(Rol.PLANIFICADOR)
     assert cliente.post(GUARDAR, params={"fecha": "no-es-fecha"}).status_code == 400
+
+
+def test_error_al_reemplazar_conserva_ruta_anterior_y_limpia_temporal(tmp_path, monkeypatch):
+    """No perdemos el estado válido ante un fallo del disco durante el guardado."""
+    from datetime import date
+    import pytest
+    from app.rutas import guardadas
+
+    ruta = tmp_path / "rutas.json"
+    almacen = RutasGuardadasArchivo(ruta)
+    fecha = date(2026, 10, 30)
+    almacen.guardar(fecha, {"estado": "original"})
+    antes = ruta.read_bytes()
+
+    def reemplazo_fallido(_temporal, _final):
+        raise OSError("fallo de disco simulado")
+
+    monkeypatch.setattr(guardadas.os, "replace", reemplazo_fallido)
+    with pytest.raises(OSError, match="fallo de disco simulado"):
+        almacen.guardar(fecha, {"estado": "nuevo"})
+
+    assert ruta.read_bytes() == antes
+    assert RutasGuardadasArchivo(ruta).obtener(fecha) == {"estado": "original"}
+    assert list(tmp_path.glob("*.tmp")) == []
