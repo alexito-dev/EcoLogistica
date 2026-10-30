@@ -6,6 +6,16 @@
 
 **Líder del Proyecto:** Alex Jesus Zorrilla Apumayta
 
+
+## Nota posterior de cierre en Jira — 30/10/2026
+
+Como equipo, **cerramos el Sprint 3 oficial (id 38)** en Jira el **30/10/2026 a las 15:09:55, hora de Lima**, con cuatro de cuatro elementos del alcance regularizado en Listo: [ECO-22](https://continental-team-ecologistica.atlassian.net/browse/ECO-22) (rutas por fecha y guardado), [ECO-23](https://continental-team-ecologistica.atlassian.net/browse/ECO-23) (benchmark), [ECO-17](https://continental-team-ecologistica.atlassian.net/browse/ECO-17) (CI/OpenAPI) y [ECO-25](https://continental-team-ecologistica.atlassian.net/browse/ECO-25) (indicadores **estimados**). El PR #5 se fusionó a `main` en el commit `8ac95644`.
+
+El resultado de **5/5 criterios de demostración** y **10/10 pasos E2E manuales** que aparece en esta revisión se refiere al incremento técnico documentado, no a un ensayo de entrega real ni a que todos los controles WCAG estén completos. La auditoría WCAG conserva **88,9 %**, todavía por debajo de la meta interna ≥90 %. No se ha demostrado Playwright, CD, visor del conductor ni KPI de entregas ejecutadas. Esos requisitos se conservan como trabajo posterior en ECO-24, ECO-27, ECO-13, ECO-14 y ECO-26. Tampoco se ha migrado la persistencia de rutas/usuarios a PostgreSQL (ECO-21).
+
+La fecha administrativa de cierre no representa un Sprint 3 históricamente iniciado el 09/10: Jira se creó e inició el 30/10, después del trabajo ya documentado, y se cerró el mismo día con autorización. No reconstruimos puntos ni actas antiguas. [Acta consolidada de Sprints 1–3](../20261030%20Acta%20consolidada%20de%20cierre%20Sprints%2001-03.md).
+
+---
 ## Adenda de conciliación Jira–GitHub (30/10/2026)
 
 La evidencia de demostración descrita en esta revisión corresponde al corte **técnico**, no a un cierre de Jira. Como equipo, fusionamos las correcciones del [PR #3](https://github.com/alexito-dev/EcoLogistica/pull/3) a `main`; el [CI del commit `3375602`](https://github.com/alexito-dev/EcoLogistica/actions/runs/41117477415) aprobó backend, frontend, OpenSpec y pruebas de integración con PostgreSQL/PostGIS aislado.
