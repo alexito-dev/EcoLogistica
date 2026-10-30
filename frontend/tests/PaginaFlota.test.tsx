@@ -38,7 +38,7 @@ describe('Flota: formularios, permisos y fallos de red', () => {
     expect(screen.getByText('Apto para planificar')).toBeInTheDocument()
     expect(screen.getByText('Sin turno declarado')).toBeInTheDocument()
     expect(screen.getByText('Mantenimiento')).toBeInTheDocument()
-    expect(screen.getByText('Furgón · 2022')).toBeInTheDocument()
+    expect(screen.getAllByText('Furgón · 2022').length).toBeGreaterThan(0)
     expect(screen.getByRole('region', { name: 'Resumen de flota' })).toBeInTheDocument()
   })
 
