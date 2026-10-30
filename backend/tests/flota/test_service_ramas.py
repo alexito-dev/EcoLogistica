@@ -146,3 +146,30 @@ def test_health_verifica_ambas_tablas_obligatorias(monkeypatch, tablas, correcto
     else:
         with pytest.raises(RuntimeError, match="migraciones"):
             database_health.verificar_base_de_datos()
+
+
+def test_conexion_postgres_exige_configuracion_y_usa_pool_seguro(monkeypatch):
+    """El adaptador no conecta sin URL y conserva la configuración de pool."""
+    from app import database
+
+    database.get_engine.cache_clear()
+    try:
+        monkeypatch.setattr(database, "get_settings", lambda: SimpleNamespace(database_url=None))
+        with pytest.raises(RuntimeError, match="DATABASE_URL"):
+            database.get_engine()
+
+        esperado = object()
+        llamadas = []
+        def falso_engine(url, **opciones):
+            llamadas.append((url, opciones))
+            return esperado
+
+        monkeypatch.setattr(database, "get_settings", lambda: SimpleNamespace(database_url="postgresql+psycopg://test@localhost/eco_test"))
+        monkeypatch.setattr(database, "create_engine", falso_engine)
+        assert database.get_engine() is esperado
+        assert llamadas == [(
+            "postgresql+psycopg://test@localhost/eco_test",
+            {"pool_pre_ping": True, "pool_size": 5, "max_overflow": 5},
+        )]
+    finally:
+        database.get_engine.cache_clear()
