@@ -196,3 +196,52 @@ def test_persistencia_en_archivo(repo_usuarios, servicio, reloj, tmp_path):
     _acceder(servicio, reloj)
     recargado = UsuariosArchivoRepository(tmp_path / "usuarios.json")
     assert recargado.obtener_por_correo(CORREO).mfa_secreto
+
+
+def test_fallo_escritura_no_deja_archivo_temporal(tmp_path, monkeypatch):
+    """Ante un fallo del reemplazo, conservamos el archivo anterior y limpiamos el temporal."""
+    from app.auth.archivo_repository import UsuariosArchivoRepository
+    from app.auth import archivo_repository
+
+    ruta = tmp_path / "usuarios.json"
+    repositorio = UsuariosArchivoRepository(ruta)
+    sembrar_usuarios_demo(repositorio, CLAVE_DEMO)
+    antes = ruta.read_bytes()
+
+    def reemplazo_fallido(_origen, _destino):
+        raise OSError("fallo simulado de disco")
+
+    monkeypatch.setattr(archivo_repository.os, "replace", reemplazo_fallido)
+    with pytest.raises(OSError, match="fallo simulado"):
+        repositorio._persistir()
+
+    assert ruta.read_bytes() == antes
+    assert not list(tmp_path.glob("*.tmp"))
+
+
+def test_error_de_disco_revierte_usuario_e_intentos_en_memoria(tmp_path, monkeypatch):
+    """El repositorio no anuncia cambios que no pudo persistir."""
+    from app.auth.archivo_repository import UsuariosArchivoRepository
+    from app.auth import archivo_repository
+    from app.auth.domain import RegistroIntentos
+
+    repositorio = UsuariosArchivoRepository(tmp_path / "usuarios.json")
+    sembrar_usuarios_demo(repositorio, CLAVE_DEMO)
+    usuario = repositorio.obtener_por_correo(CORREO)
+    anterior = usuario.id
+    antes_disco = (tmp_path / "usuarios.json").read_bytes()
+
+    def fallar(_origen, _destino):
+        raise OSError("reemplazo rechazado")
+
+    monkeypatch.setattr(archivo_repository.os, "replace", fallar)
+    with pytest.raises(OSError):
+        repositorio.guardar_intentos(CORREO, RegistroIntentos())
+    assert CORREO not in repositorio._intentos
+
+    nuevo = type(usuario)(**{**vars(usuario), "id": "nuevo-usuario-id"})
+    with pytest.raises(OSError):
+        repositorio.guardar(nuevo)
+    assert repositorio.obtener("nuevo-usuario-id") is None
+    assert repositorio.obtener(anterior) is not None
+    assert (tmp_path / "usuarios.json").read_bytes() == antes_disco
