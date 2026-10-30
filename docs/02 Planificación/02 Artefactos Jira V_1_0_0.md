@@ -2,6 +2,26 @@
 
 [← Volver al README Principal](../../README.md)
 
+## Conciliación final de alcance del Sprint 3 — 30/10/2026
+
+Como equipo, completamos la conciliación del **incremento efectivamente implementado** a la fecha de corte y separamos las obligaciones de producto que requieren funcionalidades posteriores. Esta delimitación no convierte resultados sintéticos en resultados observados ni modifica los datos históricos de Jira.
+
+| Trabajo | Alcance que sí corresponde al Sprint 3 | Estado de cierre técnico | Obligación posterior |
+|---|---|---|---|
+| [ECO-22](https://continental-team-ecologistica.atlassian.net/browse/ECO-22) | Generar propuesta por fecha, mostrar paradas/vehículos/carga, guardar en JSON y recuperar después de reiniciar | Implementado y probado; aceptar selección automática por fecha | Selección manual opcional de subconjuntos y persistencia transaccional: evaluar siguiente versión y ECO-21 |
+| [ECO-23](https://continental-team-ecologistica.atlassian.net/browse/ECO-23) | Benchmark sintético ≤45 s con salida de error al incumplir, incluido en CI | Implementado y automatizado | Ensayos con volúmenes/datos reales cuando existan |
+| [ECO-17](https://continental-team-ecologistica.atlassian.net/browse/ECO-17) | CI de pruebas, migraciones e integración PostGIS; OpenSpec; contrato OpenAPI y verificación de acceso | Implementado, sujeto a ejecución final de CI | [ECO-27](https://continental-team-ecologistica.atlassian.net/browse/ECO-27): Playwright, CD y controles de ramas |
+| [ECO-25](https://continental-team-ecologistica.atlassian.net/browse/ECO-25) | Dashboard de planificación **estimada**, roles y estado sin datos | Implementado, sujeto a ejecución final de CI | [ECO-14](https://continental-team-ecologistica.atlassian.net/browse/ECO-14) y [ECO-26](https://continental-team-ecologistica.atlassian.net/browse/ECO-26): indicadores reales de entregas |
+| [ECO-24](https://continental-team-ecologistica.atlassian.net/browse/ECO-24) | Auditoría WCAG y seis correcciones del Sprint 3, conservadas como trabajo concluido en los documentos técnicos | El informe registra **88,9 % (40/45)**, menor a la meta interna ≥90 % | La **verificación restante** permanece fuera del Sprint 3, abierta y sin acreditación de conformidad |
+| [ECO-13](https://continental-team-ecologistica.atlassian.net/browse/ECO-13) | Mapa de rutas para Planificación adelantado durante Sprint 3 | Implementado dentro del recorrido de ECO-22 | La historia original pide visor del rol Conductor, que sigue pendiente |
+| [ECO-21](https://continental-team-ecologistica.atlassian.net/browse/ECO-21) | Persistencia de rutas por fecha **en archivo local** | Mitigación válida para demo, **no** base de datos de rutas/cuentas | PostgreSQL para cuentas/rutas y cifrado TOTP en reposo |
+
+**Regla de aceptación del cierre:** solo las tarjetas pertenecientes al incremento funcional verificable se mantienen dentro de Sprint 3. Las tareas que exigen hechos aún no implementados se conservan en el backlog con requisitos y dueños identificables, sin adjudicarles puntos históricos ni estados Listo. El cierre administrativo del Sprint 3 se registrará en Jira una vez aprobado el CI de su versión integrada.
+
+**Nota de cronología:** el incremento se documentó entre 09/10 y 30/10; Sprint 3 (id 38) se creó e inició **administrativamente el 30/10**, no se simula una ejecución retrospectiva ni una velocity de tres semanas en ese sprint.
+
+---
+
 ## Actualización de gestión verificada — 30/10/2026
 
 > **Esta sección es el estado de Jira posterior al corte histórico del 09/10.** Conservamos los números y las fechas de los registros anteriores; no modificamos retrospectivamente el cumplimiento del Sprint 1 ni simulamos un Sprint Planning que no consta.
