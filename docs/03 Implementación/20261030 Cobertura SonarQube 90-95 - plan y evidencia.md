@@ -16,6 +16,22 @@ C_{CI}=100\,\frac{L_{cubiertas}+R_{cubiertas}}{L_{totales}+R_{totales}}
 Este indicador explicita tanto la cobertura de líneas como la de ramas. Puede diferir del cálculo oficial de SonarQube según cómo se instrumenten y clasifiquen condiciones, por lo que no sustituimos uno por el otro.
 
 
+## Tercera medición: objetivo ampliado ≥95 % alcanzado en CI
+
+Como equipo, verificamos que [GitHub Actions #41125601203](https://github.com/alexito-dev/EcoLogistica/actions/runs/41125601203), en la rama de calidad (`b19ebf3b`, SHA de prueba del PR `f611b398`), finalizó **correctamente sus cinco jobs**, incluida la ejecución de la puerta obligatoria `--min 90`. La medición se calculó sobre la misma versión de ambos ecosistemas, PostGIS de prueba incluido:
+
+| Área | Líneas | Ramas | Cobertura combinada |
+|---|---:|---:|---:|
+| Backend Python | 1682/1719 = **97,85 %** | 214/240 = **89,17 %** | **96,78 %** |
+| Frontend TypeScript | 672/700 = **96,00 %** | 542/610 = **88,85 %** | **92,67 %** |
+| **Total combinado** | **2354/2419 = 97,31 %** | **756/850 = 88,94 %** | **95,14 %** |
+
+**Evolución auditada:** 84,74 % → 91,56 % → 92,90 % → 94,95 % → **95,14 % combinado**. La última mejora añadió pruebas de configuración segura del pool SQLAlchemy y ramas de fallo ante ausencia de `DATABASE_URL`; no redujimos los denominadores de cobertura para aparentar avance. La puerta vigente exige **≥90 %**, y el **objetivo ampliado del 95 % quedó alcanzado** en este indicador de CI.
+
+La certificación mediante **SonarQube sigue pendiente**: el servidor del proyecto es local y no accesible por la conexión actual. No modificamos la métrica histórica SonarQube de 82,8 % ni atribuimos un nuevo Quality Gate a estas cifras. Para el resultado oficial debemos analizar el mismo commit de `main` cuando el PR se fusione, con `scripts/analizar-sonarqube.ps1`, importar ambas coberturas y registrar el valor reportado por SonarQube en el documento de ejecución.
+
+---
+
 ## Segunda medición verificable: después de ampliar pruebas Python y Vitest
 
 En la [ejecución de CI #41124453799](https://github.com/alexito-dev/EcoLogistica/actions/runs/41124453799), correspondiente a la rama `quality/coverage-90-sonarqube-20261030` en el commit `a11c0af9` (el contexto de prueba de PR identificó `722ad649`), **los cinco jobs terminaron correctamente**. Los datos medidos desde los XML y LCOV fueron:
