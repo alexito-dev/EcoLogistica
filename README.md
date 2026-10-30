@@ -5,7 +5,8 @@
 # EcoLogística Huancayo
 ### Plataforma de Optimización de Rutas Sostenibles de Última Milla
 
-[![Estado](https://img.shields.io/badge/Estado-Implementaci%C3%B3n%20%C2%B7%20Sprint%202-2ea44f?style=flat-square)](docs/03%20Implementaci%C3%B3n)
+[![Estado](https://img.shields.io/badge/Estado-Implementaci%C3%B3n%20%C2%B7%20Sprint%203-2ea44f?style=flat-square)](docs/03%20Implementaci%C3%B3n/Sprint%2003)
+[![Quality Gate](https://img.shields.io/badge/SonarQube-Quality%20Gate%20PASSED-4c9a2a?style=flat-square)](docs/03%20Implementaci%C3%B3n/Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)
 [![Versión](https://img.shields.io/badge/Versión-En%20desarrollo-blue?style=flat-square)](README.md)
 [![Stack](https://img.shields.io/badge/Stack-React%20%2B%20FastAPI-025B29?style=flat-square)](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md)
 [![Metodología](https://img.shields.io/badge/Metodología-Scrum%20%2B%20ramas%20cortas-6f42c1?style=flat-square)](docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20V_1_0_0.md)
@@ -61,10 +62,12 @@ El sistema permite entrar con TOTP y roles, registrar pedidos, volver a encontra
 |---|---|---|
 | Sprint 1 · 14/09–28/09; cierre registrado 09/10 | Línea base vigente: acceso MFA/roles y pedidos con persistencia. | El recorrido está implementado y comprobado, incluida la persistencia tras reiniciar la API. El compromiso original conserva su resultado de 0/2 al 28/09; la lectura dinámica actual de Jira es 1/2 (ECO-9 `Listo`, ECO-15 `Por hacer`) y no se cuenta como velocidad histórica. ECO-15 conserva su asociación al Sprint 1 cerrado y sigue pendiente. |
 | Sprint 2 · 29/09–12/10, alcance reordenado | Administración mantiene vehículos; Planificación configura disponibilidad y turnos por fecha. | El E2E web aprobó los cinco criterios funcionales y Jira refleja ECO-12 y ECO-19 en `Listo` (2/2, 10 puntos). Pasaron 107 pruebas de backend, 39 de frontend y la compilación de producción. El usuario confirmó el 09/10 la aprobación del incremento. El sprint permanece activo hasta su cierre administrativo. |
-| Sprint 3 · siguiente alcance | Planificación genera, guarda y vuelve a consultar rutas para pedidos pendientes usando vehículos elegibles. | Pendiente: persistencia de rutas/paradas, generación factible y verificación del recorrido. Fechas y estimación se acuerdan en Jira. |
+| Sprint 3 · en revisión (Inspección 03) | Planificación genera, guarda y vuelve a consultar rutas para pedidos pendientes usando vehículos elegibles. | Al 30/10: vista previa de rutas en mapa (Leaflet/OSM + OSRM), indicadores de CO₂e y CI en GitHub Actions. Cumplen 3 de 5 criterios; faltan persistir la ruta (EN-005) y medir el tiempo de generación (EN-001). Calidad, seguridad y accesibilidad evaluadas con SonarQube, OWASP Top 10:2025 y WCAG 2.2 AA. Ver [Sprint 03](#93-fase-03-implementación). |
 | Sprint 4 · propósito conservado | Conducción consulta una ruta, registra avances e incidencias; Planificación puede revisarlos. | Se mantiene como alcance posterior; se precisa en el plan funcional de sprints. |
 
 Jira ya refleja la rebase funcional: ECO-12 y ECO-19 están en `Listo` dentro del Sprint 2; ECO-16 y ECO-20 constan completadas fuera del Sprint 1 cerrado, sin alterar la velocidad histórica. ECO-15 sigue `Por hacer` y conserva su asociación al Sprint 1 cerrado como compromiso pendiente de replanificar. ECO-21 se limita a persistencia de cuentas y rutas y protección de secretos TOTP. La configuración actual de `ECO board` tiene cuatro columnas en español (`Por hacer`, `En curso`, `En revisión / QA`, `Listo`) con categorías alineadas; el estado duplicado `Finalizada` se retiró y no hay incidencias en ese estado. Jira aún no tiene una versión de entrega. El detalle está en [02. Artefactos Jira](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md).
+
+**Corte del Sprint 3 (30/10/2026).** La rama `sprint-3/calidad-owasp-wcag` integra `feature/rutas-indicadores` y pasa **130 pruebas de backend y 52 de frontend** con una cobertura de **81,3 %**. SonarQube da *Quality Gate* **PASSED**, 0 bugs, 0 vulnerabilidades, 0 *hotspots* y 0,0 % de duplicación. En OWASP Top 10:2025 no quedan vulnerabilidades críticas abiertas, y la auditoría WCAG 2.2 AA alcanza **86,7 %** de los criterios aplicables (meta ≥ 90 %). Detalle en los [documentos del Sprint 03](#93-fase-03-implementación).
 
 La línea base funcional acordada para Sprint 1–4 está en [05. Plan funcional de sprints](docs/02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md), con criterios para flota y rutas y con los cortes históricos preservados.
 
@@ -149,18 +152,22 @@ graph TD
 
 ```text
 EcoLogistica/
-├── .github/                       # Plantillas de incidencias y solicitudes de cambio
+├── .github/                       # Plantillas de incidencias/PR y CI (workflows/ci.yml)
 ├── assets/                        # Logotipo y evidencias de Jira
 ├── backend/
 │   ├── src/app/auth/              # Autenticación, MFA, roles y auditoría
 │   ├── src/app/pedidos/           # Dominio, API y repositorios en memoria y PostgreSQL/PostGIS
 │   ├── src/app/flota/             # Catálogo de vehículos y disponibilidad diaria
+│   ├── src/app/rutas/             # Vista previa de rutas (asignación por capacidad, ventanas y CO₂e)
+│   ├── src/app/indicadores/       # Indicadores de operación y sostenibilidad
 │   └── tests/                     # Pruebas de API, servicios y dominio
+├── database/migrations/           # Migraciones Alembic (PostGIS)
 ├── docs/
 │   ├── 01 Inicio/                 # Acta, alcance, requisitos y arquitectura
 │   ├── 02 Planificación/          # Backlog, Jira, riesgos y presupuesto
 │   ├── 03 Implementación/         # Informes, revisión, retrospectiva e impedimentos
-│   │   └── Sprint 2/              # Artefactos del segundo sprint
+│   │   ├── Sprint 2/              # Artefactos del segundo sprint
+│   │   └── Sprint 03/             # Revisión, retrospectiva, SonarQube, OWASP y WCAG
 │   ├── 04 Seguimiento y Control/  # Carpeta reservada; aún sin entregables
 │   ├── 05 Cierre/                 # Carpeta reservada; aún sin entregables
 │   └── otros/                     # Reservado para soporte técnico
@@ -172,6 +179,7 @@ EcoLogistica/
 │   ├── specs/                     # Especificaciones vigentes
 │   └── changes/archive/           # Cambios implementados y archivados
 ├── .env.example                   # Variables de entorno de ejemplo, sin secretos
+├── sonar-project.properties       # Configuración del análisis de SonarQube
 └── README.md                      # Guía y estado del proyecto
 ```
 
@@ -262,7 +270,20 @@ npm.cmd test
 Pop-Location
 ```
 
-### 8.5. Acceso con verificación en dos pasos (RF-11.1)
+### 8.5. Análisis de calidad con SonarQube
+
+```powershell
+# Cobertura que lee SonarQube
+Push-Location backend;  .\.venv\Scripts\python.exe -m pytest --cov=app --cov-report=xml:coverage.xml; Pop-Location
+Push-Location frontend; npx.cmd vitest run --coverage; Pop-Location
+
+# Con un servidor SonarQube en marcha y un token de análisis en $env:SONAR_TOKEN:
+sonar-scanner -D"sonar.host.url=http://localhost:9000" -D"sonar.token=$env:SONAR_TOKEN"
+```
+
+La configuración está en [`sonar-project.properties`](sonar-project.properties). Resultados y procedimiento completo en [03. Calidad de código](docs/03%20Implementaci%C3%B3n/Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md).
+
+### 8.6. Acceso con verificación en dos pasos (RF-11.1)
 
 Toda la aplicación exige **contraseña + código TOTP** de una app autenticadora (Google Authenticator, Microsoft Authenticator u otra).
 
@@ -282,7 +303,7 @@ Seguridad: contraseñas con Argon2id, sesión en cookie `HttpOnly` y `SameSite=S
 | `GET` | `/api/v1/auth/sesion` | Usuario de la sesión vigente |
 | `POST` | `/api/v1/auth/logout` | Cierra la sesión e invalida los tokens emitidos |
 
-### 8.6. API de pedidos (HU-001)
+### 8.7. API de pedidos (HU-001)
 
 | Método | Ruta | Descripción |
 | :--- | :--- | :--- |
@@ -292,7 +313,7 @@ Seguridad: contraseñas con Argon2id, sesión en cookie `HttpOnly` y `SameSite=S
 
 Requiere sesión (`401`) y rol (`403`). Errores: `400` formato o tipo inválido, `422` regla de negocio (ventana, carga, ámbito), `404` inexistente, `409` código duplicado. Las ventanas horarias se envían en ISO 8601 **con desfase** (por ejemplo `2026-10-05T08:00:00-05:00`). Contrato completo en `/docs`.
 
-### 8.7. Alcance y límites de los incrementos
+### 8.8. Alcance y límites de los incrementos
 
 Implementado con OpenSpec en los cambios `registro-pedidos` (registrar, consultar y listar pedidos) y `autenticacion-mfa` (acceso con verificación en dos pasos y permisos por rol; incluye la auditoría de su especificación en `openspec/changes/archive/2026-10-02-autenticacion-mfa/auditoria-especificacion.md`). Límites conocidos, pendientes de otros cambios:
 
@@ -348,6 +369,14 @@ Entregables del **Sprint 2** (ECO Sprint 2, desde el 29/09/2026; revisión el 09
 - [02. Registro de Impedimentos](docs/03%20Implementaci%C3%B3n/Sprint%202/02%20Registro%20de%20Impedimentos%20V_1_0_0.md)
 - [03. Revisión del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%202/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
 - [04. Retrospectiva del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%202/04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
+
+Entregables del **Sprint 03** (Inspección 03 · semana 11 — SonarQube, WCAG y OWASP; corte del 30/10/2026):
+
+- [01. Revisión del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
+- [02. Retrospectiva del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%2003/02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
+- [03. Calidad de código (SonarQube)](docs/03%20Implementaci%C3%B3n/Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)
+- [04. Seguridad OWASP Top 10:2025](docs/03%20Implementaci%C3%B3n/Sprint%2003/04%20OWASP%20V_1_0_0.md)
+- [05. Accesibilidad WCAG 2.2 AA](docs/03%20Implementaci%C3%B3n/Sprint%2003/05%20WCAG%20V_1_0_0.md)
 
 Auditoría transversal: [05. Auditoría de coherencia al 09/10/2026](docs/03%20Implementaci%C3%B3n/05%20Auditor%C3%ADa%20de%20coherencia%20al%2009-10-2026.md).
 

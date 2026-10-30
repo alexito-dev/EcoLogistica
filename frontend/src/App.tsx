@@ -1,10 +1,10 @@
-import { lazy, Suspense, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { ShieldX } from 'lucide-react'
 import { AuthProvider } from './auth/AuthContext'
 import { useAuth } from './auth/useAuth'
 import LoginPage from './auth/LoginPage'
 import AppShell from './components/AppShell'
-import { vistasDelRol, type Vista } from './lib/navegacion'
+import { NAVEGACION, vistasDelRol, type Vista } from './lib/navegacion'
 import PaginaPedidos from './pages/PaginaPedidos'
 
 // Flota, Rutas (con Leaflet) e Indicadores se descargan solo al abrirlas: carga inicial ligera para 2G/3G (RES-06).
@@ -21,9 +21,25 @@ function CargandoVista() {
   )
 }
 
+/** Título de la pestaña según lo que se ve (WCAG 2.4.2): la app es de una sola página. */
+function tituloDePagina(estado: string, conSesion: boolean, vista: Vista | undefined): string | null {
+  if (estado === 'cargando') return null
+  if (!conSesion) return 'Iniciar sesión'
+  if (!vista) return 'Acceso no autorizado'
+  return NAVEGACION.find((n) => n.vista === vista)?.texto ?? null
+}
+
 function Raiz() {
   const { estado, usuario, salir } = useAuth()
   const [elegida, setVista] = useState<Vista | null>(null)
+
+  // Cada rol abre su primera vista permitida; una vista ajena nunca se muestra (RBAC, documento 08).
+  const permitidas = usuario ? vistasDelRol(usuario.rol) : []
+  const vista = elegida && permitidas.includes(elegida) ? elegida : permitidas[0]
+  const titulo = tituloDePagina(estado, estado !== 'anonimo' && !!usuario, vista)
+  useEffect(() => {
+    if (titulo) document.title = `${titulo} · EcoLogística Huancayo`
+  }, [titulo])
 
   if (estado === 'cargando') {
     return (
@@ -35,10 +51,6 @@ function Raiz() {
   }
 
   if (estado === 'anonimo' || !usuario) return <LoginPage />
-
-  // Cada rol abre su primera vista permitida; una vista ajena nunca se muestra (RBAC, documento 08).
-  const permitidas = vistasDelRol(usuario.rol)
-  const vista = elegida && permitidas.includes(elegida) ? elegida : permitidas[0]
 
   if (!vista) {
     return (

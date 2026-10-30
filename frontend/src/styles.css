@@ -43,6 +43,7 @@
   --texto: #032d2f;
   --texto-suave: #4a5d57;
   --borde: #e2ece5;
+  --borde-campo: #7d8f87; /* ≥ 3:1 sobre superficie (WCAG 1.4.11) */
   --primario: #025b29;
   --primario-texto: #ffffff;
   --primario-hover: #034a22;
@@ -70,6 +71,7 @@
   --texto: #e8f3ec;
   --texto-suave: #a9c4b6;
   --borde: #0e4649;
+  --borde-campo: #5f8a7c;
   --primario: #33a905;
   --primario-texto: #032d2f;
   --primario-hover: #3fbd0b;
@@ -149,14 +151,6 @@ code {
 }
 
 /* ================= Flota ================= */
-.nav__item {
-  width: 100%;
-  border: 0;
-  background: transparent;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-}
 .flota-listado {
   margin: 0 0 24px;
   padding: 22px;
@@ -167,17 +161,17 @@ code {
 .flota-formulario input,
 .flota-formulario select,
 .flota-formulario textarea {
-  width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--borde);
+  width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--borde-campo);
   border-radius: var(--radio-chico); background: var(--superficie-alterna); color: var(--texto); font: inherit;
 }
 .flota-listado > header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
 .flota-listado > header p { margin-top: 5px; color: var(--texto-suave); }
 .flota-tarjetas { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 16px; }
-.flota-vehiculo { padding: 20px; border: 1px solid var(--borde); border-radius: var(--radio); background: var(--superficie); }
+.flota-vehiculo { padding: 20px; border: 1px solid var(--borde); border-radius: var(--radio); background: var(--superficie); transition: border-color 0.2s, transform 0.2s var(--curva); }
 .flota-vehiculo__cabecera { display: flex; align-items: center; justify-content: space-between; }
 .flota-vehiculo__icono { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; color: var(--primario); background: var(--acento-fondo); }
 .estado-vehiculo { padding: 4px 10px; border-radius: 99px; font-size: .82rem; font-weight: 600; background: var(--superficie-alterna); }
-.estado-vehiculo--disponible { color: var(--primario); }
+.estado-vehiculo--disponible { color: var(--acento-texto); }
 .estado-vehiculo--mantenimiento, .estado-vehiculo--inactivo { color: var(--texto-suave); }
 .flota-vehiculo h3 { margin-top: 16px; font-size: 1.2rem; }
 .flota-vehiculo__tipo { color: var(--texto-suave); }
@@ -199,7 +193,6 @@ code {
 .flota-checkbox input { width: 18px; min-height: 18px; }
 .flota-formulario textarea { min-height: 90px; resize: vertical; }
 .formulario__acciones { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
-.flota-vehiculo { transition: border-color 0.2s, transform 0.2s var(--curva); }
 .flota-vehiculo:hover { border-color: var(--texto-suave); }
 @media (max-width: 700px) {
   .flota-listado { padding: 16px; }
@@ -328,6 +321,12 @@ code {
   gap: 4px;
 }
 .nav__item {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -626,7 +625,6 @@ main:focus {
   padding-left: 42px;
   border-radius: 999px;
   background: var(--superficie-alterna);
-  border-color: transparent;
 }
 
 .vacio {
@@ -965,7 +963,7 @@ select {
   font: inherit;
   color: var(--texto);
   background: var(--superficie);
-  border: 1px solid var(--borde);
+  border: 1px solid var(--borde-campo);
   border-radius: var(--radio-chico);
   padding: 11px 14px;
   min-height: 46px;
@@ -1431,7 +1429,7 @@ select[aria-invalid='true'] {
   font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: 0.06em;
-  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 @media (min-width: 640px) {

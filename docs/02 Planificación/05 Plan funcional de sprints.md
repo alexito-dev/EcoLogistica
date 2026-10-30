@@ -7,8 +7,8 @@
 | Campo | Valor |
 |---|---|
 | Proyecto | EcoLogística Huancayo |
-| Versión | 1.13.0 |
-| Fecha | 09/10/2026 |
+| Versión | 1.14.0 |
+| Fecha | 30/10/2026 |
 | Enfoque | Cada sprint debe dejar una tarea real que una persona pueda completar en el sistema. |
 
 ## Para qué sirve este plan
@@ -27,7 +27,7 @@ La distribución funcional vigente queda así: Sprint 1 reúne acceso MFA y role
 |---|---|---|
 | **Sprint 1** · 14/09–28/09; cerrado 09/10 | Que Planificación entre con MFA y roles, registre pedidos, los consulte y conserve los datos tras reiniciar la API. | El incremento funcional está implementado y comprobado. El corte original del 28/09 queda en 0/2 historias: ECO-15 sigue pendiente y el trabajo incorporado por la rebase posterior no se cuenta como velocidad histórica. ECO-9 sigue mostrando su historial de asignación original; ECO-16 y ECO-20 quedaron completadas en el backlog porque Jira no permite añadirlas al sprint cerrado. |
 | **Sprint 2** · 29/09–13/10, alcance reordenado | Que Administración mantenga vehículos y que Planificación configure disponibilidad y turno por fecha para determinar unidades elegibles. | **Criterios E2E de flota aprobados el 09/10/2026** en navegador con MFA, API y PostGIS temporales: alta/edición y unicidad, validaciones, disponibilidad con motivo, exclusión de mantenimiento/inactivos y persistencia tras reiniciar. Jira ya refleja ECO-12 y ECO-19 en `Listo` (2/2 historias, 10 puntos). El usuario confirmó el 09/10 la aprobación del incremento; Jira mantiene el sprint activo hasta su cierre administrativo. |
-| **Sprint 3** · siguiente alcance, fechas por acordar | Que Planificación genere una ruta guardada a partir de pedidos pendientes y vehículos elegibles, y vuelva a consultar el orden de paradas, cargas y ventanas horarias. | Requiere persistir rutas y paradas, aplicar capacidades y turnos de la flota de Sprint 2 y generar una secuencia factible. El optimizador y la medición de rendimiento forman parte del recorrido; no se cuentan como entrega aparte. Alcance, estimación y fechas se acuerdan en Jira. |
+| **Sprint 3** · en revisión (Inspección 03, semana 11) | Que Planificación genere una ruta guardada a partir de pedidos pendientes y vehículos elegibles, y vuelva a consultar el orden de paradas, cargas y ventanas horarias. | **Al 30/10/2026:** vista previa de rutas por fecha con mapa, indicadores y CI implementados; cumplen 3 de 5 criterios (1, 2 y 4). La ruta todavía no se guarda (criterio 3, EN-005) y el tiempo de generación no se midió (criterio 5, EN-001). Detalle en la [Revisión del Sprint 03](../03%20Implementaci%C3%B3n/Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md). Estado en Jira por confirmar. |
 | **Sprint 4** · propósito conservado | Que una persona conductora consulte su ruta, marque el avance de las entregas y reporte incidencias para que Planificación pueda actuar. | Se mantiene el propósito anterior: ejecución de ruta por Conducción y visibilidad de estados/incidencias para Planificación. Mapa y re-enrutamiento se incorporan según el alcance acordado para completar el recorrido. |
 
 ## Qué debe poder hacerse al terminar Sprint 2: gestión de flota
@@ -61,6 +61,8 @@ Para lograrlo, el equipo completa la generación de ruta (HU-004) y persistencia
 3. La ruta queda guardada y sigue apareciendo después de reiniciar la aplicación.
 4. Si no hay una combinación posible, el sistema explica qué pedido, ventana o capacidad impide crearla; no asigna una ruta parcial como si estuviera lista.
 5. La generación se mide contra el objetivo de tiempo del backlog (≤45 segundos) usando el volumen y los casos que el equipo acuerde para EN-001. No se publica un resultado de rendimiento hasta medirlo.
+
+**Resultado al 30/10/2026:** la vista previa de rutas ([especificación](../../openspec/specs/rutas/spec.md)) cumple los criterios 1, 2 y 4: usa solo pedidos planificables y vehículos elegibles, muestra vehículo, orden, carga y llegadas, y explica cada pedido no asignado. No cumple el criterio 3 porque es de solo lectura, y el criterio 5 sigue sin medirse. En el mismo sprint se evaluó el producto con SonarQube ([calidad](../03%20Implementaci%C3%B3n/Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)), OWASP Top 10:2025 ([seguridad](../03%20Implementaci%C3%B3n/Sprint%2003/04%20OWASP%20V_1_0_0.md)) y WCAG 2.2 AA ([accesibilidad](../03%20Implementaci%C3%B3n/Sprint%2003/05%20WCAG%20V_1_0_0.md)). La persistencia de la ruta pasa a ser la primera prioridad del Sprint 4, antes de la ejecución por Conducción.
 
 En la demo se empieza con pedidos reales ingresados durante la revisión o con datos claramente identificados como datos de prueba; no se presentan ejemplos ficticios como operaciones de DistriRápido. Esta propuesta todavía necesita estimación, capacidad y aprobación del equipo antes de convertirse en compromiso de Jira.
 
@@ -134,6 +136,8 @@ La gestión de vehículos y turnos está implementada y sus cinco criterios func
 
 Antes de empezar, el equipo acuerda una meta que empiece con una acción concreta, quién la necesita y cómo se comprobará. Se completa el recorrido principal desde la interfaz y la respuesta del sistema confirma lo ocurrido. Si el flujo depende de una regla o un permiso, se comprueba también ese caso. La información sobrevive lo que la historia prometa: si el objetivo necesita guardar algo, reiniciar la aplicación no debe borrarlo.
 
+Desde el Sprint 3 también forman parte de la definición: el *Quality Gate* de SonarQube en verde, ninguna vulnerabilidad crítica de OWASP Top 10:2025 abierta y ninguna violación A/AA de axe-core en las vistas tocadas, en tema claro y oscuro.
+
 Al cerrar, se muestra el flujo en un entorno reproducible, se enlaza evidencia en Jira, se registran defectos conocidos y se separa claramente lo terminado de lo que queda pendiente. Un servidor encendido, una tabla creada, una prueba aislada o un módulo técnico por sí solo no demuestra que la tarea de la persona ya se pueda hacer.
 
 Esta definición sirve para juzgar el incremento de un sprint. No significa que el PMV completo esté listo para operar: su aceptación todavía debe cubrir, entre otras cosas, despliegue, respaldos, seguridad, disponibilidad, integración y los resultados medibles acordados con el negocio.
@@ -157,3 +161,4 @@ Esta definición sirve para juzgar el incremento de un sprint. No significa que 
 | 1.11.1 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra el E2E navegador de los cinco criterios de aceptación de flota y la persistencia después de reiniciar la API. |
 | 1.12.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se enlaza la especificación principal OpenSpec de flota desde el resultado y alcance de Sprint 2. |
 | 1.13.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la aprobación confirmada del incremento y se mantiene Sprint 2 activo hasta el cierre administrativo. |
+| 1.14.0 | 30/10/2026 | Hilario Talavera, Alexander Daniel | Se registra el resultado del Sprint 3 frente a sus cinco criterios (3/5), se enlazan los documentos del Sprint 03 y se agregan SonarQube, OWASP y WCAG a la definición de sprint útil. |

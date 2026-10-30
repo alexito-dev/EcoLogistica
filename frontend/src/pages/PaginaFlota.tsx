@@ -148,7 +148,7 @@ function FormularioVehiculo({ inicial, onGuardar, onCancelar }: { inicial: Vehic
     <div className="flota-campos-dobles"><label>Consumo por 100 km *<input required type="number" min="0.0001" step="0.0001" value={datos.consumoBasePor100km || ''} onChange={(e) => editar('consumoBasePor100km', Number(e.target.value))} /></label><label>Año<input type="number" min="1990" max="2100" value={datos.anio ?? ''} onChange={(e) => editar('anio', e.target.value ? Number(e.target.value) : null)} /></label></div>
     <label>Factor de emisión (opcional)<input type="number" min="0.000001" step="0.000001" value={datos.factorEmisionKgco2eUnidad ?? ''} onChange={(e) => editar('factorEmisionKgco2eUnidad', e.target.value ? Number(e.target.value) : null)} /></label>
     <label>Estado<select value={datos.estado} onChange={(e) => editar('estado', e.target.value as EstadoVehiculo)}><option value="DISPONIBLE">Disponible</option><option value="MANTENIMIENTO">Mantenimiento</option><option value="INACTIVO">Inactivo</option></select></label>
-    <div className="formulario__acciones"><button type="button" className="boton boton--secundario" onClick={onCancelar}>Cancelar</button><button className="boton boton--primario">{inicial ? 'Guardar cambios' : 'Registrar vehículo'}</button></div>
+    <div className="formulario__acciones"><button type="button" className="boton boton--secundario" onClick={onCancelar}>Cancelar</button><button type="submit" className="boton boton--primario">{inicial ? 'Guardar cambios' : 'Registrar vehículo'}</button></div>
   </form>
 }
 
@@ -165,6 +165,6 @@ function FormularioDisponibilidad({ fechaInicial, inicial, onGuardar, onCancelar
     <label className="flota-checkbox"><input type="checkbox" checked={disponible} onChange={(e) => setDisponible(e.target.checked)} /> Disponible para planificar</label>
     {!disponible && <label>Motivo o restricción *<textarea required maxLength={500} value={restriccion} onChange={(e) => setRestriccion(e.target.value)} /></label>}
     <p className="flota-ayuda">El sistema conserva la nota ingresada; no valida reglas de circulación externas.</p>
-    <div className="formulario__acciones"><button type="button" className="boton boton--secundario" onClick={onCancelar}>Cancelar</button><button className="boton boton--primario">Guardar disponibilidad</button></div>
+    <div className="formulario__acciones"><button type="button" className="boton boton--secundario" onClick={onCancelar}>Cancelar</button><button type="submit" className="boton boton--primario">Guardar disponibilidad</button></div>
   </form>
 }

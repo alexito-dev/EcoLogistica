@@ -132,7 +132,7 @@ export default function LoginPage() {
         </div>
       </section>
 
-      <section className="acceso__panel">
+      <main className="acceso__panel">
         <div className="acceso__tema">
           <ThemeToggle />
         </div>
@@ -247,7 +247,7 @@ export default function LoginPage() {
           )}
         </div>
         <p className="acceso__pie">Taller de Proyectos 2 · Ingeniería de Sistemas e Informática · 2026</p>
-      </section>
+      </main>
     </div>
   )
 }

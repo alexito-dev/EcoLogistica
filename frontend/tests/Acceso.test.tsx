@@ -25,6 +25,14 @@ describe('Acceso con MFA', () => {
     render(<App />)
     expect(await screen.findByRole('heading', { name: 'Iniciar sesión' })).toBeInTheDocument()
     expect(screen.getByLabelText('Contraseña')).toHaveAttribute('type', 'password')
+    await waitFor(() => expect(document.title).toBe('Iniciar sesión · EcoLogística Huancayo'))
+  })
+
+  it('el título de la pestaña nombra la vista abierta (WCAG 2.4.2)', async () => {
+    vi.spyOn(auth, 'obtenerSesion').mockResolvedValue(planificador)
+    render(<App />)
+    await screen.findByRole('heading', { name: 'Pedidos', level: 1 })
+    await waitFor(() => expect(document.title).toBe('Pedidos · EcoLogística Huancayo'))
   })
 
   it('con sesión vigente muestra pedidos con nombre y rol', async () => {

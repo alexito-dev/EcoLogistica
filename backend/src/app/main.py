@@ -22,6 +22,15 @@ from app.indicadores.router import router as indicadores_router
 from app.rutas.router import router as rutas_router
 
 METODOS_QUE_CAMBIAN_ESTADO = {"POST", "PUT", "PATCH", "DELETE"}
+PREFIJO_API = "/api/v1"
+# Cabeceras de endurecimiento (OWASP A02:2025). La CSP estricta solo aplica a la API JSON;
+# /docs carga Swagger UI desde un CDN y quedaría inutilizable con ella.
+CABECERAS_SEGURIDAD = {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "no-referrer",
+}
+CSP_API = "default-src 'none'; frame-ancestors 'none'"
 
 
 def configurar_registro() -> None:
@@ -69,6 +78,14 @@ def create_app() -> FastAPI:
             return JSONResponse(status_code=403, content={"status": 403, "message": "Origen no permitido"})
         return await call_next(request)
 
+    @app.middleware("http")
+    async def cabeceras_de_seguridad(request: Request, call_next):
+        respuesta = await call_next(request)
+        respuesta.headers.update(CABECERAS_SEGURIDAD)
+        if request.url.path.startswith(PREFIJO_API):
+            respuesta.headers["Content-Security-Policy"] = CSP_API
+        return respuesta
+
     app.add_middleware(
         CORSMiddleware,
         allow_origins=[settings.cors_origin],
@@ -77,11 +94,8 @@ def create_app() -> FastAPI:
         allow_headers=["Content-Type"],
     )
     registrar_manejadores(app)
-    app.include_router(auth_router, prefix="/api/v1")
-    app.include_router(pedidos_router, prefix="/api/v1")
-    app.include_router(flota_router, prefix="/api/v1")
-    app.include_router(rutas_router, prefix="/api/v1")
-    app.include_router(indicadores_router, prefix="/api/v1")
+    for router in (auth_router, pedidos_router, flota_router, rutas_router, indicadores_router):
+        app.include_router(router, prefix=PREFIJO_API)
     return app
 
 

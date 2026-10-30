@@ -113,7 +113,7 @@ def _vecino_mas_cercano(deposito: Punto, pedidos: list[Pedido]) -> list[Pedido]:
     actual = deposito
     while pendientes:
         # Desempate por prioridad (mayor primero) y código, para un resultado determinista.
-        siguiente = min(pendientes, key=lambda p: (distancia_km(actual, _punto(p)), -p.prioridad, p.codigo))
+        siguiente = min(pendientes, key=lambda p, desde=actual: (distancia_km(desde, _punto(p)), -p.prioridad, p.codigo))
         pendientes.remove(siguiente)
         orden.append(siguiente)
         actual = _punto(siguiente)
@@ -209,7 +209,7 @@ def planificar(fecha: date, deposito: Punto, pedidos: list[Pedido], vehiculos: l
             continue
         # Pulido final con 2-opt desde la inserción y desde el vecino más cercano.
         inicios = (lote, _vecino_mas_cercano(deposito, lote))
-        orden = min((_dos_opt(o, lambda o, v=vehiculo: costo(v, o)) for o in inicios), key=lambda o: costo(vehiculo, o))
+        orden = min((_dos_opt(o, lambda o, v=vehiculo: costo(v, o)) for o in inicios), key=lambda o, v=vehiculo: costo(v, o))
         paradas, duracion = _programar(deposito, vehiculo, fecha, orden)
         km = longitud_recorrido(deposito, orden)
         propuesta.rutas.append(

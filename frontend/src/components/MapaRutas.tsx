@@ -110,6 +110,8 @@ export default function MapaRutas({ vista, seleccion, onSeleccion }: Props) {
 
     L.marker(deposito, {
       icon: L.divIcon({ className: '', html: '<span class="marcador-deposito" aria-hidden="true"></span>', iconSize: [34, 34], iconAnchor: [17, 17] }),
+      // El marcador es enfocable (role="button"): el título le da nombre accesible (WCAG 4.1.2).
+      title: `Depósito: ${vista.deposito.nombre}`,
       zIndexOffset: 1000,
     })
       .bindPopup(`<strong>${escapar(vista.deposito.nombre)}</strong><br>Punto de salida y regreso`)
