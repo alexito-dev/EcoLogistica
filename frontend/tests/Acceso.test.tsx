@@ -191,3 +191,75 @@ describe('Cliente HTTP', () => {
     await expect(auth.cerrarSesion()).resolves.toBeUndefined()
   })
 })
+
+
+describe('Acceso: recuperación y ramas de autenticación', () => {
+  it('muestra un aviso estable si no se puede consultar la sesión inicial', async () => {
+    vi.spyOn(auth, 'obtenerSesion').mockRejectedValue(new Error('Backend inaccesible'))
+    render(<App />)
+    expect(await screen.findByRole('heading', { name: 'Iniciar sesión' })).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('No se pudo conectar con el servidor')
+  })
+
+  it('permite mostrar y ocultar la contraseña sin modificar su valor', async () => {
+    vi.spyOn(auth, 'obtenerSesion').mockResolvedValue(null)
+    const usuario = userEvent.setup()
+    render(<App />)
+    const campo = await screen.findByLabelText('Contraseña')
+    await usuario.type(campo, 'ClaveSegura2026')
+    await usuario.click(screen.getByRole('button', { name: 'Mostrar contraseña' }))
+    expect(campo).toHaveAttribute('type', 'text')
+    expect(campo).toHaveValue('ClaveSegura2026')
+    await usuario.click(screen.getByRole('button', { name: 'Ocultar contraseña' }))
+    expect(campo).toHaveAttribute('type', 'password')
+  })
+
+  it('no revela fallos internos del backend al iniciar sesión', async () => {
+    vi.spyOn(auth, 'obtenerSesion').mockResolvedValue(null)
+    vi.spyOn(auth, 'iniciarSesion').mockRejectedValue(new TypeError('STACK secreto interno'))
+    const usuario = userEvent.setup()
+    render(<App />)
+    await llenarCredenciales(usuario)
+    expect(await screen.findByRole('alert')).toHaveTextContent('No se pudo iniciar sesión.')
+    expect(screen.queryByText(/STACK secreto interno/)).not.toBeInTheDocument()
+  })
+
+  it('vuelve desde MFA a credenciales sin conservar el código ingresado', async () => {
+    vi.spyOn(auth, 'obtenerSesion').mockResolvedValue(null)
+    vi.spyOn(auth, 'iniciarSesion').mockResolvedValue({ paso: 'MFA', claveMfa: null, otpauthUri: null })
+    const usuario = userEvent.setup()
+    render(<App />)
+    await llenarCredenciales(usuario)
+    await usuario.type(await screen.findByLabelText('Código de verificación'), '123456')
+    await usuario.click(screen.getByRole('button', { name: 'Volver' }))
+    expect(await screen.findByRole('heading', { name: 'Iniciar sesión' })).toBeInTheDocument()
+    expect(screen.queryByLabelText('Código de verificación')).not.toBeInTheDocument()
+  })
+
+  it('maneja correctamente un fallo imprevisto del segundo factor', async () => {
+    vi.spyOn(auth, 'obtenerSesion').mockResolvedValue(null)
+    vi.spyOn(auth, 'iniciarSesion').mockResolvedValue({ paso: 'MFA', claveMfa: null, otpauthUri: null })
+    vi.spyOn(auth, 'verificarCodigo').mockRejectedValue(new TypeError('error de conexión interna'))
+    const usuario = userEvent.setup()
+    render(<App />)
+    await llenarCredenciales(usuario)
+    await usuario.type(await screen.findByLabelText('Código de verificación'), '123456')
+    await usuario.click(screen.getByRole('button', { name: 'Verificar y entrar' }))
+    expect(await screen.findByRole('alert')).toHaveTextContent('No se pudo verificar el código.')
+    expect(screen.getByLabelText('Código de verificación')).toHaveValue('')
+  })
+
+  it('permite enrolar un factor sin URI ni secreto solamente con el código', async () => {
+    vi.spyOn(auth, 'obtenerSesion').mockResolvedValue(null)
+    vi.spyOn(auth, 'iniciarSesion').mockResolvedValue({ paso: 'ENROLAR', claveMfa: null, otpauthUri: null })
+    vi.spyOn(auth, 'verificarCodigo').mockResolvedValue(planificador)
+    const usuario = userEvent.setup()
+    render(<App />)
+    await llenarCredenciales(usuario)
+    expect(await screen.findByRole('heading', { name: /Active la verificación/ })).toBeInTheDocument()
+    expect(screen.queryByAltText(/Código QR/)).not.toBeInTheDocument()
+    await usuario.type(screen.getByLabelText('Código de verificación'), '123456')
+    await usuario.click(screen.getByRole('button', { name: 'Activar y entrar' }))
+    expect(await screen.findByRole('heading', { name: 'Pedidos', level: 1 })).toBeInTheDocument()
+  })
+})
