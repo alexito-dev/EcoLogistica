@@ -3986,3 +3986,124 @@ select[aria-invalid='true'] {
   margin: 0;
   flex: 1 1 260px;
 }
+
+/* ---- Conducción y seguimiento (Sprint 4) ---- */
+.paradas-ejecucion,
+.paradas-seguimiento,
+.incidencias {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+.parada-ejecucion {
+  border: 1px solid var(--borde-campo, #7d8f87);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  display: grid;
+  gap: 0.5rem;
+}
+.parada-ejecucion--entregado {
+  opacity: 0.8;
+}
+.parada-ejecucion--incidencia {
+  border-left-width: 6px;
+}
+.parada-ejecucion__cabecera {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+.parada-ejecucion__orden {
+  flex: none;
+  min-width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  background: var(--verde-oscuro, #032d2f);
+  color: #fff;
+}
+.parada-ejecucion__titulo,
+.parada-ejecucion__detalle,
+.parada-ejecucion__nota {
+  margin: 0;
+}
+.parada-ejecucion__detalle {
+  font-size: 0.875rem;
+}
+.parada-ejecucion__nota {
+  font-style: italic;
+}
+.parada-ejecucion__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.parada-ejecucion__incidencia {
+  display: grid;
+  gap: 0.5rem;
+}
+.parada-ejecucion__incidencia textarea {
+  width: 100%;
+  min-height: 4.5rem;
+  border: 1px solid var(--borde-campo, #7d8f87);
+  border-radius: 8px;
+  padding: 0.5rem;
+  font: inherit;
+}
+.insignia--incidencia {
+  background: #fde8e8;
+  color: #7a1212;
+}
+.insignia--reprogramado {
+  background: #eef2f6;
+  color: #33475b;
+}
+progress {
+  width: 100%;
+  height: 0.75rem;
+  margin: 0.5rem 0 1rem;
+}
+.incidencias li {
+  border-left: 4px solid #b42318;
+  padding-left: 0.75rem;
+}
+.incidencias p {
+  margin: 0.15rem 0;
+}
+.campo {
+  display: grid;
+  gap: 0.25rem;
+  margin-bottom: 0.75rem;
+}
+.campo select {
+  border: 1px solid var(--borde-campo, #7d8f87);
+  border-radius: 8px;
+  padding: 0.5rem;
+  font: inherit;
+}
+
+/* WCAG 2.4.11: el foco nunca queda oculto tras las barras fijas (superior e inferior móvil). */
+html {
+  scroll-padding-top: 5rem;
+  scroll-padding-bottom: 6rem;
+}
+.pie__mapa {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+}
+.pie__enlace {
+  background: none;
+  border: 0;
+  padding: 0.25rem 0;
+  min-height: 24px;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+}

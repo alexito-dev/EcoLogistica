@@ -28,6 +28,8 @@ class Settings(BaseSettings):
     usuarios_archivo: Path = Path(__file__).resolve().parents[2] / ".data" / "usuarios.json"
     rutas_archivo: Path = Path(__file__).resolve().parents[2] / ".data" / "rutas.json"
     database_url: str | None = None
+    # Clave Fernet que cifra los secretos TOTP en PostgreSQL (ECO-21). Obligatoria si hay DATABASE_URL.
+    totp_clave_cifrado: str = ""
 
     # Ámbito geográfico configurable (RF-02.2). Rectángulo de aproximación para
     # desarrollo; debe validarse con el negocio y sustituirse por PostGIS (EN-005).

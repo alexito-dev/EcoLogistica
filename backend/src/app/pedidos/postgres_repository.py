@@ -6,7 +6,7 @@ from uuid import UUID
 from sqlalchemy import Engine, text
 from sqlalchemy.exc import IntegrityError
 
-from app.pedidos.domain import CodigoDuplicadoError, EstadoPedido, Pedido, Ubicacion
+from app.pedidos.domain import CodigoDuplicadoError, EstadoPedido, Pedido, PedidoNoEncontradoError, Ubicacion
 
 _SELECT_PEDIDO = """
 SELECT p.id, p.codigo, p.destinatario_alias, p.demanda_kg, p.demanda_m3,
@@ -80,6 +80,17 @@ class PedidosPostgresRepository:
             if self.obtener_por_codigo(pedido.codigo) is not None:
                 raise CodigoDuplicadoError(pedido.codigo) from error
             raise
+
+    def actualizar_estado(self, pedido_id: UUID, estado: EstadoPedido) -> None:
+        with self._engine.begin() as connection:
+            actualizadas = connection.execute(
+                text(
+                    "UPDATE pedidos SET estado = CAST(:estado AS estado_pedido), actualizado_en = now() WHERE id = :id"
+                ),
+                {"estado": estado.value, "id": pedido_id},
+            ).rowcount
+        if actualizadas == 0:
+            raise PedidoNoEncontradoError(pedido_id)
 
     def obtener(self, pedido_id: UUID) -> Pedido | None:
         with self._engine.connect() as connection:

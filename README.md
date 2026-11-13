@@ -60,6 +60,8 @@ Desarrollar e implementar un PMV web que optimice las rutas de distribución urb
 
 ### 2.4. Estado verificado del proyecto al 09/10/2026
 
+> **Corte histórico.** Las cifras de esta sección (pruebas, límites, linter) corresponden al 09/10/2026 y se conservan como registro; el estado vigente está en los cortes del 30/10 y del 13/11 más abajo.
+
 La línea base tecnológica vigente es **React + Vite + TypeScript** para la interfaz, **FastAPI + Python** para la API y **PostgreSQL/PostGIS** para pedidos, ubicaciones, vehículos y disponibilidades. La línea base funcional se reordenó el 09/10: Sprint 1 reúne el acceso MFA/roles y los pedidos persistentes; Sprint 2, la gestión de flota; Sprint 3, las rutas. La documentación y las metas de Jira se actualizaron para reflejar esa decisión, conservando los cortes históricos. Siguen pendientes la persistencia de usuarios y rutas, Leaflet/OpenStreetMap y el motor de optimización. La matriz y el alcance están en [10. Stack tecnológico](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md).
 
 El sistema permite entrar con TOTP y roles, registrar pedidos, volver a encontrarlos y consultar su detalle. Los pedidos y sus coordenadas se guardan en PostgreSQL/PostGIS y se comprobó que siguen ahí tras reiniciar la API. El 09/10/2026 pasaron **107 pruebas de backend y 39 de frontend**; también terminó la compilación de producción. El incremento de flota se recorrió visualmente con MFA en un PostGIS aislado y continuó disponible tras reiniciar la API. El linter termina con dos avisos de `set-state-in-effect`, uno preexistente en pedidos y otro en la nueva vista de flota. No hay todavía pruebas automatizadas que integren los adaptadores PostgreSQL; la persistencia se comprobó manualmente en bases aisladas. La compilación avisa que faltan los archivos de la fuente Codec Pro. Aún no hay optimización de rutas ni despliegue continuo.
@@ -69,11 +71,13 @@ El sistema permite entrar con TOTP y roles, registrar pedidos, volver a encontra
 | Sprint 1 · 14/09–28/09; cierre registrado 09/10 | Línea base vigente: acceso MFA/roles y pedidos con persistencia. | El recorrido está implementado y comprobado, incluida la persistencia tras reiniciar la API. El compromiso original conserva su resultado de 0/2 al 28/09; la lectura dinámica actual de Jira es 1/2 (ECO-9 `Listo`, ECO-15 `Por hacer`) y no se cuenta como velocidad histórica. ECO-15 conserva su asociación al Sprint 1 cerrado y sigue pendiente. |
 | Sprint 2 · 29/09–12/10, alcance reordenado | Administración mantiene vehículos; Planificación configura disponibilidad y turnos por fecha. | El E2E web aprobó los cinco criterios funcionales y Jira refleja ECO-12 y ECO-19 en `Listo` (2/2, 10 puntos). Pasaron 107 pruebas de backend, 39 de frontend y la compilación de producción. El usuario confirmó el 09/10 la aprobación del incremento. El sprint permanece activo hasta su cierre administrativo. |
 | Sprint 3 · en revisión (Inspección 03) | Planificación genera, guarda y vuelve a consultar rutas para pedidos pendientes usando vehículos elegibles. | Al 30/10: rutas en mapa (Leaflet/OSM + OSRM) que se guardan por fecha y se reabren tras reiniciar, indicadores de CO₂e, benchmark del motor y CI en GitHub Actions. Cumplen los 5 criterios; las rutas se guardan en un archivo local y pasan a PostgreSQL en el Sprint 4 (EN-005). Calidad, seguridad y accesibilidad evaluadas con SonarQube, OWASP Top 10:2025 y WCAG 2.2 AA. Ver [Sprint 03](#93-fase-03-implementación). |
-| Sprint 4 · propósito conservado | Conducción consulta una ruta, registra avances e incidencias; Planificación puede revisarlos. | Se mantiene como alcance posterior; se precisa en el plan funcional de sprints. |
+| Sprint 4 · corte 13/11/2026 | Conducción consulta una ruta, registra avances e incidencias; Planificación puede revisarlos y actuar. | Implementado y verificado con pruebas E2E en navegador real (9/9): «Mi ruta», avance de entregas, incidencias, seguimiento, reprogramación y reoptimización de pendientes. Incluye ECO-21 (cuentas, rutas y avance en PostgreSQL; TOTP cifrado), ECO-24 (WCAG 45/45 por pruebas), ECO-27 (Playwright) y la Inspección 04 (Green IT). Límite: la persistencia en PostgreSQL se verifica en CI, no se ejecutó en la máquina de desarrollo. Ver [Sprint 04](#93-fase-03-implementación). |
 
 Jira ya refleja la rebase funcional: ECO-12 y ECO-19 están en `Listo` dentro del Sprint 2; ECO-16 y ECO-20 constan completadas fuera del Sprint 1 cerrado, sin alterar la velocidad histórica. ECO-15 sigue `Por hacer` y conserva su asociación al Sprint 1 cerrado como compromiso pendiente de replanificar. ECO-21 se limita a persistencia de cuentas y rutas y protección de secretos TOTP. La configuración actual de `ECO board` tiene cuatro columnas en español (`Por hacer`, `En curso`, `En revisión / QA`, `Listo`) con categorías alineadas; el estado duplicado `Finalizada` se retiró y no hay incidencias en ese estado. Jira aún no tiene una versión de entrega. El detalle está en [02. Artefactos Jira](docs/02%20Planificaci%C3%B3n/02%20Artefactos%20Jira%20V_1_0_0.md).
 
 **Corte del Sprint 3 (30/10/2026).** La rama `sprint-3/calidad-owasp-wcag` integra `feature/rutas-indicadores` y pasa **137 pruebas de backend y 58 de frontend** (cobertura de líneas del backend: 92,6 %; SonarQube midió **82,8 %** en su análisis del 30/10 con backend y frontend). SonarQube da *Quality Gate* **PASSED**, 0 bugs, 0 vulnerabilidades, 0 *hotspots* y 0,0 % de duplicación; fiabilidad C por 3 incidencias abiertas (ver [03 Calidad de código](docs/03%20Implementaci%C3%B3n/Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)). En OWASP Top 10:2025 no quedan vulnerabilidades críticas abiertas, y la auditoría WCAG 2.2 AA alcanza **88,9 %** de los criterios aplicables (meta ≥ 90 %). Detalle en los [documentos del Sprint 03](#93-fase-03-implementación).
+
+**Corte del Sprint 4 (13/11/2026).** Pasan **180 pruebas de backend (8 de PostgreSQL omitidas localmente y ejecutadas en CI), 125 de frontend y 9 E2E con Playwright**. La auditoría WCAG 2.2 AA pasa de 88,9 % a **45 de 45 criterios aplicables verificados por prueba** (sin certificación ni pruebas con lectores de pantalla). El cálculo de cobertura y el análisis SonarQube de los cortes anteriores **no se rehicieron** con el código nuevo. Detalle en la [Revisión del Sprint 04](docs/03%20Implementaci%C3%B3n/Sprint%2004/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md).
 
 La línea base funcional acordada para Sprint 1–4 está en [05. Plan funcional de sprints](docs/02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md), con criterios para flota y rutas y con los cortes históricos preservados.
 
@@ -251,7 +255,7 @@ En PowerShell, desde la raíz del repositorio:
 Copy-Item .env.example .env
 ```
 
-El archivo incluye CORS, ámbito geográfico, autenticación y conexión local a PostgreSQL/PostGIS. Antes de levantar la base, reemplaza `REEMPLAZAR_POR_UN_SECRETO_ALEATORIO` por una clave aleatoria en `POSTGRES_PASSWORD` y `DATABASE_URL`. `.env` está ignorado por Git; no subas ese archivo.
+El archivo incluye CORS, ámbito geográfico, autenticación y conexión local a PostgreSQL/PostGIS. Antes de levantar la base, reemplaza `REEMPLAZAR_POR_UN_SECRETO_ALEATORIO` por una clave aleatoria en `POSTGRES_PASSWORD` y `DATABASE_URL`. Genera además `TOTP_CLAVE_CIFRADO` (instrucción en `.env.example`) y guárdala fuera de Git. `.env` está ignorado por Git; no subas ese archivo.
 
 ### 8.3. Despliegue Local
 
@@ -306,6 +310,15 @@ Push-Location backend; .\.venv\Scripts\python.exe scripts\medir_api_verde.py 100
 python scripts\calcular_swdm.py lighthouse-reports\<antes>.report.json lighthouse-reports\<despues>.report.json
 ```
 
+### 8.4.2. Pruebas E2E (Playwright)
+
+```powershell
+Push-Location frontend
+npm.cmd ci
+npx.cmd playwright test        # levanta API (8000) y UI (3000) con datos temporales; usa el Chrome instalado
+Pop-Location
+```
+
 ### 8.5. Análisis de calidad con SonarQube
 
 ```powershell
@@ -326,7 +339,7 @@ Toda la aplicación exige **contraseña + código TOTP** de una app autenticador
 1. En un entorno local nuevo, al iniciar el backend se crean **cinco usuarios de demostración**, uno por rol: `admin@ecologistica.test`, `planificador@ecologistica.test`, `conductor@ecologistica.test`, `gerente@ecologistica.test` y `auditor@ecologistica.test`. Para recorrer el Sprint 2, usa `planificador@ecologistica.test`.
 2. Antes de ese primer inicio, puedes definir `DEMO_CLAVE` en `.env` con una contraseña local. Si la dejas vacía, el backend genera una aleatoria y **la muestra una sola vez en su consola**. Esa configuración solo se usa al crear las cuentas por primera vez; cambiarla después no reemplaza las contraseñas guardadas.
 3. En el primer ingreso de cada usuario, la app muestra un **código QR** (y la clave para ingreso manual): escanéelo con la app autenticadora y escriba el código de 6 dígitos.
-4. Permisos actuales (matriz RBAC del documento 08): **Planificador** registra y consulta pedidos; **Administrador** solo consulta; los demás roles ven "Acceso no autorizado" hasta que existan sus vistas.
+4. Permisos actuales (matriz RBAC del documento 08): **Planificador** registra y consulta pedidos, gestiona rutas, asigna conductores y atiende incidencias; **Administrador** consulta y supervisa; **Conductor** consulta su ruta asignada y registra el avance de sus entregas («Mi ruta»); **Gerente** ve Indicadores; **Auditor** ve "Acceso no autorizado" hasta que existan sus vistas.
 
 Estas cuentas locales **no están conectadas al correo institucional**. El archivo `backend/.data/usuarios.json` conserva hashes de contraseña y secretos TOTP, no las contraseñas originales. Si se pierde una contraseña, no se puede recuperar desde ese archivo y actualmente el proyecto no ofrece una recuperación desde la interfaz. No borres `backend/.data/` para intentar obtenerla: esa carpeta guarda las cuentas y su configuración de acceso. El ingreso también requiere el código de una app autenticadora.
 
@@ -353,7 +366,7 @@ Requiere sesión (`401`) y rol (`403`). Errores: `400` formato o tipo inválido,
 
 Implementado con OpenSpec en los cambios `registro-pedidos` (registrar, consultar y listar pedidos) y `autenticacion-mfa` (acceso con verificación en dos pasos y permisos por rol; incluye la auditoría de su especificación en `openspec/changes/archive/2026-10-02-autenticacion-mfa/auditoria-especificacion.md`). Límites conocidos, pendientes de otros cambios:
 
-- Pedidos y ubicaciones se guardan en PostgreSQL/PostGIS. Las cuentas de demostración siguen en `backend/.data/` y los secretos TOTP aún no se cifran en reposo; tampoco hay recuperación del segundo factor ni consulta de auditoría desde la interfaz. Esa parte de EN-005 sigue pendiente.
+- Con `DATABASE_URL` definida, pedidos, flota, cuentas, rutas guardadas y el avance de las entregas se guardan en PostgreSQL/PostGIS y los secretos TOTP se cifran en reposo con `TOTP_CLAVE_CIFRADO` (obligatoria con base de datos). Sin `DATABASE_URL` se usan archivos locales en `backend/.data/` y memoria, solo para desarrollo y pruebas. Siguen pendientes la recuperación del segundo factor y la consulta de auditoría desde la interfaz.
 - El ámbito geográfico es un rectángulo de aproximación configurable en `.env` (`AMBITO_*`), por validar con el negocio.
 - La fuente **Codec Pro** es comercial: ver `frontend/public/fonts/LEEME.md`; sin ella se usa la fuente del sistema.
 
@@ -405,6 +418,14 @@ Entregables del **Sprint 2** (ECO Sprint 2, desde el 29/09/2026; revisión el 09
 - [02. Registro de Impedimentos](docs/03%20Implementaci%C3%B3n/Sprint%2002/02%20Registro%20de%20Impedimentos%20V_1_0_0.md)
 - [03. Revisión del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%2002/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
 - [04. Retrospectiva del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%2002/04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
+
+Entregables del **Sprint 04** (corte del 13/11/2026 — Conducción, deuda de los Sprints 1–3, WCAG, E2E y usabilidad):
+
+- [01. Revisión del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%2004/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
+- [02. Accesibilidad WCAG 2.2](docs/03%20Implementaci%C3%B3n/Sprint%2004/02%20Accesibilidad%20WCAG%202.2%20V_1_0_0.md)
+- [03. Pruebas E2E y calidad](docs/03%20Implementaci%C3%B3n/Sprint%2004/03%20Pruebas%20E2E%20y%20calidad%20V_1_0_0.md)
+- [04. Usabilidad (SUS y Nielsen)](docs/03%20Implementaci%C3%B3n/Sprint%2004/04%20Usabilidad%20SUS%20y%20Nielsen%20V_1_0_0.md)
+- Especificación [conduccion](openspec/specs/conduccion/spec.md)
 
 Entregables de la **Inspección 04** (Semana 13 — reducción del impacto ambiental, Green IT; 13/11/2026):
 

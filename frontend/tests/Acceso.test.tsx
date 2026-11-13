@@ -147,7 +147,7 @@ describe('Acceso con MFA', () => {
   })
 
   it('un rol sin permiso ve el aviso de acceso no autorizado', async () => {
-    vi.spyOn(auth, 'obtenerSesion').mockResolvedValue({ ...planificador, nombre: 'Conductor de ruta', rol: 'CONDUCTOR' })
+    vi.spyOn(auth, 'obtenerSesion').mockResolvedValue({ ...planificador, nombre: 'Auditoría', rol: 'AUDITOR' })
     render(<App />)
     expect(await screen.findByRole('heading', { name: 'Acceso no autorizado' })).toBeInTheDocument()
     expect(screen.queryByRole('heading', { name: 'Pedidos', level: 1 })).not.toBeInTheDocument()

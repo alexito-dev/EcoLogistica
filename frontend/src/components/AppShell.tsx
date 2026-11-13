@@ -92,6 +92,14 @@ export default function AppShell({ children, usuario, onSalir, vista, onVistaCha
           {children}
         </main>
         <footer className="pie">
+          {/* Segunda vía de navegación (WCAG 2.4.5): mapa de las vistas disponibles para el rol. */}
+          <nav aria-label="Mapa de navegación" className="pie__mapa">
+            {NAVEGACION.filter((n) => n.roles.includes(usuario.rol)).map(({ texto, vista: destino }) => (
+              <button key={destino} type="button" className="pie__enlace" onClick={() => onVistaChange(destino)}>
+                Ir a {texto}
+              </button>
+            ))}
+          </nav>
           <small>Taller de Proyectos 2 · Ingeniería de Sistemas e Informática · 2026</small>
         </footer>
       </div>

@@ -20,4 +20,7 @@ class PedidosRepository(Protocol):
     ) -> tuple[list[Pedido], int]:
         """Pedidos por `creado_en` descendente y total que cumple el filtro."""
 
+    def actualizar_estado(self, pedido_id: UUID, estado: EstadoPedido) -> None:
+        """Cambia el estado del pedido (avance de la entrega). Lanza `PedidoNoEncontradoError` si no existe."""
+
     def siguiente_correlativo(self) -> int: ...

@@ -92,3 +92,6 @@ backend/.data/
 
 lighthouse-reports/
 .lighthouseci/
+
+playwright-report/
+test-results/

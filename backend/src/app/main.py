@@ -22,6 +22,7 @@ from app.pedidos.router import router as pedidos_router
 from app.pedidos.siembra import sembrar_pedidos_demo
 from app.indicadores.router import router as indicadores_router
 from app.rutas.router import router as rutas_router
+from app.conduccion.router import router as conduccion_router
 
 METODOS_QUE_CAMBIAN_ESTADO = {"POST", "PUT", "PATCH", "DELETE"}
 PREFIJO_API = "/api/v1"
@@ -100,7 +101,7 @@ def create_app() -> FastAPI:
     # Compresión Brotli (con respaldo Gzip) de las respuestas JSON mayores a 1 KB: es la capa más externa.
     app.add_middleware(BrotliMiddleware, quality=4, minimum_size=1024, gzip_fallback=True)
     registrar_manejadores(app)
-    for router in (auth_router, pedidos_router, flota_router, rutas_router, indicadores_router):
+    for router in (auth_router, pedidos_router, flota_router, rutas_router, indicadores_router, conduccion_router):
         app.include_router(router, prefix=PREFIJO_API)
     return app
 

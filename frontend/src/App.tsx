@@ -8,10 +8,12 @@ import AvisoSesion from './components/AvisoSesion'
 import { NAVEGACION, vistasDelRol, type Vista } from './lib/navegacion'
 import PaginaPedidos from './pages/PaginaPedidos'
 
-// Flota, Rutas (con Leaflet) e Indicadores se descargan solo al abrirlas: carga inicial ligera para 2G/3G (RES-06).
+// Flota, Rutas (con Leaflet), Seguimiento, Mi ruta e Indicadores se descargan solo al abrirlas: carga inicial ligera para 2G/3G (RES-06).
 const PaginaFlota = lazy(() => import('./pages/PaginaFlota'))
 const PaginaRutas = lazy(() => import('./pages/PaginaRutas'))
 const PaginaIndicadores = lazy(() => import('./pages/PaginaIndicadores'))
+const PaginaSeguimiento = lazy(() => import('./pages/PaginaSeguimiento'))
+const PaginaMiRuta = lazy(() => import('./pages/PaginaMiRuta'))
 
 function CargandoVista() {
   return (
@@ -76,6 +78,8 @@ function Raiz() {
           <PaginaFlota puedeAdministrar={usuario.rol === 'ADMIN'} puedePlanificar={usuario.rol === 'PLANIFICADOR'} />
         )}
         {vista === 'rutas' && <PaginaRutas />}
+        {vista === 'seguimiento' && <PaginaSeguimiento />}
+        {vista === 'miruta' && <PaginaMiRuta />}
         {vista === 'indicadores' && <PaginaIndicadores />}
       </Suspense>
     </AppShell>

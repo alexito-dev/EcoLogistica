@@ -16,3 +16,6 @@ def verificar_base_de_datos() -> None:
         tablas = inspect(connection)
         if not tablas.has_table("pedidos") or not tablas.has_table("ubicaciones"):
             raise RuntimeError("Faltan tablas de pedidos; ejecuta las migraciones antes de iniciar la API")
+        for tabla in ("usuarios", "rutas_guardadas", "eventos_parada"):
+            if not tablas.has_table(tabla):
+                raise RuntimeError(f"Falta la tabla {tabla}; ejecuta las migraciones (alembic upgrade head)")

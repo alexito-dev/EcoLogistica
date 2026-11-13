@@ -129,10 +129,14 @@ def test_health_falla_si_no_existe_postgis(monkeypatch):
         database_health.verificar_base_de_datos()
 
 
+TABLAS_COMPLETAS = {"pedidos", "ubicaciones", "usuarios", "rutas_guardadas", "eventos_parada"}
+
+
 @pytest.mark.parametrize("tablas, correcto", [
-    ({"pedidos", "ubicaciones"}, True),
+    (TABLAS_COMPLETAS, True),
     ({"pedidos"}, False),
     ({"ubicaciones"}, False),
+    ({"pedidos", "ubicaciones"}, False),  # falta ejecutar la migración 20261113_01 (cuentas y conducción)
 ])
 def test_health_verifica_ambas_tablas_obligatorias(monkeypatch, tablas, correcto):
     class Conexion:

@@ -68,10 +68,10 @@ describe('PaginaIndicadores', () => {
 
 describe('menú por rol', () => {
   it('cada rol ve solo sus vistas', () => {
-    expect(vistasDelRol('PLANIFICADOR')).toEqual(['pedidos', 'flota', 'rutas', 'indicadores'])
-    expect(vistasDelRol('ADMIN')).toEqual(['pedidos', 'flota', 'rutas', 'indicadores'])
+    expect(vistasDelRol('PLANIFICADOR')).toEqual(['pedidos', 'flota', 'rutas', 'seguimiento', 'indicadores'])
+    expect(vistasDelRol('ADMIN')).toEqual(['pedidos', 'flota', 'rutas', 'seguimiento', 'indicadores'])
     expect(vistasDelRol('GERENTE')).toEqual(['indicadores'])
-    expect(vistasDelRol('CONDUCTOR')).toEqual([])
+    expect(vistasDelRol('CONDUCTOR')).toEqual(['miruta'])
     expect(vistasDelRol('AUDITOR')).toEqual([])
   })
 })

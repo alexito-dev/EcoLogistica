@@ -7,12 +7,15 @@ from typing import Annotated
 from fastapi import Cookie, Depends, Response
 
 from app.auth.archivo_repository import UsuariosArchivoRepository
+from app.auth.cifrado import CifradorSecretos
 from app.auth.auditoria import registrar_evento
 from app.auth.domain import DURACION_MAXIMA_SESION, AccesoDenegadoError, Rol, Usuario
+from app.auth.postgres_repository import UsuariosPostgresRepository
 from app.auth.repository import UsuariosRepository
 from app.auth.service import AutenticacionService
 from app.auth.siembra import DOMINIO_DEMO, sembrar_usuarios_demo
 from app.config import get_settings
+from app.database import get_engine
 
 COOKIE_SESION = "eco_sesion"
 COOKIE_MFA = "eco_mfa"
@@ -23,7 +26,13 @@ RUTA_COOKIE_MFA = "/api/v1/auth"
 @lru_cache
 def get_repositorio_usuarios() -> UsuariosRepository:
     settings = get_settings()
-    repositorio = UsuariosArchivoRepository(settings.usuarios_archivo)
+    if settings.database_url:
+        # ECO-21: cuentas en PostgreSQL con los secretos TOTP cifrados en reposo.
+        repositorio: UsuariosRepository = UsuariosPostgresRepository(
+            get_engine(), CifradorSecretos(settings.totp_clave_cifrado)
+        )
+    else:
+        repositorio = UsuariosArchivoRepository(settings.usuarios_archivo)
     generada = sembrar_usuarios_demo(repositorio, settings.demo_clave or None)
     if generada:
         # Solo en desarrollo y una única vez: la contraseña no se guarda en ningún archivo del repositorio.

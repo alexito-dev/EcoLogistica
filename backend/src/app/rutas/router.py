@@ -16,7 +16,9 @@ from app.pedidos.router import get_repositorio
 from app.pedidos.domain import ReglaDominioError
 from app.pedidos.schemas import ErrorOut
 from app.rutas.planificador import Punto
+from app.database import get_engine
 from app.rutas.guardadas import RutasGuardadasArchivo
+from app.rutas.guardadas_postgres import RutasGuardadasPostgres
 from app.rutas.schemas import RutaGuardadaOut, VistaPreviaOut
 from app.rutas.service import RutasService
 
@@ -25,8 +27,12 @@ ROLES_PLANIFICACION = (Rol.PLANIFICADOR, Rol.ADMIN)
 
 
 @lru_cache
-def get_repositorio_guardadas() -> RutasGuardadasArchivo:
-    return RutasGuardadasArchivo(get_settings().rutas_archivo)
+def get_repositorio_guardadas() -> RutasGuardadasArchivo | RutasGuardadasPostgres:
+    """PostgreSQL si DATABASE_URL está definida (ECO-21); archivo local solo para pruebas y desarrollo sin base."""
+    settings = get_settings()
+    if settings.database_url:
+        return RutasGuardadasPostgres(get_engine())
+    return RutasGuardadasArchivo(settings.rutas_archivo)
 
 
 def get_servicio_rutas(
@@ -78,7 +84,7 @@ def vista_previa(
 )
 def guardar(
     servicio: Annotated[RutasService, Depends(get_servicio_rutas)],
-    guardadas: Annotated[RutasGuardadasArchivo, Depends(get_repositorio_guardadas)],
+    guardadas: Annotated[RutasGuardadasArchivo | RutasGuardadasPostgres, Depends(get_repositorio_guardadas)],
     usuario: Annotated[Usuario, Depends(requerir_rol(*ROLES_PLANIFICACION))],
     fecha: Annotated[date, Query(description="Fecha de reparto (AAAA-MM-DD)")],
 ) -> RutaGuardadaOut:
@@ -106,7 +112,7 @@ def guardar(
     dependencies=[Depends(requerir_rol(*ROLES_PLANIFICACION))],
 )
 def guardada(
-    guardadas: Annotated[RutasGuardadasArchivo, Depends(get_repositorio_guardadas)],
+    guardadas: Annotated[RutasGuardadasArchivo | RutasGuardadasPostgres, Depends(get_repositorio_guardadas)],
     fecha: Annotated[date, Query(description="Fecha de reparto (AAAA-MM-DD)")],
 ) -> RutaGuardadaOut:
     registro = guardadas.obtener(fecha)

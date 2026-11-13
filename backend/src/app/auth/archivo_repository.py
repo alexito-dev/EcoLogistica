@@ -76,6 +76,10 @@ class UsuariosArchivoRepository:
     def obtener_por_correo(self, correo: str) -> Usuario | None:
         return next((u for u in self._usuarios.values() if u.correo == correo), None)
 
+    def listar_por_rol(self, rol: Rol) -> list[Usuario]:
+        activos = [u for u in self._usuarios.values() if u.rol == rol and u.estado == EstadoUsuario.ACTIVO]
+        return sorted(activos, key=lambda u: u.nombre)
+
     def guardar(self, usuario: Usuario) -> None:
         with self._lock:
             anterior = self._usuarios.get(usuario.id)

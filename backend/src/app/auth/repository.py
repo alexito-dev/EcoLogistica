@@ -1,8 +1,8 @@
-"""Puerto de persistencia de usuarios (el adaptador PostgreSQL llegará con EN-005)."""
+"""Puerto de persistencia de usuarios (adaptadores: archivo local para pruebas y PostgreSQL con secretos TOTP cifrados)."""
 
 from typing import Protocol
 
-from app.auth.domain import RegistroIntentos, Usuario
+from app.auth.domain import RegistroIntentos, Rol, Usuario
 
 
 class UsuariosRepository(Protocol):
@@ -10,6 +10,9 @@ class UsuariosRepository(Protocol):
 
     def obtener_por_correo(self, correo: str) -> Usuario | None:
         """Busca por correo ya normalizado."""
+
+    def listar_por_rol(self, rol: Rol) -> list[Usuario]:
+        """Usuarios activos de un rol, por nombre."""
 
     def guardar(self, usuario: Usuario) -> None: ...
 

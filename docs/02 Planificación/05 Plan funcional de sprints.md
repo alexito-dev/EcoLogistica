@@ -119,6 +119,8 @@ HU-003 / ECO-12 y HU-009 / ECO-19 están ahora asignadas al Sprint 2 y en `Listo
 
 ## Qué tendría que poder hacerse al terminar Sprint 4
 
+> **Resultado al 13/11/2026.** Los cinco criterios siguientes se implementaron y se comprobaron con pruebas automáticas y un recorrido E2E en navegador real. Ver la [Revisión del Sprint 04](../03%20Implementaci%C3%B3n/Sprint%2004/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md) y la especificación [conduccion](../../openspec/specs/conduccion/spec.md). El texto de abajo conserva la propuesta original; las estimaciones y la aprobación en Jira siguen siendo del equipo.
+
 **Meta propuesta:** Conducción abre su ruta asignada, marca el avance de cada entrega y reporta una incidencia; Planificación puede ver el cambio y actuar.
 
 El flujo reúne la consulta de la ruta en el mapa (HU-005), el registro de estados de entrega (HU-010) y, si el equipo confirma su alcance, el re-enrutamiento ante una incidencia (HU-006). Son propuestas basadas en el backlog existente, no historias ya aceptadas para el Sprint 4.

@@ -1,9 +1,11 @@
 """Adaptador en memoria del repositorio de pedidos (válido para un único proceso)."""
 
+from dataclasses import replace
+from datetime import datetime, timezone
 from threading import Lock
 from uuid import UUID
 
-from app.pedidos.domain import CodigoDuplicadoError, EstadoPedido, Pedido
+from app.pedidos.domain import CodigoDuplicadoError, EstadoPedido, Pedido, PedidoNoEncontradoError
 
 
 class PedidosMemoryRepository:
@@ -19,6 +21,13 @@ class PedidosMemoryRepository:
                 raise CodigoDuplicadoError(pedido.codigo)
             self._por_id[pedido.id] = pedido
             self._id_por_codigo[pedido.codigo] = pedido.id
+
+    def actualizar_estado(self, pedido_id: UUID, estado: EstadoPedido) -> None:
+        with self._lock:
+            pedido = self._por_id.get(pedido_id)
+            if pedido is None:
+                raise PedidoNoEncontradoError(pedido_id)
+            self._por_id[pedido_id] = replace(pedido, estado=estado, actualizado_en=datetime.now(timezone.utc))
 
     def obtener(self, pedido_id: UUID) -> Pedido | None:
         return self._por_id.get(pedido_id)
