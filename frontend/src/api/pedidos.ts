@@ -59,6 +59,14 @@ export function crearPedido(datos: PedidoCrear): Promise<Pedido> {
   return solicitar<Pedido>('/pedidos', { method: 'POST', body: JSON.stringify(datos) })
 }
 
-export function listarPedidos(pagina = 1, limite = 20): Promise<ListadoPedidos> {
-  return solicitar<ListadoPedidos>(`/pedidos?pagina=${pagina}&limite=${limite}`)
+/** Registros por página: bloques pequeños reducen el JSON, la memoria del navegador y el consumo de red. */
+export const PEDIDOS_POR_PAGINA = 12
+
+export function listarPedidos(
+  pagina = 1,
+  limite = PEDIDOS_POR_PAGINA,
+  estado?: EstadoPedido,
+): Promise<ListadoPedidos> {
+  const filtro = estado ? `&estado=${estado}` : ''
+  return solicitar<ListadoPedidos>(`/pedidos?pagina=${pagina}&limite=${limite}${filtro}`)
 }

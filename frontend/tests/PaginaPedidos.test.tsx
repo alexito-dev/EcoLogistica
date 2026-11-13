@@ -103,17 +103,23 @@ describe('PaginaPedidos', () => {
     expect(panel).toHaveTextContent('Prioridad Urgente')
   })
 
-  it('filtra por estado y busca por texto', async () => {
-    vi.spyOn(api, 'listarPedidos').mockResolvedValue(conDos)
+  it('filtra por estado en el servidor y busca por texto en la página', async () => {
+    const listar = vi
+      .spyOn(api, 'listarPedidos')
+      .mockImplementation(async (_pagina, _limite, estado) =>
+        estado === 'ENTREGADO' ? { items: [otro], total: 1, pagina: 1, limite: 12 } : conDos,
+      )
     const user = userEvent.setup()
     render(<PaginaPedidos puedeRegistrar />)
     await screen.findByText('PED-000001')
 
     await user.selectOptions(screen.getByLabelText('Filtrar por estado'), 'ENTREGADO')
+    await waitFor(() => expect(screen.queryByText('PED-000001')).not.toBeInTheDocument())
     expect(screen.getByText('PED-000002')).toBeInTheDocument()
-    expect(screen.queryByText('PED-000001')).not.toBeInTheDocument()
+    expect(listar).toHaveBeenLastCalledWith(1, 12, 'ENTREGADO')
 
     await user.selectOptions(screen.getByLabelText('Filtrar por estado'), 'TODOS')
+    await screen.findByText('PED-000001')
     await user.type(screen.getByLabelText('Buscar pedidos por código, dirección o distrito'), 'tambo')
     expect(screen.getByText('PED-000002')).toBeInTheDocument()
     expect(screen.queryByText('PED-000001')).not.toBeInTheDocument()
@@ -121,6 +127,18 @@ describe('PaginaPedidos', () => {
     await user.clear(screen.getByLabelText('Buscar pedidos por código, dirección o distrito'))
     await user.type(screen.getByLabelText('Buscar pedidos por código, dirección o distrito'), 'zzz')
     expect(screen.getByText('Sin resultados')).toBeInTheDocument()
+  })
+
+  it('pide al servidor la página siguiente en bloques de 12', async () => {
+    const listar = vi
+      .spyOn(api, 'listarPedidos')
+      .mockResolvedValue({ items: [pedido], total: 30, pagina: 1, limite: 12 })
+    const user = userEvent.setup()
+    render(<PaginaPedidos puedeRegistrar />)
+    await screen.findByText('PED-000001')
+    expect(listar).toHaveBeenLastCalledWith(1, 12, undefined)
+    await user.click(screen.getByRole('button', { name: 'Página siguiente' }))
+    await waitFor(() => expect(listar).toHaveBeenLastCalledWith(2, 12, undefined))
   })
 
   it('permite reintentar cuando falla la carga del listado', async () => {

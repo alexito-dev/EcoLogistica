@@ -1,0 +1,62 @@
+name: Green IT & Performance Audit
+
+# Auditoría automática de rendimiento y huella de carbono (Inspección 4, Semana 13).
+# Falla si la interfaz publicada en el build deja de cumplir los umbrales de lighthouserc.json.
+on:
+  push:
+    branches: [main, "sprint-*/**", "feature/**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: green-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lighthouse:
+    name: Lighthouse CI (rendimiento, accesibilidad y peso)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Instalar dependencias del frontend
+        working-directory: frontend
+        run: npm ci
+
+      - name: Compilar para producción
+        working-directory: frontend
+        run: npm run build
+
+      - name: Ejecutar Lighthouse CI
+        run: npx --yes @lhci/cli@0.14.0 autorun --config=./lighthouserc.json
+
+      - name: Calcular huella de carbono por visita (SWDM v4)
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import glob, json, sys
+          sys.path.insert(0, "scripts")
+          from calcular_swdm import co2e_gramos, energia_kwh
+          informes = sorted(glob.glob("lighthouse-reports/ci/*.report.json"))
+          if not informes:
+              raise SystemExit("Sin informes de Lighthouse")
+          with open(informes[0], encoding="utf8") as f:
+              peso = json.load(f)["audits"]["total-byte-weight"]["numericValue"]
+          print(f"Peso: {peso/1024:.1f} KiB | {energia_kwh(peso):.7f} kWh | {co2e_gramos(peso):.4f} g CO2e por visita")
+          PY
+
+      - name: Publicar informes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: lighthouse-reports/ci
+          if-no-files-found: warn

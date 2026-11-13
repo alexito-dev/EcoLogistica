@@ -5,7 +5,7 @@
 # EcoLogística Huancayo
 ### Plataforma de Optimización de Rutas Sostenibles de Última Milla
 
-[![Estado](https://img.shields.io/badge/Estado-Implementaci%C3%B3n%20%C2%B7%20Sprint%203-2ea44f?style=flat-square)](docs/03%20Implementaci%C3%B3n/Sprint%2003)
+[![Estado](https://img.shields.io/badge/Estado-Implementaci%C3%B3n%20%C2%B7%20Sprint%204-2ea44f?style=flat-square)](docs/03%20Implementaci%C3%B3n/Sprint%2003)
 [![SonarQube (análisis histórico 9b31dd0)](https://img.shields.io/badge/SonarQube%209b31dd0-PASSED%20hist%C3%B3rico-4c9a2a?style=flat-square)](docs/03%20Implementaci%C3%B3n/Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)
 [![Versión](https://img.shields.io/badge/Versión-En%20desarrollo-blue?style=flat-square)](README.md)
 [![Stack](https://img.shields.io/badge/Stack-React%20%2B%20FastAPI-025B29?style=flat-square)](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md)
@@ -22,6 +22,8 @@
 ---
 
 **Cobertura de pruebas — mejora posterior al Sprint 3:** nuestro [control de cobertura en CI](https://github.com/alexito-dev/EcoLogistica/actions/runs/41125601203) midió **95,14 % global**, **97,31 % en líneas** y **88,94 % en ramas**, con backend, frontend y PostGIS aislado. Establecimos el mínimo obligatorio del **90 % combinado** y alcanzamos la **meta ampliada del 95 %** en el indicador CI mediante `scripts/reporte_cobertura.py --min 90`. **No es un escaneo nuevo de SonarQube**: la medición oficial sigue pendiente de la instancia local. [Plan, evidencias y criterios](docs/03%20Implementaci%C3%B3n/20261030%20Cobertura%20SonarQube%2090-95%20-%20plan%20y%20evidencia.md).
+
+**Inspección 04 — Green IT (13/11/2026):** reducimos **91,6 %** el peso de la carga inicial (1,16 MiB → 0,10 MiB; 0,1672 g → 0,0140 g de CO₂e por visita con SWDM v4) y subimos el rendimiento Lighthouse móvil de 74 a 99 (escritorio 100). Aplicamos las 8 optimizaciones al stack real (React + FastAPI + PostGIS), con auditoría automática en [`green-audit.yml`](.github/workflows/green-audit.yml). **Límite declarado:** en móvil lento FCP (1,51 s) y LCP (1,99 s) siguen sobre los umbrales 1,0 s y 1,4 s; en escritorio se cumplen todos. [Informe](docs/03%20Implementaci%C3%B3n/reduccion%20del%20impacto%20ambiental/01%20Informe%20de%20reduccion%20del%20impacto%20ambiental%20V_1_0_0.md) · [Estándares y matriz de mapeo](docs/03%20Implementaci%C3%B3n/reduccion%20del%20impacto%20ambiental/02%20Estandares%20Ingenier%C3%ADa%20de%20software%20V_1_0_0.md).
 
 **SonarQube:** el análisis documentado como PASSED corresponde al commit histórico `9b31dd0`, no a todos los cambios posteriores. Consultar la [validación de vigencia y guía de reanálisis](docs/03%20Implementaci%C3%B3n/Sprint%2003/20261030%20Validaci%C3%B3n%20del%20reporte%20SonarQube%20y%20rean%C3%A1lisis.md). El CI del repositorio todavía no ejecuta SonarScanner.
 
@@ -292,6 +294,18 @@ Push-Location backend
 Pop-Location
 ```
 
+### 8.4.1. Auditoría Green IT (Inspección 04)
+
+```powershell
+# Compilar con NODE_ENV=production fijado (no usar `vite build` directo) y auditar con Lighthouse CI
+Push-Location frontend; npm.cmd run build; Pop-Location
+npx.cmd --yes @lhci/cli@0.14.0 autorun --config=./lighthouserc.json   # requiere Chrome (CHROME_PATH)
+
+# Peso del listado de pedidos antes/después de paginar y comprimir, y CO2e por visita (SWDM v4)
+Push-Location backend; .\.venv\Scripts\python.exe scripts\medir_api_verde.py 100; Pop-Location
+python scripts\calcular_swdm.py lighthouse-reports\<antes>.report.json lighthouse-reports\<despues>.report.json
+```
+
 ### 8.5. Análisis de calidad con SonarQube
 
 ```powershell
@@ -391,6 +405,12 @@ Entregables del **Sprint 2** (ECO Sprint 2, desde el 29/09/2026; revisión el 09
 - [02. Registro de Impedimentos](docs/03%20Implementaci%C3%B3n/Sprint%2002/02%20Registro%20de%20Impedimentos%20V_1_0_0.md)
 - [03. Revisión del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%2002/03%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
 - [04. Retrospectiva del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%2002/04%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
+
+Entregables de la **Inspección 04** (Semana 13 — reducción del impacto ambiental, Green IT; 13/11/2026):
+
+- [01. Informe de reducción del impacto ambiental](docs/03%20Implementaci%C3%B3n/reduccion%20del%20impacto%20ambiental/01%20Informe%20de%20reduccion%20del%20impacto%20ambiental%20V_1_0_0.md)
+- [02. Estándares de ingeniería de software y guía de desarrollo verde](docs/03%20Implementaci%C3%B3n/reduccion%20del%20impacto%20ambiental/02%20Estandares%20Ingenier%C3%ADa%20de%20software%20V_1_0_0.md)
+- [Flujo `green-audit.yml`](.github/workflows/green-audit.yml) y [umbrales `lighthouserc.json`](lighthouserc.json)
 
 Entregables del **Sprint 03** (Inspección 03 · semana 11 — SonarQube, WCAG y OWASP; corte del 30/10/2026):
 

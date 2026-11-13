@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Boxes, Clock, Plus, TriangleAlert, Weight } from 'lucide-react'
-import { ApiError, listarPedidos, type Pedido } from '../api/pedidos'
+import { ApiError, listarPedidos, PEDIDOS_POR_PAGINA, type EstadoPedido, type Pedido } from '../api/pedidos'
 import Drawer from '../components/Drawer'
 import Hero from '../components/Hero'
 import PedidoDetalle from '../components/PedidoDetalle'
@@ -23,18 +23,20 @@ export default function PaginaPedidos({ puedeRegistrar }: Props) {
   const [detalle, setDetalle] = useState<Pedido | null>(null)
   const [aviso, setAviso] = useState<string | null>(null)
   const [nuevoId, setNuevoId] = useState<string | null>(null)
+  const [pagina, setPagina] = useState(1)
+  const [estadoFiltro, setEstadoFiltro] = useState<'TODOS' | EstadoPedido>('TODOS')
 
   // El estado se actualiza al resolver la promesa: el efecto inicial no provoca renders en cascada.
   const consultar = useCallback(
     () =>
-      listarPedidos(1, 100)
+      listarPedidos(pagina, PEDIDOS_POR_PAGINA, estadoFiltro === 'TODOS' ? undefined : estadoFiltro)
         .then((listado) => {
           setPedidos(listado.items)
           setTotal(listado.total)
         })
         .catch((e: unknown) => setError(e instanceof ApiError ? e.message : 'No se pudo cargar el listado de pedidos.'))
         .finally(() => setCargando(false)),
-    [],
+    [pagina, estadoFiltro],
   )
 
   const cargar = useCallback(() => {
@@ -76,9 +78,9 @@ export default function PaginaPedidos({ puedeRegistrar }: Props) {
 
       <section className="stats" aria-label="Resumen de pedidos">
         <StatCard indice={1} titulo="Pedidos" valor={total} detalle="Registrados en total" icono={Boxes} />
-        <StatCard indice={2} titulo="Pendientes" valor={resumen.pendientes} detalle="Esperando planificación" icono={Clock} />
-        <StatCard indice={3} titulo="Prioridad alta" valor={resumen.urgentes} detalle="Alta o urgente" icono={TriangleAlert} />
-        <StatCard indice={4} titulo="Carga total" valor={resumen.kg} sufijo="kg" detalle="Suma de pesos" icono={Weight} />
+        <StatCard indice={2} titulo="Pendientes" valor={resumen.pendientes} detalle="En esta página" icono={Clock} />
+        <StatCard indice={3} titulo="Prioridad alta" valor={resumen.urgentes} detalle="En esta página" icono={TriangleAlert} />
+        <StatCard indice={4} titulo="Carga total" valor={resumen.kg} sufijo="kg" detalle="Suma de esta página" icono={Weight} />
       </section>
 
       <PedidosTable
@@ -89,6 +91,15 @@ export default function PaginaPedidos({ puedeRegistrar }: Props) {
         onReintentar={() => void cargar()}
         onVer={setDetalle}
         onNuevo={puedeRegistrar ? abrirFormulario : undefined}
+        pagina={pagina}
+        limite={PEDIDOS_POR_PAGINA}
+        totalRegistros={total}
+        onPagina={setPagina}
+        estadoFiltro={estadoFiltro}
+        onEstadoFiltro={(estado) => {
+          setEstadoFiltro(estado)
+          setPagina(1)
+        }}
       />
 
       <Drawer

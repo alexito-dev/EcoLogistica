@@ -19,7 +19,7 @@ import { useMediaQuery } from '../hooks/useMediaQuery'
 import { ventanaCorta } from '../lib/fechas'
 import { ETIQUETA_ESTADO, ETIQUETA_PRIORIDAD, formatoNumero } from '../lib/estados'
 
-const POR_PAGINA = 8
+const ESTADOS = Object.keys(ETIQUETA_ESTADO) as EstadoPedido[]
 
 interface Props {
   pedidos: Pedido[]
@@ -29,6 +29,13 @@ interface Props {
   onReintentar: () => void
   onVer: (pedido: Pedido) => void
   onNuevo?: () => void
+  /** Paginación y filtro de estado resueltos por el servidor (bloques de 12 registros). */
+  pagina: number
+  limite: number
+  totalRegistros: number
+  onPagina: (pagina: number) => void
+  estadoFiltro: 'TODOS' | EstadoPedido
+  onEstadoFiltro: (estado: 'TODOS' | EstadoPedido) => void
 }
 
 function Insignias({ p }: { p: Pedido }) {
@@ -40,27 +47,38 @@ function Insignias({ p }: { p: Pedido }) {
   )
 }
 
-export default function PedidosTable({ pedidos, cargando, error, resaltadoId, onReintentar, onVer, onNuevo }: Props) {
+export default function PedidosTable({
+  pedidos,
+  cargando,
+  error,
+  resaltadoId,
+  onReintentar,
+  onVer,
+  onNuevo,
+  pagina,
+  limite,
+  totalRegistros,
+  onPagina,
+  estadoFiltro,
+  onEstadoFiltro,
+}: Props) {
   const [busqueda, setBusqueda] = useState('')
-  const [estado, setEstado] = useState<'TODOS' | EstadoPedido>('TODOS')
-  const [pagina, setPagina] = useState(1)
   const esMovil = useMediaQuery('(max-width: 1099px)')
 
   const filtrados = useMemo(() => {
     const termino = busqueda.trim().toLowerCase()
     return pedidos.filter((p) => {
-      if (estado !== 'TODOS' && p.estado !== estado) return false
       if (!termino) return true
       return [p.codigo, p.direccion, p.distrito, p.destinatarioAlias ?? ''].some((t) =>
         t.toLowerCase().includes(termino),
       )
     })
-  }, [pedidos, busqueda, estado])
+  }, [pedidos, busqueda])
 
-  const totalPaginas = Math.max(1, Math.ceil(filtrados.length / POR_PAGINA))
+  const totalPaginas = Math.max(1, Math.ceil(totalRegistros / limite))
   const paginaActual = Math.min(pagina, totalPaginas)
-  const visibles = filtrados.slice((paginaActual - 1) * POR_PAGINA, paginaActual * POR_PAGINA)
-  const estadosPresentes = Array.from(new Set(pedidos.map((p) => p.estado)))
+  const visibles = filtrados
+  const hayFiltro = estadoFiltro !== 'TODOS'
   const claseFila = (p: Pedido) => `aparecer${p.id === resaltadoId ? ' resaltado' : ''}`
 
   return (
@@ -81,10 +99,7 @@ export default function PedidosTable({ pedidos, cargando, error, resaltadoId, on
               type="search"
               placeholder="Buscar pedido…"
               value={busqueda}
-              onChange={(e) => {
-                setBusqueda(e.target.value)
-                setPagina(1)
-              }}
+              onChange={(e) => setBusqueda(e.target.value)}
             />
           </div>
           <div className="filtro">
@@ -94,14 +109,11 @@ export default function PedidosTable({ pedidos, cargando, error, resaltadoId, on
             </label>
             <select
               id="filtro-estado"
-              value={estado}
-              onChange={(e) => {
-                setEstado(e.target.value as 'TODOS' | EstadoPedido)
-                setPagina(1)
-              }}
+              value={estadoFiltro}
+              onChange={(e) => onEstadoFiltro(e.target.value as 'TODOS' | EstadoPedido)}
             >
               <option value="TODOS">Todos los estados</option>
-              {estadosPresentes.map((e) => (
+              {ESTADOS.map((e) => (
                 <option key={e} value={e}>
                   {ETIQUETA_ESTADO[e]}
                 </option>
@@ -132,7 +144,17 @@ export default function PedidosTable({ pedidos, cargando, error, resaltadoId, on
         </div>
       )}
 
-      {!cargando && pedidos.length === 0 && !error && (
+      {!cargando && pedidos.length === 0 && !error && hayFiltro && (
+        <div className="vacio">
+          <span className="vacio__icono">
+            <SearchX size={34} aria-hidden="true" />
+          </span>
+          <p className="vacio__titulo">Sin resultados</p>
+          <p>No hay pedidos con el estado seleccionado.</p>
+        </div>
+      )}
+
+      {!cargando && pedidos.length === 0 && !error && !hayFiltro && (
         <div className="vacio">
           <span className="vacio__icono">
             <Inbox size={34} aria-hidden="true" />
@@ -252,17 +274,17 @@ export default function PedidosTable({ pedidos, cargando, error, resaltadoId, on
         </div>
       )}
 
-      {visibles.length > 0 && (
+      {pedidos.length > 0 && (
         <nav className="paginacion" aria-label="Paginación de pedidos">
           <p aria-live="polite">
-            Mostrando {(paginaActual - 1) * POR_PAGINA + 1}–{(paginaActual - 1) * POR_PAGINA + visibles.length} de{' '}
-            {filtrados.length}
+            Mostrando {(paginaActual - 1) * limite + 1}–{(paginaActual - 1) * limite + pedidos.length} de{' '}
+            {totalRegistros}
           </p>
           <div>
             <button
               type="button"
               className="icono-boton icono-boton--borde"
-              onClick={() => setPagina(paginaActual - 1)}
+              onClick={() => onPagina(paginaActual - 1)}
               disabled={paginaActual === 1}
               aria-label="Página anterior"
             >
@@ -274,7 +296,7 @@ export default function PedidosTable({ pedidos, cargando, error, resaltadoId, on
             <button
               type="button"
               className="icono-boton icono-boton--borde"
-              onClick={() => setPagina(paginaActual + 1)}
+              onClick={() => onPagina(paginaActual + 1)}
               disabled={paginaActual === totalPaginas}
               aria-label="Página siguiente"
             >

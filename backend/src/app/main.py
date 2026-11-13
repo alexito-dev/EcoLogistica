@@ -6,7 +6,9 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from brotli_asgi import BrotliMiddleware
 
+from app.cache_http import EtagMiddleware
 from app.auth.dependencias import get_repositorio_usuarios
 from app.auth.router import router as auth_router
 from app.config import get_settings
@@ -86,13 +88,17 @@ def create_app() -> FastAPI:
             respuesta.headers["Content-Security-Policy"] = CSP_API
         return respuesta
 
+    app.add_middleware(EtagMiddleware)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=[settings.cors_origin],
         allow_credentials=True,
         allow_methods=["GET", "POST", "PUT"],
         allow_headers=["Content-Type"],
+        expose_headers=["ETag"],
     )
+    # Compresión Brotli (con respaldo Gzip) de las respuestas JSON mayores a 1 KB: es la capa más externa.
+    app.add_middleware(BrotliMiddleware, quality=4, minimum_size=1024, gzip_fallback=True)
     registrar_manejadores(app)
     for router in (auth_router, pedidos_router, flota_router, rutas_router, indicadores_router):
         app.include_router(router, prefix=PREFIJO_API)

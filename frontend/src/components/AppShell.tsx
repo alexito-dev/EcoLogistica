@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { Leaf, LogOut } from 'lucide-react'
 import { ETIQUETA_ROL, type Rol, type Usuario } from '../api/auth'
+import Logo from './Logo'
 import { NAVEGACION, type Vista } from '../lib/navegacion'
 import ThemeToggle from './ThemeToggle'
 
@@ -43,7 +44,7 @@ export default function AppShell({ children, usuario, onSalir, vista, onVistaCha
 
       <aside className="lateral">
         <div className="marca">
-          <img src="/logo_ecologistica.png" alt="" width="40" height="40" />
+          <Logo tamano={40} />
           <div>
             <p className="marca__nombre">EcoLogística</p>
             <p className="marca__lema">Huancayo</p>
@@ -61,7 +62,7 @@ export default function AppShell({ children, usuario, onSalir, vista, onVistaCha
       <div className="principal">
         <header className="barra">
           <div className="barra__marca">
-            <img src="/logo_ecologistica.png" alt="" width="32" height="32" />
+            <Logo tamano={32} />
             <span>EcoLogística</span>
           </div>
           <p className="barra__contexto">Panel de {ETIQUETA_ROL[usuario.rol].toLowerCase()}</p>

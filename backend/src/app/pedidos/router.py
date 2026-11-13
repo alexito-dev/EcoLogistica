@@ -73,7 +73,7 @@ def listar_pedidos(
     servicio: ServicioDep,
     estado: EstadoPedido | None = None,
     pagina: Annotated[int, Query(ge=1)] = 1,
-    limite: Annotated[int, Query(ge=1, le=100)] = 20,
+    limite: Annotated[int, Query(ge=1, le=100)] = 12,
 ) -> ListadoPedidosOut:
     pedidos, total = servicio.listar(estado, pagina, limite)
     return ListadoPedidosOut(

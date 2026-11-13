@@ -11,3 +11,4 @@ PyJWT>=2.8
 SQLAlchemy>=2.0,<2.1
 alembic>=1.14,<2.0
 psycopg[binary]>=3.2,<4
+brotli-asgi>=1.4

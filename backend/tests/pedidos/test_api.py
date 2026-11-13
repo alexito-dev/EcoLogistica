@@ -138,7 +138,7 @@ def test_listado_por_defecto(client, pedido_valido):
     for _ in range(3):
         client.post(BASE, json=pedido_valido)
     cuerpo = client.get(BASE).json()
-    assert (cuerpo["total"], cuerpo["pagina"], cuerpo["limite"]) == (3, 1, 20)
+    assert (cuerpo["total"], cuerpo["pagina"], cuerpo["limite"]) == (3, 1, 12)
     assert [p["codigo"] for p in cuerpo["items"]] == ["PED-000003", "PED-000002", "PED-000001"]
 
 

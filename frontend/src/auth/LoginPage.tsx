@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { ArrowLeft, CircleAlert, Eye, EyeOff, KeyRound, LogIn, ShieldCheck, Smartphone } from 'lucide-react'
 import { iniciarSesion, verificarCodigo, type RespuestaLogin } from '../api/auth'
 import { ApiError } from '../api/http'
+import Logo from '../components/Logo'
 import ThemeToggle from '../components/ThemeToggle'
 import { useAuth } from './useAuth'
 
@@ -126,7 +127,7 @@ export default function LoginPage() {
           </g>
         </svg>
         <div className="acceso__marca-texto">
-          <img src="/logo_ecologistica.png" alt="" width="56" height="56" />
+          <Logo tamano={56} />
           <p className="acceso__nombre">EcoLogística Huancayo</p>
           <p className="acceso__lema">Rutas sostenibles de última milla para el valle del Mantaro.</p>
         </div>
