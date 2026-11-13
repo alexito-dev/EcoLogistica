@@ -68,8 +68,8 @@ jobs:
           alembic upgrade head
           alembic downgrade base
           alembic upgrade head
-      - name: Integración real de pedidos y flota contra PostGIS aislado
-        run: pytest -q tests/integracion/test_postgis.py
+      - name: Integración real de pedidos, flota, cuentas, rutas y conducción contra PostGIS aislado
+        run: pytest -q tests/integracion
 
   frontend:
     name: Frontend (tipos, lint, pruebas, build)

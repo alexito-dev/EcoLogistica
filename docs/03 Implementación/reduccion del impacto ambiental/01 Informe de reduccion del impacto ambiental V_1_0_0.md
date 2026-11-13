@@ -284,6 +284,7 @@ Pruebas: respuestas mayores a 1 KB salen con `content-encoding: br` o `gzip` seg
 ### 4.3 Declaración de incumplimientos y límites
 
 - **En móvil, FCP (1,51 s) y LCP (1,99 s) no alcanzan los umbrales 1,0 s y 1,4 s** de la rúbrica, aunque el puntaje (99) y el TBT sí. En escritorio se cumplen todos. El pipeline se configura en escritorio por esa razón y así se declara.
+- **Intento adicional para móvil (13/11/2026):** se probó incrustar la hoja de estilos en el HTML y mostrar una pantalla de carga estática para adelantar el primer pintado. El resultado fue FCP 1,5 s y LCP 1,9 s (frente a 1,51 s y 1,99 s), una mejora marginal que no alcanza los umbrales; se revirtió para no añadir complejidad sin beneficio. Con el perfil de 4G lenta simulada de Lighthouse, la brecha restante depende del tamaño del JavaScript inicial (83 kB gzip) y exigiría reducir React/Leaflet en la carga inicial, trabajo que no se emprendió.
 - Los valores de la plantilla de la consigna (38 → 96, 8,4 MB, 68 solicitudes, 2,15 g) **no corresponden a este proyecto** y no se usan.
 - Se midió la pantalla de acceso (carga inicial pública), no las vistas autenticadas. Durante las auditorías la API no estaba en ejecución: las 2–4 solicitudes de verificación de sesión fallan por igual antes y después y no suman bytes.
 
@@ -335,7 +336,7 @@ Este ahorro corresponde únicamente a la carga de la pantalla de acceso. Es una 
 - Pruebas automáticas al cierre: **166 de backend aprobadas y 4 omitidas** (las de PostGIS requieren la base de pruebas) y **115 de frontend aprobadas**; `tsc -b` y el linter sin errores; compilación de producción sin advertencias.
 - `lhci autorun` ejecutado localmente: 3 corridas, todas las aserciones de `lighthouserc.json` aprobadas.
 - Pipeline [`.github/workflows/green-audit.yml`](../../../.github/workflows/green-audit.yml): compila el frontend, ejecuta LHCI con umbrales (rendimiento ≥ 90, LCP ≤ 1,4 s, TBT ≤ 85 ms, CLS ≤ 0,02, peso ≤ 1,1 MB), calcula CO₂e por visita con SWDM v4 y publica los informes como artefacto.
-- Pendiente de comprobar: la primera ejecución del workflow en GitHub Actions (el repositorio remoto aún no lo ha corrido); se documentará en la revisión del Sprint 4.
+- **GitHub Actions:** el workflow `green-audit.yml` se ejecutó el 13/11/2026 sobre el commit `1d57b0d` y concluyó con éxito ([ejecución 43453357841](https://github.com/alexito-dev/EcoLogistica/actions/runs/43453357841)).
 
 ## 7. Conclusiones
 

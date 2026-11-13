@@ -33,7 +33,7 @@ Localmente se usa el Chrome instalado (`channel: 'chrome'`); en CI, el Chromium 
 
 ## 3. Integración continua
 
-El archivo [`.github/workflows/ci.yml`](../../../.github/workflows/ci.yml) tiene ahora el trabajo `e2e`, junto con `backend`, `migraciones`, `frontend`, `openspec` y `cobertura-integral`. [`green-audit.yml`](../../../.github/workflows/green-audit.yml) audita rendimiento con Lighthouse CI. **Ambos flujos nuevos están configurados y validados localmente; su primera ejecución en GitHub Actions todavía no se ha observado.**
+El archivo [`.github/workflows/ci.yml`](../../../.github/workflows/ci.yml) tiene ahora el trabajo `e2e`, junto con `backend`, `migraciones`, `frontend`, `openspec` y `cobertura-integral`. [`green-audit.yml`](../../../.github/workflows/green-audit.yml) audita rendimiento con Lighthouse CI. **Ambos flujos se ejecutaron en GitHub Actions el 13/11/2026 sobre el commit `1d57b0d` y concluyeron con éxito** ([CI](https://github.com/alexito-dev/EcoLogistica/actions/runs/43453357665), [Green IT](https://github.com/alexito-dev/EcoLogistica/actions/runs/43453357841)); el informe de Playwright y los informes de cobertura quedan como artefactos del CI.
 
 ## 4. Conjunto de pruebas al corte
 
