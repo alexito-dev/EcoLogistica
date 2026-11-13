@@ -9,7 +9,7 @@
 
 ## 1. Qué se automatizó
 
-Las pruebas viven en [`frontend/e2e/`](../../../frontend/e2e/) y se configuran en [`frontend/playwright.config.ts`](../../../frontend/playwright.config.ts). Levantan la **API real** (FastAPI con datos de demostración y archivos temporales; `DATABASE_URL` vacío para no tocar nunca una base real) y la interfaz, y operan un navegador real. Las cuentas se enrolan por el flujo verdadero de MFA: el guion lee la clave que muestra la pantalla y calcula el código TOTP (RFC 6238).
+Las pruebas viven en [`frontend/e2e/`](../../../frontend/e2e/) y se configuran en [`frontend/playwright.config.ts`](../../../frontend/playwright.config.ts). Levantan la **API real** y el **build de producción** del frontend (el mismo que se publica, con Preact) (FastAPI con datos de demostración y archivos temporales; `DATABASE_URL` vacío para no tocar nunca una base real) y la interfaz, y operan un navegador real. Las cuentas se enrolan por el flujo verdadero de MFA: el guion lee la clave que muestra la pantalla y calcula el código TOTP (RFC 6238).
 
 | Prueba | Qué recorre |
 |---|---|
@@ -40,8 +40,8 @@ El archivo [`.github/workflows/ci.yml`](../../../.github/workflows/ci.yml) tiene
 
 | Capa | Aprobadas | Omitidas | Observación |
 |---|---:|---:|---|
-| Backend (pytest) | 191 | 9 | Las omitidas son de PostgreSQL/PostGIS (`ECO_TEST_DATABASE_URL`); corren en CI |
-| Frontend (Vitest) | 127 | 0 | |
+| Backend (pytest) | 201 | 9 | Las omitidas son de PostgreSQL/PostGIS (`ECO_TEST_DATABASE_URL`); corren en CI |
+| Frontend (Vitest) | 133 | 0 | |
 | E2E (Playwright) | 10 | 0 | |
 
 ## 5. SonarQube en la integración continua

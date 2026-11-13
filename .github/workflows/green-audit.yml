@@ -38,6 +38,9 @@ jobs:
       - name: Ejecutar Lighthouse CI
         run: npx --yes @lhci/cli@0.14.0 autorun --config=./lighthouserc.json
 
+      - name: Ejecutar Lighthouse CI en móvil (4G lenta simulada; FCP y LCP como advertencia por variabilidad del ejecutor)
+        run: npx --yes @lhci/cli@0.14.0 autorun --config=./lighthouserc.movil.json
+
       - name: Calcular huella de carbono por visita (SWDM v4)
         if: always()
         run: |
@@ -58,5 +61,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-reports
-          path: lighthouse-reports/ci
+          path: lighthouse-reports
           if-no-files-found: warn

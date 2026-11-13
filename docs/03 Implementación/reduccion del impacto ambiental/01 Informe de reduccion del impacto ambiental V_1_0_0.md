@@ -215,9 +215,26 @@ dist/assets/browser-*.js (qrcode) 23,46 kB │ gzip: 8,86 kB  (solo al enrolar M
 
 La pantalla de acceso no descarga Leaflet ni las vistas de gestión. Forzar `NODE_ENV` desde `vite.config.ts` no funcionó (Vite lee `.env` antes), por eso se usa un lanzador que lo fija antes de importar Vite.
 
-#### 5. Depuración y Eliminación de Dependencias Innecesarias
+**Segunda ronda de reducción del JavaScript inicial** (necesaria para los umbrales móviles; ver áreas 5 y 6): el paquete inicial pasó de 265 kB (83 kB comprimidos) a **55,5 kB (18,6 kB) más 20,1 kB (8,2 kB)** del entorno de ejecución compatible.
 
-**Diagnóstico:** se auditaron las dependencias de ejecución (`react`, `react-dom`, `leaflet`, `lucide-react`, `qrcode`). No existen `moment`, `lodash`, `axios`, `dayjs` ni `jquery`: las fechas usan `Intl.DateTimeFormat` y las peticiones, `fetch`. `lucide-react` se importa por nombre y se *tree-shakea*; `qrcode` y `leaflet` están en fragmentos diferidos. El único hallazgo real fue que `@types/qrcode`, un paquete solo de tipos, figuraba como dependencia de ejecución.
+#### 5. Depuración y Sustitución de Dependencias (librerías ligeras y APIs nativas)
+
+**Diagnóstico:** se auditaron las dependencias de ejecución (`react`, `react-dom`, `leaflet`, `lucide-react`, `qrcode`). No existen `moment`, `lodash`, `axios`, `dayjs` ni `jquery`: las fechas usan `Intl.DateTimeFormat` y las peticiones, `fetch`. `lucide-react` se importa por nombre y se *tree-shakea*; `qrcode` y `leaflet` están en fragmentos diferidos. Los hallazgos reales fueron dos: `@types/qrcode`, un paquete solo de tipos, figuraba como dependencia de ejecución, y **React DOM era el mayor costo del paquete inicial** (≈ 60 kB comprimidos).
+
+**Implementación:** el build de producción sustituye React por **Preact** mediante `preact/compat` (misma API para este código), y las pruebas E2E se ejecutan contra ese mismo build para detectar cualquier diferencia de comportamiento. Las pruebas unitarias conservan React. Es el equivalente de «sustitución de librerías por alternativas más ligeras» de la consigna.
+
+```ts
+// frontend/vite.config.ts — solo en `vite build`
+const alias = {
+  react: 'preact/compat', 'react-dom/client': 'preact/compat/client',
+  'react-dom': 'preact/compat', 'react/jsx-runtime': 'preact/jsx-runtime',
+}
+resolve: command === 'build' ? { alias } : {},
+```
+```text
+ANTES  index-*.js 265,42 kB │ gzip 82,69 kB   (React + React DOM)
+DESPUÉS index-*.js 55,53 kB │ gzip 18,56 kB  + jsx-runtime-*.js 20,14 kB │ gzip 8,24 kB   (Preact)
+```
 
 **ANTES** (`frontend/package.json`):
 
@@ -238,7 +255,7 @@ const formato = new Intl.DateTimeFormat('es-PE', { timeZone: 'America/Lima', day
   year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false })
 ```
 
-La guarda [`GreenIt.test.ts`](../../../frontend/tests/GreenIt.test.ts) falla si se incorpora alguna de esas librerías. **Límite:** la mejora de esta área es pequeña; no se afirma un ahorro de peso medido.
+La guarda [`GreenIt.test.ts`](../../../frontend/tests/GreenIt.test.ts) falla si se incorpora alguna de esas librerías o si el build deja de usar Preact. **Riesgo declarado:** Preact no es React; la mitigación es que el E2E (10 pruebas, incluidos el mapa Leaflet, el formulario de MFA y la accesibilidad) corre contra el build de producción.
 
 #### 6. Reducción de Solicitudes HTTP (inlining de SVG y recursos inexistentes)
 
@@ -249,9 +266,14 @@ La guarda [`GreenIt.test.ts`](../../../frontend/tests/GreenIt.test.ts) falla si 
 /* DESPUÉS */ src: local('Codec Pro'), local('CodecPro-Regular');   /* sin archivo remoto inexistente */
 ```
 
+Dos medidas adicionales redujeron la ruta crítica de la pantalla de acceso:
+
+1. **Hoja de estilos en línea** en el `index.html` del build (plugin `cssEnLinea` de `vite.config.ts`): un viaje de ida y vuelta menos antes del primer pintado.
+2. **Marca local de sesión** (`frontend/src/auth/AuthContext.tsx`): la cookie de sesión es `HttpOnly`, así que el navegador no sabe si existe; sin una marca de que esa persona ya inició sesión, el acceso se muestra de inmediato y **no** se hace la solicitud bloqueante a `/auth/sesion`. El servidor sigue siendo la única autoridad; con marca se consulta como antes y una sesión vencida la borra. Cubierto por pruebas unitarias.
+
 | Medida | ANTES | DESPUÉS |
 |---|---:|---:|
-| Solicitudes en la carga de acceso | 14 | **9** (−36 %) |
+| Solicitudes en la carga de acceso | 14 | **5** (−64 %) |
 
 #### 7. Estrategia de Caché de Recursos
 
@@ -292,38 +314,43 @@ Comprobado en Chrome real: el listado llega con `content-encoding` `br` o `gzip`
 
 ### 1.4 Tabla Comparativa de Métricas ANTES vs. DESPUÉS
 
-**Perfil móvil (4G lenta simulada):**
+**Perfil móvil (4G lenta simulada, el predeterminado de Lighthouse):**
 
 | Métrica / Indicador | Estado Inicial (ANTES) | Estado Optimizado (DESPUÉS) | Variación Absoluta | Mejora (%) |
 |---|---:|---:|---:|---:|
-| Performance Score (Lighthouse) | 74 / 100 | **99 / 100** | +25 pts | +33,8 % |
-| First Contentful Paint (FCP) | 1,97 s | 1,51 s | −0,46 s | −23,4 % |
-| Largest Contentful Paint (LCP) | 7,38 s | **1,99 s** | −5,39 s | −73,0 % |
-| Total Blocking Time (TBT) | 101 ms | **13 ms** | −88 ms | −87,1 % |
+| Performance Score (Lighthouse) | 74 / 100 | **100 / 100** | +26 pts | +35,1 % |
+| First Contentful Paint (FCP) | 1,97 s | **0,92 s** | −1,05 s | −53,3 % |
+| Largest Contentful Paint (LCP) | 7,38 s | **1,22 s** | −6,16 s | −83,5 % |
+| Total Blocking Time (TBT) | 101 ms | **41 ms** | −60 ms | −59,4 % |
 | Cumulative Layout Shift (CLS) | 0 | 0 | 0 | — |
-| Peso Total de Transferencia | 1 211 513 B (1,21 MB) | **101 425 B (0,10 MB)** | −1 110 088 B | −91,6 % |
-| Número Total de Solicitudes HTTP | 14 | 9 | −5 | −35,7 % |
+| Peso Total de Transferencia | 1 211 513 B (1,21 MB) | **41 872 B (0,04 MB)** | −1 169 641 B | −96,5 % |
+| Número Total de Solicitudes HTTP | 14 | **5** | −9 | −64,3 % |
 | Tiempo de respuesta API (listado, mediana) | 9,19 ms | 7,80 ms | −1,39 ms | −15,1 % |
-| Huella de Carbono (g CO₂e / visita) | 0,1672 g | **0,0140 g** | −0,1532 g | −91,6 % |
+| Huella de Carbono (g CO₂e / visita) | 0,1672 g | **0,0058 g** | −0,1614 g | −96,5 % |
+| Accesibilidad / Buenas prácticas / SEO | 100 / 93 / 91 | 100 / 100 / 100 | | |
 
-El tiempo de respuesta de la API se midió en proceso con 100 pedidos sintéticos y osciló entre −15 % y −27 % en tres corridas; es una mejora modesta porque el costo dominante en esa medición no es la red.
+El tiempo de respuesta de la API se midió en proceso con 100 pedidos sintéticos y osciló entre −15 % y −27 % en tres corridas; es una mejora modesta porque el costo dominante de esa medición no es la red.
 
-**Perfil escritorio (el que verifica el pipeline `green-audit.yml`):**
+**Perfil escritorio (también verificado por `green-audit.yml`):**
 
 | Métrica | ANTES | DESPUÉS | Umbral de la rúbrica | ¿Cumple? |
 |---|---:|---:|---|:---:|
 | Rendimiento | 96 | **100** | ≥ 90 | Sí |
-| FCP | 0,45 s | **0,39 s** | ≤ 1,0 s | Sí |
-| LCP | 1,42 s | **0,54 s** | ≤ 1,4 s | Sí |
+| FCP | 0,45 s | **0,25 s** | ≤ 1,0 s | Sí |
+| LCP | 1,42 s | **0,29 s** | ≤ 1,4 s | Sí |
 | TBT | 0 ms | **0 ms** | ≤ 85 ms | Sí |
 | CLS | 0 | **0** | ≤ 0,02 | Sí |
-| Peso | 1,21 MB | **0,10 MB** | ≤ 1,1 MB | Sí |
+| Peso | 1,21 MB | **0,04 MB** | ≤ 1,1 MB | Sí |
 
-**Declaración de incumplimientos.**
+**Cumplimiento de los umbrales de la rúbrica en móvil:** rendimiento 100 (≥ 90), FCP 0,92 s (≤ 1,0 s), LCP 1,22 s (≤ 1,4 s), TBT 41 ms (≤ 85 ms), CLS 0 (≤ 0,02) y peso 0,04 MB (≤ 1,1 MB). Tres corridas consecutivas dieron FCP 0,91–0,95 s y LCP 1,21–1,26 s ([`evidencias/`](evidencias/)).
 
-- **En móvil con 4G lenta simulada, FCP (1,51 s) y LCP (1,99 s) no alcanzan 1,0 s y 1,4 s**, aunque el puntaje (99), el TBT, el CLS y el peso sí cumplen. Se probaron dos mejoras adicionales (hoja de estilos en línea, y pantalla de carga estática con estilos no bloqueantes): la segunda dio FCP entre 0,9 s y 1,5 s según la corrida, es decir, no fue estable, y el LCP quedó en 2,0 s; se revirtieron por añadir complejidad sin beneficio reproducible. La brecha depende del JavaScript inicial (83 kB comprimidos).
-- Los valores de la plantilla (38 → 96, 8,4 MB, 68 solicitudes, 2,15 g) no corresponden a este proyecto.
-- Se midió la pantalla de acceso (carga inicial pública); las vistas autenticadas requieren sesión con MFA. Durante las auditorías la API no estaba en ejecución: las 2–4 solicitudes de verificación de sesión fallan igual antes y después.
+**Declaración de límites.**
+
+- Se midió la **pantalla de acceso en una primera visita** (sin marca local de sesión). Quien ya tiene sesión hace una solicitud adicional a `/auth/sesion` al abrir la aplicación; las vistas autenticadas requieren MFA y no se auditaron con Lighthouse.
+- Los márgenes en móvil son estrechos (FCP 0,92 s frente a 1,0 s): en el CI, el ejecutor de GitHub varía, por lo que FCP y LCP móviles se vigilan como **advertencia** y el puntaje, el TBT, el CLS y el peso como **error**; en escritorio todos los umbrales son error.
+- Durante las auditorías la API no estaba en ejecución: no se mide el costo de la solicitud de sesión ni de las vistas con datos.
+- Los valores de la plantilla de la consigna (38 → 96, 8,4 MB, 68 solicitudes, 2,15 g) no corresponden a este proyecto.
+- **Historial del intento:** antes de sustituir React por Preact, una pantalla de carga estática y la hoja de estilos no bloqueante dieron un FCP inestable (0,9–1,5 s) y se revirtieron; la mejora real vino de reducir el JavaScript inicial, incrustar el CSS y evitar la solicitud de sesión.
 
 **Atribución del ahorro de peso (móvil):**
 
@@ -331,7 +358,8 @@ El tiempo de respuesta de la API se midió en proceso con 100 pedidos sintético
 |---|---:|---:|
 | Línea base (compilación local con `.env` de desarrollo) | 1 211 513 | — |
 | Solo build de producción correcto | 1 148 620 | −62 893 (−5,2 %) |
-| + logotipo AVIF/WebP/PNG pequeño, favicon y sin fuentes inexistentes | 101 425 | −1 047 195 adicionales (−91,2 %) |
+| + logotipo AVIF/WebP/PNG pequeño, favicon y sin fuentes inexistentes | 101 425 | −1 047 195 adicionales |
+| + Preact, CSS en línea y sin solicitud de sesión inicial | 41 872 | −59 553 adicionales |
 
 ### 1.5 Análisis de Impacto Ambiental y Eficiencia Energética
 
@@ -345,21 +373,21 @@ Emisiones (g) = Energía × 494
 Se calcula la **primera visita** (sin caché ni hosting verde acreditado). No se aplicó la intensidad peruana porque no se verificó una cifra citable; el resultado se recalcula cambiando `INTENSIDAD_G_KWH` en [`scripts/calcular_swdm.py`](../../../scripts/calcular_swdm.py). Las constantes de la plantilla de la consigna (0,815 kWh/GB; 442 g/kWh) corresponden a una versión anterior y no se utilizaron.
 
 - **Escenario Inicial (ANTES):** transferencia 1,21 MB (0,001128 GB) → consumo 0,0003385 kWh → emisiones **0,1672 g CO₂e / visita**.
-- **Escenario Optimizado (DESPUÉS):** transferencia 0,10 MB (0,0000945 GB) → consumo 0,0000283 kWh → emisiones **0,0140 g CO₂e / visita** (−91,6 %).
+- **Escenario Optimizado (DESPUÉS):** transferencia 0,04 MB (0,000039 GB) → consumo 0,0000117 kWh → emisiones **0,0058 g CO₂e / visita** (−96,5 %).
 
 **Proyección Anual** (escenario de referencia de la consigna: 500 000 visitas/año; no es dato de DistriRápido S.A.C., que aún no mide su tráfico):
 
 | | CO₂e anual |
 |---|---:|
 | Emisiones previas | 83,6 kg |
-| Emisiones optimizadas | 7,0 kg |
-| **Ahorro neto anual** | **76,6 kg CO₂e** |
+| Emisiones optimizadas | 2,9 kg |
+| **Ahorro neto anual** | **80,7 kg CO₂e** |
 
 El ahorro corresponde únicamente a la carga de la pantalla de acceso; la mayor parte de la huella de la plataforma está en el uso autenticado, no medido aquí. El método y el pipeline quedan listos para vigilarla.
 
 ### 1.6 Evidencias Visuales de Validación (Auditoría Lighthouse)
 
-Reportes consolidados en [`evidencias/`](evidencias/) (JSON completos de Lighthouse 12, abribles en el visor de Lighthouse) y ejecuciones de [GitHub Actions](https://github.com/alexito-dev/EcoLogistica/actions/runs/43453357841).
+Reportes consolidados en [`evidencias/`](evidencias/) (JSON completos de Lighthouse 12, abribles en el visor de Lighthouse), el resumen `resumen-lighthouse.json` y las ejecuciones de [GitHub Actions](https://github.com/alexito-dev/EcoLogistica/actions).
 
 ```text
 ================================================================================
@@ -371,25 +399,25 @@ AUDITORÍA LIGHTHOUSE - ESTADO INICIAL (ANTES) - móvil
 ================================================================================
 AUDITORÍA LIGHTHOUSE - ESTADO OPTIMIZADO (DESPUÉS) - móvil
 ================================================================================
-[*] Performance:  ████████████████████  99/100
-- FCP: 1,51 s (ámbar)   - LCP: 1,99 s (ámbar)   - TBT: 13 ms   - CLS: 0
-- Transferencia: 0,10 MB en 9 solicitudes
-Accesibilidad 100 | Buenas prácticas 96 | SEO 100 (corridas de Lighthouse CI)
+[*] Performance:  ████████████████████  100/100
+- FCP: 0,92 s (VERDE)   - LCP: 1,22 s (VERDE)   - TBT: 41 ms (VERDE)   - CLS: 0 (VERDE)
+- Transferencia: 0,04 MB en 5 solicitudes
+Accesibilidad 100 | Buenas prácticas 100 | SEO 100
 ================================================================================
-ESCRITORIO (verificado por green-audit.yml en GitHub Actions)
+ESCRITORIO
 ================================================================================
 [*] Performance:  ████████████████████  100/100
-- FCP: 0,39 s   - LCP: 0,54 s   - TBT: 0 ms   - CLS: 0   - 0,10 MB
+- FCP: 0,25 s   - LCP: 0,29 s   - TBT: 0 ms   - CLS: 0   - 0,04 MB
 ```
 
-**Validación adicional.** Pruebas al cierre: 191 de backend aprobadas y 9 omitidas (PostgreSQL, que corren en CI), 127 de frontend y 10 E2E con Playwright; `tsc -b` y linter sin errores; `lhci autorun` aprobado localmente y en GitHub Actions.
+**Validación adicional.** Pruebas al cierre: 201 de backend aprobadas y 9 omitidas (PostgreSQL, que corren en CI), 133 de frontend y 10 E2E con Playwright contra el build de producción; `tsc -b` y linter sin errores; `lhci autorun` aprobado en escritorio y móvil.
 
 ### 1.7 Conclusiones
 
-1. El mayor impacto provino de **dos defectos reales** —un logotipo de 1 MB y un build local mal configurado—, no de técnicas sofisticadas.
-2. La carga inicial de acceso bajó **91,6 %** en peso y **0,1532 g CO₂e** por visita; en escritorio todos los umbrales de la rúbrica se cumplen; en móvil lento, FCP y LCP siguen por encima.
+1. La carga inicial de acceso bajó **96,5 %** en peso (de 1,21 MB a 0,04 MB) y **0,1614 g CO₂e** por visita; los umbrales de la rúbrica se cumplen en móvil y en escritorio.
+2. Los mayores ahorros vinieron de corregir defectos reales (logotipo de 1 MB, build mal configurado) y de reducir el JavaScript inicial; no de técnicas sofisticadas.
 3. La API ahora pagina en bloques de 12, comprime, revalida y filtra la planificación en la base; falta medirla con datos reales de operación.
-4. Trabajo futuro: auditar las vistas autenticadas con un guion de sesión, ejecutar `EXPLAIN ANALYZE` sobre PostGIS, medir tráfico real y reducir el JavaScript inicial para mejorar el FCP y el LCP móviles.
+4. Trabajo futuro: auditar las vistas autenticadas con un guion de sesión, ejecutar `EXPLAIN ANALYZE` sobre PostGIS, medir tráfico real y vigilar que el margen móvil (FCP 0,92 s) no se erosione.
 
 ---
 *Mediciones del 13/11/2026 en equipo de desarrollo; los valores de Lighthouse varían con la carga de la máquina.*

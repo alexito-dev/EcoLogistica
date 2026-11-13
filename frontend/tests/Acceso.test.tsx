@@ -10,14 +10,36 @@ const vacio = { items: [], total: 0, pagina: 1, limite: 100 }
 
 beforeEach(() => {
   vi.spyOn(pedidos, 'listarPedidos').mockResolvedValue(vacio)
+  // Por defecto, esta persona ya había iniciado sesión: se consulta al servidor al cargar.
+  localStorage.setItem('eco.sesion', '1')
 })
-afterEach(() => vi.restoreAllMocks())
+afterEach(() => {
+  vi.restoreAllMocks()
+  localStorage.clear()
+})
 
 async function llenarCredenciales(user: ReturnType<typeof userEvent.setup>, clave = 'clave-correcta') {
   await user.type(await screen.findByLabelText('Correo'), planificador.correo)
   await user.type(screen.getByLabelText('Contraseña'), clave)
   await user.click(screen.getByRole('button', { name: 'Continuar' }))
 }
+
+describe('Marca local de sesión (rendimiento del acceso)', () => {
+  it('sin marca no consulta la sesión y muestra el acceso de inmediato', async () => {
+    localStorage.clear()
+    const consulta = vi.spyOn(auth, 'obtenerSesion').mockResolvedValue(null)
+    render(<App />)
+    expect(await screen.findByRole('heading', { name: 'Iniciar sesión' })).toBeInTheDocument()
+    expect(consulta).not.toHaveBeenCalled()
+  })
+
+  it('una sesión vencida en el servidor borra la marca', async () => {
+    vi.spyOn(auth, 'obtenerSesion').mockResolvedValue(null)
+    render(<App />)
+    expect(await screen.findByRole('heading', { name: 'Iniciar sesión' })).toBeInTheDocument()
+    await waitFor(() => expect(localStorage.getItem('eco.sesion')).toBeNull())
+  })
+})
 
 describe('Acceso con MFA', () => {
   it('sin sesión muestra la pantalla de inicio de sesión', async () => {

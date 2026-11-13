@@ -45,10 +45,11 @@ export default defineConfig({
       },
     },
     {
-      command: 'npm run dev',
+      // Se prueba el build de PRODUCCIÓN (con Preact en lugar de React), el que realmente se publica.
+      command: 'npm run build && npx vite preview --port 3000 --strictPort',
       url: 'http://localhost:3000',
       reuseExistingServer: false,
-      timeout: 60_000,
+      timeout: 120_000,
       env: { VITE_API_URL: 'http://localhost:8000/api/v1' },
     },
   ],

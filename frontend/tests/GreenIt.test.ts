@@ -11,6 +11,14 @@ describe('Guardas Green IT (W3C WSG 1.0 pautas 1.2, 2.2 y 3.2)', () => {
     }
   })
 
+  it('el build de producción usa Preact (preact/compat) en lugar de React', () => {
+    const configuracion = leer('../vite.config.ts')
+    expect(configuracion).toContain("react: 'preact/compat'")
+    expect(configuracion).toContain("command === 'build'")
+    const { dependencies } = JSON.parse(leer('../package.json')) as { dependencies: Record<string, string> }
+    expect(Object.keys(dependencies)).toContain('preact')
+  })
+
   it('el logotipo se sirve en AVIF/WebP mediante <picture> y no como PNG original', () => {
     const logo = leer('../src/components/Logo.tsx')
     expect(logo).toContain('<picture>')
