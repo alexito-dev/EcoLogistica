@@ -62,6 +62,13 @@ test('Planificación y Conducción completan una ruta con una incidencia', async
   await expect(page.getByRole('heading', { name: /Incidencias abiertas \(0\)/ })).toBeVisible()
   await page.getByRole('button', { name: /Reoptimizar pendientes/ }).click()
   await expect(page.getByRole('status')).toContainText(/reordenaron|más corto/)
+
+  // Indicadores observados: solo con la entrega registrada por Conducción (ECO-14 y ECO-26).
+  await irA(page, 'Indicadores')
+  await page.getByLabel('Fecha de reparto').fill(fecha)
+  const observados = page.getByRole('article').filter({ has: page.getByRole('heading', { name: 'Resultados observados de la ejecución' }) })
+  await expect(observados).toContainText('puntualidad observada')
+  await expect(observados).toContainText(/1 de 6 entregadas|1 de \d+ entregadas/)
 })
 
 test('un conductor no puede abrir las vistas de Planificación', async ({ page }) => {

@@ -198,3 +198,33 @@ def test_reoptimizar_conserva_lo_ejecutado_y_es_idempotente(entorno):
     assert paradas[0]["pedidoId"] == primera and paradas[0]["estado"] == "ENTREGADO"
     assert [p["orden"] for p in paradas] == list(range(1, len(paradas) + 1))
     assert sorted(p["pedidoId"] for p in paradas) == sorted(p["pedidoId"] for p in ruta["paradas"])
+
+
+def test_indicadores_observados_solo_con_entregas_registradas(entorno):
+    ruta = entorno.preparar_rutas()
+    planificador, conductor = entorno.como(Rol.PLANIFICADOR), entorno.como(Rol.CONDUCTOR)
+    url = "/api/v1/indicadores/ejecucion"
+    vacio = planificador.get(url, params={"fecha": FECHA}).json()
+    assert vacio["entregadas"] == 0 and vacio["puntualidadPct"] is None and vacio["distanciaRecorridaKm"] == 0
+    total = sum(len(r["paradas"]) for r in entorno.guardadas.obtener(datetime(2026, 10, 10).date())["vista"]["rutas"])
+    assert vacio["paradas"] == total and vacio["pendientes"] == total
+
+    primera, segunda = ruta["paradas"][0]["pedidoId"], ruta["paradas"][-1]["pedidoId"]
+    estado(conductor, primera, "EN_RUTA")
+    estado(conductor, primera, "ENTREGADO")
+    if segunda != primera:
+        estado(conductor, segunda, "EN_RUTA")
+        estado(conductor, segunda, "INCIDENCIA", "Calle cerrada por obras")
+    datos = planificador.get(url, params={"fecha": FECHA}).json()
+    assert datos["entregadas"] == 1 and datos["cumplimientoPct"] > 0
+    # La ventana de los datos de demostración es futura respecto a la hora real: la entrega cuenta a tiempo.
+    assert datos["entregasATiempo"] + datos["entregasTarde"] == 1 and datos["puntualidadPct"] in (0.0, 100.0)
+    assert 0 < datos["distanciaRecorridaKm"] <= datos["distanciaPrevistaKm"]
+    assert 0 < datos["co2RecorridoKg"] <= datos["co2PrevistoKg"]
+    if segunda != primera:
+        assert datos["incidencias"] == 1
+
+
+def test_indicadores_observados_permisos_y_fecha_sin_rutas(entorno):
+    assert entorno.como(Rol.CONDUCTOR).get("/api/v1/indicadores/ejecucion", params={"fecha": FECHA}).status_code == 403
+    assert entorno.como(Rol.PLANIFICADOR).get("/api/v1/indicadores/ejecucion", params={"fecha": FECHA}).status_code == 404

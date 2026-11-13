@@ -1,9 +1,10 @@
-# Estándares de ingeniería de software y guía de desarrollo verde — EcoLogística Huancayo
+# ESTÁNDARES DE INGENIERÍA DE SOFTWARE Y GUÍA DE DESARROLLO VERDE (GREEN IT)
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.0.0 |
-| Fecha | 13/11/2026 |
+| **Versión** | 1.0.0 |
+| **Fecha** | 13 de noviembre de 2026 |
+| **Autor** | Equipo EcoLogística Huancayo — Zorrilla Apumayta, Alex Jesus; Anco Porras, Jhean Pier Julio; Hilario Talavera, Alexander Daniel; Vera Zea, Jhoanna Hade; Isidro Casio, Jose Luis |
 | Proyecto | EcoLogística Huancayo (React + Vite + TypeScript, FastAPI, PostgreSQL/PostGIS) |
 | Asignatura | Taller de Proyectos 2 — Inspección 04 (Semana 13) |
 | Documento complementario | [01 Informe de reducción del impacto ambiental](01%20Informe%20de%20reduccion%20del%20impacto%20ambiental%20V_1_0_0.md) |
@@ -12,9 +13,11 @@ Este documento fundamenta las 8 optimizaciones del informe en tres referencias i
 
 ---
 
-## 1. Normas internacionales aplicadas
+## 2. Estándares de Ingeniería de Software y Guía de Desarrollo Verde
 
-### 1.1 ISO/IEC 25010 — calidad del producto de software
+### 2.1 Relación de Estándares Internacionales Aplicados
+
+#### ISO/IEC 25010 (Calidad del Producto de Software)
 
 | Característica | Subcaracterística | Cómo se justifica en EcoLogística |
 |---|---|---|
@@ -25,7 +28,7 @@ Este documento fundamenta las 8 optimizaciones del informe en tres referencias i
 | Mantenibilidad | Analizabilidad | Pocas dependencias (6 de ejecución), reglas verificables por pruebas (`GreenIt.test.ts`, `test_green_it_consultas.py`). |
 | Mantenibilidad | Capacidad de ser probado | Cada optimización tiene una prueba automática que impide su regresión. |
 
-### 1.2 Green Software Foundation (GSF)
+#### Principios Green Software Foundation (GSF)
 
 Se adoptan los cuatro principios que la consigna enumera:
 
@@ -36,7 +39,7 @@ Se adoptan los cuatro principios que la consigna enumera:
 | Eficiencia de hardware | Menos JavaScript y menos CLS/TBT en el dispositivo del usuario, útil con equipos modestos o redes 2G/3G del valle del Mantaro (RES-06). |
 | Medición de la intensidad de carbono | Medir con Lighthouse y SWDM v4 en cada cambio (`green-audit.yml`) en lugar de suponer; el indicador SCI formal queda como trabajo futuro. |
 
-### 1.3 W3C Web Sustainability Guidelines (WSG 1.0)
+#### W3C Web Sustainability Guidelines (WSG 1.0)
 
 | Pauta (según la consigna) | Aplicación |
 |---|---|
@@ -46,26 +49,9 @@ Se adoptan los cuatro principios que la consigna enumera:
 
 ---
 
-## 2. Matriz de mapeo directo: estándares y optimizaciones
+### 2.2 Buenas Prácticas y Guía de Desarrollo Verde
 
-| # | Optimización aplicada (stack real) | Equivalente MERN | ISO/IEC 25010 | Principio GSF | Pauta W3C WSG 1.0 | Evidencia |
-|---|---|---|---|---|---|---|
-| 1 | SQL con columnas explícitas, sin ORM de hidratación e índices compuestos (PostgreSQL/PostGIS) | `.select()`, `.lean()`, índices MongoDB | Eficiencia — utilización de recursos | Eficiencia de energía | 3.1 Transferencia de datos | `postgres_repository.py`, migraciones, `test_green_it_consultas.py` |
-| 2 | Paginación `pagina`/`limite` de 12 en API y en la tabla de pedidos | `skip/limit` + React | Eficiencia — capacidad | Eficiencia de energía | 2.1 Eficiencia de la experiencia de usuario | `router.py`, `PaginaPedidos.tsx`, `medir_api_verde.py` |
-| 3 | Imágenes AVIF/WebP/PNG adaptativas con `<picture>` | WebP/AVIF + `<picture>` | Eficiencia — comportamiento temporal | Eficiencia de carbono | 1.2 Optimización de medios | `Logo.tsx`, `public/img/` |
-| 4 | `React.lazy`/`Suspense` por vista y build de producción con `NODE_ENV` fijado | Code splitting | Mantenibilidad — modularidad | Eficiencia de hardware | 2.4 Arquitectura de código | `App.tsx`, `scripts/build.mjs` |
-| 5 | Auditoría y depuración de dependencias; `Intl` nativo | Reemplazo de moment/lodash | Mantenibilidad — analizabilidad | Eficiencia de energía | 2.2 Código limpio y librerías | `package.json`, `fechas.ts`, `GreenIt.test.ts` |
-| 6 | SVG en línea (ilustraciones e íconos) y eliminación de solicitudes a recursos inexistentes | Inlining de SVG | Eficiencia — comportamiento temporal | Eficiencia de carbono | 3.2 Minimización de solicitudes HTTP | `Hero.tsx`, `styles.css`, `index.html` |
-| 7 | `ETag`, `Cache-Control` y 304; estáticos `immutable` en hosting | ETag Express + React Query | Eficiencia — comportamiento temporal | Eficiencia de energía | 2.4 Estrategias de caché | `cache_http.py`, `deploy/nginx.conf`, `test_cache_compresion.py` |
-| 8 | Compresión Brotli con respaldo Gzip (`BrotliMiddleware`) | `compression` de Express | Eficiencia — capacidad | Eficiencia de carbono | 3.1 Optimización de red | `main.py`, `test_cache_compresion.py` |
-
-Las ocho optimizaciones quedan vinculadas a una subcaracterística de ISO/IEC 25010, a un principio de la GSF y a una pauta WSG.
-
----
-
-## 3. Guía de desarrollo verde
-
-### 3.1 Principios de código limpio aplicados a lo verde
+#### Reglas arquitectónicas de código limpio (Clean Code, SOLID, DRY, YAGNI)
 
 | Principio | Regla para el backend (FastAPI) | Regla para el frontend (React) |
 |---|---|---|
@@ -74,16 +60,17 @@ Las ocho optimizaciones quedan vinculadas a una subcaracterística de ISO/IEC 25
 | **DRY** | Un solo middleware para ETag y uno para compresión, no lógica repetida por router; constantes compartidas (`PREFIJO_API`). | Un cliente HTTP único (`api/http.ts`), una constante `PEDIDOS_POR_PAGINA`, un componente `Logo` para todos los usos. |
 | **YAGNI** | No añadir cachés de aplicación, colas ni CDN hasta medir la necesidad; no cachear respuestas con sesión en cachés compartidas. | No añadir TanStack Query, Redux o librerías de fechas mientras `fetch` e `Intl` basten. |
 
-### 3.2 Normas para el backend
+#### Normas Backend (FastAPI / PostgreSQL)
 
 1. **Prohibido** `SELECT *` y entidades completas en listados; enumerar columnas (verificado por prueba).
+2. **Los filtros de fecha y estado se resuelven en SQL**, nunca descargando la tabla para filtrar en Python (`listar_por_ventana`).
 2. **Obligatorio** acotar todo listado con `LIMIT/OFFSET` y un máximo (`le=100`, valor por defecto 12).
 3. Todo filtro o criterio de orden frecuente debe tener índice, documentado en la migración correspondiente.
 4. Las respuestas JSON mayores a 1 KB se comprimen (Brotli o Gzip) mediante middleware.
 5. Las lecturas autenticadas devuelven `ETag` y `Cache-Control: private, no-cache`; **no** se emite `max-age` en datos por usuario.
 6. Dependencia nueva solo con justificación del impacto en instalación e imagen de despliegue.
 
-### 3.3 Normas para el frontend
+#### Normas Frontend (React)
 
 1. **Prohibido** subir imágenes PNG/JPG de más de 200 KB sin convertirlas a AVIF/WebP y servirlas con `<picture>`.
 2. Las imágenes bajo el pliegue usan `loading="lazy"`; las visibles al inicio, `decoding="async"` y `width/height` para evitar CLS.
@@ -93,7 +80,7 @@ Las ocho optimizaciones quedan vinculadas a una subcaracterística de ISO/IEC 25
 6. Los íconos y las ilustraciones decorativas se incluyen como SVG en línea o componentes, no como archivos separados.
 7. La compilación de producción se ejecuta siempre con `npm run build` (fija `NODE_ENV=production`); no se compila con `vite build` directo.
 
-### 3.4 Integración continua verde
+#### Integración en CI/CD Verde (GitHub Actions Workflow)
 
 El flujo [`.github/workflows/green-audit.yml`](../../../.github/workflows/green-audit.yml) se ejecuta en cada `push` a `main`, `sprint-*/**` y `feature/**`, y en cada `pull_request`:
 
@@ -119,7 +106,7 @@ jobs:
 
 A diferencia de la plantilla de la consigna, **el paso de Lighthouse no usa `|| true`**: si la interfaz supera los umbrales (rendimiento < 90, LCP > 1,4 s, TBT > 85 ms, CLS > 0,02 o peso > 1,1 MB), el flujo falla. Los umbrales se versionan en [`lighthouserc.json`](../../../lighthouserc.json) y se ejecutan en el perfil de escritorio, que es el que cumple la rúbrica. El flujo calcula además los gramos de CO₂e por visita con [`scripts/calcular_swdm.py`](../../../scripts/calcular_swdm.py) y publica los informes como artefacto.
 
-### 3.5 Revisión de cumplimiento (lista de verificación para cada PR)
+#### Lista de verificación para cada Pull Request
 
 - [ ] ¿Hay listados nuevos? Tienen paginación, índice y columnas explícitas.
 - [ ] ¿Hay imágenes nuevas? Están en AVIF/WebP y con dimensiones.
@@ -129,7 +116,24 @@ A diferencia de la plantilla de la consigna, **el paso de Lighthouse no usa `|| 
 
 ---
 
-## 4. Alcance y limitaciones
+### 2.3 Matriz de Mapeo Directo: Estándares vs. Optimizaciones
+
+| # | Optimización aplicada (stack real) | Equivalente MERN | ISO/IEC 25010 | Principio GSF | Pauta W3C WSG 1.0 | Evidencia |
+|---|---|---|---|---|---|---|
+| 1 | SQL con columnas explícitas, filtros en la base (`listar_por_ventana`) e índices compuestos (PostgreSQL/PostGIS) | `.select()`, `.lean()`, índices MongoDB | Eficiencia — utilización de recursos | Eficiencia de energía | 3.1 Transferencia de datos | `postgres_repository.py`, migraciones `20261113_02`, `test_green_it_consultas.py` |
+| 2 | Paginación `pagina`/`limite` de 12 en API y en la tabla de pedidos | `skip/limit` + React | Eficiencia — capacidad | Eficiencia de energía | 2.1 Eficiencia de la experiencia de usuario | `router.py`, `PaginaPedidos.tsx`, `medir_api_verde.py` |
+| 3 | Imágenes AVIF/WebP/PNG adaptativas con `<picture>` | WebP/AVIF + `<picture>` | Eficiencia — comportamiento temporal | Eficiencia de carbono | 1.2 Optimización de medios | `Logo.tsx`, `public/img/` |
+| 4 | `React.lazy`/`Suspense` por vista y build de producción con `NODE_ENV` fijado | Code splitting | Mantenibilidad — modularidad | Eficiencia de hardware | 2.4 Arquitectura de código | `App.tsx`, `scripts/build.mjs` |
+| 5 | Auditoría y depuración de dependencias; `Intl` nativo | Reemplazo de moment/lodash | Mantenibilidad — analizabilidad | Eficiencia de energía | 2.2 Código limpio y librerías | `package.json`, `fechas.ts`, `GreenIt.test.ts` |
+| 6 | SVG en línea (ilustraciones e íconos) y eliminación de solicitudes a recursos inexistentes | Inlining de SVG | Eficiencia — comportamiento temporal | Eficiencia de carbono | 3.2 Minimización de solicitudes HTTP | `Hero.tsx`, `styles.css`, `index.html` |
+| 7 | `ETag`, `Cache-Control` y 304; estáticos `immutable` en hosting | ETag Express + React Query | Eficiencia — comportamiento temporal | Eficiencia de energía | 2.4 Estrategias de caché | `cache_http.py`, `deploy/nginx.conf`, `test_cache_compresion.py` |
+| 8 | Compresión Brotli con respaldo Gzip (`BrotliMiddleware`) | `compression` de Express | Eficiencia — capacidad | Eficiencia de carbono | 3.1 Optimización de red | `main.py`, `test_cache_compresion.py` |
+
+Las ocho optimizaciones quedan vinculadas a una subcaracterística de ISO/IEC 25010, a un principio de la GSF y a una pauta WSG.
+
+---
+
+### 2.4 Alcance y limitaciones
 
 - La matriz demuestra **trazabilidad**, no certificación: no se realizó una evaluación formal de conformidad con ISO/IEC 25010 ni con la GSF.
 - El indicador SCI (Software Carbon Intensity) no se calculó; se mide el peso transferido con SWDM v4 como aproximación.
@@ -137,7 +141,7 @@ A diferencia de la plantilla de la consigna, **el paso de Lighthouse no usa `|| 
 
 ---
 
-## 5. Guía de comandos Git para la entrega de la documentación
+## 3. Guía de Comandos Git para Despliegue de Documentación
 
 Secuencia usada para crear la estructura, versionar ambos informes y sincronizarlos con GitHub. Las rutas y los nombres de archivo son los exigidos por la consigna (versión semántica `V_1_0_0`).
 

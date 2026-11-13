@@ -168,3 +168,36 @@ def test_conduccion_asignaciones_eventos_y_estado_del_pedido(engine_pg):
             conexion.execute(text("DELETE FROM pedidos WHERE id = :id"), {"id": pedido.id})
             conexion.execute(text("DELETE FROM ubicaciones WHERE id = :id"), {"id": pedido.id})
         _borrar_usuario(engine_pg, conductor)
+
+
+def test_listar_por_ventana_usa_el_dia_y_los_estados_en_la_base(engine_pg):
+    pedidos = PedidosPostgresRepository(engine_pg)
+    ambito = Ambito(-12.20, -11.95, -75.35, -75.10, ("Huancayo",))
+    base = datetime(2031, 3, 10, 13, tzinfo=timezone.utc)  # 08:00 en Lima
+    creados = []
+    try:
+        for i, desplazamiento in enumerate((0, 20, 40)):  # hoy, hoy (tarde) y pasado mañana
+            pedido = Pedido.crear(
+                codigo=f"VT-{uuid4().hex[:8].upper()}-{i}",
+                ubicacion=Ubicacion("Jr. Real 123", "Huancayo", -12.06, -75.20),
+                demanda_kg=5.0, demanda_m3=0.1, tiempo_servicio_min=5,
+                ventana_inicio=base + timedelta(hours=desplazamiento),
+                ventana_fin=base + timedelta(hours=desplazamiento + 2),
+                prioridad=2, ambito=ambito,
+            )
+            pedidos.guardar(pedido)
+            creados.append(pedido)
+        desde = datetime(2031, 3, 10, 5, tzinfo=timezone.utc)  # 00:00 en Lima
+        dia = pedidos.listar_por_ventana(desde, desde + timedelta(days=1), {EstadoPedido.PENDIENTE})
+        ids = {p.id for p in dia}
+        assert creados[0].id in ids and creados[1].id in ids and creados[2].id not in ids
+        assert [p.ventana_inicio for p in dia] == sorted(p.ventana_inicio for p in dia)
+        pedidos.actualizar_estado(creados[0].id, EstadoPedido.ENTREGADO)
+        sin_entregado = pedidos.listar_por_ventana(desde, desde + timedelta(days=1), {EstadoPedido.PENDIENTE})
+        assert creados[0].id not in {p.id for p in sin_entregado}
+        assert pedidos.listar_por_ventana(desde, desde + timedelta(days=1), set()) == []
+    finally:
+        with engine_pg.begin() as conexion:
+            for pedido in creados:
+                conexion.execute(text("DELETE FROM pedidos WHERE id = :id"), {"id": pedido.id})
+                conexion.execute(text("DELETE FROM ubicaciones WHERE id = :id"), {"id": pedido.id})

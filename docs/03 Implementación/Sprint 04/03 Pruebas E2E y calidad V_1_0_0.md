@@ -15,9 +15,10 @@ Las pruebas viven en [`frontend/e2e/`](../../../frontend/e2e/) y se configuran e
 |---|---|
 | `sprint4-conduccion` · transacción completa | Planificación guarda las rutas del día y asigna conductor a cada vehículo → Conducción abre «Mi ruta», sale hacia una parada, marca entregado, reporta una incidencia con descripción → Planificación ve la incidencia, la reprograma y reoptimiza las paradas pendientes |
 | `sprint4-conduccion` · permisos | Un conductor solo ve «Mi ruta» en el menú |
+| `verde` | Compresión Brotli/Gzip del listado, paginación de 12 y revalidación con `If-None-Match` en Chrome real |
 | `accesibilidad` | axe-core en 6 vistas × 2 temas; zoom 200 %; espaciado de texto; foco no oculto; segunda vía de navegación; cierre con `Esc` del globo del mapa |
 
-Resultado local del 13/11/2026: **9 de 9 aprobadas** en Google Chrome (≈ 4 min; el tiempo lo domina la espera de la siguiente ventana TOTP de 30 s, porque un código no puede reutilizarse).
+Resultado local del 13/11/2026: **10 de 10 aprobadas** en Google Chrome (≈ 4 min; el tiempo lo domina la espera de la siguiente ventana TOTP de 30 s, porque un código no puede reutilizarse).
 
 ## 2. Ejecución
 
@@ -39,9 +40,9 @@ El archivo [`.github/workflows/ci.yml`](../../../.github/workflows/ci.yml) tiene
 
 | Capa | Aprobadas | Omitidas | Observación |
 |---|---:|---:|---|
-| Backend (pytest) | 180 | 8 | Las omitidas son de PostgreSQL/PostGIS (`ECO_TEST_DATABASE_URL`); corren en CI |
-| Frontend (Vitest) | 125 | 0 | |
-| E2E (Playwright) | 9 | 0 | |
+| Backend (pytest) | 191 | 9 | Las omitidas son de PostgreSQL/PostGIS (`ECO_TEST_DATABASE_URL`); corren en CI |
+| Frontend (Vitest) | 127 | 0 | |
+| E2E (Playwright) | 10 | 0 | |
 
 ## 5. Límites
 

@@ -80,3 +80,28 @@ def test_un_rechazo_no_consume_correlativo(servicio):
     with pytest.raises(ReglaDominioError):
         servicio.registrar(_datos(ventanaFin="2026-10-05T07:00:00-05:00"))
     assert servicio.registrar(_datos()).codigo == "PED-000001"
+
+
+def test_listar_por_ventana_filtra_dia_de_lima_y_estado():
+    """El filtro de planificación se resuelve en el repositorio: borde del día en hora de Lima y estados."""
+    from datetime import datetime, timedelta, timezone
+    from dataclasses import replace
+
+    from app.pedidos.domain import EstadoPedido
+    from app.pedidos.memory_repository import PedidosMemoryRepository
+    from tests.pedidos.test_siembra import AMBITO
+    from app.pedidos.siembra import sembrar_pedidos_demo
+
+    lima = timezone(timedelta(hours=-5))
+    repo = PedidosMemoryRepository()
+    sembrar_pedidos_demo(repo, AMBITO, datetime(2026, 10, 9, 10, 0, tzinfo=lima))
+    desde = datetime(2026, 10, 10, 0, 0, tzinfo=lima)
+    dia = repo.listar_por_ventana(desde, desde + timedelta(days=1), {EstadoPedido.PENDIENTE})
+    assert len(dia) == 6
+    assert [p.ventana_inicio for p in dia] == sorted(p.ventana_inicio for p in dia)
+    assert repo.listar_por_ventana(desde, desde + timedelta(days=1), set()) == []
+    assert repo.listar_por_ventana(desde, desde + timedelta(days=1), {EstadoPedido.ENTREGADO}) == []
+    # El día anterior y el siguiente no incluyen estos pedidos.
+    assert repo.listar_por_ventana(desde - timedelta(days=1), desde, {EstadoPedido.PENDIENTE}) == []
+    repo._por_id[dia[0].id] = replace(dia[0], estado=EstadoPedido.ENTREGADO)
+    assert len(repo.listar_por_ventana(desde, desde + timedelta(days=1), {EstadoPedido.PENDIENTE})) == 5

@@ -52,7 +52,7 @@ describe('PaginaIndicadores', () => {
     expect(screen.getByText('El Tambo')).toBeInTheDocument()
     expect(screen.getByText('Reducción estimada de CO₂e')).toBeInTheDocument()
     expect(screen.getByText('Puntualidad prevista')).toBeInTheDocument()
-    expect(screen.getByText(/no representan entregas realizadas ni ahorro ambiental medido/)).toBeInTheDocument()
+    expect(screen.getByText(/resultados observados con las entregas que Conducción registró/)).toBeInTheDocument()
     expect(screen.getByText('Urgente')).toBeInTheDocument()
     expect(screen.getByText('Eléctrico')).toBeInTheDocument()
     // Los estados sin pedidos no ocupan una fila.
@@ -128,5 +128,34 @@ describe('Indicadores: condiciones de error, filtros y valores límite', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Reintentar' }))
     await screen.findByText('El Tambo')
     expect(obtener).toHaveBeenCalledTimes(2)
+  })
+})
+
+describe('resultados observados (ECO-14 y ECO-26)', () => {
+  const ejecucion: api.Ejecucion = {
+    fecha: '2026-10-10', paradas: 6, entregadas: 3, incidencias: 1, canceladas: 0, reprogramadas: 0, pendientes: 2,
+    entregasATiempo: 2, entregasTarde: 1, puntualidadPct: 66.7, cumplimientoPct: 50,
+    distanciaRecorridaKm: 12.5, distanciaPrevistaKm: 30, co2RecorridoKg: 2.1, co2PrevistoKg: 5,
+  }
+
+  it('muestra puntualidad, cumplimiento, recorrido y CO₂e observados', async () => {
+    vi.spyOn(api, 'obtenerIndicadores').mockResolvedValue(datos)
+    vi.spyOn(api, 'obtenerEjecucion').mockResolvedValue(ejecucion)
+    render(<PaginaIndicadores />)
+    const seccion = (await screen.findByRole('heading', { name: 'Resultados observados de la ejecución' })).closest('article')!
+    expect(seccion).toHaveTextContent(/66[.,]7 % puntualidad observada/)
+    expect(seccion).toHaveTextContent('3 de 6 entregadas')
+    expect(seccion).toHaveTextContent(/12[.,]5 km recorridos/)
+    expect(seccion).toHaveTextContent(/2[.,]1 kg CO₂e emitidos/)
+  })
+
+  it('no inventa porcentajes cuando no hay entregas o rutas', async () => {
+    vi.spyOn(api, 'obtenerIndicadores').mockResolvedValue(datos)
+    const observados = vi.spyOn(api, 'obtenerEjecucion').mockResolvedValue({ ...ejecucion, entregadas: 0, puntualidadPct: null })
+    render(<PaginaIndicadores />)
+    expect(await screen.findByText(/ninguna entrega registrada todavía/)).toBeInTheDocument()
+    observados.mockResolvedValue(null)
+    await userEvent.setup().click(screen.getByRole('button', { name: /Actualizar/ }))
+    expect(await screen.findByText(/no hay resultados observados/)).toBeInTheDocument()
   })
 })

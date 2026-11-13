@@ -29,7 +29,9 @@ Especificación: [`openspec/specs/conduccion/spec.md`](../../../openspec/specs/c
 | Cuentas y rutas en archivos JSON locales | ECO-21 | Migración `20261113_01`: tablas `usuarios`, `intentos_acceso`, `rutas_guardadas`, `asignaciones_ruta`, `eventos_parada`; adaptadores PostgreSQL; se usan cuando existe `DATABASE_URL` | Implementado y **verificado en GitHub Actions** con PostGIS real: migración aplicada, revertida y reaplicada, y pruebas de integración de cuentas, TOTP cifrado, rutas y conducción en verde (commit `1d57b0d`) |
 | Secretos TOTP sin cifrar en reposo | ECO-21 | Cifrado Fernet (`TOTP_CLAVE_CIFRADO`); la API exige la clave si hay base de datos; prueba que el valor guardado no contiene el secreto y que otra clave no lo descifra | Implementado |
 | Accesibilidad WCAG 2.2 AA por debajo de 90 % | ECO-24 | Criterios 1.4.4, 1.4.12, 1.4.13, 2.4.5 y 2.4.11 verificados con pruebas en navegador; mapa de navegación como segunda vía; `axe-core` en todas las vistas | Verificado; ver [02 Accesibilidad](02%20Accesibilidad%20WCAG%202.2%20V_1_0_0.md) |
-| E2E con Playwright y CI | ECO-27 | Suite de 9 pruebas E2E + trabajo `e2e` en `ci.yml` | Verificado localmente (9/9) y en GitHub Actions (trabajo `e2e` en verde) |
+| E2E con Playwright y CI | ECO-27 | Suite de 10 pruebas E2E + trabajo `e2e` en `ci.yml` | Verificado localmente (9/9) y en GitHub Actions (trabajo `e2e` en verde) |
+| Indicadores de entregas reales | ECO-14 y ECO-26 | `GET /indicadores/ejecucion` y sección «Resultados observados» en Indicadores: puntualidad observada, cumplimiento, incidencias, recorrido y CO₂e solo con avances registrados; sin entregas no se muestran porcentajes | Implementado; la distancia se estima por tramos (no hay GPS) |
+| Consulta de planificación eficiente | Green IT | `listar_por_ventana` filtra fecha y estado en la base con el índice `ix_pedidos_estado_ventana` (migración `20261113_02`) | Implementado; verificado en CI con PostGIS |
 | Mapa para Conducción | ECO-13 / HU-005 | Vista «Mi ruta» con mapa y paradas | Implementado |
 | Estados de entrega | HU-010 | Vista «Mi ruta» y eventos de parada | Implementado |
 | Reenrutamiento operativo | ECO-15 / HU-006 | Reprogramar incidencias y reoptimizar pendientes (vecino más cercano desde la última entrega) | Implementado con alcance acotado; no es el motor VRPTW completo (EN-001) |
@@ -37,10 +39,10 @@ Especificación: [`openspec/specs/conduccion/spec.md`](../../../openspec/specs/c
 
 ## 3. Cómo se verificó
 
-- **Backend:** 180 pruebas aprobadas y 8 omitidas (las de PostgreSQL/PostGIS requieren `ECO_TEST_DATABASE_URL`; corren en el job `cobertura-integral` de CI).
+- **Backend:** 191 pruebas aprobadas y 9 omitidas (las de PostgreSQL/PostGIS requieren `ECO_TEST_DATABASE_URL`; corren en el job `cobertura-integral` de CI).
 - **GitHub Actions (13/11/2026):** CI y Green IT concluyeron con éxito sobre `1d57b0d`.
-- **Frontend:** 125 pruebas aprobadas; `tsc -b`, linter y compilación de producción sin errores ni advertencias.
-- **E2E (navegador real, API real):** 9 de 9 aprobadas, incluido el recorrido Planificación → Conducción → incidencia → Planificación.
+- **Frontend:** 127 pruebas aprobadas; `tsc -b`, linter y compilación de producción sin errores ni advertencias.
+- **E2E (navegador real, API real):** 10 de 10 aprobadas, incluido el recorrido Planificación → Conducción → incidencia → Planificación → indicadores observados, y la comprobación de compresión y `If-None-Match`.
 - **Green IT:** `lhci autorun` aprobado con los umbrales de `lighthouserc.json`, localmente y en GitHub Actions.
 
 ## 4. Límites y trabajo que sigue abierto

@@ -3,13 +3,17 @@
 from datetime import date
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 
 from app.auth.dependencias import requerir_rol
 from app.auth.domain import Rol
 from app.flota.repository import FlotaRepository
 from app.flota.router import get_repositorio_flota
-from app.indicadores.schemas import IndicadoresOut
+from app.conduccion.router import get_repositorio_conduccion
+from app.conduccion.repository import ConduccionRepository
+from app.indicadores.ejecucion import EjecucionNoDisponibleError, calcular_ejecucion
+from app.indicadores.schemas import EjecucionOut, IndicadoresOut
+from app.rutas.router import get_repositorio_guardadas
 from app.indicadores.service import IndicadoresService
 from app.pedidos.repository import PedidosRepository
 from app.pedidos.router import get_repositorio
@@ -48,3 +52,30 @@ def indicadores(
     fecha: Annotated[date, Query(description="Fecha de reparto (AAAA-MM-DD)")],
 ) -> IndicadoresOut:
     return IndicadoresOut.desde_dominio(servicio.calcular(fecha))
+
+
+@router.get(
+    "/ejecucion",
+    response_model=EjecucionOut,
+    summary="Indicadores observados de la ejecución de rutas",
+    description=(
+        "Puntualidad, cumplimiento, incidencias, recorrido y CO₂e calculados solo con los avances que Conducción "
+        "registró. La distancia se estima por tramos completados (no hay GPS). Sin entregas, los porcentajes son nulos."
+    ),
+    responses={
+        400: {"model": ErrorOut, "description": "Fecha con formato inválido"},
+        401: {"model": ErrorOut, "description": "Sin sesión válida"},
+        403: {"model": ErrorOut, "description": "Rol sin permiso"},
+        404: {"model": ErrorOut, "description": "No hay rutas guardadas para la fecha"},
+    },
+    dependencies=[Depends(requerir_rol(Rol.PLANIFICADOR, Rol.ADMIN, Rol.GERENTE))],
+)
+def ejecucion(
+    guardadas: Annotated[object, Depends(get_repositorio_guardadas)],
+    conduccion: Annotated[ConduccionRepository, Depends(get_repositorio_conduccion)],
+    fecha: Annotated[date, Query(description="Fecha de reparto (AAAA-MM-DD)")],
+) -> EjecucionOut:
+    try:
+        return EjecucionOut.model_validate(calcular_ejecucion(guardadas, conduccion, fecha))
+    except EjecucionNoDisponibleError as error:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No hay rutas guardadas para esta fecha") from error

@@ -113,3 +113,23 @@ class IndicadoresOut(_Base):
                 ),
             ),
         )
+
+
+class EjecucionOut(_Base):
+    """Indicadores observados con los avances registrados por Conducción (ECO-14, ECO-26)."""
+
+    fecha: date
+    paradas: int
+    entregadas: int
+    incidencias: int
+    canceladas: int
+    reprogramadas: int
+    pendientes: int
+    entregas_a_tiempo: int
+    entregas_tarde: int
+    puntualidad_pct: float | None
+    cumplimiento_pct: float | None
+    distancia_recorrida_km: float
+    distancia_prevista_km: float
+    co2_recorrido_kg: float
+    co2_previsto_kg: float

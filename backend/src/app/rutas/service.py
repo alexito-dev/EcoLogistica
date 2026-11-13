@@ -1,6 +1,6 @@
 """Caso de uso: armar la vista previa de rutas de una fecha con los pedidos y la flota registrados."""
 
-from datetime import date
+from datetime import date, datetime, time, timedelta
 
 from app.flota.repository import FlotaRepository
 from app.pedidos.domain import EstadoPedido, Pedido
@@ -9,7 +9,6 @@ from app.rutas.planificador import LIMA, Propuesta, Punto, planificar
 
 # Solo se planifican pedidos que aún no salieron a reparto.
 ESTADOS_PLANIFICABLES = {EstadoPedido.PENDIENTE, EstadoPedido.VALIDADO}
-_LOTE = 100
 
 
 class RutasService:
@@ -19,18 +18,10 @@ class RutasService:
         self._deposito = deposito
 
     def pedidos_del_dia(self, fecha: date) -> list[Pedido]:
-        encontrados: list[Pedido] = []
-        pagina = 1
-        while True:
-            lote, total = self._pedidos.listar(None, pagina, _LOTE)
-            encontrados += [
-                p
-                for p in lote
-                if p.estado in ESTADOS_PLANIFICABLES and p.ventana_inicio.astimezone(LIMA).date() == fecha
-            ]
-            if pagina * _LOTE >= total or not lote:
-                return encontrados
-            pagina += 1
+        # El día se define en hora de Lima; el filtro por fecha y estado lo resuelve el repositorio (índice
+        # `ix_pedidos_estado_ventana`) en lugar de recorrer todos los pedidos en Python.
+        desde = datetime.combine(fecha, time.min, tzinfo=LIMA)
+        return self._pedidos.listar_por_ventana(desde, desde + timedelta(days=1), ESTADOS_PLANIFICABLES)
 
     def vista_previa(self, fecha: date) -> tuple[Propuesta, int]:
         vehiculos = [v for v in self._flota.listar(fecha) if v.elegible_para_planificar]

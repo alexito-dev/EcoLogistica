@@ -1,0 +1,7 @@
+pedidos sintéticos: 100
+ANTES   (100 registros, sin compresión): 48647 B
+DESPUÉS (12 registros, br): 728 B
+REVALIDACIÓN (304 con ETag): 0 B, estado 304
+Reducción: 98.5 %
+Tiempo de respuesta (mediana, en proceso): ANTES 9.19 ms | DESPUÉS 7.80 ms | 304 7.10 ms
+Mejora del tiempo de respuesta: 15.2 %

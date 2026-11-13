@@ -21,5 +21,5 @@ def test_listados_estan_acotados_con_limit_y_offset():
 
 
 def test_filtros_frecuentes_tienen_indice():
-    for indice in ("ix_pedidos_estado_creado", "ix_vehiculos_estado_placa", "ix_disponibilidad_fecha_estado", "ix_ubicaciones_punto"):
+    for indice in ("ix_pedidos_estado_creado", "ix_vehiculos_estado_placa", "ix_disponibilidad_fecha_estado", "ix_ubicaciones_punto", "ix_pedidos_estado_ventana"):
         assert indice in MIGRACIONES

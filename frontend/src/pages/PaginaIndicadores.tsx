@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { CircleAlert, Clock, Gauge, Leaf, PackageCheck, RefreshCw } from 'lucide-react'
 import { ApiError } from '../api/http'
-import { obtenerIndicadores, type Indicadores } from '../api/indicadores'
+import { obtenerEjecucion, obtenerIndicadores, type Ejecucion, type Indicadores } from '../api/indicadores'
 import Hero from '../components/Hero'
 import StatCard from '../components/StatCard'
 import { ETIQUETA_COMBUSTIBLE, ETIQUETA_ESTADO, ETIQUETA_PRIORIDAD, formatoNumero } from '../lib/estados'
@@ -39,13 +39,17 @@ function Barras({ filas, unidad = '' }: { filas: Barra[]; unidad?: string }) {
 export default function PaginaIndicadores() {
   const [fecha, setFecha] = useState(() => fechaLocal(1))
   const [datos, setDatos] = useState<Indicadores | null>(null)
+  const [ejecucion, setEjecucion] = useState<Ejecucion | null>(null)
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
 
   const consultar = useCallback(
     () =>
-      obtenerIndicadores(fecha)
-        .then(setDatos)
+      Promise.all([obtenerIndicadores(fecha), obtenerEjecucion(fecha).catch(() => null)])
+        .then(([indicadores, observados]) => {
+          setDatos(indicadores)
+          setEjecucion(observados)
+        })
         .catch((e: unknown) => setError(e instanceof ApiError ? e.message : 'No se pudieron calcular los indicadores.'))
         .finally(() => setCargando(false)),
     [fecha],
@@ -72,7 +76,7 @@ export default function PaginaIndicadores() {
     <>
       <Hero
         titulo="Indicadores"
-        subtitulo="Estimaciones de planificación: no representan entregas realizadas ni ahorro ambiental medido."
+        subtitulo="Estimaciones de planificación y, aparte, resultados observados con las entregas que Conducción registró."
         accion={
           <div className="rutas-filtro">
             <label>
@@ -122,6 +126,44 @@ export default function PaginaIndicadores() {
                 { etiqueta: 'Propuesta estimada', valor: dia.co2Kg },
               ]}
             />
+          </article>
+
+          <article className="tarjeta indicador indicador--ancho" aria-labelledby="titulo-observados">
+            <h2 id="titulo-observados">Resultados observados de la ejecución</h2>
+            {!ejecucion ? (
+              <p className="indicador__nota">Aún no hay rutas guardadas para esta fecha: no hay resultados observados.</p>
+            ) : ejecucion.entregadas === 0 ? (
+              <p className="indicador__nota">
+                Hay {ejecucion.paradas} paradas planificadas y ninguna entrega registrada todavía; no se muestran
+                porcentajes de puntualidad ni emisiones recorridas.
+              </p>
+            ) : (
+              <>
+                <p className="indicador__nota">
+                  Calculado solo con entregas registradas por Conducción. La distancia se estima por tramos completados
+                  (no hay GPS).
+                </p>
+                <ul className="observados">
+                  <li>
+                    <strong>{formatoNumero(ejecucion.puntualidadPct ?? 0)} %</strong> puntualidad observada (
+                    {ejecucion.entregasATiempo} a tiempo, {ejecucion.entregasTarde} tarde)
+                  </li>
+                  <li>
+                    <strong>{ejecucion.entregadas}</strong> de {ejecucion.paradas} entregadas (
+                    {formatoNumero(ejecucion.cumplimientoPct ?? 0)} %); {ejecucion.incidencias} con incidencia,{' '}
+                    {ejecucion.canceladas} canceladas, {ejecucion.reprogramadas} reprogramadas
+                  </li>
+                  <li>
+                    <strong>{formatoNumero(ejecucion.distanciaRecorridaKm)} km</strong> recorridos de{' '}
+                    {formatoNumero(ejecucion.distanciaPrevistaKm)} km previstos
+                  </li>
+                  <li>
+                    <strong>{formatoNumero(ejecucion.co2RecorridoKg)} kg CO₂e</strong> emitidos de{' '}
+                    {formatoNumero(ejecucion.co2PrevistoKg)} kg previstos para toda la ruta
+                  </li>
+                </ul>
+              </>
+            )}
           </article>
 
           <article className="tarjeta indicador">

@@ -60,3 +60,23 @@ La interfaz MUST mostrar a cada rol solo las vistas que puede abrir: `PLANIFICAD
 
 - **WHEN** una persona `GERENTE` inicia sesión
 - **THEN** la interfaz abre Indicadores y el menú no ofrece Pedidos, Flota ni Rutas
+
+### Requirement: Mostrar resultados observados de la ejecución
+
+El sistema SHALL permitir a `PLANIFICADOR`, `ADMIN` y `GERENTE` consultar, para una fecha con rutas guardadas, los resultados observados con los avances que Conducción registró: paradas por estado, entregas a tiempo y tarde, cumplimiento, distancia recorrida estimada por tramos completados y CO₂e proporcional a esa distancia. Cuando no existan entregas registradas, la puntualidad y el cumplimiento MUST ser nulos y el sistema MUST NOT presentar cifras estimadas como observadas. Si la fecha no tiene rutas guardadas, el sistema MUST responder 404, y MUST denegar los demás roles.
+
+#### Scenario: Sin entregas registradas
+
+- **WHEN** se consultan los resultados observados de una fecha con rutas guardadas pero sin entregas
+- **THEN** el sistema responde 200 con puntualidad nula, distancia y CO₂e recorridos iguales a cero y todas las paradas pendientes
+
+#### Scenario: Con entregas registradas
+
+- **WHEN** Conducción registró al menos una entrega
+- **THEN** la respuesta cuenta las entregas a tiempo y tarde según la ventana de cada parada, y la distancia y el CO₂e recorridos no superan los previstos
+
+#### Scenario: Fecha sin rutas o rol sin permiso
+
+- **WHEN** la fecha no tiene rutas guardadas, o la consulta la hace un rol distinto de los permitidos
+- **THEN** el sistema responde 404 o 403 respectivamente
+

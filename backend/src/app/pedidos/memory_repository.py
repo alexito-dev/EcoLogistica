@@ -2,6 +2,7 @@
 
 from dataclasses import replace
 from datetime import datetime, timezone
+from collections.abc import Collection
 from threading import Lock
 from uuid import UUID
 
@@ -21,6 +22,12 @@ class PedidosMemoryRepository:
                 raise CodigoDuplicadoError(pedido.codigo)
             self._por_id[pedido.id] = pedido
             self._id_por_codigo[pedido.codigo] = pedido.id
+
+    def listar_por_ventana(self, desde: datetime, hasta: datetime, estados: Collection[EstadoPedido]) -> list[Pedido]:
+        with self._lock:
+            pedidos = list(self._por_id.values())
+        elegidos = [p for p in pedidos if desde <= p.ventana_inicio < hasta and p.estado in estados]
+        return sorted(elegidos, key=lambda p: (p.ventana_inicio, p.codigo))
 
     def actualizar_estado(self, pedido_id: UUID, estado: EstadoPedido) -> None:
         with self._lock:

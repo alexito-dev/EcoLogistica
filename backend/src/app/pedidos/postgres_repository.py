@@ -1,6 +1,7 @@
 """PostgreSQL/PostGIS adapter for the order repository."""
 
-from collections.abc import Mapping
+from collections.abc import Collection, Mapping
+from datetime import datetime
 from uuid import UUID
 
 from sqlalchemy import Engine, text
@@ -80,6 +81,28 @@ class PedidosPostgresRepository:
             if self.obtener_por_codigo(pedido.codigo) is not None:
                 raise CodigoDuplicadoError(pedido.codigo) from error
             raise
+
+    def listar_por_ventana(self, desde: datetime, hasta: datetime, estados: Collection[EstadoPedido]) -> list[Pedido]:
+        # El filtro por fecha y estado se resuelve en la base con el índice (estado, ventana_inicio):
+        # no se descargan todos los pedidos para descartarlos en Python.
+        if not estados:
+            return []
+        marcadores = {f"e{i}": estado.value for i, estado in enumerate(sorted(estados, key=lambda e: e.value))}
+        lista = ", ".join(f"CAST(:{clave} AS estado_pedido)" for clave in marcadores)
+        with self._engine.connect() as connection:
+            filas = (
+                connection.execute(
+                    text(
+                        _SELECT_PEDIDO
+                        + f" WHERE p.ventana_inicio >= :desde AND p.ventana_inicio < :hasta AND p.estado IN ({lista})"
+                        + " ORDER BY p.ventana_inicio, p.codigo"
+                    ),
+                    {"desde": desde, "hasta": hasta, **marcadores},
+                )
+                .mappings()
+                .all()
+            )
+        return [self._desde_fila(fila) for fila in filas]
 
     def actualizar_estado(self, pedido_id: UUID, estado: EstadoPedido) -> None:
         with self._engine.begin() as connection:

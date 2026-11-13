@@ -6,7 +6,9 @@ Uso: python scripts/medir_api_verde.py [cantidad_de_pedidos]   (datos sintético
 """
 
 import os
+import statistics
 import sys
+import time
 import tempfile
 from pathlib import Path
 
@@ -33,6 +35,18 @@ PEDIDO = {
 }
 
 
+def mediana_ms(funcion, repeticiones: int = 40) -> float:
+    """Mediana en milisegundos de una llamada (se descartan 5 de calentamiento)."""
+    for _ in range(5):
+        funcion()
+    muestras = []
+    for _ in range(repeticiones):
+        inicio = time.perf_counter()
+        funcion()
+        muestras.append((time.perf_counter() - inicio) * 1000)
+    return statistics.median(muestras)
+
+
 def main() -> None:
     cantidad = int(sys.argv[1]) if len(sys.argv) > 1 else 100
     repo = PedidosMemoryRepository()
@@ -55,6 +69,13 @@ def main() -> None:
         print(f"DESPUÉS (12 registros, {primera.headers.get('content-encoding', 'sin compresión')}): {bytes_despues} B")
         print(f"REVALIDACIÓN (304 con ETag): {len(revalidada.content)} B, estado {revalidada.status_code}")
         print(f"Reducción: {100 * (1 - bytes_despues / bytes_antes):.1f} %")
+        t_antes = mediana_ms(lambda: c.get(BASE, params={"limite": 100}, headers={"Accept-Encoding": "identity"}))
+        t_despues = mediana_ms(lambda: c.get(BASE, params={"pagina": 1, "limite": 12}, headers={"Accept-Encoding": "br"}))
+        t_304 = mediana_ms(
+            lambda: c.get(BASE, params={"pagina": 1, "limite": 12}, headers={"Accept-Encoding": "br", "If-None-Match": etag})
+        )
+        print(f"Tiempo de respuesta (mediana, en proceso): ANTES {t_antes:.2f} ms | DESPUÉS {t_despues:.2f} ms | 304 {t_304:.2f} ms")
+        print(f"Mejora del tiempo de respuesta: {100 * (1 - t_despues / t_antes):.1f} %")
     app.dependency_overrides.clear()
 
 
