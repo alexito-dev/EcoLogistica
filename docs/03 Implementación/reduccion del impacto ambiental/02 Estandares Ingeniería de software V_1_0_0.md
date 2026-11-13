@@ -134,3 +134,33 @@ A diferencia de la plantilla de la consigna, **el paso de Lighthouse no usa `|| 
 - La matriz demuestra **trazabilidad**, no certificación: no se realizó una evaluación formal de conformidad con ISO/IEC 25010 ni con la GSF.
 - El indicador SCI (Software Carbon Intensity) no se calculó; se mide el peso transferido con SWDM v4 como aproximación.
 - La caché de estáticos inmutable y la compresión Brotli de estáticos dependen del servidor de hosting, aún no definido para el despliegue (`deploy/nginx.conf` es una referencia).
+
+---
+
+## 5. Guía de comandos Git para la entrega de la documentación
+
+Secuencia usada para crear la estructura, versionar ambos informes y sincronizarlos con GitHub. Las rutas y los nombres de archivo son los exigidos por la consigna (versión semántica `V_1_0_0`).
+
+```bash
+# 1. Verificar el estado actual del repositorio
+git status
+
+# 2. Crear las carpetas de destino en la ruta exacta
+mkdir -p "docs/03 Implementación/reduccion del impacto ambiental"
+
+# 3. Los dos archivos Markdown quedan en esa carpeta:
+#    - 01 Informe de reduccion del impacto ambiental V_1_0_0.md
+#    - 02 Estandares Ingeniería de software V_1_0_0.md
+
+# 4. Añadir la carpeta y los documentos al área de preparación (staging)
+git add "docs/03 Implementación/reduccion del impacto ambiental/"
+
+# 5. Registrar el commit que formaliza la documentación
+git commit -m "docs(green-it): add performance optimization reports and software engineering standards"
+
+# 6. Sincronizar con el repositorio remoto
+git push origin sprint-4/green-it-calidad
+```
+
+**Variación respecto a la plantilla.** La plantilla termina con `git push origin main`. En este proyecto el flujo es de ramas cortas con Pull Request y CI obligatorio (ver GitFlow del Sprint 03), por lo que el `push` se hace a la rama `sprint-4/green-it-calidad` y la integración a `main` se realiza mediante Pull Request una vez que el CI pasa.
+
