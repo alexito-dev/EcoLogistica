@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { CheckCircle2, CircleAlert, MapPinned, RefreshCw, Shuffle, TriangleAlert } from 'lucide-react'
 import {
   asignarConductor,
@@ -20,11 +20,27 @@ export default function PaginaSeguimiento() {
   const [ocupada, setOcupada] = useState(false)
   const [error, setError] = useState('')
   const [aviso, setAviso] = useState('')
+  // Planificación suele guardar las rutas del día siguiente: si hoy no hay, se ofrece mañana (heurística 1 de Nielsen).
+  const buscarCercana = useRef(true)
+  const [confirmando, setConfirmando] = useState<string | null>(null)
 
   const cargar = useCallback(
     () =>
       obtenerSeguimiento(fecha)
-        .then(setDatos)
+        .then(async (d) => {
+          if (!d && buscarCercana.current) {
+            buscarCercana.current = false
+            const manana = fechaLocal(1)
+            const siguiente = await obtenerSeguimiento(manana)
+            if (siguiente) {
+              setFecha(manana)
+              setAviso(`No hay rutas para hoy; se muestra el ${fechaCorta(manana)}, que tiene rutas guardadas.`)
+              setDatos(siguiente)
+              return
+            }
+          }
+          setDatos(d)
+        })
         .catch((e: unknown) => setError(e instanceof ApiError ? e.message : 'No se pudo cargar el seguimiento.'))
         .finally(() => setCargando(false)),
     [fecha],
@@ -48,6 +64,7 @@ export default function PaginaSeguimiento() {
 
   const cambiarFecha = (valor: string) => {
     if (!valor) return
+    buscarCercana.current = false
     setCargando(true)
     setError('')
     setAviso('')
@@ -132,20 +149,39 @@ export default function PaginaSeguimiento() {
                       {i.actualizadoEn ? ` · ${isoAHoraLima(i.actualizadoEn)}` : ''}
                     </p>
                     <p className="parada-ejecucion__nota">{i.nota}</p>
-                    <button
-                      type="button"
-                      className="boton boton--secundario boton--chico"
-                      disabled={ocupada}
-                      aria-label={`Reprogramar pedido ${i.codigo}`}
-                      onClick={() =>
-                        void ejecutar(async () => {
-                          await reprogramarParada(i.pedidoId, fecha)
-                          return `Pedido ${i.codigo} reprogramado: volvió a Pendiente para planificarlo de nuevo.`
-                        })
-                      }
-                    >
-                      <RefreshCw size={14} aria-hidden="true" /> Reprogramar
-                    </button>
+                    {confirmando === i.pedidoId ? (
+                      <div className="parada-ejecucion__acciones">
+                        <span>¿Devolver el pedido a Pendiente? Esta incidencia quedará cerrada.</span>
+                        <button
+                          type="button"
+                          className="boton boton--primario boton--chico"
+                          disabled={ocupada}
+                          aria-label={`Confirmar reprogramación del pedido ${i.codigo}`}
+                          onClick={() =>
+                            void ejecutar(async () => {
+                              await reprogramarParada(i.pedidoId, fecha)
+                              setConfirmando(null)
+                              return `Pedido ${i.codigo} reprogramado: volvió a Pendiente para planificarlo de nuevo.`
+                            })
+                          }
+                        >
+                          Confirmar
+                        </button>
+                        <button type="button" className="boton boton--secundario boton--chico" onClick={() => setConfirmando(null)}>
+                          Cancelar
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        type="button"
+                        className="boton boton--secundario boton--chico"
+                        disabled={ocupada}
+                        aria-label={`Reprogramar pedido ${i.codigo}`}
+                        onClick={() => setConfirmando(i.pedidoId)}
+                      >
+                        <RefreshCw size={14} aria-hidden="true" /> Reprogramar
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>

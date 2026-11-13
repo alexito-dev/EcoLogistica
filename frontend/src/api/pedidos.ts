@@ -1,6 +1,6 @@
 /** Cliente de la API de pedidos. Las reglas de negocio las decide el backend. */
 
-import { solicitar } from './http'
+import { API_URL, ApiError, solicitar } from './http'
 
 export { ApiError } from './http'
 
@@ -69,4 +69,21 @@ export function listarPedidos(
 ): Promise<ListadoPedidos> {
   const filtro = estado ? `&estado=${estado}` : ''
   return solicitar<ListadoPedidos>(`/pedidos?pagina=${pagina}&limite=${limite}${filtro}`)
+}
+
+export interface ResultadoImportacion {
+  importados: number
+  codigos: string[]
+}
+
+/** Importa pedidos desde el contenido de la plantilla CSV (todo o nada; ECO-18). */
+export function importarPedidos(contenido: string): Promise<ResultadoImportacion> {
+  return solicitar<ResultadoImportacion>('/pedidos/importar', { method: 'POST', body: JSON.stringify({ contenido }) })
+}
+
+/** Texto de la plantilla CSV con los encabezados esperados. */
+export async function obtenerPlantilla(): Promise<string> {
+  const respuesta = await fetch(`${API_URL}/pedidos/plantilla`, { credentials: 'include' })
+  if (!respuesta.ok) throw new ApiError(respuesta.status, 'No se pudo descargar la plantilla.')
+  return respuesta.text()
 }

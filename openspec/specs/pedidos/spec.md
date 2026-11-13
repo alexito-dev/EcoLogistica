@@ -146,3 +146,23 @@ El formulario de registro SHALL incluir un mapa Leaflet con teselas de OpenStree
 
 - **WHEN** el mapa no está disponible o el planificador usa solo el teclado
 - **THEN** puede registrar el pedido escribiendo latitud y longitud en sus campos
+
+### Requirement: Importar pedidos desde una plantilla
+
+El sistema SHALL permitir a una persona con rol `PLANIFICADOR` descargar una plantilla CSV e importar hasta 500 pedidos de un archivo de hasta 1 MB. La importación MUST ser de todo o nada: el sistema MUST validar cada fila con las mismas reglas del registro individual, MUST registrar los pedidos solo si ninguna fila tiene errores y, si los hay, MUST responder 422 indicando la fila y la columna de cada error sin registrar ninguno. El sistema MUST aceptar coma o punto y coma como separador y fechas `AAAA-MM-DD HH:MM` en hora de Lima o ISO 8601 con desfase, y MUST rechazar códigos repetidos en el archivo o ya existentes.
+
+#### Scenario: Importar un archivo válido
+
+- **WHEN** el planificador importa un archivo cuyas filas cumplen todas las reglas
+- **THEN** el sistema responde 201 con la cantidad y los códigos importados y los pedidos quedan `PENDIENTE`
+
+#### Scenario: Archivo con errores
+
+- **WHEN** alguna fila tiene una ventana invertida, una ubicación fuera del ámbito o un código repetido
+- **THEN** el sistema responde 422 con un error por fila y columna y no registra ningún pedido
+
+#### Scenario: Rol sin permiso o archivo inválido
+
+- **WHEN** una persona sin rol `PLANIFICADOR` importa, o el archivo está vacío, no tiene las columnas obligatorias o excede 500 filas
+- **THEN** el sistema responde 403 o 422 respectivamente
+

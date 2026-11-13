@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import { CheckCircle2, CircleAlert, MapPinned, Navigation, TriangleAlert, XCircle } from 'lucide-react'
 import {
   comoVistaPrevia,
@@ -121,11 +121,26 @@ export default function PaginaMiRuta() {
   const [ocupada, setOcupada] = useState(false)
   const [error, setError] = useState('')
   const [aviso, setAviso] = useState('')
+  // Planificación suele guardar las rutas del día siguiente: si hoy no hay, se ofrece mañana (heurística 1 de Nielsen).
+  const buscarCercana = useRef(true)
 
   const cargar = useCallback(
     () =>
       obtenerMiRuta(fecha)
-        .then(setDatos)
+        .then(async (d) => {
+          if (!d && buscarCercana.current) {
+            buscarCercana.current = false
+            const manana = fechaLocal(1)
+            const siguiente = await obtenerMiRuta(manana)
+            if (siguiente) {
+              setFecha(manana)
+              setAviso(`No hay rutas para hoy; se muestra el ${fechaCorta(manana)}, que tiene rutas guardadas.`)
+              setDatos(siguiente)
+              return
+            }
+          }
+          setDatos(d)
+        })
         .catch((e: unknown) => setError(e instanceof ApiError ? e.message : 'No se pudo cargar su ruta.'))
         .finally(() => setCargando(false)),
     [fecha],
@@ -136,6 +151,7 @@ export default function PaginaMiRuta() {
 
   const cambiarFecha = (valor: string) => {
     if (!valor) return
+    buscarCercana.current = false
     setCargando(true)
     setError('')
     setAviso('')

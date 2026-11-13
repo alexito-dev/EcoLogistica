@@ -4115,3 +4115,14 @@ html {
   display: grid;
   gap: 0.5rem;
 }
+
+.importar {
+  display: grid;
+  gap: 1rem;
+}
+.importar__errores {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+  max-height: 14rem;
+  overflow: auto;
+}

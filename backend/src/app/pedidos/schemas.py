@@ -40,6 +40,15 @@ class PedidoCrear(_Base):
     observacion_operativa: _Observacion | None = None
 
 
+class ImportarIn(_Base):
+    contenido: str = Field(min_length=1, max_length=1_000_000)
+
+
+class ImportadosOut(_Base):
+    importados: int
+    codigos: list[str]
+
+
 class PedidoOut(_Base):
     id: UUID
     codigo: str

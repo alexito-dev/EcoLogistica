@@ -96,6 +96,17 @@ describe('PaginaMiRuta (HU-005 y HU-010)', () => {
     await waitFor(() => expect(registrar).toHaveBeenCalledWith('p1', expect.any(String), 'INCIDENCIA', 'Cliente ausente'))
   })
 
+  it('si hoy no hay rutas, muestra la fecha siguiente que sí las tiene y lo avisa', async () => {
+    const consultar = vi
+      .spyOn(api, 'obtenerMiRuta')
+      .mockResolvedValueOnce(null)
+      .mockResolvedValue(miRuta([{ ...base, estado: 'PENDIENTE' }]))
+    render(<PaginaMiRuta />)
+    expect(await screen.findByText('DR-1001')).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('No hay rutas para hoy')
+    expect(consultar).toHaveBeenCalled()
+  })
+
   it('explica cuando no hay ruta asignada', async () => {
     vi.spyOn(api, 'obtenerMiRuta').mockResolvedValue(null)
     render(<PaginaMiRuta />)
@@ -152,6 +163,8 @@ describe('PaginaSeguimiento (HU-006 y HU-010)', () => {
     const seccion = (await screen.findByRole('heading', { name: /Incidencias abiertas \(1\)/ })).closest('section')!
     expect(within(seccion).getByText('Cliente ausente')).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Reprogramar pedido DR-1001' }))
+    expect(reprogramar).not.toHaveBeenCalled() // pide confirmación antes de cerrar la incidencia
+    await user.click(screen.getByRole('button', { name: 'Confirmar reprogramación del pedido DR-1001' }))
     await waitFor(() => expect(reprogramar).toHaveBeenCalledWith('p1', expect.any(String)))
     expect(await screen.findByRole('status')).toHaveTextContent('volvió a Pendiente')
   })

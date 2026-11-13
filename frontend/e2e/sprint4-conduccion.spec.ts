@@ -59,6 +59,7 @@ test('Planificación y Conducción completan una ruta con una incidencia', async
   await expect(page.getByRole('heading', { name: /Incidencias abiertas \(1\)/ })).toBeVisible()
   await expect(page.getByText('Cliente ausente en el domicilio').first()).toBeVisible()
   await page.getByRole('button', { name: /Reprogramar pedido/ }).click()
+  await page.getByRole('button', { name: /Confirmar reprogramación del pedido/ }).click()
   await expect(page.getByRole('heading', { name: /Incidencias abiertas \(0\)/ })).toBeVisible()
   await page.getByRole('button', { name: /Reoptimizar pendientes/ }).click()
   await expect(page.getByRole('status')).toContainText(/reordenaron|más corto/)

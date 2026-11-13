@@ -44,8 +44,21 @@ El archivo [`.github/workflows/ci.yml`](../../../.github/workflows/ci.yml) tiene
 | Frontend (Vitest) | 127 | 0 | |
 | E2E (Playwright) | 10 | 0 | |
 
-## 5. Límites
+## 5. SonarQube en la integración continua
+
+El trabajo `cobertura-integral` de `ci.yml` incluye ahora un paso de **SonarQube con puerta de calidad** (`sonar.qualitygate.wait=true`) que lee la cobertura de Python y de TypeScript generada en el mismo trabajo y la configuración de [`sonar-project.properties`](../../../sonar-project.properties). **Solo se ejecuta si el repositorio define los secretos `SONAR_TOKEN` y `SONAR_HOST_URL`**; sin ellos se omite y el CI no falla.
+
+Para activarlo (lo debe hacer quien administra el repositorio, porque requiere una cuenta y un token propios):
+
+1. Crear el proyecto en SonarCloud (gratuito para repositorios públicos) o en un servidor SonarQube propio, con la clave `ecologistica`. En SonarCloud, añadir también `sonar.organization` en `sonar-project.properties`.
+2. En GitHub: *Settings → Secrets and variables → Actions* y crear `SONAR_TOKEN` y `SONAR_HOST_URL` (por ejemplo `https://sonarcloud.io`).
+3. Hacer un push: el paso aparecerá en el CI y bloqueará el trabajo si la puerta de calidad falla.
+
+**Estado:** el análisis oficial con el código del Sprint 4 **todavía no se ha ejecutado** porque faltan esas credenciales; el valor de SonarQube del Sprint 3 (commit `9b31dd0`) sigue siendo el último medido. La cobertura combinada del 90 % sí se verifica en cada CI con `scripts/reporte_cobertura.py`.
+
+## 6. Límites
 
 - Las pruebas E2E usan la API con repositorios en memoria y archivos: **no** ejercitan PostgreSQL. Esa capa la cubren las pruebas de integración del job `cobertura-integral`.
 - No existe despliegue continuo ni entorno de pruebas alojado; E2E corre contra servidores locales efímeros.
 - No se midió cobertura de las pruebas E2E.
+- La importación de pedidos por plantilla (ECO-18) se verifica con pruebas de API y de interfaz; no tiene recorrido E2E.

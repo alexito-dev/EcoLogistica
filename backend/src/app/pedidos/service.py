@@ -10,6 +10,7 @@ from app.pedidos.domain import (
     PedidoNoEncontradoError,
     Ubicacion,
 )
+from app.pedidos.importacion import validar_archivo
 from app.pedidos.repository import PedidosRepository
 from app.pedidos.schemas import PedidoCrear
 
@@ -43,6 +44,11 @@ class PedidosService:
             pedido = replace(pedido, codigo=self._resolver_codigo(None))
         self._repo.guardar(pedido)  # lanza CodigoDuplicadoError si el código ya existe
         return pedido
+
+    def importar(self, contenido: str) -> list[Pedido]:
+        """Registra todos los pedidos de una plantilla CSV, o ninguno si alguna fila es inválida (ECO-18)."""
+        validos = validar_archivo(contenido, self._ambito, self._repo)
+        return [self.registrar(datos) for datos in validos]
 
     def obtener(self, pedido_id: UUID) -> Pedido:
         pedido = self._repo.obtener(pedido_id)

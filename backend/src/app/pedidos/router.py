@@ -4,7 +4,7 @@ from functools import lru_cache
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, Query, status
+from fastapi import APIRouter, Depends, Query, Response, status
 
 from app.auth.dependencias import requerir_rol
 from app.auth.domain import Rol
@@ -14,7 +14,8 @@ from app.pedidos.domain import EstadoPedido
 from app.pedidos.memory_repository import PedidosMemoryRepository
 from app.pedidos.postgres_repository import PedidosPostgresRepository
 from app.pedidos.repository import PedidosRepository
-from app.pedidos.schemas import ErrorOut, ListadoPedidosOut, PedidoCrear, PedidoOut
+from app.pedidos.importacion import PLANTILLA_CSV
+from app.pedidos.schemas import ErrorOut, ImportadosOut, ImportarIn, ListadoPedidosOut, PedidoCrear, PedidoOut
 from app.pedidos.service import PedidosService
 
 router = APIRouter(prefix="/pedidos", tags=["Pedidos"])
@@ -82,6 +83,38 @@ def listar_pedidos(
         pagina=pagina,
         limite=limite,
     )
+
+
+@router.get(
+    "/plantilla",
+    summary="Descargar la plantilla CSV de importación",
+    response_class=Response,
+    responses={200: {"content": {"text/csv": {}}, "description": "Encabezados de la plantilla"}, 401: _ERRORES[401], 403: _ERRORES[403]},
+    dependencies=[PUEDE_REGISTRAR],
+)
+def descargar_plantilla() -> Response:
+    return Response(
+        content=PLANTILLA_CSV,
+        media_type="text/csv; charset=utf-8",
+        headers={"Content-Disposition": 'attachment; filename="plantilla-pedidos.csv"'},
+    )
+
+
+@router.post(
+    "/importar",
+    response_model=ImportadosOut,
+    status_code=status.HTTP_201_CREATED,
+    summary="Importar pedidos desde la plantilla CSV (todo o nada)",
+    description=(
+        "Valida todas las filas y registra los pedidos solo si ninguna tiene errores. Máximo 500 pedidos y 1 MB. "
+        "Acepta coma o punto y coma; fechas AAAA-MM-DD HH:MM en hora de Lima o ISO 8601 con desfase."
+    ),
+    responses={k: _ERRORES[k] for k in (400, 401, 403, 422)},
+    dependencies=[PUEDE_REGISTRAR],
+)
+def importar_pedidos(datos: ImportarIn, servicio: ServicioDep) -> ImportadosOut:
+    pedidos = servicio.importar(datos.contenido)
+    return ImportadosOut(importados=len(pedidos), codigos=[p.codigo for p in pedidos])
 
 
 @router.get(

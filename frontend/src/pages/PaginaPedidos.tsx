@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Boxes, Clock, Plus, TriangleAlert, Weight } from 'lucide-react'
+import { Boxes, Clock, FileUp, Plus, TriangleAlert, Weight } from 'lucide-react'
 import { ApiError, listarPedidos, PEDIDOS_POR_PAGINA, type EstadoPedido, type Pedido } from '../api/pedidos'
 import Drawer from '../components/Drawer'
 import Hero from '../components/Hero'
+import ImportarPedidos from '../components/ImportarPedidos'
 import PedidoDetalle from '../components/PedidoDetalle'
 import PedidoForm from '../components/PedidoForm'
 import PedidosTable from '../components/PedidosTable'
@@ -20,6 +21,7 @@ export default function PaginaPedidos({ puedeRegistrar }: Props) {
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [formAbierto, setFormAbierto] = useState(false)
+  const [importarAbierto, setImportarAbierto] = useState(false)
   const [detalle, setDetalle] = useState<Pedido | null>(null)
   const [aviso, setAviso] = useState<string | null>(null)
   const [nuevoId, setNuevoId] = useState<string | null>(null)
@@ -66,10 +68,16 @@ export default function PaginaPedidos({ puedeRegistrar }: Props) {
         subtitulo="Registre y consulte los pedidos de última milla con su ventana horaria."
         accion={
           puedeRegistrar ? (
-            <button type="button" className="boton boton--claro" onClick={abrirFormulario}>
-              <Plus size={18} aria-hidden="true" />
-              Nuevo pedido
-            </button>
+            <>
+              <button type="button" className="boton boton--claro" onClick={abrirFormulario}>
+                <Plus size={18} aria-hidden="true" />
+                Nuevo pedido
+              </button>
+              <button type="button" className="boton boton--claro" onClick={() => setImportarAbierto(true)}>
+                <FileUp size={18} aria-hidden="true" />
+                Importar pedidos
+              </button>
+            </>
           ) : (
             <p className="hero__nota">Modo consulta: solo el planificador registra pedidos.</p>
           )
@@ -114,6 +122,22 @@ export default function PaginaPedidos({ puedeRegistrar }: Props) {
             setFormAbierto(false)
             setNuevoId(pedido.id)
             setAviso(`Pedido ${pedido.codigo} registrado en estado Pendiente.`)
+            void cargar()
+          }}
+        />
+      </Drawer>
+
+      <Drawer
+        abierto={importarAbierto}
+        titulo="Importar pedidos"
+        descripcion="Carga masiva desde la plantilla CSV"
+        onCerrar={() => setImportarAbierto(false)}
+      >
+        <ImportarPedidos
+          onCancelar={() => setImportarAbierto(false)}
+          onImportado={(cantidad) => {
+            setImportarAbierto(false)
+            setAviso(`${cantidad} pedido(s) importado(s) en estado Pendiente.`)
             void cargar()
           }}
         />

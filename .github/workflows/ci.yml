@@ -151,8 +151,11 @@ jobs:
     env:
       DATABASE_URL: postgresql+psycopg://eco_ci:eco_ci@localhost:5432/ecologistica_test
       ECO_TEST_DATABASE_URL: postgresql+psycopg://eco_ci:eco_ci@localhost:5432/ecologistica_test
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # SonarQube necesita el historial para atribuir el código nuevo
       - uses: actions/setup-python@v5
         with:
           python-version: "3.10"
@@ -180,6 +183,13 @@ jobs:
         run: npx vitest run --coverage
       - name: Consolidar cobertura y publicar resumen con denominadores
         run: python scripts/reporte_cobertura.py --min 90
+      - name: Análisis SonarQube con puerta de calidad (solo si el repositorio define SONAR_TOKEN y SONAR_HOST_URL)
+        if: env.SONAR_TOKEN != ''
+        uses: SonarSource/sonarqube-scan-action@v5.0.0
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args: -Dsonar.qualitygate.wait=true
       - name: Conservar reportes XML y LCOV por commit
         if: always()
         uses: actions/upload-artifact@v4
