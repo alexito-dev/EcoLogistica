@@ -176,7 +176,7 @@ def test_listar_por_ventana_usa_el_dia_y_los_estados_en_la_base(engine_pg):
     base = datetime(2031, 3, 10, 13, tzinfo=timezone.utc)  # 08:00 en Lima
     creados = []
     try:
-        for i, desplazamiento in enumerate((0, 20, 40)):  # hoy, hoy (tarde) y pasado mañana
+        for i, desplazamiento in enumerate((0, 8, 40)):  # 08:00 y 16:00 de Lima del 10/03; y el 11/03
             pedido = Pedido.crear(
                 codigo=f"VT-{uuid4().hex[:8].upper()}-{i}",
                 ubicacion=Ubicacion("Jr. Real 123", "Huancayo", -12.06, -75.20),
