@@ -280,6 +280,14 @@ npm.cmd ci
 npm.cmd run dev
 ```
 
+### 8.3.1. Demostración con un solo comando (sin Docker)
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\iniciar-demo.ps1
+```
+
+Abre la API (puerto 8001) y la pantalla (puerto 3000) con datos sintéticos de Huancayo y archivos temporales, sin base de datos real. La contraseña de demostración que imprime el script es solo para esa instancia local descartable; el ingreso exige además el código de una app autenticadora.
+
 ### 8.4. Pruebas Automatizadas
 ```powershell
 # Desde la raíz del repositorio, con el entorno backend instalado
