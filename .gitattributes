@@ -1,0 +1,3 @@
+# Los scripts que se ejecutan en Linux (contenedor, CI) deben conservar saltos de línea LF.
+*.sh text eol=lf
+Dockerfile text eol=lf
