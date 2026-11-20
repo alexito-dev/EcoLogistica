@@ -7,8 +7,11 @@ name: Deploy production
 #
 # La imagen (Dockerfile) contiene la API y la interfaz: un solo servicio y un solo origen (requisito de las cookies
 # SameSite=Strict). Configuración en Settings → Secrets and variables → Actions:
-#   Secret    DEPLOY_HOOK_BACKEND  (deploy hook del servicio; ver render.yaml)
 #   Variable  PRODUCTION_URL       (URL pública, https://…)
+#   Y UNA de estas dos formas de publicar:
+#   a) VPS por SSH (deploy/vps/desplegar.sh): Secret DEPLOY_SSH_KEY (clave privada), Variable DEPLOY_SERVER
+#      (por defecto root@169.58.235.118) y Variable DEPLOY_HOST (por defecto ecologistica.arno.services).
+#   b) Hosting con deploy hook (ver render.yaml): Secret DEPLOY_HOOK_BACKEND.
 #   Opcionales: DEPLOY_HOOK_FRONTEND y PRODUCTION_API_URL, solo si la interfaz y la API se alojan por separado.
 # Mientras falten los obligatorios, el flujo valida el código y declara explícitamente que NO desplegó.
 
@@ -43,14 +46,13 @@ jobs:
       listo: ${{ steps.verificar.outputs.listo }}
     env:
       DEPLOY_HOOK_BACKEND: ${{ secrets.DEPLOY_HOOK_BACKEND }}
-      DEPLOY_HOOK_FRONTEND: ${{ secrets.DEPLOY_HOOK_FRONTEND }}
+      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
       PRODUCTION_URL: ${{ vars.PRODUCTION_URL }}
-      PRODUCTION_API_URL: ${{ vars.PRODUCTION_API_URL }}
     steps:
       - id: verificar
         run: |
           faltan=""
-          [ -n "$DEPLOY_HOOK_BACKEND" ] || faltan="$faltan DEPLOY_HOOK_BACKEND"
+          { [ -n "$DEPLOY_HOOK_BACKEND" ] || [ -n "$DEPLOY_SSH_KEY" ]; } || faltan="$faltan DEPLOY_SSH_KEY_o_DEPLOY_HOOK_BACKEND"
           [ -n "$PRODUCTION_URL" ] || faltan="$faltan PRODUCTION_URL"
           if [ -n "$faltan" ]; then
             echo "listo=false" >> "$GITHUB_OUTPUT"
@@ -71,9 +73,22 @@ jobs:
     env:
       DEPLOY_HOOK_BACKEND: ${{ secrets.DEPLOY_HOOK_BACKEND }}
       DEPLOY_HOOK_FRONTEND: ${{ secrets.DEPLOY_HOOK_FRONTEND }}
+      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+      DEPLOY_SERVER: ${{ vars.DEPLOY_SERVER || 'root@169.58.235.118' }}
+      DEPLOY_HOST: ${{ vars.DEPLOY_HOST || 'ecologistica.arno.services' }}
       PRODUCTION_API_URL: ${{ vars.PRODUCTION_API_URL || vars.PRODUCTION_URL }}
     steps:
-      - name: Desplegar la API (el servicio aplica las migraciones de Alembic al arrancar)
+      - uses: actions/checkout@v4
+      - name: Desplegar al VPS por SSH (el contenedor aplica las migraciones de Alembic al arrancar)
+        if: env.DEPLOY_SSH_KEY != ''
+        run: |
+          install -m 700 -d ~/.ssh
+          echo "$DEPLOY_SSH_KEY" > ~/.ssh/id_deploy && chmod 600 ~/.ssh/id_deploy
+          ssh-keyscan -H "${DEPLOY_SERVER#*@}" >> ~/.ssh/known_hosts 2>/dev/null
+          export DEPLOY_SSH_OPTS="-i $HOME/.ssh/id_deploy"
+          bash deploy/vps/desplegar.sh
+      - name: Desplegar con el deploy hook del hosting
+        if: env.DEPLOY_SSH_KEY == '' && env.DEPLOY_HOOK_BACKEND != ''
         run: curl --fail --silent --show-error --max-time 60 -X POST "$DEPLOY_HOOK_BACKEND" > /dev/null
       - name: Esperar a que la API publicada responda /health
         run: |

@@ -1,0 +1,64 @@
+# EcoLogística en un VPS con Coolify/Traefik (el proxy pone el HTTPS). Las claves NO están aquí: viven en
+# /root/ecologistica/.env, solo en el servidor. Un servicio de aplicación (API + interfaz) y su base PostGIS.
+name: ecologistica
+
+services:
+  ecologisticadb:
+    image: postgis/postgis:16-3.5
+    container_name: ecologistica_db
+    restart: always
+    environment:
+      POSTGRES_DB: ecologistica
+      POSTGRES_USER: eco
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ecologistica_pgdata:/var/lib/postgresql/data
+    networks: [internal] # sin puerto publicado: solo lo ve la aplicación
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U eco -d ecologistica"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+  app:
+    image: ecologistica:latest
+    container_name: ecologistica_app
+    restart: always
+    depends_on:
+      ecologisticadb:
+        condition: service_healthy
+    networks: [internal, coolify]
+    environment:
+      DATABASE_URL: postgresql://eco:${POSTGRES_PASSWORD}@ecologisticadb:5432/ecologistica
+      CORS_ORIGIN: ${PUBLIC_URL}
+      COOKIE_SECURE: "true"
+      JWT_SECRET: ${JWT_SECRET}
+      TOTP_CLAVE_CIFRADO: ${TOTP_CLAVE_CIFRADO}
+      DEMO_CLAVE: ${DEMO_CLAVE}
+      DEMO_PEDIDOS: "true"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 8
+      start_period: 30s
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=coolify
+      - traefik.http.routers.ecologistica.rule=Host(`${PUBLIC_HOST}`)
+      - traefik.http.routers.ecologistica.entrypoints=https
+      - traefik.http.routers.ecologistica.tls=true
+      - traefik.http.routers.ecologistica.tls.certresolver=letsencrypt
+      - traefik.http.services.ecologistica.loadbalancer.server.port=8000
+      - traefik.http.routers.ecologistica-http.rule=Host(`${PUBLIC_HOST}`)
+      - traefik.http.routers.ecologistica-http.entrypoints=http
+      - traefik.http.routers.ecologistica-http.middlewares=ecologistica-redirect
+      - traefik.http.middlewares.ecologistica-redirect.redirectscheme.scheme=https
+
+volumes:
+  ecologistica_pgdata:
+
+networks:
+  internal:
+  coolify:
+    external: true

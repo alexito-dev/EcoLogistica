@@ -52,7 +52,7 @@ Pruebas al cierre: **230 de backend** (9 de PostgreSQL se ejecutan solo en CI), 
 
 **Qué falta (dicho con transparencia):**
 
-- **Despliegue con URL pública:** el código está listo (`Dockerfile`, `render.yaml`, `deploy-production.yml`) y probado en local; falta crear la cuenta del hosting y cargar el secreto `DEPLOY_HOOK_BACKEND` y la variable `PRODUCTION_URL` (guía en la [sección 8.9](#89-despliegue-a-producción-un-solo-servicio)).
+- **Despliegue automático desde GitHub:** la aplicación **ya está publicada** en https://ecologistica.arno.services (VPS con Docker y HTTPS, datos sintéticos). Falta cargar en el repositorio el secreto `DEPLOY_SSH_KEY` y la variable `PRODUCTION_URL` para que `deploy-production.yml` y `monitoreo.yml` actúen solos (guía en la [sección 8.9](#89-despliegue-a-producción-un-solo-servicio)).
 - **Usabilidad SUS:** el cálculo y el protocolo están listos, pero todavía no hay respuestas de personas reales (n = 0); no se estima un puntaje.
 - **SonarQube vigente, protección de `main` y revisión por pares, y tarjetas de Jira del cierre:** pendientes (ver la [Retrospectiva](docs/03%20Implementaci%C3%B3n/Sprint%2004/02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md#acciones-a-realizar)).
 - **Motor VRPTW completo (EN-001):** el re-enrutamiento usa una heurística acotada.
@@ -247,8 +247,9 @@ EcoLogistica/
 │   ├── specs/                     # Especificaciones vigentes
 │   └── changes/archive/           # Cambios implementados y archivados
 ├── Dockerfile                     # Imagen de producción de un solo servicio (API + interfaz compilada)
-├── render.yaml                    # Plano de infraestructura para Render (servicio web + PostgreSQL)
+├── render.yaml                    # Plano alternativo para Render (servicio web + PostgreSQL)
 ├── deploy/arranque.sh             # Migraciones y arranque del servicio de producción
+├── deploy/vps/                    # Despliegue al VPS: docker-compose con Traefik y script desplegar.sh
 ├── .env.example                   # Variables de entorno de ejemplo, sin secretos
 ├── sonar-project.properties       # Configuración del análisis de SonarQube
 └── README.md                      # Guía y estado del proyecto
@@ -387,7 +388,7 @@ Chromium ejecuta toda la suite; Firefox y WebKit ejecutan los flujos críticos y
 
 - **Se ejecuta sola** al hacer `push` o abrir un Pull Request (`ci.yml` y `tests.yml`) y al subir a `main` (`deploy-production.yml`).
 - **A mano:** pestaña *Actions* del repositorio, elegir el flujo, **Run workflow** y la rama. Los informes de Playwright quedan en *Artifacts* al final de la ejecución.
-- **Secretos del despliegue** (Settings → Secrets and variables → Actions): el secreto `DEPLOY_HOOK_BACKEND` y la variable `PRODUCTION_URL`. Sin ellos el flujo valida el código y avisa «no se desplegó». Opcionales: `DEPLOY_HOOK_FRONTEND` y `PRODUCTION_API_URL` (solo si interfaz y API se alojan por separado) y, para calidad, `SONAR_TOKEN` y `SONAR_HOST_URL`.
+- **Secretos del despliegue** (Settings → Secrets and variables → Actions): la variable `PRODUCTION_URL` y el secreto `DEPLOY_SSH_KEY` (VPS por SSH) o `DEPLOY_HOOK_BACKEND` (hosting con deploy hook). Sin ellos el flujo valida el código y avisa «no se desplegó». Opcionales: `DEPLOY_HOOK_FRONTEND` y `PRODUCTION_API_URL` (solo si interfaz y API se alojan por separado) y, para calidad, `SONAR_TOKEN` y `SONAR_HOST_URL`.
 
 ### 8.4.4. Usabilidad SUS (Sprint 4)
 
@@ -461,7 +462,9 @@ Implementado con OpenSpec en los cambios `registro-pedidos` (registrar, consulta
 
 ### 8.9. Despliegue a producción (un solo servicio)
 
-La sesión usa cookies `HttpOnly` + `SameSite=Strict`, que solo funcionan si la interfaz y la API comparten origen. Por eso el `Dockerfile` construye la interfaz y FastAPI la entrega junto con la API (`FRONTEND_DIST`). Con [Render](https://render.com) (plan gratuito):
+La sesión usa cookies `HttpOnly` + `SameSite=Strict`, que solo funcionan si la interfaz y la API comparten origen. Por eso el `Dockerfile` construye la interfaz y FastAPI la entrega junto con la API (`FRONTEND_DIST`). **Producción actual:** VPS con Docker y Traefik, en https://ecologistica.arno.services, publicada con `bash deploy/vps/desplegar.sh` (sube el código, construye la imagen, arranca la aplicación con su base PostGIS y espera `/health`; solo toca `/root/ecologistica` y los contenedores `ecologistica_*`). Para que GitHub lo haga solo: secreto `DEPLOY_SSH_KEY` (clave privada con acceso al servidor) y variable `PRODUCTION_URL`; opcionales `DEPLOY_SERVER` y `DEPLOY_HOST`. Las claves de la aplicación se generan una vez en el servidor (`/root/ecologistica/.env`) y no se versionan.
+
+**Alternativa con [Render](https://render.com)** (plan gratuito):
 
 1. **New → Blueprint** y elegir este repositorio: `render.yaml` crea el servicio web `ecologistica` y la base `ecologistica-db` (PostgreSQL con PostGIS; las migraciones se aplican al arrancar).
 2. En el servicio, completar las variables: `TOTP_CLAVE_CIFRADO` (`python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"`), `CORS_ORIGIN` (la URL pública, sin barra final) y `DEMO_CLAVE`.

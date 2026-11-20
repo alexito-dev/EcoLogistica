@@ -29,7 +29,7 @@ Alcance del Sprint 4 (Inspección 5): que Conducción consulte su ruta, marque e
 
 ## Demostración del trabajo completado
 
-- **Entorno utilizado:** local, con la API y el build de producción de la interfaz levantados con datos de demostración (`scripts\iniciar-demo.ps1`) y, para la comprobación automática, por Playwright. Todavía no existe un entorno de *staging* ni de producción activo: `deploy-production.yml` está implementado, pero necesita un servicio de alojamiento y sus secretos.
+- **Entorno utilizado:** producción en un VPS con Docker y HTTPS, `https://ecologistica.arno.services` (datos sintéticos de demostración, API e interfaz en un solo servicio con PostgreSQL/PostGIS), publicada con `deploy/vps/desplegar.sh`; para la comprobación automática, Playwright en local y contra esa URL. No existe un entorno de *staging* separado.
 - **Funcionalidades exhibidas** (recorrido de ocho pasos): Planificación revisa los pedidos, guarda las rutas del día y asigna conductor; Conducción abre «Mi ruta», marca una entrega como entregada y reporta una incidencia; Planificación ve la incidencia, la reprograma con confirmación; Indicadores muestra los «Resultados observados». Después se muestran los flujos de GitHub Actions y el informe HTML de Playwright.
 - **Evidencias:** capturas del recorrido en [`evidencias/`](evidencias/) (archivos `demo-01` a `demo-08`) y de los informes HTML de Playwright en [Chromium](evidencias/informe-playwright-chromium.png) y [WebKit](evidencias/informe-playwright-webkit.png).
 - **Retroalimentación recibida:** la demostración formal ante el docente se realiza en la exposición del 20/11/2026 (14:40–15:00). Hasta la fecha de este documento no consta una sesión con las personas de Planificación y Conducción de DistriRápido S.A.C., por lo que no se registran asistentes, acuerdos ni acta. La retroalimentación obtenida se agregará en la versión 1.1.0 de este documento.
@@ -38,7 +38,7 @@ Alcance del Sprint 4 (Inspección 5): que Conducción consulte su ruta, marque e
 
 | Pendiente | Estado y justificación | Tratamiento posterior |
 |---|---|---|
-| Despliegue a producción con URL operativa | Código listo y probado en local (`Dockerfile` de un solo servicio, `render.yaml`, `deploy-production.yml`, `monitoreo.yml`; la prueba de disponibilidad pasa 8 de 8 contra la API entregando la interfaz). Falta crear la cuenta del alojamiento y definir el secreto `DEPLOY_HOOK_BACKEND` y la variable `PRODUCTION_URL` | Acción 2 de la [Retrospectiva](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md#acciones-a-realizar); luego medir disponibilidad en el entorno desplegado |
+| Despliegue automático desde GitHub | La aplicación **ya está en producción** (`https://ecologistica.arno.services`, `/health` en verde, disponibilidad 8 de 8 y 30 de 30 sondas). Falta que `deploy-production.yml` la publique sola: cargar en el repositorio el secreto `DEPLOY_SSH_KEY` y la variable `PRODUCTION_URL` | Acción 2 de la [Retrospectiva](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md#acciones-a-realizar); luego medir disponibilidad en el entorno desplegado |
 | Puntuación SUS | Sin respuestas de personas usuarias (**n = 0**): no se estima ni se inventa | Acción 3: aplicar la encuesta a 5 o más personas y publicar el documento 04 en versión 1.1.0 |
 | Firefox en la máquina de desarrollo | No arranca localmente (falta el runtime de Visual C++); se verifica en GitHub Actions | Opcional: instalar el runtime para reproducirlo localmente |
 | SonarQube en CI | Se activa solo con `SONAR_TOKEN` y `SONAR_HOST_URL` | Acción 4 |

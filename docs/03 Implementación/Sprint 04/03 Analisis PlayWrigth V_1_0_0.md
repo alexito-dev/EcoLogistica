@@ -188,8 +188,11 @@ La prueba sondea `/health` 30 veces consecutivas y exige una disponibilidad ≥ 
 |---|---:|---:|---:|---:|---:|
 | Chromium | 30 | 30 | 100 % | 10 ms | 12 ms |
 | WebKit | 30 | 30 | 100 % | 8 ms | 13 ms |
+| **Producción** (`https://ecologistica.arno.services`, Chromium, 20/11/2026) | 30 | 30 | **100 %** | 279 ms | 610 ms |
 
-> **Limitación.** Esto mide la disponibilidad del proceso local durante unos segundos, **no** el *uptime* de un entorno desplegado: no hay producción todavía. Cuando exista, la misma prueba se ejecuta contra ella en el trabajo `humo` de [`deploy-production.yml`](../../../.github/workflows/deploy-production.yml) con `ECO_BASE_URL` y `ECO_API_URL`, y su resultado debe registrarse en la versión 1.1.0 de este informe. Para un *uptime* real, se necesita un monitor externo continuo sobre `/health`.
+**Entorno desplegado (20/11/2026).** La aplicación se publicó en un VPS con Docker y HTTPS (Traefik y Let's Encrypt) en `https://ecologistica.arno.services` mediante [`deploy/vps/desplegar.sh`](../../../deploy/vps/desplegar.sh). La suite `disponibilidad.spec.ts` se ejecutó contra esa URL con `ECO_BASE_URL` y `ECO_API_URL`: **8 de 8 pruebas aprobadas** (códigos 200, 401, 404 y 405, fallos 500/503 y de red informados, cabeceras de seguridad) y 30 de 30 sondas a `/health` correctas. La latencia incluye el viaje de red desde Huancayo hasta el servidor. Web Vitals de la pantalla de acceso en producción: TTFB 615 ms, FCP 1 228 ms, LCP 1 228 ms, CLS 0 (una sola carga; mayores que en local por la distancia al servidor, y no comparables con la auditoría Lighthouse en móvil simulado del informe Green IT).
+
+> **Limitación.** Son 30 sondas de unos segundos: demuestran que el entorno responde, no un *uptime* sostenido. El monitoreo continuo lo hace [`monitoreo.yml`](../../../.github/workflows/monitoreo.yml), que sondea `/health` cada 6 horas cuando existe la variable `PRODUCTION_URL` del repositorio; sus resultados se publican en el resumen de cada ejecución de Actions.
 
 ## 5. Integración con CI/CD
 
@@ -200,7 +203,7 @@ La prueba sondea `/health` 30 veces consecutivas y exige una disponibilidad ≥ 
 
 ## 6. Lo que este informe no demuestra
 
-- No mide un entorno desplegado: no hay hosting productivo ni URL pública. El flujo de despliegue está implementado pero **no se ha ejecutado** hasta que el equipo cree el servicio (`render.yaml`) y defina el secreto `DEPLOY_HOOK_BACKEND` y la variable `PRODUCTION_URL`. La prueba de disponibilidad sí se ejecutó contra la API entregando la interfaz compilada en local (8 de 8 aprobadas, 30 de 30 sondas a `/health`); el uptime del entorno público lo mide `monitoreo.yml` una vez desplegado.
+- Solo la suite de disponibilidad y los Web Vitals se ejecutaron contra el entorno desplegado; las pruebas con sesión (MFA) no se corren contra producción. El despliegue desde GitHub Actions (`deploy-production.yml`) requiere cargar el secreto `DEPLOY_SSH_KEY` y la variable `PRODUCTION_URL` en el repositorio; el despliegue de esta fecha se hizo ejecutando el mismo script desde la máquina del equipo.
 - No incluye pruebas contra PostgreSQL en E2E (las usa solo la integración de `tests.yml`, con PostGIS aislado).
 - Las métricas de rendimiento son de una máquina de desarrollo y de una sola carga; no reemplazan una prueba de carga.
 - Firefox solo se ha ejecutado en GitHub Actions, no en la máquina de desarrollo.

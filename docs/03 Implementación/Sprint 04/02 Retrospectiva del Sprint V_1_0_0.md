@@ -56,7 +56,7 @@
 | # | Acción | Responsable | Fecha límite | Métrica de seguimiento |
 |---|---|---|---|---|
 | 1 | Mantener los tres navegadores en verde y tratar cada reintento como hallazgo, no como aprobación | Isidro Casio | 27/11/2026 | Cero pruebas marcadas *flaky* en tres ejecuciones consecutivas de `tests.yml` |
-| 2 | Crear los servicios en el alojamiento elegido con `render.yaml` y definir el secreto `DEPLOY_HOOK_BACKEND` y la variable `PRODUCTION_URL` | Anco Porras, con aprobación de Zorrilla Apumayta, Alex Jesus | 27/11/2026 | `deploy-production.yml` con el trabajo «Desplegar a producción» en verde y `/health` respondiendo 200 |
+| 2 | Cargar en GitHub el secreto `DEPLOY_SSH_KEY` y la variable `PRODUCTION_URL` para que `deploy-production.yml` publique en el VPS sin intervención manual | Anco Porras, con aprobación de Zorrilla Apumayta, Alex Jesus | 27/11/2026 | `deploy-production.yml` con el trabajo «Desplegar a producción» en verde y `/health` respondiendo 200 |
 | 3 | Aplicar la encuesta SUS a por lo menos 5 personas con las tareas T1–T6 y registrar el resultado con `procesar_sus.py --markdown` | Vera Zea | 30/11/2026 | Documento 04 en versión 1.1.0 con n ≥ 5 y SUS promedio ≥ 68 |
 | 4 | Definir `SONAR_TOKEN` y `SONAR_HOST_URL` para activar la puerta de calidad de SonarQube en CI | Isidro Casio | 27/11/2026 | Paso de SonarQube ejecutado y *Quality Gate* en verde |
 | 5 | Activar la protección de `main` (PR obligatorio y CI en verde) | Zorrilla Apumayta, Alex Jesus | 27/11/2026 | Ningún commit directo a `main` posterior a esa fecha |
