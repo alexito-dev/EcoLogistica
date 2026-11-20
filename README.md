@@ -11,7 +11,7 @@
 [![Estado](https://img.shields.io/badge/Estado-Implementaci%C3%B3n%20%C2%B7%20Sprint%204-2ea44f?style=flat-square)](docs/03%20Implementaci%C3%B3n/Sprint%2004)
 [![SonarQube (análisis histórico 9b31dd0)](https://img.shields.io/badge/SonarQube%209b31dd0-PASSED%20hist%C3%B3rico-4c9a2a?style=flat-square)](docs/03%20Implementaci%C3%B3n/Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)
 [![Versión](https://img.shields.io/badge/Versión-En%20desarrollo-blue?style=flat-square)](README.md)
-[![Stack](https://img.shields.io/badge/Stack-React%20%2B%20FastAPI-025B29?style=flat-square)](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md)
+[![Stack](https://img.shields.io/badge/Stack-React%20%2B%20FastAPI-025B29?style=flat-square)](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_1_0.md)
 [![Metodología](https://img.shields.io/badge/Metodología-Scrum%20%2B%20ramas%20cortas-6f42c1?style=flat-square)](docs/01%20Inicio/01.%20Selecci%C3%B3n%20del%20enfoque%20del%20proyecto%20V_1_0_0.md)
 [![Curso](https://img.shields.io/badge/Asignatura-Taller%20de%20Proyectos%202-0969da?style=flat-square)](README.md)
 [![Zona](https://img.shields.io/badge/Ubicación-Huancayo%2C%20Perú-d97706?style=flat-square)](README.md)
@@ -46,12 +46,13 @@
 | [`tests.yml`](.github/workflows/tests.yml) | Pruebas unitarias e integración (PostGIS) y E2E con Playwright en Chromium, Firefox y WebKit; guarda los informes como artefactos | Insignia **Tests** |
 | [`deploy-production.yml`](.github/workflows/deploy-production.yml) | Valida y despliega a producción con GitHub Secrets; si faltan los secretos, lo indica y no despliega | Insignia **Deploy production** |
 | [`green-audit.yml`](.github/workflows/green-audit.yml) | Auditoría Lighthouse con umbrales de rendimiento y peso | Ejecución por rama |
+| [`monitoreo.yml`](.github/workflows/monitoreo.yml) | Cada 6 horas sondea `/health` del entorno desplegado y registra disponibilidad y latencia | Se activa al definir `PRODUCTION_URL` |
 
-Pruebas al cierre: **221 de backend** (9 de PostgreSQL se ejecutan solo en CI), **134 de frontend** y la suite E2E (24 pruebas en Chromium; los flujos críticos también en Firefox y WebKit).
+Pruebas al cierre: **230 de backend** (9 de PostgreSQL se ejecutan solo en CI), **134 de frontend** y la suite E2E (24 pruebas en Chromium; los flujos críticos también en Firefox y WebKit).
 
 **Qué falta (dicho con transparencia):**
 
-- **Despliegue con URL pública:** el flujo está listo, pero necesita un servicio de alojamiento y los secretos `DEPLOY_HOOK_BACKEND`, `DEPLOY_HOOK_FRONTEND`, `PRODUCTION_URL` y `PRODUCTION_API_URL`.
+- **Despliegue con URL pública:** el código está listo (`Dockerfile`, `render.yaml`, `deploy-production.yml`) y probado en local; falta crear la cuenta del hosting y cargar el secreto `DEPLOY_HOOK_BACKEND` y la variable `PRODUCTION_URL` (guía en la [sección 8.9](#89-despliegue-a-producción-un-solo-servicio)).
 - **Usabilidad SUS:** el cálculo y el protocolo están listos, pero todavía no hay respuestas de personas reales (n = 0); no se estima un puntaje.
 - **SonarQube vigente, protección de `main` y revisión por pares, y tarjetas de Jira del cierre:** pendientes (ver la [Retrospectiva](docs/03%20Implementaci%C3%B3n/Sprint%2004/02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md#acciones-a-realizar)).
 - **Motor VRPTW completo (EN-001):** el re-enrutamiento usa una heurística acotada.
@@ -104,7 +105,7 @@ Desarrollar e implementar un PMV web que optimice las rutas de distribución urb
 
 > **Corte histórico.** Los dos párrafos siguientes describen el estado al **09/10/2026** (107 pruebas de backend y 39 de frontend) y se conservan como registro. Lo que sigue pendiente allí (persistencia de usuarios y rutas, mapa, motor y despliegue) se resolvió después, salvo lo indicado en «Estado actual» al inicio de este README.
 
-La línea base tecnológica vigente es **React + Vite + TypeScript** para la interfaz, **FastAPI + Python** para la API y **PostgreSQL/PostGIS** para pedidos, ubicaciones, vehículos y disponibilidades. La línea base funcional se reordenó el 09/10: Sprint 1 reúne el acceso MFA/roles y los pedidos persistentes; Sprint 2, la gestión de flota; Sprint 3, las rutas. La documentación y las metas de Jira se actualizaron para reflejar esa decisión, conservando los cortes históricos. Siguen pendientes la persistencia de usuarios y rutas, Leaflet/OpenStreetMap y el motor de optimización. La matriz y el alcance están en [10. Stack tecnológico](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md).
+La línea base tecnológica vigente es **React + Vite + TypeScript** para la interfaz, **FastAPI + Python** para la API y **PostgreSQL/PostGIS** para pedidos, ubicaciones, vehículos y disponibilidades. La línea base funcional se reordenó el 09/10: Sprint 1 reúne el acceso MFA/roles y los pedidos persistentes; Sprint 2, la gestión de flota; Sprint 3, las rutas. La documentación y las metas de Jira se actualizaron para reflejar esa decisión, conservando los cortes históricos. Siguen pendientes la persistencia de usuarios y rutas, Leaflet/OpenStreetMap y el motor de optimización. La matriz y el alcance están en [10. Stack tecnológico](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_1_0.md).
 
 El sistema permite entrar con TOTP y roles, registrar pedidos, volver a encontrarlos y consultar su detalle. Los pedidos y sus coordenadas se guardan en PostgreSQL/PostGIS y se comprobó que siguen ahí tras reiniciar la API. El 09/10/2026 pasaron **107 pruebas de backend y 39 de frontend**; también terminó la compilación de producción. El incremento de flota se recorrió visualmente con MFA en un PostGIS aislado y continuó disponible tras reiniciar la API. El linter termina con dos avisos de `set-state-in-effect`, uno preexistente en pedidos y otro en la nueva vista de flota. No hay todavía pruebas automatizadas que integren los adaptadores PostgreSQL; la persistencia se comprobó manualmente en bases aisladas. La compilación avisa que faltan los archivos de la fuente Codec Pro. Aún no hay optimización de rutas ni despliegue continuo.
 
@@ -119,7 +120,7 @@ Jira ya refleja la rebase funcional: ECO-12 y ECO-19 están en `Listo` dentro de
 
 **Corte del Sprint 3 (30/10/2026).** La rama `sprint-3/calidad-owasp-wcag` integra `feature/rutas-indicadores` y pasa **137 pruebas de backend y 58 de frontend** (cobertura de líneas del backend: 92,6 %; SonarQube midió **82,8 %** en su análisis del 30/10 con backend y frontend). SonarQube da *Quality Gate* **PASSED**, 0 bugs, 0 vulnerabilidades, 0 *hotspots* y 0,0 % de duplicación; fiabilidad C por 3 incidencias abiertas (ver [03 Calidad de código](docs/03%20Implementaci%C3%B3n/Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)). En OWASP Top 10:2025 no quedan vulnerabilidades críticas abiertas, y la auditoría WCAG 2.2 AA alcanza **88,9 %** de los criterios aplicables (meta ≥ 90 %). Detalle en los [documentos del Sprint 03](#93-fase-03-implementación).
 
-**Cierre del Sprint 4 (20/11/2026).** Pasan **221 pruebas de backend (9 de PostgreSQL omitidas localmente y ejecutadas en CI), 134 de frontend y la suite E2E de Playwright (24 pruebas en Chromium y los flujos críticos en Firefox y WebKit) contra el build de producción**. La auditoría WCAG 2.2 AA pasa de 88,9 % a **45 de 45 criterios aplicables verificados por prueba** (sin certificación ni pruebas con lectores de pantalla). El cálculo de cobertura y el análisis SonarQube de los cortes anteriores **no se rehicieron** con el código nuevo. Detalle en la [Revisión del Sprint 04](docs/03%20Implementaci%C3%B3n/Sprint%2004/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md).
+**Cierre del Sprint 4 (20/11/2026).** Pasan **230 pruebas de backend (9 de PostgreSQL omitidas localmente y ejecutadas en CI), 134 de frontend y la suite E2E de Playwright (24 pruebas en Chromium y los flujos críticos en Firefox y WebKit) contra el build de producción**. La auditoría WCAG 2.2 AA pasa de 88,9 % a **45 de 45 criterios aplicables verificados por prueba** (sin certificación ni pruebas con lectores de pantalla). El cálculo de cobertura y el análisis SonarQube de los cortes anteriores **no se rehicieron** con el código nuevo. Detalle en la [Revisión del Sprint 04](docs/03%20Implementaci%C3%B3n/Sprint%2004/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md).
 
 La línea base funcional acordada para Sprint 1–4 está en [05. Plan funcional de sprints](docs/02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md), con criterios para flota y rutas y con los cortes históricos preservados.
 
@@ -245,6 +246,9 @@ EcoLogistica/
 ├── openspec/
 │   ├── specs/                     # Especificaciones vigentes
 │   └── changes/archive/           # Cambios implementados y archivados
+├── Dockerfile                     # Imagen de producción de un solo servicio (API + interfaz compilada)
+├── render.yaml                    # Plano de infraestructura para Render (servicio web + PostgreSQL)
+├── deploy/arranque.sh             # Migraciones y arranque del servicio de producción
 ├── .env.example                   # Variables de entorno de ejemplo, sin secretos
 ├── sonar-project.properties       # Configuración del análisis de SonarQube
 └── README.md                      # Guía y estado del proyecto
@@ -383,7 +387,7 @@ Chromium ejecuta toda la suite; Firefox y WebKit ejecutan los flujos críticos y
 
 - **Se ejecuta sola** al hacer `push` o abrir un Pull Request (`ci.yml` y `tests.yml`) y al subir a `main` (`deploy-production.yml`).
 - **A mano:** pestaña *Actions* del repositorio, elegir el flujo, **Run workflow** y la rama. Los informes de Playwright quedan en *Artifacts* al final de la ejecución.
-- **Secretos del despliegue** (Settings → Secrets and variables → Actions): `DEPLOY_HOOK_BACKEND` y `DEPLOY_HOOK_FRONTEND` (secretos); `PRODUCTION_URL` y `PRODUCTION_API_URL` (variables). Sin ellos el flujo valida el código y avisa «no se desplegó». Opcionales para calidad: `SONAR_TOKEN` y `SONAR_HOST_URL`.
+- **Secretos del despliegue** (Settings → Secrets and variables → Actions): el secreto `DEPLOY_HOOK_BACKEND` y la variable `PRODUCTION_URL`. Sin ellos el flujo valida el código y avisa «no se desplegó». Opcionales: `DEPLOY_HOOK_FRONTEND` y `PRODUCTION_API_URL` (solo si interfaz y API se alojan por separado) y, para calidad, `SONAR_TOKEN` y `SONAR_HOST_URL`.
 
 ### 8.4.4. Usabilidad SUS (Sprint 4)
 
@@ -455,6 +459,17 @@ Implementado con OpenSpec en los cambios `registro-pedidos` (registrar, consulta
 - El ámbito geográfico es un rectángulo de aproximación configurable en `.env` (`AMBITO_*`), por validar con el negocio.
 - La fuente **Codec Pro** es comercial: ver `frontend/public/fonts/LEEME.md`; sin ella se usa la fuente del sistema.
 
+### 8.9. Despliegue a producción (un solo servicio)
+
+La sesión usa cookies `HttpOnly` + `SameSite=Strict`, que solo funcionan si la interfaz y la API comparten origen. Por eso el `Dockerfile` construye la interfaz y FastAPI la entrega junto con la API (`FRONTEND_DIST`). Con [Render](https://render.com) (plan gratuito):
+
+1. **New → Blueprint** y elegir este repositorio: `render.yaml` crea el servicio web `ecologistica` y la base `ecologistica-db` (PostgreSQL con PostGIS; las migraciones se aplican al arrancar).
+2. En el servicio, completar las variables: `TOTP_CLAVE_CIFRADO` (`python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"`), `CORS_ORIGIN` (la URL pública, sin barra final) y `DEMO_CLAVE`.
+3. Copiar el **Deploy Hook** del servicio (Settings → Deploy Hook) a GitHub: secreto `DEPLOY_HOOK_BACKEND`, y la URL pública como variable `PRODUCTION_URL`.
+4. A partir de ahí, cada `push` a `main` ejecuta CI y Tests, despliega, espera `GET /health` y corre la prueba de humo; `monitoreo.yml` mide la disponibilidad cada 6 horas.
+
+Verificación local previa: `vite build` con `VITE_API_URL=/api/v1`, arrancar la API con `FRONTEND_DIST=frontend/dist` y ejecutar `ECO_BASE_URL=http://127.0.0.1:8010 ECO_API_URL=http://127.0.0.1:8010 npx playwright test e2e/disponibilidad.spec.ts --project=chromium` (8 de 8 aprobadas).
+
 ---
 
 ## 9. Navegación de Documentación
@@ -472,9 +487,9 @@ Acceso directo a los documentos versionados. Las carpetas de Seguimiento y Contr
 - [07. Requisitos no funcionales](docs/01%20Inicio/07.%20Requisitos%20no%20funcionales%20V_1_0_0.md)
 - [08. Usuarios](docs/01%20Inicio/08.%20Usuarios%20V_1_0_0.md)
 - [09. Reglas de negocio](docs/01%20Inicio/09.%20Reglas%20de%20negocio%20V_1_0_0.md)
-- [10. Stack tecnológico](docs/01%20Inicio/10.%20Stack%20tecnológico%20V_1_0_0.md)
-- [11. Base de datos](docs/01%20Inicio/11.%20Base%20de%20datos%20V_1_0_0.md)
-- [12. Modelo C4](docs/01%20Inicio/12.%20Modelo%20C4%20V_1_0_0.md)
+- [10. Stack tecnológico](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_1_0.md)
+- [11. Base de datos](docs/01%20Inicio/11.%20Base%20de%20datos%20V_1_1_0.md)
+- [12. Modelo C4](docs/01%20Inicio/12.%20Modelo%20C4%20V_1_1_0.md)
 - [13. Restricciones](docs/01%20Inicio/13.%20Restricciones%20V_1_0_0.md)
 
 ### 9.2. Fase 02: Planificación

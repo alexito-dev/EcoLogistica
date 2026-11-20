@@ -1,0 +1,17 @@
+.git
+.github
+.claude
+**/node_modules
+**/dist
+**/test-results
+**/playwright-report
+backend/.venv
+backend/.data
+backend/.pytest_cache
+backend/.coverage
+backend/coverage.xml
+docs
+assets
+.env
+.env.*
+!.env.example

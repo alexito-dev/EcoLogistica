@@ -111,7 +111,7 @@ ECO-16 se incorporó originalmente al Sprint 2 para que el pedido de HU-001 siga
 |---|---|
 | Base de código del backend (FastAPI por capas) y del frontend (React + Vite + TypeScript), con scripts de ejecución y prueba | `backend/`, `frontend/`, README sección 8 |
 | PostGIS para pedidos y ubicaciones, migración Alembic y comprobación después de reiniciar la API | [ECO-16](https://continental-team-ecologistica.atlassian.net/browse/ECO-16), `docker-compose.yml`, `database/migrations/`, [adaptador PostgreSQL](../../../backend/src/app/pedidos/postgres_repository.py) |
-| Ratificación del stack React + FastAPI y alineación de 5 documentos de la línea base (versión 1.1.0) | [10 Stack tecnológico](../../01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md) |
+| Ratificación del stack React + FastAPI y alineación de 5 documentos de la línea base (versión 1.1.0) | [10 Stack tecnológico](../../01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_1_0.md) |
 | Flujo OpenSpec completo: 2 cambios con propuesta, especificación, diseño y tareas, ambos archivados; sus especificaciones viven en `openspec/specs/pedidos` y `openspec/specs/autenticacion` | `openspec/` |
 | Suites de regresión existentes reejecutadas el 09/10 después del cambio PostGIS (100 pruebas de backend y 39 de frontend aprobadas) | `backend/tests/`, `frontend/tests/`; estas suites no incluyen integración automatizada con PostgreSQL |
 

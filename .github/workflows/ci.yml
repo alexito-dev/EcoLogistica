@@ -98,3 +98,24 @@ jobs:
             exit 1
           fi
           echo "Repositorio limpio: sin .gitignore~, .env, node_modules ni reportes temporales."
+
+  imagen-produccion:
+    name: Imagen de producción (Docker)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Construir la imagen (API + interfaz compilada)
+        run: docker build -t ecologistica .
+      - name: Arrancar el contenedor y comprobar /health y la interfaz
+        run: |
+          docker run -d --name eco -p 8000:8000 -e JWT_SECRET="$(openssl rand -hex 32)" ecologistica
+          for i in $(seq 1 30); do
+            curl --fail --silent http://localhost:8000/health && break
+            sleep 2
+          done
+          curl --fail --silent http://localhost:8000/health | grep -q '"status":"ok"'
+          curl --fail --silent http://localhost:8000/ | grep -q "EcoLog"
+          curl --silent -o /dev/null -w "%{http_code}\n" http://localhost:8000/api/v1/pedidos | grep -q 401
+      - name: Registro del contenedor si falló
+        if: failure()
+        run: docker logs eco

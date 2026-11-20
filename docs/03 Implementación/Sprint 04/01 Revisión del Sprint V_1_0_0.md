@@ -38,7 +38,7 @@ Alcance del Sprint 4 (Inspección 5): que Conducción consulte su ruta, marque e
 
 | Pendiente | Estado y justificación | Tratamiento posterior |
 |---|---|---|
-| Despliegue a producción con URL operativa | Flujo listo; falta crear el servicio de alojamiento y definir `DEPLOY_HOOK_BACKEND`, `DEPLOY_HOOK_FRONTEND`, `PRODUCTION_URL` y `PRODUCTION_API_URL` | Acción 2 de la [Retrospectiva](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md#acciones-a-realizar); luego medir disponibilidad en el entorno desplegado |
+| Despliegue a producción con URL operativa | Código listo y probado en local (`Dockerfile` de un solo servicio, `render.yaml`, `deploy-production.yml`, `monitoreo.yml`; la prueba de disponibilidad pasa 8 de 8 contra la API entregando la interfaz). Falta crear la cuenta del alojamiento y definir el secreto `DEPLOY_HOOK_BACKEND` y la variable `PRODUCTION_URL` | Acción 2 de la [Retrospectiva](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md#acciones-a-realizar); luego medir disponibilidad en el entorno desplegado |
 | Puntuación SUS | Sin respuestas de personas usuarias (**n = 0**): no se estima ni se inventa | Acción 3: aplicar la encuesta a 5 o más personas y publicar el documento 04 en versión 1.1.0 |
 | Firefox en la máquina de desarrollo | No arranca localmente (falta el runtime de Visual C++); se verifica en GitHub Actions | Opcional: instalar el runtime para reproducirlo localmente |
 | SonarQube en CI | Se activa solo con `SONAR_TOKEN` y `SONAR_HOST_URL` | Acción 4 |

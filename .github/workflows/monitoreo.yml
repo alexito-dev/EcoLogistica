@@ -1,0 +1,43 @@
+name: Monitoreo de disponibilidad
+
+# Mide la disponibilidad real (uptime) del entorno desplegado: cada 6 horas sondea /health y registra el resultado
+# y la latencia en el resumen de la ejecución. Falla si el servicio no responde, para que quede visible en Actions.
+# Requiere la variable PRODUCTION_URL (Settings → Secrets and variables → Actions → Variables); sin ella se omite.
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sondear:
+    name: Sondear producción
+    runs-on: ubuntu-latest
+    env:
+      PRODUCTION_URL: ${{ vars.PRODUCTION_URL }}
+    steps:
+      - name: Sondas a /health
+        run: |
+          if [ -z "$PRODUCTION_URL" ]; then
+            echo "### Monitoreo omitido" >> "$GITHUB_STEP_SUMMARY"
+            echo "No existe la variable \`PRODUCTION_URL\`: todavía no hay entorno desplegado que medir." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          total=10; ok=0; suma=0; max=0
+          echo "### Disponibilidad de ${PRODUCTION_URL}" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Sonda | Código | Tiempo (ms) |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---:|---:|---:|" >> "$GITHUB_STEP_SUMMARY"
+          for i in $(seq 1 $total); do
+            salida=$(curl -s -o /dev/null --max-time 30 -w "%{http_code} %{time_total}" "$PRODUCTION_URL/health" || echo "000 0")
+            codigo=${salida% *}; ms=$(awk -v t="${salida#* }" 'BEGIN{printf "%d", t*1000}')
+            [ "$codigo" = "200" ] && ok=$((ok+1))
+            suma=$((suma+ms)); [ "$ms" -gt "$max" ] && max=$ms
+            echo "| $i | $codigo | $ms |" >> "$GITHUB_STEP_SUMMARY"
+            sleep 3
+          done
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Disponibilidad:** $ok de $total sondas correctas ($((ok*100/total)) %). Promedio $((suma/total)) ms, máximo $max ms." >> "$GITHUB_STEP_SUMMARY"
+          [ "$ok" -eq "$total" ] || { echo "::error::El servicio respondió correctamente solo $ok de $total veces"; exit 1; }

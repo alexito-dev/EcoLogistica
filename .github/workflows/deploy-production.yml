@@ -5,10 +5,12 @@ name: Deploy production
 # «deploy hooks» (por ejemplo Render o Railway): cada hook es una URL secreta que, al recibir un POST, compila y
 # publica la última versión del repositorio en ese servicio.
 #
-# Configuración en Settings → Secrets and variables → Actions:
-#   Secrets   DEPLOY_HOOK_BACKEND, DEPLOY_HOOK_FRONTEND
-#   Variables PRODUCTION_URL (interfaz, https://…), PRODUCTION_API_URL (API, https://…)
-# Mientras no estén definidos, el flujo valida el código y declara explícitamente que NO desplegó.
+# La imagen (Dockerfile) contiene la API y la interfaz: un solo servicio y un solo origen (requisito de las cookies
+# SameSite=Strict). Configuración en Settings → Secrets and variables → Actions:
+#   Secret    DEPLOY_HOOK_BACKEND  (deploy hook del servicio; ver render.yaml)
+#   Variable  PRODUCTION_URL       (URL pública, https://…)
+#   Opcionales: DEPLOY_HOOK_FRONTEND y PRODUCTION_API_URL, solo si la interfaz y la API se alojan por separado.
+# Mientras falten los obligatorios, el flujo valida el código y declara explícitamente que NO desplegó.
 
 on:
   push:
@@ -49,9 +51,7 @@ jobs:
         run: |
           faltan=""
           [ -n "$DEPLOY_HOOK_BACKEND" ] || faltan="$faltan DEPLOY_HOOK_BACKEND"
-          [ -n "$DEPLOY_HOOK_FRONTEND" ] || faltan="$faltan DEPLOY_HOOK_FRONTEND"
           [ -n "$PRODUCTION_URL" ] || faltan="$faltan PRODUCTION_URL"
-          [ -n "$PRODUCTION_API_URL" ] || faltan="$faltan PRODUCTION_API_URL"
           if [ -n "$faltan" ]; then
             echo "listo=false" >> "$GITHUB_OUTPUT"
             echo "### Despliegue omitido" >> "$GITHUB_STEP_SUMMARY"
@@ -71,7 +71,7 @@ jobs:
     env:
       DEPLOY_HOOK_BACKEND: ${{ secrets.DEPLOY_HOOK_BACKEND }}
       DEPLOY_HOOK_FRONTEND: ${{ secrets.DEPLOY_HOOK_FRONTEND }}
-      PRODUCTION_API_URL: ${{ vars.PRODUCTION_API_URL }}
+      PRODUCTION_API_URL: ${{ vars.PRODUCTION_API_URL || vars.PRODUCTION_URL }}
     steps:
       - name: Desplegar la API (el servicio aplica las migraciones de Alembic al arrancar)
         run: curl --fail --silent --show-error --max-time 60 -X POST "$DEPLOY_HOOK_BACKEND" > /dev/null
@@ -84,7 +84,8 @@ jobs:
             sleep 10
           done
           echo "::error::La API no respondió /health en 5 minutos"; exit 1
-      - name: Desplegar la interfaz
+      - name: Desplegar la interfaz por separado (solo si se configuró un servicio aparte)
+        if: env.DEPLOY_HOOK_FRONTEND != ''
         run: curl --fail --silent --show-error --max-time 60 -X POST "$DEPLOY_HOOK_FRONTEND" > /dev/null
 
   humo:
@@ -93,7 +94,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ECO_BASE_URL: ${{ vars.PRODUCTION_URL }}
-      ECO_API_URL: ${{ vars.PRODUCTION_API_URL }}
+      ECO_API_URL: ${{ vars.PRODUCTION_API_URL || vars.PRODUCTION_URL }}
       CI: "true"
     steps:
       - uses: actions/checkout@v4

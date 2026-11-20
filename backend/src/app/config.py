@@ -28,6 +28,8 @@ class Settings(BaseSettings):
     usuarios_archivo: Path = Path(__file__).resolve().parents[2] / ".data" / "usuarios.json"
     rutas_archivo: Path = Path(__file__).resolve().parents[2] / ".data" / "rutas.json"
     database_url: str | None = None
+    # Carpeta con el build del frontend (`frontend/dist`). Si existe, la API también entrega la interfaz (producción).
+    frontend_dist: Path | None = None
     # Clave Fernet que cifra los secretos TOTP en PostgreSQL (ECO-21). Obligatoria si hay DATABASE_URL.
     totp_clave_cifrado: str = ""
 
@@ -43,6 +45,17 @@ class Settings(BaseSettings):
     deposito_nombre: str = "Centro de distribución Huancayo"
     deposito_lat: float = -12.0651
     deposito_lon: float = -75.2049
+
+    @model_validator(mode="after")
+    def _normalizar_url_de_base_de_datos(self) -> "Settings":
+        # Los hostings entregan `postgres://` o `postgresql://`; SQLAlchemy necesita el controlador explícito.
+        url = self.database_url
+        if url:
+            for prefijo in ("postgres://", "postgresql://"):
+                if url.startswith(prefijo):
+                    self.database_url = "postgresql+psycopg://" + url[len(prefijo) :]
+                    break
+        return self
 
     @model_validator(mode="after")
     def _validar_ambito(self) -> "Settings":

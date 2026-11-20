@@ -16,6 +16,7 @@ from app.config import get_settings
 from app.database import get_engine
 from app.database_health import verificar_base_de_datos
 from app.errors import registrar_manejadores
+from app.estaticos import servir_interfaz
 from app.flota.router import get_repositorio_flota
 from app.flota.router import router as flota_router
 from app.flota.siembra import sembrar_vehiculos_demo
@@ -118,6 +119,8 @@ def create_app() -> FastAPI:
 
     for router in (auth_router, pedidos_router, flota_router, rutas_router, indicadores_router, conduccion_router):
         app.include_router(router, prefix=PREFIJO_API)
+    if settings.frontend_dist:
+        servir_interfaz(app, settings.frontend_dist)  # al final: solo atiende lo que ninguna ruta de la API reclamó
     return app
 
 

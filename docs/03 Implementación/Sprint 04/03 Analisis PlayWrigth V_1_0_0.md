@@ -200,7 +200,7 @@ La prueba sondea `/health` 30 veces consecutivas y exige una disponibilidad ≥ 
 
 ## 6. Lo que este informe no demuestra
 
-- No mide un entorno desplegado: no hay hosting productivo ni URL pública. El flujo de despliegue está implementado pero **no se ha ejecutado** hasta que el equipo cree los servicios y defina los secretos `DEPLOY_HOOK_BACKEND`, `DEPLOY_HOOK_FRONTEND` y las variables `PRODUCTION_URL` y `PRODUCTION_API_URL`.
+- No mide un entorno desplegado: no hay hosting productivo ni URL pública. El flujo de despliegue está implementado pero **no se ha ejecutado** hasta que el equipo cree el servicio (`render.yaml`) y defina el secreto `DEPLOY_HOOK_BACKEND` y la variable `PRODUCTION_URL`. La prueba de disponibilidad sí se ejecutó contra la API entregando la interfaz compilada en local (8 de 8 aprobadas, 30 de 30 sondas a `/health`); el uptime del entorno público lo mide `monitoreo.yml` una vez desplegado.
 - No incluye pruebas contra PostgreSQL en E2E (las usa solo la integración de `tests.yml`, con PostGIS aislado).
 - Las métricas de rendimiento son de una máquina de desarrollo y de una sola carga; no reemplazan una prueba de carga.
 - Firefox solo se ha ejecutado en GitHub Actions, no en la máquina de desarrollo.

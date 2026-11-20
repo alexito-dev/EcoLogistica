@@ -1,0 +1,33 @@
+# Plano de infraestructura para Render (https://render.com): un servicio web (API + interfaz) y una base PostgreSQL.
+# Uso: Render → New → Blueprint → elegir este repositorio. Después, en el servicio, completar las variables
+# marcadas «sync: false». El despliegue lo dispara GitHub Actions (deploy-production.yml) mediante el deploy hook,
+# solo cuando CI y Tests pasan; por eso autoDeploy está desactivado.
+databases:
+  - name: ecologistica-db
+    plan: free
+    postgresMajorVersion: "16"
+
+services:
+  - type: web
+    name: ecologistica
+    runtime: docker
+    plan: free
+    autoDeploy: false
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ecologistica-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: TOTP_CLAVE_CIFRADO   # clave Fernet: python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+        sync: false
+      - key: CORS_ORIGIN          # URL pública del servicio, p. ej. https://ecologistica.onrender.com (sin barra final)
+        sync: false
+      - key: DEMO_CLAVE           # contraseña de las cuentas de demostración
+        sync: false
+      - key: DEMO_PEDIDOS         # datos sintéticos de Huancayo para la demostración
+        value: "true"
+      - key: COOKIE_SECURE
+        value: "true"

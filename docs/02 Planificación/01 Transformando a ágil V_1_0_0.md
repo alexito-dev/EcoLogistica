@@ -322,7 +322,7 @@ Entonces el reporte no muestra vulnerabilidades críticas del OWASP Top 10 pendi
 
 **Épica:** EP-07. **Prioridad:** Alta.
 
-Soporta el almacenamiento y las consultas geográficas que usan HU-002, HU-003 y HU-004 (PostgreSQL + PostGIS, según el [Modelo C4](../01%20Inicio/12.%20Modelo%20C4%20V_1_0_0.md)).
+Soporta el almacenamiento y las consultas geográficas que usan HU-002, HU-003 y HU-004 (PostgreSQL + PostGIS, según el [Modelo C4](../01%20Inicio/12.%20Modelo%20C4%20V_1_1_0.md)).
 
 ```gherkin
 Escenario: Consultar por proximidad
