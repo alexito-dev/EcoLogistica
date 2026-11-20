@@ -1,5 +1,7 @@
 # INFORME DE REDUCCIÓN DEL IMPACTO AMBIENTAL (GREEN IT)
 
+[← Volver al README principal](../../../README.md#93-fase-03-implementación)
+
 | Campo | Valor |
 |---|---|
 | **Versión** | 1.0.0 |
@@ -7,7 +9,7 @@
 | **Autor** | Equipo EcoLogística Huancayo — Zorrilla Apumayta, Alex Jesus; Anco Porras, Jhean Pier Julio; Hilario Talavera, Alexander Daniel; Vera Zea, Jhoanna Hade; Isidro Casio, Jose Luis |
 | **Proyecto** | EcoLogística Huancayo (React + Vite + TypeScript, FastAPI, PostgreSQL/PostGIS) |
 | **Asignatura** | Taller de Proyectos 2 — Inspección 04 (Semana 13) |
-| **Documento complementario** | [02 Estándares de ingeniería de software y guía de desarrollo verde](02%20Estandares%20Ingenier%C3%ADa%20de%20software%20V_1_0_0.md) |
+| **Documento complementario** | [02 Estándares de ingeniería de software y guía de desarrollo verde](02%20Estandares%20Ingenier%C3%ADa%20de%20software%20V_1_1_0.md) |
 
 > **Nota de adaptación.** La consigna describe las 8 optimizaciones para el stack MERN (MongoDB, Express, React, Node). EcoLogística usa **FastAPI y PostgreSQL/PostGIS** en el servidor, por lo que cada optimización se aplicó con su equivalente real: `.select()`/`.lean()` → columnas explícitas, filtros en SQL e índices; middleware `compression` de Express → `BrotliMiddleware` de Starlette; ETag de Express → middleware ETag propio. **Todas las cifras fueron medidas sobre este repositorio**; no se reutilizaron los valores ilustrativos de la plantilla.
 
@@ -385,6 +387,23 @@ Se calcula la **primera visita** (sin caché ni hosting verde acreditado). No se
 
 El ahorro corresponde únicamente a la carga de la pantalla de acceso; la mayor parte de la huella de la plataforma está en el uso autenticado, no medido aquí. El método y el pipeline quedan listos para vigilarla.
 
+#### 1.5.1 Huella de carbono por módulo, antes y después
+
+La sección anterior mide la pantalla de acceso. Para responder qué ocurre en **cada módulo de la aplicación**, se midió lo que el navegador descarga la primera vez que entra a cada vista (HTML, JavaScript, CSS, logotipo y los fragmentos propios de esa vista), todo comprimido con Gzip como lo sirve `vite preview` en ambas versiones, y se aplicó el mismo modelo SWDM v4 de la sección anterior. El ANTES es el commit `2b08013` compilado con la configuración de desarrollo de la línea base (React en modo desarrollo, logotipo PNG de 1 049 853 B); el DESPUÉS es la versión actual (Preact, CSS en línea, logotipo AVIF de 1 526 B). Reproducible con [`scripts/calcular_swdm_modulos.py`](../../../scripts/calcular_swdm_modulos.py); los valores crudos están en [`evidencias/co2-por-modulo.json`](evidencias/co2-por-modulo.json).
+
+| Módulo | ANTES (B) | DESPUÉS (B) | Reducción | CO₂e ANTES (g/visita) | CO₂e DESPUÉS (g/visita) | Energía DESPUÉS (kWh) |
+|---|---:|---:|---:|---:|---:|---:|
+| Pedidos (arranque) | 1 205 650 | 36 482 | −97,0 % | 0,1664 | 0,0050 | 0,0000102 |
+| Flota | 1 210 068 | 40 079 | −96,7 % | 0,1670 | 0,0055 | 0,0000112 |
+| Rutas (con mapa) | 1 260 830 | 91 416 | −92,7 % | 0,1740 | 0,0126 | 0,0000255 |
+| Indicadores | 1 208 405 | 39 251 | −96,8 % | 0,1668 | 0,0054 | 0,0000110 |
+| Seguimiento | no existía | 39 647 | — | — | 0,0055 | 0,0000111 |
+| Mi ruta (con mapa) | no existía | 90 980 | — | — | 0,0126 | 0,0000254 |
+
+**Lectura.** Todos los módulos existentes bajan entre 92,7 % y 97,0 %. Los módulos con mapa (Rutas y Mi ruta) pesan más porque cargan la biblioteca Leaflet bajo demanda: solo la descarga quien entra a una vista con mapa. Seguimiento y Mi ruta nacieron en el Sprint 4 ya con carga diferida, por eso no tienen ANTES.
+
+**Límites.** Es transferencia estática, de una primera visita sin caché; no incluye las respuestas de la API (el listado de 12 pedidos viaja comprimido con Brotli o Gzip) ni los mosaicos del mapa de OpenStreetMap, que son un servicio externo. Las vistas autenticadas no se auditaron con Lighthouse porque exigen segundo factor.
+
 ### 1.6 Evidencias Visuales de Validación (Auditoría Lighthouse)
 
 Reportes consolidados en [`evidencias/`](evidencias/) (JSON completos de Lighthouse 12, abribles en el visor de Lighthouse), el resumen `resumen-lighthouse.json` y las ejecuciones de [GitHub Actions](https://github.com/alexito-dev/EcoLogistica/actions).
@@ -421,3 +440,12 @@ ESCRITORIO
 
 ---
 *Mediciones del 13/11/2026 en equipo de desarrollo; los valores de Lighthouse varían con la carga de la máquina.*
+
+---
+
+## Historial de cambios
+
+| Versión | Fecha | Cambio |
+|---|---|---|
+| 1.0.0 | 13/11/2026 | Primera emisión (Inspección 04, Green IT). |
+| 1.1.0 | 20/11/2026 | Se agrega la sección 1.5.1 con la huella de carbono por módulo (antes y después), `scripts/calcular_swdm_modulos.py` y `evidencias/co2-por-modulo.json`, atendiendo la observación de la Inspección 4. |

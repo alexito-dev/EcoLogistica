@@ -38,7 +38,7 @@ Especificación: [`openspec/specs/conduccion/spec.md`](../../../openspec/specs/c
 | Mapa para Conducción | ECO-13 / HU-005 | Vista «Mi ruta» con mapa y paradas | Implementado |
 | Estados de entrega | HU-010 | Vista «Mi ruta» y eventos de parada | Implementado |
 | Reenrutamiento operativo | ECO-15 / HU-006 | Reprogramar incidencias y reoptimizar pendientes (vecino más cercano desde la última entrega) | Implementado con alcance acotado; no es el motor VRPTW completo (EN-001) |
-| Optimizaciones Green IT | Inspección 04 | Ver [informe](../reduccion%20del%20impacto%20ambiental/01%20Informe%20de%20reduccion%20del%20impacto%20ambiental%20V_1_0_0.md) | Entregado |
+| Optimizaciones Green IT | Inspección 04 | Ver [informe](../reduccion%20del%20impacto%20ambiental/01%20Informe%20de%20reduccion%20del%20impacto%20ambiental%20V_1_1_0.md) | Entregado |
 
 ## 3. Cómo se verificó
 

@@ -1,5 +1,7 @@
 # ESTÁNDARES DE INGENIERÍA DE SOFTWARE Y GUÍA DE DESARROLLO VERDE (GREEN IT)
 
+[← Volver al README principal](../../../README.md#93-fase-03-implementación)
+
 | Campo | Valor |
 |---|---|
 | **Versión** | 1.0.0 |
@@ -7,7 +9,7 @@
 | **Autor** | Equipo EcoLogística Huancayo — Zorrilla Apumayta, Alex Jesus; Anco Porras, Jhean Pier Julio; Hilario Talavera, Alexander Daniel; Vera Zea, Jhoanna Hade; Isidro Casio, Jose Luis |
 | Proyecto | EcoLogística Huancayo (React + Vite + TypeScript, FastAPI, PostgreSQL/PostGIS) |
 | Asignatura | Taller de Proyectos 2 — Inspección 04 (Semana 13) |
-| Documento complementario | [01 Informe de reducción del impacto ambiental](01%20Informe%20de%20reduccion%20del%20impacto%20ambiental%20V_1_0_0.md) |
+| Documento complementario | [01 Informe de reducción del impacto ambiental](01%20Informe%20de%20reduccion%20del%20impacto%20ambiental%20V_1_1_0.md) |
 
 Este documento fundamenta las 8 optimizaciones del informe en tres referencias internacionales y define las reglas arquitectónicas que el equipo adopta para que no se pierdan. La numeración de las pautas W3C sigue la asignación de la consigna de la Semana 13.
 
@@ -118,18 +120,31 @@ A diferencia de la plantilla de la consigna, **el paso de Lighthouse no usa `|| 
 
 ### 2.3 Matriz de Mapeo Directo: Estándares vs. Optimizaciones
 
-| # | Optimización aplicada (stack real) | Equivalente MERN | ISO/IEC 25010 | Principio GSF | Pauta W3C WSG 1.0 | Evidencia |
-|---|---|---|---|---|---|---|
-| 1 | SQL con columnas explícitas, filtros en la base (`listar_por_ventana`) e índices compuestos (PostgreSQL/PostGIS) | `.select()`, `.lean()`, índices MongoDB | Eficiencia — utilización de recursos | Eficiencia de energía | 3.1 Transferencia de datos | `postgres_repository.py`, migraciones `20261113_02`, `test_green_it_consultas.py` |
-| 2 | Paginación `pagina`/`limite` de 12 en API y en la tabla de pedidos | `skip/limit` + React | Eficiencia — capacidad | Eficiencia de energía | 2.1 Eficiencia de la experiencia de usuario | `router.py`, `PaginaPedidos.tsx`, `medir_api_verde.py` |
-| 3 | Imágenes AVIF/WebP/PNG adaptativas con `<picture>` | WebP/AVIF + `<picture>` | Eficiencia — comportamiento temporal | Eficiencia de carbono | 1.2 Optimización de medios | `Logo.tsx`, `public/img/` |
-| 4 | `React.lazy`/`Suspense` por vista y build de producción con `NODE_ENV` fijado | Code splitting | Mantenibilidad — modularidad | Eficiencia de hardware | 2.4 Arquitectura de código | `App.tsx`, `scripts/build.mjs` |
-| 5 | Auditoría y sustitución de dependencias: Preact (`preact/compat`) en lugar de React en el build, `Intl` nativo | Reemplazo de moment/lodash | Mantenibilidad — analizabilidad | Eficiencia de energía | 2.2 Código limpio y librerías | `package.json`, `vite.config.ts`, `fechas.ts`, `GreenIt.test.ts` |
-| 6 | SVG en línea (ilustraciones e íconos), CSS en línea, eliminación de recursos inexistentes y de la solicitud de sesión para quien no tiene sesión | Inlining de SVG | Eficiencia — comportamiento temporal | Eficiencia de carbono | 3.2 Minimización de solicitudes HTTP | `Hero.tsx`, `styles.css`, `index.html` |
-| 7 | `ETag`, `Cache-Control` y 304; estáticos `immutable` en hosting | ETag Express + React Query | Eficiencia — comportamiento temporal | Eficiencia de energía | 2.4 Estrategias de caché | `cache_http.py`, `deploy/nginx.conf`, `test_cache_compresion.py` |
-| 8 | Compresión Brotli con respaldo Gzip (`BrotliMiddleware`) | `compression` de Express | Eficiencia — capacidad | Eficiencia de carbono | 3.1 Optimización de red | `main.py`, `test_cache_compresion.py` |
+| # | Optimización aplicada (stack real) | Equivalente MERN | ISO/IEC 25010 | Principio GSF | Pauta W3C WSG 1.0 | Evidencia | Commit |
+|---|---|---|---|---|---|---|---|
+| 1 | SQL con columnas explícitas, filtros en la base (`listar_por_ventana`) e índices compuestos (PostgreSQL/PostGIS) | `.select()`, `.lean()`, índices MongoDB | Eficiencia — utilización de recursos | Eficiencia de energía | 3.1 Transferencia de datos | `postgres_repository.py`, migraciones `20261113_02`, `test_green_it_consultas.py` | [`4349948`](https://github.com/alexito-dev/EcoLogistica/commit/4349948), [`3bee0be`](https://github.com/alexito-dev/EcoLogistica/commit/3bee0be) |
+| 2 | Paginación `pagina`/`limite` de 12 en API y en la tabla de pedidos | `skip/limit` + React | Eficiencia — capacidad | Eficiencia de energía | 2.1 Eficiencia de la experiencia de usuario | `router.py`, `PaginaPedidos.tsx`, `medir_api_verde.py` | [`4349948`](https://github.com/alexito-dev/EcoLogistica/commit/4349948) |
+| 3 | Imágenes AVIF/WebP/PNG adaptativas con `<picture>` | WebP/AVIF + `<picture>` | Eficiencia — comportamiento temporal | Eficiencia de carbono | 1.2 Optimización de medios | `Logo.tsx`, `public/img/` | [`4349948`](https://github.com/alexito-dev/EcoLogistica/commit/4349948) |
+| 4 | `React.lazy`/`Suspense` por vista y build de producción con `NODE_ENV` fijado | Code splitting | Mantenibilidad — modularidad | Eficiencia de hardware | 2.4 Arquitectura de código | `App.tsx`, `scripts/build.mjs` | [`b0a8e89`](https://github.com/alexito-dev/EcoLogistica/commit/b0a8e89) (`React.lazy`), [`4349948`](https://github.com/alexito-dev/EcoLogistica/commit/4349948) (`NODE_ENV`) |
+| 5 | Auditoría y sustitución de dependencias: Preact (`preact/compat`) en lugar de React en el build, `Intl` nativo | Reemplazo de moment/lodash | Mantenibilidad — analizabilidad | Eficiencia de energía | 2.2 Código limpio y librerías | `package.json`, `vite.config.ts`, `fechas.ts`, `GreenIt.test.ts` | [`4349948`](https://github.com/alexito-dev/EcoLogistica/commit/4349948), [`e1d961f`](https://github.com/alexito-dev/EcoLogistica/commit/e1d961f) |
+| 6 | SVG en línea (ilustraciones e íconos), CSS en línea, eliminación de recursos inexistentes y de la solicitud de sesión para quien no tiene sesión | Inlining de SVG | Eficiencia — comportamiento temporal | Eficiencia de carbono | 3.2 Minimización de solicitudes HTTP | `Hero.tsx`, `styles.css`, `index.html` | [`4349948`](https://github.com/alexito-dev/EcoLogistica/commit/4349948), [`e1d961f`](https://github.com/alexito-dev/EcoLogistica/commit/e1d961f) |
+| 7 | `ETag`, `Cache-Control` y 304; estáticos `immutable` en hosting | ETag Express + React Query | Eficiencia — comportamiento temporal | Eficiencia de energía | 2.4 Estrategias de caché | `cache_http.py`, `deploy/nginx.conf`, `test_cache_compresion.py` | [`4349948`](https://github.com/alexito-dev/EcoLogistica/commit/4349948) |
+| 8 | Compresión Brotli con respaldo Gzip (`BrotliMiddleware`) | `compression` de Express | Eficiencia — capacidad | Eficiencia de carbono | 3.1 Optimización de red | `main.py`, `test_cache_compresion.py` | [`4349948`](https://github.com/alexito-dev/EcoLogistica/commit/4349948) |
 
 Las ocho optimizaciones quedan vinculadas a una subcaracterística de ISO/IEC 25010, a un principio de la GSF y a una pauta WSG.
+
+#### Trazabilidad inversa: del estándar a lo que se hizo
+
+| Estándar y requisito | Optimizaciones que lo cumplen | Dónde verificarlo |
+|---|---|---|
+| ISO/IEC 25010 — Eficiencia de desempeño: utilización de recursos | 1 | `test_green_it_consultas.py`, migración `20261113_02` |
+| ISO/IEC 25010 — Eficiencia de desempeño: comportamiento temporal | 3, 6, 7 | Informe Lighthouse (FCP 0,92 s, LCP 1,22 s) en [`evidencias/`](evidencias/) |
+| ISO/IEC 25010 — Eficiencia de desempeño: capacidad | 2, 8 | `test_cache_compresion.py`, `medir_api_verde.py` |
+| ISO/IEC 25010 — Mantenibilidad: modularidad y analizabilidad | 4, 5 | `App.tsx` (carga diferida por vista), `GreenIt.test.ts` |
+| GSF — Eficiencia de energía | 1, 2, 5, 7 | Energía por módulo en el [informe, sección 1.5.1](01%20Informe%20de%20reduccion%20del%20impacto%20ambiental%20V_1_1_0.md#151-huella-de-carbono-por-módulo-antes-y-después) |
+| GSF — Eficiencia de carbono | 3, 6, 8 | Emisiones por módulo, misma sección; `scripts/calcular_swdm_modulos.py` |
+| GSF — Eficiencia de hardware | 4 | Menos JavaScript inicial: 1 205 650 B a 36 482 B en el arranque |
+| W3C WSG 1.2 (medios), 2.4 (arquitectura y caché) y 3.1 (transferencia de datos) | 1.2: optimización 3; 2.4: optimizaciones 4 y 7; 3.1: optimizaciones 1 y 8 | Columna «Pauta W3C WSG 1.0» de la matriz anterior |
 
 ---
 
@@ -153,8 +168,8 @@ git status
 mkdir -p "docs/03 Implementación/reduccion del impacto ambiental"
 
 # 3. Los dos archivos Markdown quedan en esa carpeta:
-#    - 01 Informe de reduccion del impacto ambiental V_1_0_0.md
-#    - 02 Estandares Ingeniería de software V_1_0_0.md
+#    - 01 Informe de reduccion del impacto ambiental V_1_1_0.md
+#    - 02 Estandares Ingeniería de software V_1_1_0.md
 
 # 4. Añadir la carpeta y los documentos al área de preparación (staging)
 git add "docs/03 Implementación/reduccion del impacto ambiental/"
@@ -168,3 +183,11 @@ git push origin sprint-4/green-it-calidad
 
 **Variación respecto a la plantilla.** La plantilla termina con `git push origin main`. En este proyecto el flujo es de ramas cortas con Pull Request y CI obligatorio (ver GitFlow del Sprint 03), por lo que el `push` se hace a la rama `sprint-4/green-it-calidad` y la integración a `main` se realiza mediante Pull Request una vez que el CI pasa.
 
+---
+
+## Historial de cambios
+
+| Versión | Fecha | Cambio |
+|---|---|---|
+| 1.0.0 | 13/11/2026 | Primera emisión (Inspección 04, Green IT). |
+| 1.1.0 | 20/11/2026 | Se agrega la columna «Commit» a la matriz de mapeo y la trazabilidad inversa por estándar; se corrige que la carga diferida por vista (`React.lazy`) data del 09/10/2026 y que la mejora de este sprint fue fijar `NODE_ENV` en la compilación. |

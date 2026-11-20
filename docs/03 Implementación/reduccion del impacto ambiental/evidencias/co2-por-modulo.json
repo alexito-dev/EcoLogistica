@@ -1,0 +1,40 @@
+[
+  {
+    "modulo": "Pedidos (arranque)",
+    "bytes_antes": 1205650,
+    "bytes_despues": 36482,
+    "co2e_antes_g": 0.1664062310010195,
+    "co2e_despues_g": 0.005035318806767465
+  },
+  {
+    "modulo": "Flota",
+    "bytes_antes": 1210068,
+    "bytes_despues": 40079,
+    "co2e_antes_g": 0.16701601222157483,
+    "co2e_despues_g": 0.005531783960759641
+  },
+  {
+    "modulo": "Rutas",
+    "bytes_antes": 1260830,
+    "bytes_despues": 91416,
+    "co2e_antes_g": 0.1740222852677107,
+    "co2e_despues_g": 0.012617419660091401
+  },
+  {
+    "modulo": "Indicadores",
+    "bytes_antes": 1208405,
+    "bytes_despues": 39251,
+    "co2e_antes_g": 0.16678648162633183,
+    "co2e_despues_g": 0.005417501740157604
+  },
+  {
+    "modulo": "Seguimiento",
+    "bytes_antes": null,
+    "bytes_despues": 39647
+  },
+  {
+    "modulo": "Mi ruta",
+    "bytes_antes": null,
+    "bytes_despues": 90980
+  }
+]
