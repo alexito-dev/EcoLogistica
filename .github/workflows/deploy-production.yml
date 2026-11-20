@@ -1,0 +1,120 @@
+name: Deploy production
+
+# Despliegue continuo (Sprint 5). Solo se despliega código que pasó CI y Tests. Las credenciales se leen de
+# GitHub Secrets; ninguna se escribe en el repositorio. El destino es el servicio de hosting que dispone de
+# «deploy hooks» (por ejemplo Render o Railway): cada hook es una URL secreta que, al recibir un POST, compila y
+# publica la última versión del repositorio en ese servicio.
+#
+# Configuración en Settings → Secrets and variables → Actions:
+#   Secrets   DEPLOY_HOOK_BACKEND, DEPLOY_HOOK_FRONTEND
+#   Variables PRODUCTION_URL (interfaz, https://…), PRODUCTION_API_URL (API, https://…)
+# Mientras no estén definidos, el flujo valida el código y declara explícitamente que NO desplegó.
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-production # nunca dos despliegues a la vez; el segundo espera al primero
+  cancel-in-progress: false
+
+jobs:
+  ci:
+    name: Validar (CI)
+    uses: ./.github/workflows/ci.yml
+    secrets: inherit
+
+  tests:
+    name: Validar (Tests)
+    uses: ./.github/workflows/tests.yml
+    secrets: inherit
+
+  configuracion:
+    name: Comprobar configuración de producción
+    runs-on: ubuntu-latest
+    outputs:
+      listo: ${{ steps.verificar.outputs.listo }}
+    env:
+      DEPLOY_HOOK_BACKEND: ${{ secrets.DEPLOY_HOOK_BACKEND }}
+      DEPLOY_HOOK_FRONTEND: ${{ secrets.DEPLOY_HOOK_FRONTEND }}
+      PRODUCTION_URL: ${{ vars.PRODUCTION_URL }}
+      PRODUCTION_API_URL: ${{ vars.PRODUCTION_API_URL }}
+    steps:
+      - id: verificar
+        run: |
+          faltan=""
+          [ -n "$DEPLOY_HOOK_BACKEND" ] || faltan="$faltan DEPLOY_HOOK_BACKEND"
+          [ -n "$DEPLOY_HOOK_FRONTEND" ] || faltan="$faltan DEPLOY_HOOK_FRONTEND"
+          [ -n "$PRODUCTION_URL" ] || faltan="$faltan PRODUCTION_URL"
+          [ -n "$PRODUCTION_API_URL" ] || faltan="$faltan PRODUCTION_API_URL"
+          if [ -n "$faltan" ]; then
+            echo "listo=false" >> "$GITHUB_OUTPUT"
+            echo "### Despliegue omitido" >> "$GITHUB_STEP_SUMMARY"
+            echo "El código pasó CI y Tests, pero **no se desplegó**: faltan en el repositorio:$faltan." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "listo=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  desplegar:
+    name: Desplegar a producción
+    needs: [ci, tests, configuracion]
+    if: needs.configuracion.outputs.listo == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ vars.PRODUCTION_URL }}
+    env:
+      DEPLOY_HOOK_BACKEND: ${{ secrets.DEPLOY_HOOK_BACKEND }}
+      DEPLOY_HOOK_FRONTEND: ${{ secrets.DEPLOY_HOOK_FRONTEND }}
+      PRODUCTION_API_URL: ${{ vars.PRODUCTION_API_URL }}
+    steps:
+      - name: Desplegar la API (el servicio aplica las migraciones de Alembic al arrancar)
+        run: curl --fail --silent --show-error --max-time 60 -X POST "$DEPLOY_HOOK_BACKEND" > /dev/null
+      - name: Esperar a que la API publicada responda /health
+        run: |
+          for intento in $(seq 1 30); do
+            if curl --fail --silent --max-time 10 "$PRODUCTION_API_URL/health" | grep -q '"status":"ok"'; then
+              echo "API disponible tras $intento intento(s)"; exit 0
+            fi
+            sleep 10
+          done
+          echo "::error::La API no respondió /health en 5 minutos"; exit 1
+      - name: Desplegar la interfaz
+        run: curl --fail --silent --show-error --max-time 60 -X POST "$DEPLOY_HOOK_FRONTEND" > /dev/null
+
+  humo:
+    name: Prueba de humo posterior al despliegue
+    needs: desplegar
+    runs-on: ubuntu-latest
+    env:
+      ECO_BASE_URL: ${{ vars.PRODUCTION_URL }}
+      ECO_API_URL: ${{ vars.PRODUCTION_API_URL }}
+      CI: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Instalar Playwright
+        working-directory: frontend
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Disponibilidad y resiliencia contra producción
+        working-directory: frontend
+        run: npx playwright test e2e/disponibilidad.spec.ts --project=chromium
+      - name: Publicar informe
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-produccion
+          path: frontend/playwright-report
+          retention-days: 30
+          if-no-files-found: warn
