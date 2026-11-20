@@ -6,10 +6,10 @@
 |---|---|
 | Versión | 1.0.0 |
 | Fecha | 20/11/2026 |
-| Rama | `sprint-5/cicd-playwright-usabilidad` |
+| Rama | `sprint-4/cierre-inspeccion-5` |
 | Herramienta | Playwright 1.65 (`@playwright/test`) |
 | Entorno de medición | Máquina de desarrollo (Windows 10), API FastAPI y build de producción de la interfaz servidos en local con datos temporales |
-| Documentos relacionados | [Pruebas E2E y calidad del Sprint 4](../Sprint%2004/03%20Pruebas%20E2E%20y%20calidad%20V_1_0_0.md) · [`tests.yml`](../../../.github/workflows/tests.yml) |
+| Documentos relacionados | [Pruebas E2E y calidad del Sprint 4](../Sprint%2004/07%20Calidad%20inicial%20E2E%20y%20SonarQube%20V_1_0_0.md) · [`tests.yml`](../../../.github/workflows/tests.yml) |
 
 > **Alcance de las mediciones.** Las cifras de este informe se midieron en una máquina de desarrollo con la API y la interfaz en `localhost`: describen el comportamiento del código, no el de una red real ni el de un servidor productivo, que **todavía no existe** (ver [sección 6](#6-lo-que-este-informe-no-demuestra)). Firefox no pudo ejecutarse en esa máquina; su resultado se toma de GitHub Actions (sección 2.3).
 
@@ -28,9 +28,9 @@ frontend/
 ├── playwright.config.ts          # proyectos, servidores web y variables de entorno
 ├── e2e/
 │   ├── ayudas.ts                 # inicio de sesión con contraseña + TOTP (RFC 6238), navegación
-│   ├── criticos.spec.ts          # Sprint 5 · autenticación, roles y formulario de pedidos
-│   ├── disponibilidad.spec.ts    # Sprint 5 · códigos HTTP, fallos de red/servidor y uptime
-│   ├── rendimiento.spec.ts       # Sprint 5 · Web Vitals y tiempos de la API (solo Chromium)
+│   ├── criticos.spec.ts          # Sprint 4 · autenticación, roles y formulario de pedidos
+│   ├── disponibilidad.spec.ts    # Sprint 4 · códigos HTTP, fallos de red/servidor y uptime
+│   ├── rendimiento.spec.ts       # Sprint 4 · Web Vitals y tiempos de la API (solo Chromium)
 │   ├── sprint4-conduccion.spec.ts# recorrido Planificación → Conducción → incidencia
 │   ├── accesibilidad.spec.ts     # axe-core y criterios WCAG 2.2 AA
 │   └── verde.spec.ts             # compresión y caché condicional (Green IT)

@@ -74,7 +74,7 @@ La principal brecha medible se encuentra en **frontend** y en las **ramas condic
 
 1. Configuramos `pytest --cov=app --cov-branch` para medir también ramas y ejecutar la suite completa contra PostgreSQL/PostGIS con datos aislados y migraciones Alembic previas.
 2. Ejecutamos Vitest con V8 y reporte LCOV de todo `frontend/src`, incluyendo vistas y APIs. No excluimos módulos para subir métricas.
-3. El script [`scripts/reporte_cobertura.py`](../../../scripts/reporte_cobertura.py) consolida numeradores y denominadores de líneas/ramas y genera el resumen de GitHub Actions.
+3. El script [`scripts/reporte_cobertura.py`](../../scripts/reporte_cobertura.py) consolida numeradores y denominadores de líneas/ramas y genera el resumen de GitHub Actions.
 4. Conservamos `backend/coverage.xml` y `frontend/coverage/lcov.info` en un artefacto de GitHub Actions por ejecución durante 30 días.
 5. Añadimos pruebas orientadas a flujos reales de API, autenticación, flota, rutas, reintentos, permisos, persistencia y estados vacíos.
 6. Una vez alcanzado el 90 % en CI sobre el mismo commit, exigiremos `--min 90` como puerta de calidad, sin cambiar artificialmente la fórmula.

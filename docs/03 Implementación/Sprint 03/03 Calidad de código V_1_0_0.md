@@ -129,7 +129,7 @@ Los 4 code smells adicionales vienen del código nuevo del sprint (rutas guardad
 | 3 | `S3358` / `S4624` — extraer ternarios y plantillas anidadas | ≈ 1 h | Vera Zea, Jhoanna Hade | Sprint 4 |
 | 4 | `S8409` — quitar `response_model` redundante en 13 endpoints (comprobar que OpenAPI no cambie) | ≈ 30 min | Anco Porras, Jhean Pier Julio | Sprint 4 |
 | 5 | `S6759` / `S1874` — `Readonly<Props>` y reemplazo de `FormEvent` | ≈ 2 h | Vera Zea, Jhoanna Hade | Sprint 4 |
-| 6 | `S9073` / `S5778` — refactorizar aserciones de pruebas | ≈ 3 h | Isidro Casio, Jose Luis | Sprint 5 |
+| 6 | `S9073` / `S5778` — refactorizar aserciones de pruebas | ≈ 3 h | Isidro Casio, Jose Luis | Backlog posterior |
 | 7 | Cobertura de adaptadores PostgreSQL con pruebas de integración en el job de PostGIS del CI | 4–6 h | Isidro Casio, Jose Luis | Sprint 4 |
 
 **Meta para el próximo análisis:** 0 incidencias de severidad Alta, fiabilidad A, menos de 60 code smells, cobertura ≥ 85 % y análisis automático en cada PR (acciones 1 y 8 de la [retrospectiva](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md#acciones-a-realizar)).

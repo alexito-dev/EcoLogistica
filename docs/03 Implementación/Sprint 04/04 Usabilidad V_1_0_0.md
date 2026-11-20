@@ -9,7 +9,7 @@
 | Sistema evaluado | EcoLogística Huancayo (interfaz web, roles Planificación y Conducción) |
 | Instrumento | System Usability Scale (SUS), 10 ítems, escala Likert 1–5 |
 | Estado de la medición | **Instrumento, tareas y cálculo listos y probados; respuestas de personas usuarias aún no registradas** |
-| Documentos relacionados | [Protocolo del Sprint 4](../Sprint%2004/04%20Usabilidad%20SUS%20y%20Nielsen%20V_1_0_0.md) · [Evaluación heurística](../Sprint%2004/05%20Evaluaci%C3%B3n%20heur%C3%ADstica%20de%20Nielsen%20V_1_0_0.md) |
+| Documentos relacionados | [Protocolo del Sprint 4](../Sprint%2004/08%20Protocolo%20SUS%20y%20Nielsen%20V_1_0_0.md) · [Evaluación heurística](../Sprint%2004/09%20Evaluaci%C3%B3n%20heur%C3%ADstica%20de%20Nielsen%20V_1_0_0.md) |
 
 > **Declaración de integridad.** Este documento **no contiene puntuaciones SUS de personas reales** porque la encuesta todavía no se ha aplicado. Una puntuación SUS solo existe con respuestas auténticas; inventarlas o estimarlas invalidaría el informe. Lo que sí está terminado y verificado es todo lo necesario para obtenerla en una sesión de unos 30 minutos: la ficha técnica, las tareas, la hoja de respuestas, el cálculo automatizado con grado A–F y su [prueba automática](../../../backend/tests/test_usabilidad_sus.py). La sección 3.3 muestra el cálculo con un **ejemplo ilustrativo señalado como tal**, que no representa datos del proyecto.
 
@@ -23,7 +23,7 @@
 
 | Aspecto | Definición |
 |---|---|
-| Instrumento | SUS (Brooke, 1996): 10 enunciados alternando tono positivo (impares) y negativo (pares). Equivalente en español aprobado en la [guía de laboratorio](../Sprint%2004/04%20Usabilidad%20SUS%20y%20Nielsen%20V_1_0_0.md#3-system-usability-scale-sus) |
+| Instrumento | SUS (Brooke, 1996): 10 enunciados alternando tono positivo (impares) y negativo (pares). Equivalente en español aprobado en la [guía de laboratorio](../Sprint%2004/08%20Protocolo%20SUS%20y%20Nielsen%20V_1_0_0.md#3-system-usability-scale-sus) |
 | Escala de valoración | Likert de 1 (totalmente en desacuerdo) a 5 (totalmente de acuerdo) |
 | Perfil de la muestra | Personas de Planificación y de Conducción de DistriRápido S.A.C. o con perfil equivalente (quien programa rutas; quien las ejecuta en reparto). Se registran rol, experiencia previa con herramientas de rutas y dispositivo, sin datos personales |
 | Tamaño de la muestra (*n*) | Mínimo **5 personas** (rúbrica y práctica habitual para una primera medición); idealmente 5 por rol |
@@ -114,7 +114,7 @@ Con n pequeño (5–10), el promedio tiene un margen de error amplio: el informe
 
 ### 4.2. Cuellos de botella de interfaz identificados hasta ahora
 
-Provienen de la [evaluación heurística de Nielsen](../Sprint%2004/05%20Evaluaci%C3%B3n%20heur%C3%ADstica%20de%20Nielsen%20V_1_0_0.md) (una persona evaluadora, no sustituye al SUS) y de la ejecución de las pruebas de este sprint.
+Provienen de la [evaluación heurística de Nielsen](../Sprint%2004/09%20Evaluaci%C3%B3n%20heur%C3%ADstica%20de%20Nielsen%20V_1_0_0.md) (una persona evaluadora, no sustituye al SUS) y de la ejecución de las pruebas de este sprint.
 
 | Origen | Hallazgo | Ítems SUS que probablemente lo reflejen |
 |---|---|---|
@@ -124,7 +124,7 @@ Provienen de la [evaluación heurística de Nielsen](../Sprint%2004/05%20Evaluac
 | Heurística H4 (sev. 3) | Una entrega marcada por error no se puede revertir | 9 |
 | Heurística H5 (sev. 2) | Asignar el mismo conductor a varios vehículos obliga a elegirlo uno por uno | 8 |
 | Heurística H9 (sev. 2) | No hay manual breve para personas usuarias | 4, 10 |
-| Pruebas E2E del Sprint 5 | El segundo factor TOTP solo acepta cada código una vez: reingresar con la misma cuenta antes de 30 s obliga a esperar la ventana siguiente. Es una decisión de seguridad (RF-11.1), pero puede percibirse como espera en sesiones de prueba y en cambios rápidos de turno | 1, 8 |
+| Pruebas E2E del Sprint 4 | El segundo factor TOTP solo acepta cada código una vez: reingresar con la misma cuenta antes de 30 s obliga a esperar la ventana siguiente. Es una decisión de seguridad (RF-11.1), pero puede percibirse como espera en sesiones de prueba y en cambios rápidos de turno | 1, 8 |
 
 ### 4.3. Mejoras aplicadas y propuestas
 

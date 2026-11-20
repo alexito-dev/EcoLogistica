@@ -1,59 +1,50 @@
-# Revisión del Sprint 4 — EcoLogística Huancayo
+# Revisión del sprint
 
-| Campo | Valor |
-|---|---|
-| Versión | 1.0.0 |
-| Corte | 13/11/2026 |
-| Rama | `sprint-4/green-it-calidad` |
-| Propósito | Que Conducción consulte su ruta, marque cada entrega y reporte incidencias, y que Planificación actúe sobre ellas; cerrar la deuda de los Sprints 1–3 y la Inspección 04 (Green IT) |
-| Plan de referencia | [05. Plan funcional de sprints](../../02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md) |
+[← Volver al README principal](../../../README.md#93-fase-03-implementación)
 
-> **Alcance de este documento.** Registra lo implementado y verificado en el repositorio. **No** afirma el estado de las tarjetas de Jira (no se verificó desde este entorno): los identificadores se citan para que el equipo las actualice. Tampoco documenta reuniones, asistencia ni votaciones del equipo que no consten.
+**Nombre del Proyecto:** EcoLogística Huancayo — Plataforma de Optimización de Rutas Sostenibles de Última Milla
 
-## 1. Qué debía poder hacerse y qué se comprobó
+**Líder del Proyecto:** Zorrilla Apumayta, Alex Jesus
 
-| # | Criterio del plan funcional (Sprint 4) | Resultado | Evidencia |
+## Historias de Usuario completadas en este Sprint
+
+Alcance del Sprint 4 (Inspección 5): que Conducción consulte su ruta, marque el avance de las entregas y reporte incidencias para que Planificación actúe, y que cada cambio se compruebe y publique de forma automática. Los commits de cierre son los de la rama `sprint-4/cierre-inspeccion-5` y los del Sprint 4 ya integrados: [`1d57b0d`](https://github.com/alexito-dev/EcoLogistica/commit/1d57b0d), [`3bee0be`](https://github.com/alexito-dev/EcoLogistica/commit/3bee0be), [`ac59b73`](https://github.com/alexito-dev/EcoLogistica/commit/ac59b73), [`e1d961f`](https://github.com/alexito-dev/EcoLogistica/commit/e1d961f), [`003b5a7`](https://github.com/alexito-dev/EcoLogistica/commit/003b5a7) y [`5f750bf`](https://github.com/alexito-dev/EcoLogistica/commit/5f750bf).
+
+| Código | Título | Criterios de aceptación verificados | Enlace de cierre y evidencia |
 |---|---|---|---|
-| 1 | La persona conductora solo ve la ruta asignada y consulta sus paradas en orden | Cumplido | `GET /api/v1/conduccion/mi-ruta`; `backend/tests/conduccion/test_api.py::test_conductor_ve_solo_la_ruta_asignada…`; E2E `sprint4-conduccion.spec.ts` |
-| 2 | Marca `En ruta`, `Entregado`, `Incidencia` o `Cancelado` y el cambio se conserva | Cumplido | `POST /conduccion/paradas/{id}/estado`; eventos inmutables; el estado del pedido se actualiza; prueba de persistencia en PostgreSQL (`test_cuentas_rutas_conduccion.py`, se ejecuta en CI) |
-| 3 | Una incidencia en ruta activa es visible para Planificación con su descripción; el re-enrutamiento conserva lo entregado | Cumplido | `GET /conduccion/seguimiento`; `POST /conduccion/reoptimizar` (idempotente, no mueve paradas atendidas) |
-| 4 | Lo que no se puede reasignar se explica; no se oculta ni se cambia silenciosamente | Cumplido | Transiciones inválidas responden 422 con los estados permitidos; la incidencia exige descripción; `reprogramar` solo aplica a incidencias y conserva el historial |
-| 5 | Los indicadores no se rellenan con cifras inventadas | Cumplido | Esta iteración no agrega indicadores nuevos; el avance se muestra como conteo real de eventos |
+| HU-005 / ECO-13 | Ver mi ruta en el mapa (Conducción) | La persona conductora solo ve la ruta asignada, con paradas numeradas en orden y mapa | [`1d57b0d`](https://github.com/alexito-dev/EcoLogistica/commit/1d57b0d); `GET /api/v1/conduccion/mi-ruta`; [`sprint4-conduccion.spec.ts`](../../../frontend/e2e/sprint4-conduccion.spec.ts) |
+| HU-010 | Marcar el avance de cada entrega | Marca `En ruta`, `Entregado`, `Incidencia` o `Cancelado`; los cambios quedan como eventos inmutables y el estado del pedido se actualiza; las transiciones inválidas responden 422 | [`1d57b0d`](https://github.com/alexito-dev/EcoLogistica/commit/1d57b0d); `POST /conduccion/paradas/{id}/estado`; pruebas en [`backend/tests/conduccion/`](../../../backend/tests/conduccion/) |
+| HU-006 / ECO-15 | Atender incidencias y reorganizar la ruta | Planificación ve la incidencia con su descripción, la reprograma con confirmación y reoptimiza solo lo pendiente sin mover lo ya atendido | [`1d57b0d`](https://github.com/alexito-dev/EcoLogistica/commit/1d57b0d); `GET /conduccion/seguimiento`, `POST /conduccion/reoptimizar` |
+| ECO-14 / ECO-26 | Indicadores con entregas reales | Puntualidad observada, cumplimiento, incidencias, recorrido y CO₂e solo con avances registrados; sin entregas no se muestran porcentajes | [`3bee0be`](https://github.com/alexito-dev/EcoLogistica/commit/3bee0be) |
+| ECO-18 | Importar pedidos por plantilla CSV | Plantilla descargable; importación de todo o nada con errores por fila y columna | [`ac59b73`](https://github.com/alexito-dev/EcoLogistica/commit/ac59b73) |
+| ECO-21 | Cuentas y rutas en PostgreSQL con TOTP cifrado | Migración con cinco tablas nuevas aplicada, revertida y reaplicada en PostGIS; secretos TOTP cifrados con Fernet | [`1d57b0d`](https://github.com/alexito-dev/EcoLogistica/commit/1d57b0d); [ejecución de CI](https://github.com/alexito-dev/EcoLogistica/actions/runs/43453357665) |
+| ECO-24 | Accesibilidad WCAG 2.2 AA | 45/45 criterios verificados con pruebas en navegador y `axe-core` en todas las vistas | [`1d57b0d`](https://github.com/alexito-dev/EcoLogistica/commit/1d57b0d); [documento 06](06%20Accesibilidad%20WCAG%202.2%20V_1_0_0.md) |
+| ECO-27 | Pruebas E2E con Playwright en tres navegadores | Chromium, Firefox y WebKit ejecutan los flujos críticos: acceso con MFA, rol, validación de formularios y recorrido de Conducción | [`003b5a7`](https://github.com/alexito-dev/EcoLogistica/commit/003b5a7), [`5f750bf`](https://github.com/alexito-dev/EcoLogistica/commit/5f750bf); [`playwright.config.ts`](../../../frontend/playwright.config.ts); [documento 03](03%20Analisis%20PlayWrigth%20V_1_0_0.md) |
+| EN-006 / ECO-17 | CI/CD en tres flujos independientes | `ci.yml`, `tests.yml` y `deploy-production.yml` con GitHub Secrets; reportes guardados como artefactos | [`003b5a7`](https://github.com/alexito-dev/EcoLogistica/commit/003b5a7); [`.github/workflows/`](../../../.github/workflows/) |
+| Inspección 04 | Rendimiento móvil (Green IT) | FCP 0,92 s, LCP 1,22 s, TBT 41 ms, CLS 0; carga de 1 211 513 B a 41 872 B (−96,5 %) | [`4349948`](https://github.com/alexito-dev/EcoLogistica/commit/4349948), [`e1d961f`](https://github.com/alexito-dev/EcoLogistica/commit/e1d961f); [informe Green IT](../reduccion%20del%20impacto%20ambiental/01%20Informe%20de%20reduccion%20del%20impacto%20ambiental%20V_1_0_0.md) |
+| Sin tarjeta (nuevo) | Monitoreo de rendimiento y disponibilidad | Web Vitals y tiempos de API por debajo de 500 ms; códigos 200/401/404/405 y fallos 500/503 informados sin romper la interfaz; sonda `GET /health` | [`003b5a7`](https://github.com/alexito-dev/EcoLogistica/commit/003b5a7); [`rendimiento.spec.ts`](../../../frontend/e2e/rendimiento.spec.ts), [`disponibilidad.spec.ts`](../../../frontend/e2e/disponibilidad.spec.ts) |
+| Sin tarjeta (nuevo) | Evaluación de usabilidad SUS y heurística | Script de cálculo SUS con grado A–F (26 pruebas) y evaluación heurística de Nielsen con correcciones aplicadas | [`003b5a7`](https://github.com/alexito-dev/EcoLogistica/commit/003b5a7), [`ac59b73`](https://github.com/alexito-dev/EcoLogistica/commit/ac59b73); [documento 04](04%20Usabilidad%20V_1_0_0.md) |
 
-Especificación: [`openspec/specs/conduccion/spec.md`](../../../openspec/specs/conduccion/spec.md).
+**Definition of Done aplicada:** código en la rama, pruebas automáticas en verde, `ruff`, `oxlint`, `tsc -b` y compilación sin errores, y comprobación en GitHub Actions. Resultado de la verificación: ver la sección 2 del [documento 05](05%20Deuda%20cerrada%20y%20verificaci%C3%B3n%20del%20Sprint%204%20V_1_0_0.md) y el [análisis Playwright](03%20Analisis%20PlayWrigth%20V_1_0_0.md#22-resultados-de-ejecución).
 
-## 2. Deuda de los Sprints 1–3 cerrada en este sprint
+## Demostración del trabajo completado
 
-| Pendiente | Tarjeta | Qué se hizo | Estado |
-|---|---|---|---|
-| Cuentas y rutas en archivos JSON locales | ECO-21 | Migración `20261113_01`: tablas `usuarios`, `intentos_acceso`, `rutas_guardadas`, `asignaciones_ruta`, `eventos_parada`; adaptadores PostgreSQL; se usan cuando existe `DATABASE_URL` | Implementado y **verificado en GitHub Actions** con PostGIS real: migración aplicada, revertida y reaplicada, y pruebas de integración de cuentas, TOTP cifrado, rutas y conducción en verde (commit `1d57b0d`) |
-| Secretos TOTP sin cifrar en reposo | ECO-21 | Cifrado Fernet (`TOTP_CLAVE_CIFRADO`); la API exige la clave si hay base de datos; prueba que el valor guardado no contiene el secreto y que otra clave no lo descifra | Implementado |
-| Accesibilidad WCAG 2.2 AA por debajo de 90 % | ECO-24 | Criterios 1.4.4, 1.4.12, 1.4.13, 2.4.5 y 2.4.11 verificados con pruebas en navegador; mapa de navegación como segunda vía; `axe-core` en todas las vistas | Verificado; ver [02 Accesibilidad](02%20Accesibilidad%20WCAG%202.2%20V_1_0_0.md) |
-| E2E con Playwright y CI | ECO-27 | Suite de 10 pruebas E2E + trabajo `e2e` en `ci.yml` | Verificado localmente (9/9) y en GitHub Actions (trabajo `e2e` en verde) |
-| Importación de pedidos por plantilla | ECO-18 | Plantilla CSV descargable, `POST /pedidos/importar` de todo o nada con errores por fila y columna, y pantalla «Importar pedidos»; acepta coma o punto y coma y fechas en hora de Lima | Implementado; probado en API y en interfaz (sin recorrido E2E) |
-| Rendimiento móvil (umbrales de la rúbrica) | Inspección 04 | Preact en el build de producción, CSS en línea y sin solicitud de sesión para quien no tiene sesión | FCP 0,92 s, LCP 1,22 s, TBT 41 ms, CLS 0 en móvil; el E2E corre contra ese build |
-| Evaluación heurística de Nielsen | Usabilidad | [05 Evaluación heurística](05%20Evaluaci%C3%B3n%20heur%C3%ADstica%20de%20Nielsen%20V_1_0_0.md): 10 heurísticas, hallazgos reales y correcciones (fecha por defecto, confirmación al reprogramar) | Hecha por una evaluadora única (inspección experta); no sustituye la prueba con usuarios |
-| Indicadores de entregas reales | ECO-14 y ECO-26 | `GET /indicadores/ejecucion` y sección «Resultados observados» en Indicadores: puntualidad observada, cumplimiento, incidencias, recorrido y CO₂e solo con avances registrados; sin entregas no se muestran porcentajes | Implementado; la distancia se estima por tramos (no hay GPS) |
-| Consulta de planificación eficiente | Green IT | `listar_por_ventana` filtra fecha y estado en la base con el índice `ix_pedidos_estado_ventana` (migración `20261113_02`) | Implementado; verificado en CI con PostGIS |
-| Mapa para Conducción | ECO-13 / HU-005 | Vista «Mi ruta» con mapa y paradas | Implementado |
-| Estados de entrega | HU-010 | Vista «Mi ruta» y eventos de parada | Implementado |
-| Reenrutamiento operativo | ECO-15 / HU-006 | Reprogramar incidencias y reoptimizar pendientes (vecino más cercano desde la última entrega) | Implementado con alcance acotado; no es el motor VRPTW completo (EN-001) |
-| Optimizaciones Green IT | Inspección 04 | Ver [informe](../reduccion%20del%20impacto%20ambiental/01%20Informe%20de%20reduccion%20del%20impacto%20ambiental%20V_1_0_0.md) | Entregado |
+- **Entorno utilizado:** local, con la API y el build de producción de la interfaz levantados con datos de demostración (`scripts\iniciar-demo.ps1`) y, para la comprobación automática, por Playwright. Todavía no existe un entorno de *staging* ni de producción activo: `deploy-production.yml` está implementado, pero necesita un servicio de alojamiento y sus secretos.
+- **Funcionalidades exhibidas** (recorrido de ocho pasos): Planificación revisa los pedidos, guarda las rutas del día y asigna conductor; Conducción abre «Mi ruta», marca una entrega como entregada y reporta una incidencia; Planificación ve la incidencia, la reprograma con confirmación; Indicadores muestra los «Resultados observados». Después se muestran los flujos de GitHub Actions y el informe HTML de Playwright.
+- **Evidencias:** capturas del recorrido en [`evidencias/`](evidencias/) (archivos `demo-01` a `demo-08`) y de los informes HTML de Playwright en [Chromium](evidencias/informe-playwright-chromium.png) y [WebKit](evidencias/informe-playwright-webkit.png).
+- **Retroalimentación recibida:** la demostración formal ante el docente se realiza en la exposición del 20/11/2026 (14:40–15:00). Hasta la fecha de este documento no consta una sesión con las personas de Planificación y Conducción de DistriRápido S.A.C., por lo que no se registran asistentes, acuerdos ni acta. La retroalimentación obtenida se agregará en la versión 1.1.0 de este documento.
 
-## 3. Cómo se verificó
+## Pendientes
 
-- **Backend:** 201 pruebas aprobadas y 9 omitidas (las de PostgreSQL/PostGIS requieren `ECO_TEST_DATABASE_URL`; corren en el job `cobertura-integral` de CI).
-- **GitHub Actions (13/11/2026):** CI y Green IT concluyeron con éxito sobre `1d57b0d`.
-- **Frontend:** 133 pruebas aprobadas; `tsc -b`, linter y compilación de producción sin errores ni advertencias.
-- **E2E (navegador real, API real):** 10 de 10 aprobadas, incluido el recorrido Planificación → Conducción → incidencia → Planificación → indicadores observados, y la comprobación de compresión y `If-None-Match`.
-- **Green IT:** `lhci autorun` aprobado con los umbrales de `lighthouserc.json`, localmente y en GitHub Actions.
-
-## 4. Límites y trabajo que sigue abierto
-
-- **PostgreSQL:** no se ejecutó en la máquina de desarrollo (sin Docker). Su verificación es la de GitHub Actions: [CI del commit `1d57b0d`](https://github.com/alexito-dev/EcoLogistica/actions/runs/43453357665), con los siete trabajos en verde (backend, migraciones, frontend, E2E, OpenSpec, cobertura integral y, en su flujo aparte, [Green IT](https://github.com/alexito-dev/EcoLogistica/actions/runs/43453357841)). No se pudo leer el registro detallado de esos trabajos (requiere sesión), por lo que no se cita el porcentaje exacto de cobertura: solo que el umbral combinado del 90 % se cumplió.
-- **Re-enrutamiento:** reordena con una heurística local; no recalcula asignación de vehículos ni reintegra pedidos reprogramados automáticamente (Planificación debe volver a guardar rutas).
-- **Mi ruta** no usa geolocalización ni modo sin conexión.
-- **Usabilidad:** se hizo una [evaluación heurística](05%20Evaluaci%C3%B3n%20heur%C3%ADstica%20de%20Nielsen%20V_1_0_0.md) y se entregan los instrumentos SUS; **no hay puntuación SUS** porque la encuesta solo puede responderla un grupo de personas reales (5 personas bastan para una primera medición). Ver [04 Usabilidad](04%20Usabilidad%20SUS%20y%20Nielsen%20V_1_0_0.md).
-- **Retrospectiva, estimación y Jira:** corresponden al equipo y se gestionan fuera de este repositorio; no se redactan aquí.
-- **SonarQube:** el CI ya trae el paso de análisis con puerta de calidad, pero **se activa solo con los secretos `SONAR_TOKEN` y `SONAR_HOST_URL`** del repositorio (cuenta propia en SonarCloud o servidor); sin ellos no corrió con el código nuevo. La cobertura combinada se verifica en cada CI con `scripts/reporte_cobertura.py --min 90`.
-- **Despliegue:** sigue sin existir despliegue continuo ni entorno productivo.
+| Pendiente | Estado y justificación | Tratamiento posterior |
+|---|---|---|
+| Despliegue a producción con URL operativa | Flujo listo; falta crear el servicio de alojamiento y definir `DEPLOY_HOOK_BACKEND`, `DEPLOY_HOOK_FRONTEND`, `PRODUCTION_URL` y `PRODUCTION_API_URL` | Acción 2 de la [Retrospectiva](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md#acciones-a-realizar); luego medir disponibilidad en el entorno desplegado |
+| Puntuación SUS | Sin respuestas de personas usuarias (**n = 0**): no se estima ni se inventa | Acción 3: aplicar la encuesta a 5 o más personas y publicar el documento 04 en versión 1.1.0 |
+| Firefox en la máquina de desarrollo | No arranca localmente (falta el runtime de Visual C++); se verifica en GitHub Actions | Opcional: instalar el runtime para reproducirlo localmente |
+| SonarQube en CI | Se activa solo con `SONAR_TOKEN` y `SONAR_HOST_URL` | Acción 4 |
+| Protección de `main` y revisión por pares | Deuda desde el Sprint 3 | Acción 5 |
+| HU-011 (comparar ruta optimizada con la línea base manual) | No implementada: no hay datos de línea base acordados | Backlog |
+| EN-001 completo (motor VRPTW) | El re-enrutamiento usa una heurística acotada (vecino más cercano) | Backlog; ver los [límites del Sprint 4](05%20Deuda%20cerrada%20y%20verificaci%C3%B3n%20del%20Sprint%204%20V_1_0_0.md#4-límites-y-trabajo-que-sigue-abierto) |
+| Hallazgos de usabilidad H4, H5 y H9 | Requieren una regla de negocio o decisión de producto | Acción 7 |
+| Tarjetas de Jira de este alcance | No creadas para parte del trabajo; sin ellas no se mide la velocidad | Acción 6 |
+| Pruebas E2E con PostgreSQL | La suite E2E usa memoria y archivos temporales; PostGIS se prueba en integración | Backlog |

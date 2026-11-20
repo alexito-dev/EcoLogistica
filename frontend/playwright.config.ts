@@ -3,10 +3,10 @@ import { join } from 'node:path'
 import { defineConfig, devices } from '@playwright/test'
 
 /**
- * Pruebas E2E (ECO-27, Sprint 5). Levantan la API real (FastAPI, memoria + archivos temporales, sin PostgreSQL ni
+ * Pruebas E2E (ECO-27, Sprint 4). Levantan la API real (FastAPI, memoria + archivos temporales, sin PostgreSQL ni
  * Docker) y la interfaz, y recorren los flujos de punta a punta en un navegador real.
  *
- * Navegadores (Sprint 5): Chromium ejecuta TODA la suite; Firefox y WebKit ejecutan los flujos críticos
+ * Navegadores (Sprint 4): Chromium ejecuta TODA la suite; Firefox y WebKit ejecutan los flujos críticos
  * (`criticos.spec.ts`, `sprint4-conduccion.spec.ts`) y la disponibilidad/resiliencia (`disponibilidad.spec.ts`). El monitoreo de rendimiento
  * (`rendimiento.spec.ts`) usa las API de Chromium y solo corre allí. Localmente Chromium usa el Chrome instalado;
  * en CI, el Chromium que instala Playwright.

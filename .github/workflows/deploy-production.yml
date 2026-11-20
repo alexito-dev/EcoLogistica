@@ -1,6 +1,6 @@
 name: Deploy production
 
-# Despliegue continuo (Sprint 5). Solo se despliega código que pasó CI y Tests. Las credenciales se leen de
+# Despliegue continuo (Sprint 4). Solo se despliega código que pasó CI y Tests. Las credenciales se leen de
 # GitHub Secrets; ninguna se escribe en el repositorio. El destino es el servicio de hosting que dispone de
 # «deploy hooks» (por ejemplo Render o Railway): cada hook es una URL secreta que, al recibir un POST, compila y
 # publica la última versión del repositorio en ese servicio.

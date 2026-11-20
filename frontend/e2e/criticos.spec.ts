@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 import { CLAVE_DEMO, cerrarSesion, iniciarSesion, irA } from './ayudas'
 
 /**
- * Flujos críticos de negocio (Sprint 5). Se ejecutan en Chromium, Firefox y WebKit: autenticación con MFA,
+ * Flujos críticos de negocio (Sprint 4). Se ejecutan en Chromium, Firefox y WebKit: autenticación con MFA,
  * control de acceso por rol y validación del formulario de pedidos hasta guardar un pedido.
  */
 

@@ -6,8 +6,8 @@ Solo usa la biblioteca estandar. Uso: python scripts/usabilidad/procesar_sus.py 
 
 Puntuacion estandar: impares (valor - 1), pares (5 - valor); suma x 2,5 (rango 0-100).
 Interpretacion segun la guia de laboratorio: > 68 buena, 50-68 aceptable, < 50 baja.
-Sprint 5: ademas se informa el grado A-F (curva de Sauro y Lewis, 2016) y, con --markdown, la tabla de
-respuestas con el calculo paso a paso, lista para pegar en docs/03 Implementacion/Sprint 05/04 Usabilidad.
+Sprint 4: ademas se informa el grado A-F (curva de Sauro y Lewis, 2016) y, con --markdown, la tabla de
+respuestas con el calculo paso a paso, lista para pegar en docs/03 Implementacion/Sprint 04/04 Usabilidad.
 Uso: python scripts/usabilidad/procesar_sus.py respuestas.csv [--markdown]
 """
 

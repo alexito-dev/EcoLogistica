@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test'
 import { iniciarSesion } from './ayudas'
 
 /**
- * Monitoreo de rendimiento (Sprint 5, solo Chromium): Web Vitals de la pantalla de acceso con el build de
+ * Monitoreo de rendimiento (Sprint 4, solo Chromium): Web Vitals de la pantalla de acceso con el build de
  * producción (TTFB, FCP, LCP, CLS) y tiempos de respuesta de la API autenticada. Los valores medidos se adjuntan
  * al informe HTML (`rendimiento.json`) y se imprimen en consola para documentarlos.
  *

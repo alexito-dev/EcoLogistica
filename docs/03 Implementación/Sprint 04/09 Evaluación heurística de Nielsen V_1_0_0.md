@@ -6,7 +6,7 @@
 | Fecha | 13/11/2026 |
 | Método | Inspección experta con las 10 heurísticas de Nielsen sobre la aplicación en ejecución (Planificación y Conducción) |
 | Quién la hizo | El desarrollador con asistencia de IA, recorriendo los flujos reales en el navegador y en las pruebas E2E |
-| Documento relacionado | [04 Usabilidad SUS y Nielsen](04%20Usabilidad%20SUS%20y%20Nielsen%20V_1_0_0.md) |
+| Documento relacionado | [04 Usabilidad SUS y Nielsen](08%20Protocolo%20SUS%20y%20Nielsen%20V_1_0_0.md) |
 
 > **Alcance honesto.** Esta es una **evaluación heurística de expertos (una sola persona evaluadora)**, que la propia metodología reconoce como complementaria. **No es** una prueba con usuarios y **no produce una puntuación SUS**: esa escala solo existe con respuestas reales de personas, y por eso sigue pendiente de aplicarse (ver documento 04). Los hallazgos de abajo son observaciones reales de la aplicación, no resultados inventados.
 
@@ -31,5 +31,5 @@ Severidad según Nielsen: 0 = no es un problema; 1 = cosmético; 2 = menor; 3 = 
 
 ## 2. Lo que sigue pendiente de verdad
 
-- La **puntuación SUS** y la **evaluación con varias personas** necesitan aplicarse a usuarios reales; el protocolo, las tareas, la plantilla CSV y el script de cálculo están listos en el [documento 04](04%20Usabilidad%20SUS%20y%20Nielsen%20V_1_0_0.md) y bastan unos 30 minutos con 5 personas para obtener datos reales.
+- La **puntuación SUS** y la **evaluación con varias personas** necesitan aplicarse a usuarios reales; el protocolo, las tareas, la plantilla CSV y el script de cálculo están listos en el [documento 04](08%20Protocolo%20SUS%20y%20Nielsen%20V_1_0_0.md) y bastan unos 30 minutos con 5 personas para obtener datos reales.
 - Las decisiones H4, H5 y H9 quedan en el backlog para que el equipo y el Product Owner las prioricen.

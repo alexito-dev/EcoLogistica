@@ -1,6 +1,6 @@
 name: CI
 
-# Integración continua (Sprint 5): estilo, análisis estático, compilación y validación de dependencias.
+# Integración continua (Sprint 4): estilo, análisis estático, compilación y validación de dependencias.
 # Las pruebas (unitarias, integración y E2E) viven en tests.yml.
 
 on:

@@ -1,4 +1,4 @@
-"""Sonda de disponibilidad /health usada por el despliegue y por las pruebas E2E de resiliencia (Sprint 5)."""
+"""Sonda de disponibilidad /health usada por el despliegue y por las pruebas E2E de resiliencia (Sprint 4)."""
 
 from fastapi.testclient import TestClient
 

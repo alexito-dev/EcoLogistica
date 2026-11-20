@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 
 /**
- * Disponibilidad y resiliencia (Sprint 5): códigos HTTP esperados, manejo de errores de red y de servidor en la
+ * Disponibilidad y resiliencia (Sprint 4): códigos HTTP esperados, manejo de errores de red y de servidor en la
  * interfaz, y una sonda de disponibilidad (uptime) sobre /health. Corre en Chromium, Firefox y WebKit y también
  * contra un entorno desplegado (ECO_BASE_URL / ECO_API_URL) como prueba de humo posterior al despliegue.
  */
