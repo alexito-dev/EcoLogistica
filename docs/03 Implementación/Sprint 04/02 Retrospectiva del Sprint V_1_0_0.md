@@ -20,7 +20,7 @@
 ## ¿Qué estamos haciendo bien?
 
 - **Cuatro capas de verificación automática:** `ci.yml` (estilo, análisis estático, compilación y dependencias), `tests.yml` (unitarias, integración con PostGIS y E2E en tres navegadores), `green-audit.yml` (Lighthouse) y la validación de especificaciones OpenSpec.
-- **Honestidad documental:** cada documento separa lo medido de lo pendiente; no hay puntuación SUS ni URL de producción porque todavía no existen datos reales.
+- **Honestidad documental:** cada documento separa lo medido de lo pendiente; el SUS se informa con su muestra (n = 5, estudiantes y egresados) y sus límites, y las métricas que no se registraron (finalización y tiempo por tarea) se declaran como tales.
 - **Pruebas deterministas contra servicios reales:** la API y la interfaz arrancan con datos temporales y aislados; ninguna prueba toca una base real.
 - **Convenciones de equipo:** Conventional Commits, ramas `sprint-N/*` que activan el CI, especificaciones OpenSpec por capacidad y documentación versionada con enlaces de ida y vuelta.
 - **Seguridad por defecto:** TOTP cifrado en reposo, cookies `HttpOnly` y `SameSite=Strict`, y pruebas que verifican cabeceras de endurecimiento y que los errores no filtren trazas.
@@ -30,7 +30,7 @@
 ### Personas
 
 - Firefox solo pudo ejecutarse en CI; conviene que más de una persona pueda reproducir la suite en los tres navegadores.
-- La evaluación SUS necesita participantes ajenos al equipo de desarrollo y reclutarlos no tenía responsable asignado hasta este sprint.
+- El SUS se aplicó a 5 estudiantes y egresados, pero en las sesiones no se registró quién completó cada tarea ni cuánto tardó; en la próxima medición hay que llevar una hoja de observación por persona.
 
 ### Relaciones
 
@@ -57,7 +57,7 @@
 |---|---|---|---|---|
 | 1 | Mantener los tres navegadores en verde y tratar cada reintento como hallazgo, no como aprobación | Isidro Casio | 27/11/2026 | Cero pruebas marcadas *flaky* en tres ejecuciones consecutivas de `tests.yml` |
 | 2 | Cargar en GitHub el secreto `DEPLOY_SSH_KEY` y la variable `PRODUCTION_URL` para que `deploy-production.yml` publique en el VPS sin intervención manual | Anco Porras, con aprobación de Zorrilla Apumayta, Alex Jesus | 27/11/2026 | `deploy-production.yml` con el trabajo «Desplegar a producción» en verde y `/health` respondiendo 200 |
-| 3 | Aplicar la encuesta SUS a por lo menos 5 personas con las tareas T1–T6 y registrar el resultado con `procesar_sus.py --markdown` | Vera Zea | 30/11/2026 | Documento 04 en versión 1.1.0 con n ≥ 5 y SUS promedio ≥ 68 |
+| 3 | Repetir el SUS con al menos 5 personas de Planificación y Conducción de DistriRápido S.A.C., registrando finalización, tiempo y errores por tarea (T1–T6) | Vera Zea | 30/11/2026 | Documento 04 en versión 1.2.0 con SUS ≥ 68 y finalización ≥ 80 % |
 | 4 | Definir `SONAR_TOKEN` y `SONAR_HOST_URL` para activar la puerta de calidad de SonarQube en CI | Isidro Casio | 27/11/2026 | Paso de SonarQube ejecutado y *Quality Gate* en verde |
 | 5 | Activar la protección de `main` (PR obligatorio y CI en verde) | Zorrilla Apumayta, Alex Jesus | 27/11/2026 | Ningún commit directo a `main` posterior a esa fecha |
 | 6 | Crear en Jira las tarjetas de este alcance y estimarlas | Zorrilla Apumayta, Alex Jesus | 25/11/2026 | Tarjetas con puntos y vinculadas a los commits del Sprint 4 |

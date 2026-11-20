@@ -31,5 +31,5 @@ Severidad según Nielsen: 0 = no es un problema; 1 = cosmético; 2 = menor; 3 = 
 
 ## 2. Lo que sigue pendiente de verdad
 
-- La **puntuación SUS** y la **evaluación con varias personas** necesitan aplicarse a usuarios reales; el protocolo, las tareas, la plantilla CSV y el script de cálculo están listos en el [documento 04](08%20Protocolo%20SUS%20y%20Nielsen%20V_1_0_0.md) y bastan unos 30 minutos con 5 personas para obtener datos reales.
+- La **puntuación SUS** se obtuvo después con 5 personas (77,5, grado B+; ver el [documento 04](04%20Usabilidad%20V_1_0_0.md)); falta aplicarla a personal de la empresa.
 - Las decisiones H4, H5 y H9 quedan en el backlog para que el equipo y el Product Owner las prioricen.

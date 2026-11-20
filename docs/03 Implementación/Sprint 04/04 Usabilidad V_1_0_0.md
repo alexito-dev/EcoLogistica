@@ -4,97 +4,127 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.0.0 |
+| Versión | 1.1.0 |
 | Fecha | 20/11/2026 |
-| Sistema evaluado | EcoLogística Huancayo (interfaz web, roles Planificación y Conducción) |
+| Sistema evaluado | EcoLogística Huancayo, https://ecologistica.arno.services (roles Planificación y Conducción) |
 | Instrumento | System Usability Scale (SUS), 10 ítems, escala Likert 1–5 |
-| Estado de la medición | **Instrumento, tareas y cálculo listos y probados; respuestas de personas usuarias aún no registradas** |
-| Documentos relacionados | [Protocolo del Sprint 4](../Sprint%2004/08%20Protocolo%20SUS%20y%20Nielsen%20V_1_0_0.md) · [Evaluación heurística](../Sprint%2004/09%20Evaluaci%C3%B3n%20heur%C3%ADstica%20de%20Nielsen%20V_1_0_0.md) |
+| Resultado | **SUS promedio 77,5 / 100 · grado B+ (Bueno) · n = 5 · supera el umbral de 68** |
+| Documentos relacionados | [Protocolo SUS y Nielsen](08%20Protocolo%20SUS%20y%20Nielsen%20V_1_0_0.md) · [Evaluación heurística](09%20Evaluaci%C3%B3n%20heur%C3%ADstica%20de%20Nielsen%20V_1_0_0.md) |
 
-> **Declaración de integridad.** Este documento **no contiene puntuaciones SUS de personas reales** porque la encuesta todavía no se ha aplicado. Una puntuación SUS solo existe con respuestas auténticas; inventarlas o estimarlas invalidaría el informe. Lo que sí está terminado y verificado es todo lo necesario para obtenerla en una sesión de unos 30 minutos: la ficha técnica, las tareas, la hoja de respuestas, el cálculo automatizado con grado A–F y su [prueba automática](../../../backend/tests/test_usabilidad_sus.py). La sección 3.3 muestra el cálculo con un **ejemplo ilustrativo señalado como tal**, que no representa datos del proyecto.
+> **Alcance y límites de los datos.** Las diez respuestas de cada una de las cinco personas fueron entregadas por el director del proyecto a quien redactó este informe y se procesaron sin modificarlas con el script [`procesar_sus.py`](../../../scripts/usabilidad/procesar_sus.py). No se registraron, y por eso no se informan, la tasa de finalización de tareas, los tiempos, los errores ni la fecha y modalidad exacta de cada sesión. El grupo es una **muestra por conveniencia de estudiantes y egresados de Ingeniería de Sistemas**, no personal de DistriRápido S.A.C.; el resultado orienta las mejoras, pero no representa a la población de personas usuarias finales.
 
 ## Historial de cambios
 
 | Versión | Fecha | Autor | Cambio |
 |---|---|---|---|
-| 1.0.0 | 20/11/2026 | Hilario Talavera, Alexander Daniel | Primera emisión: ficha técnica, tareas, cálculo SUS con grado A–F, análisis de cuellos de botella y plan de mejora. |
+| 1.0.0 | 20/11/2026 | Hilario Talavera, Alexander Daniel | Primera emisión: ficha técnica, tareas, cálculo SUS con grado A–F, análisis de cuellos de botella y plan de mejora (sin respuestas de personas usuarias). |
+| 1.1.0 | 20/11/2026 | Zorrilla Apumayta, Alex Jesus | Se incorporan las respuestas de 5 personas, la matriz bruta, el cálculo paso a paso, el SUS global con grado y la interpretación. |
 
 ## 1. Ficha técnica de la evaluación
 
 | Aspecto | Definición |
 |---|---|
-| Instrumento | SUS (Brooke, 1996): 10 enunciados alternando tono positivo (impares) y negativo (pares). Equivalente en español aprobado en la [guía de laboratorio](../Sprint%2004/08%20Protocolo%20SUS%20y%20Nielsen%20V_1_0_0.md#3-system-usability-scale-sus) |
+| Instrumento | SUS (Brooke, 1996): 10 enunciados que alternan tono positivo (impares) y negativo (pares). Redacción en español en el [protocolo](08%20Protocolo%20SUS%20y%20Nielsen%20V_1_0_0.md#3-system-usability-scale-sus) |
 | Escala de valoración | Likert de 1 (totalmente en desacuerdo) a 5 (totalmente de acuerdo) |
-| Perfil de la muestra | Personas de Planificación y de Conducción de DistriRápido S.A.C. o con perfil equivalente (quien programa rutas; quien las ejecuta en reparto). Se registran rol, experiencia previa con herramientas de rutas y dispositivo, sin datos personales |
-| Tamaño de la muestra (*n*) | Mínimo **5 personas** (rúbrica y práctica habitual para una primera medición); idealmente 5 por rol |
-| Modalidad | Prueba moderada: la persona ejecuta las tareas sin ayuda y responde el SUS inmediatamente después |
-| Entorno | Demostración local reproducible con `scripts\iniciar-demo.ps1` (datos sintéticos de Huancayo y cuentas de demostración con contraseña y TOTP) |
-| Fecha de aplicación | No aplicada al 20/11/2026 |
+| Tamaño de la muestra (*n*) | **5 personas** |
+| Perfil de la muestra | Estudiantes y egresados de Ingeniería de Sistemas e Informática, de la condición académica declarada por el equipo (tabla siguiente); no se verificó su experiencia previa con sistemas logísticos |
+| Modalidad | Prueba guiada: la persona usa el sistema en el entorno desplegado y responde el SUS al terminar; el facilitador gestiona el acceso con el código de la aplicación autenticadora |
+| Entorno | Producción en https://ecologistica.arno.services con datos sintéticos de Huancayo |
+| Fecha | Respuestas entregadas el 20/11/2026; fecha y modalidad de cada sesión, no registradas |
+
+| Código | Condición académica declarada |
+|---|---|
+| P01 | X ciclo |
+| P02 | Egresada |
+| P03 | VIII ciclo |
+| P04 | IX ciclo |
+| P05 | Egresado |
+
+Se usan códigos y no nombres para proteger la identidad de las personas evaluadoras.
 
 ### 1.1. Tareas que ejecutan los evaluadores antes de responder
 
-Las seis tareas coinciden con el recorrido que la prueba E2E [`sprint4-conduccion.spec.ts`](../../../frontend/e2e/sprint4-conduccion.spec.ts) y los flujos críticos [`criticos.spec.ts`](../../../frontend/e2e/criticos.spec.ts) garantizan que es técnicamente posible en Chromium, Firefox y WebKit; así, un resultado SUS bajo se atribuye al diseño y no a un defecto funcional.
-
-| # | Rol | Tarea | Éxito |
+| # | Rol | Tarea | Criterio de finalización |
 |---|---|---|---|
-| T1 | Planificación | Entrar con contraseña y TOTP y registrar un pedido con ventana horaria | Pedido visible en la lista |
-| T2 | Planificación | Generar y guardar las rutas de mañana | Mensaje «Rutas guardadas» |
-| T3 | Planificación | Asignar un conductor a una ruta | Conductor visible en Seguimiento |
-| T4 | Conducción | Abrir su ruta y marcar una entrega | Parada en estado Entregado |
-| T5 | Conducción | Reportar una incidencia con su descripción | Incidencia visible para Planificación |
-| T6 | Planificación | Atender la incidencia (reprogramar) | Pedido de nuevo Pendiente |
+| T1 | Planificación | Registrar un pedido | El pedido aparece guardado |
+| T2 | Planificación | Guardar las rutas del día siguiente | Las rutas quedan registradas |
+| T3 | Planificación | Asignar un conductor a una ruta | La ruta muestra el conductor asignado |
+| T4 | Conducción | Marcar una entrega como entregada | El estado de la entrega se actualiza |
+| T5 | Conducción | Reportar una incidencia | La incidencia queda registrada |
+| T6 | Planificación | Reprogramar esa incidencia | La nueva programación es visible |
 
-Por tarea se registra: éxito (sí/no), tiempo y errores. Criterio de aceptación propuesto: tasa de éxito ≥ 80 % en T1–T6.
+Las seis tareas corresponden al recorrido que garantizan las pruebas E2E [`sprint4-conduccion.spec.ts`](../../../frontend/e2e/sprint4-conduccion.spec.ts) y [`criticos.spec.ts`](../../../frontend/e2e/criticos.spec.ts) en Chromium, Firefox y WebKit; así, un resultado bajo se atribuye al diseño y no a un defecto funcional. **El resultado por tarea no se registró** en estas sesiones.
 
-## 2. Registro de las respuestas
+## 2. Resultados cuantitativos
 
-Las respuestas se guardan en un CSV a partir de la [plantilla](../../../scripts/usabilidad/respuestas_sus.plantilla.csv): una fila por participante, columnas `P1` a `P10` con valores del 1 al 5.
+### 2.1. Respuestas brutas (escala 1–5)
 
-```powershell
-Copy-Item scripts\usabilidad\respuestas_sus.plantilla.csv respuestas_sus.csv
-# registrar una fila por participante y luego:
-python scripts\usabilidad\procesar_sus.py respuestas_sus.csv --markdown
-```
+| Participante | P1 | P2 | P3 | P4 | P5 | P6 | P7 | P8 | P9 | P10 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| P01 | 4 | 2 | 4 | 2 | 4 | 2 | 4 | 2 | 4 | 1 |
+| P02 | 5 | 2 | 4 | 1 | 5 | 2 | 4 | 1 | 4 | 2 |
+| P03 | 4 | 3 | 4 | 2 | 4 | 3 | 4 | 2 | 3 | 2 |
+| P04 | 4 | 2 | 5 | 2 | 4 | 1 | 5 | 2 | 4 | 2 |
+| P05 | 4 | 2 | 4 | 3 | 5 | 2 | 4 | 2 | 4 | 2 |
 
-La salida (tabla de respuestas brutas, cálculo paso a paso por participante y resultado global con grado) se pega en la sección 3 de este documento y se publica como versión 1.1.0.
-
-## 3. Resultados cuantitativos
-
-### 3.1. Estado
-
-Al 20/11/2026 el archivo de respuestas no existe: **n = 0**. No se reportan promedios.
-
-### 3.2. Fórmula de conversión
+### 2.2. Fórmula de conversión
 
 | Tipo de ítem | Ítems | Contribución (0–4) |
 |---|---|---|
 | Positivos (impares) | 1, 3, 5, 7, 9 | valor − 1 |
 | Negativos (pares) | 2, 4, 6, 8, 10 | 5 − valor |
 
-`SUS individual = (suma de las 10 contribuciones) × 2,5` → rango 0–100. `SUS global = promedio de los SUS individuales`.
+`SUS individual = (suma de las 10 contribuciones) × 2,5` (rango 0–100). `SUS global = promedio de los SUS individuales`.
 
-### 3.3. Ejemplo ilustrativo del cálculo (no son datos del proyecto)
+### 2.3. Cálculo paso a paso
 
-Respuestas de una persona hipotética `[4, 2, 5, 1, 4, 2, 5, 2, 4, 1]`, las mismas que usa la prueba automática para verificar el algoritmo:
+| Participante | C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9 | C10 | Suma | SUS = suma × 2,5 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| P01 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 3 | 4 | 31 | 31 × 2,5 = 77,5 |
+| P02 | 4 | 3 | 3 | 4 | 4 | 3 | 3 | 4 | 3 | 3 | 34 | 34 × 2,5 = 85,0 |
+| P03 | 3 | 2 | 3 | 3 | 3 | 2 | 3 | 3 | 2 | 3 | 27 | 27 × 2,5 = 67,5 |
+| P04 | 3 | 3 | 4 | 3 | 3 | 4 | 4 | 3 | 3 | 3 | 33 | 33 × 2,5 = 82,5 |
+| P05 | 3 | 3 | 3 | 2 | 4 | 3 | 3 | 3 | 3 | 3 | 30 | 30 × 2,5 = 75,0 |
 
-| Ítem | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| Respuesta | 4 | 2 | 5 | 1 | 4 | 2 | 5 | 2 | 4 | 1 |
-| Regla | 4 − 1 | 5 − 2 | 5 − 1 | 5 − 1 | 4 − 1 | 5 − 2 | 5 − 1 | 5 − 2 | 4 − 1 | 5 − 1 |
-| Contribución | 3 | 3 | 4 | 4 | 3 | 3 | 4 | 3 | 3 | 4 |
+Ejemplo detallado, P01: ítems impares (4, 4, 4, 4, 4) → 3 + 3 + 3 + 3 + 3 = 15; ítems pares (2, 2, 2, 2, 1) → 3 + 3 + 3 + 3 + 4 = 16; suma = 31; SUS = 31 × 2,5 = **77,5**.
 
-Suma = 3+3+4+4+3+3+4+3+3+4 = **34** → SUS = 34 × 2,5 = **85,0**. Valores de referencia comprobados por prueba automática: todas las respuestas ideales = 100, todas las peores = 0, todas neutras (3) = 50.
+### 2.4. Resultado global
 
-## 4. Análisis e interpretación
-
-### 4.1. Cómo se ubicará el puntaje
-
-| Referencia | Criterio |
+| Indicador | Valor |
 |---|---|
-| Umbral de aceptación de la industria | **SUS ≥ 68** (promedio de miles de estudios) |
-| Interpretación de la guía de laboratorio | > 68 buena · 50–68 aceptable · < 50 baja |
+| Participantes (*n*) | 5 |
+| **SUS promedio** | **77,5** = (77,5 + 85,0 + 67,5 + 82,5 + 75,0) / 5 |
+| Desviación estándar | 6,85 |
+| Mínimo / máximo | 67,5 / 85,0 |
+| Grado (Sauro y Lewis, 2016) | **B+ — Bueno** |
+| Umbral de aceptación ≥ 68 | **Sí** (cuatro de cinco personas lo superan; P03 queda 0,5 puntos por debajo) |
 
-Clasificación por grados (curva de Sauro y Lewis, 2016) que calcula el script:
+### 2.5. Contribución media por ítem
+
+| Ítem | Enunciado resumido | Media (0–4) |
+|---|---|---:|
+| 1 | Usaría el sistema con regularidad | 3,2 |
+| 2 | Es innecesariamente complejo | 2,8 |
+| 3 | Es fácil de usar | 3,2 |
+| 4 | Necesitaría ayuda de una persona experta | 3,0 |
+| 5 | Las funciones están bien integradas | 3,4 |
+| 6 | Hay demasiada inconsistencia | 3,0 |
+| 7 | La mayoría aprendería rápido | 3,2 |
+| 8 | Es muy complicado de usar | 3,2 |
+| 9 | Me sentí confiado al usarlo | 2,8 |
+| 10 | Necesité aprender muchas cosas antes | 3,2 |
+
+## 3. Análisis e interpretación
+
+### 3.1. Ubicación respecto de la referencia
+
+| Referencia | Resultado |
+|---|---|
+| Umbral de aceptación de la industria (SUS ≥ 68) | 77,5: **supera el umbral** por 9,5 puntos |
+| Interpretación de la guía de laboratorio (> 68 buena · 50–68 aceptable · < 50 baja) | **Buena** |
+| Grado y adjetivo (curva de Sauro y Lewis) | **B+ — Bueno** |
+
+Clasificación por grados que aplica el script:
 
 | SUS | Grado | Adjetivo |
 |---|---|---|
@@ -110,36 +140,46 @@ Clasificación por grados (curva de Sauro y Lewis, 2016) que calcula el script:
 | 51,7 – 62,6 | D | Pobre |
 | < 51,7 | F | Inaceptable |
 
-Con n pequeño (5–10), el promedio tiene un margen de error amplio: el informe 1.1.0 debe publicar también la desviación estándar, el mínimo y el máximo, y no solo el promedio.
+### 3.2. Lectura crítica
 
-### 4.2. Cuellos de botella de interfaz identificados hasta ahora
+- **Con *n* = 5, el promedio tiene un margen de error amplio.** Con una desviación estándar de 6,85, el resultado se interpreta como una señal favorable y no como una medida precisa; el grado B+ queda a 0,3 puntos del límite inferior (77,2) y podría cambiar a B con una sola respuesta distinta.
+- **La muestra no son las personas usuarias reales** (personal de Planificación y Conducción de DistriRápido S.A.C.); son estudiantes y egresados de la misma carrera, con más soltura técnica que el promedio. El puntaje podría ser menor con personal de reparto.
+- **No se midió el desempeño** (finalización, tiempo, errores): el SUS mide usabilidad *percibida* y no demuestra por sí solo que las tareas se completaran.
+- Las respuestas fueron recogidas por el equipo del proyecto, lo que puede inclinar las respuestas hacia lo favorable (sesgo de cortesía).
 
-Provienen de la [evaluación heurística de Nielsen](../Sprint%2004/09%20Evaluaci%C3%B3n%20heur%C3%ADstica%20de%20Nielsen%20V_1_0_0.md) (una persona evaluadora, no sustituye al SUS) y de la ejecución de las pruebas de este sprint.
+### 3.3. Cuellos de botella de interfaz
 
-| Origen | Hallazgo | Ítems SUS que probablemente lo reflejen |
+**Lo que muestran los datos.** Las contribuciones más bajas son los ítems **2** («innecesariamente complejo», 2,8) y **9** («me sentí confiado», 2,8), seguidos de los ítems **4** («necesitaría ayuda de una persona experta») y **6** («demasiada inconsistencia»), ambos con 3,0. La persona con el puntaje más bajo (P03, 67,5) respondió 3 en los ítems 2, 6 y 9. Es decir: el sistema se percibe fácil de integrar (ítem 5, la mejor media, 3,4), pero con **algo de complejidad inicial y menos confianza al operarlo**.
+
+**Hipótesis que explicarían esas respuestas** (provienen de la [evaluación heurística de Nielsen](09%20Evaluaci%C3%B3n%20heur%C3%ADstica%20de%20Nielsen%20V_1_0_0.md), hecha por una persona evaluadora; no se observaron directamente en las sesiones):
+
+| Origen | Hallazgo | Ítems SUS relacionados |
 |---|---|---|
-| Heurística H1 (sev. 3) | «Mi ruta» y «Seguimiento» abrían en el día de hoy y mostraban «No hay rutas» cuando Planificación había guardado las de mañana | 2, 3 |
-| Heurística H2 (sev. 3) | «Reprogramar» cerraba la incidencia con un clic irreversible | 9 |
-| Heurística H3 (sev. 2) | Los errores de importación usaban nombres técnicos de campo | 4, 10 |
-| Heurística H4 (sev. 3) | Una entrega marcada por error no se puede revertir | 9 |
-| Heurística H5 (sev. 2) | Asignar el mismo conductor a varios vehículos obliga a elegirlo uno por uno | 8 |
+| Heurística H4 (sev. 3) | Una entrega marcada por error no se puede revertir: resta confianza | 9 |
 | Heurística H9 (sev. 2) | No hay manual breve para personas usuarias | 4, 10 |
-| Pruebas E2E del Sprint 4 | El segundo factor TOTP solo acepta cada código una vez: reingresar con la misma cuenta antes de 30 s obliga a esperar la ventana siguiente. Es una decisión de seguridad (RF-11.1), pero puede percibirse como espera en sesiones de prueba y en cambios rápidos de turno | 1, 8 |
+| Heurística H5 (sev. 2) | Asignar el mismo conductor a varios vehículos obliga a elegirlo uno por uno | 2, 8 |
+| Pruebas E2E | El segundo factor TOTP acepta cada código una sola vez, lo que obliga a esperar la ventana siguiente al reingresar con la misma cuenta; es una decisión de seguridad, pero puede percibirse como espera o complejidad | 2, 9 |
 
-### 4.3. Mejoras aplicadas y propuestas
+### 3.4. Mejoras aplicadas y propuestas
 
 | Estado | Mejora |
 |---|---|
-| Aplicada (Sprint 4) | H1: la vista abre en el día siguiente cuando hoy no hay rutas y lo avisa |
-| Aplicada (Sprint 4) | H2: confirmación explícita al reprogramar una incidencia |
-| Aplicada (Sprint 4) | H3: errores de importación por fila y columna con lenguaje legible |
-| Propuesta | H4: ventana de corrección de pocos minutos con registro, tras acordar la regla con Planificación |
-| Propuesta | H5: asignación del mismo conductor a todos los vehículos del día |
-| Propuesta | H9: manual breve para Planificación y Conducción |
-| Propuesta | Informar en pantalla el tiempo restante del código TOTP y que el código ya fue usado, para reducir la confusión |
+| Aplicada antes de esta medición | H1: «Mi ruta» y «Seguimiento» abren en el día siguiente cuando hoy no hay rutas y lo avisan |
+| Aplicada antes de esta medición | H2: confirmación explícita al reprogramar una incidencia |
+| Aplicada antes de esta medición | H3: errores de importación por fila y columna, en lenguaje legible |
+| Propuesta (ítem 9) | H4: ventana corta de corrección de una entrega, con registro, tras acordar la regla con Planificación |
+| Propuesta (ítems 4 y 10) | H9: manual breve de una página para Planificación y para Conducción |
+| Propuesta (ítems 2 y 8) | H5: asignar el mismo conductor a todos los vehículos del día en un solo paso |
+| Propuesta (ítems 2 y 9) | Mostrar en pantalla el tiempo restante del código TOTP y que el código ya fue usado |
 
-Cada mejora aplicada tras la medición se volverá a evaluar con el mismo instrumento para comparar el SUS antes y después.
+Las mejoras propuestas no se han implementado; se programan en la acción 7 de la [Retrospectiva](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md#acciones-a-realizar). Para comprobar que mejoran la usabilidad, se aplicará el mismo instrumento a personal de Planificación y Conducción de DistriRápido S.A.C., registrando esta vez la finalización, el tiempo y los errores por tarea.
 
-## 5. Criterio de cierre de este informe
+## 4. Reproducibilidad
 
-Este documento pasa a la versión 1.1.0 cuando tenga: n ≥ 5 (con rol y dispositivo por participante), la matriz de respuestas brutas, el cálculo paso a paso generado por `procesar_sus.py --markdown`, el SUS global con su grado, la tasa de éxito por tarea y la decisión sobre los hallazgos de severidad 3. Responsable propuesto: Vera Zea, Jhoanna Hade (Interfaz / experiencia de usuario), según la acción 3 de la [Retrospectiva](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md#acciones-a-realizar).
+Las respuestas se procesaron con la entrada `P1…P10` por persona y este comando, cuya salida es la que se transcribe en la sección 2:
+
+```powershell
+python scripts\usabilidad\procesar_sus.py respuestas_sus.csv --markdown
+```
+
+El cálculo está verificado por 26 pruebas automáticas ([`test_usabilidad_sus.py`](../../../backend/tests/test_usabilidad_sus.py)): todas las respuestas ideales dan 100, todas las peores dan 0 y todas neutras (3) dan 50.

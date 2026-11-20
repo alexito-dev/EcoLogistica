@@ -53,7 +53,7 @@ Pruebas al cierre: **230 de backend** (9 de PostgreSQL se ejecutan solo en CI), 
 **Qué falta (dicho con transparencia):**
 
 - **Despliegue automático desde GitHub:** la aplicación **ya está publicada** en https://ecologistica.arno.services (VPS con Docker y HTTPS, datos sintéticos). Falta cargar en el repositorio el secreto `DEPLOY_SSH_KEY` y la variable `PRODUCTION_URL` para que `deploy-production.yml` y `monitoreo.yml` actúen solos (guía en la [sección 8.9](#89-despliegue-a-producción-un-solo-servicio)).
-- **Usabilidad SUS:** el cálculo y el protocolo están listos, pero todavía no hay respuestas de personas reales (n = 0); no se estima un puntaje.
+- **Usabilidad SUS (a ampliar):** el SUS dio **77,5 / 100 (grado B+, n = 5, supera el umbral de 68)**, pero la muestra son estudiantes y egresados de Ingeniería de Sistemas, y no se registraron la finalización ni el tiempo por tarea. Falta repetirlo con personal de Planificación y Conducción de DistriRápido S.A.C. ([informe](docs/03%20Implementaci%C3%B3n/Sprint%2004/04%20Usabilidad%20V_1_0_0.md)).
 - **SonarQube vigente, protección de `main` y revisión por pares, y tarjetas de Jira del cierre:** pendientes (ver la [Retrospectiva](docs/03%20Implementaci%C3%B3n/Sprint%2004/02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md#acciones-a-realizar)).
 - **Motor VRPTW completo (EN-001):** el re-enrutamiento usa una heurística acotada.
 
