@@ -42,7 +42,8 @@ def test_codigo_totp_no_se_puede_repetir():
 
 
 def test_uri_de_aprovisionamiento():
-    uri = seguridad.uri_aprovisionamiento("JBSWY3DPEHPK3PXP", "planificador@ecologistica.test")
+    # pyotp >= 2.12 exige secretos de al menos 112 bits; el secreto real (random_base32) tiene 160.
+    uri = seguridad.uri_aprovisionamiento("JBSWY3DPEHPK3PXPJBSWY3DPEHPK3PXP", "planificador@ecologistica.test")
     assert uri.startswith("otpauth://totp/")
     assert "issuer=EcoLog" in uri
 

@@ -3,13 +3,23 @@ import { join } from 'node:path'
 import { defineConfig, devices } from '@playwright/test'
 
 /**
- * Pruebas E2E (ECO-27). Levantan la API real (FastAPI, memoria + archivos temporales, sin PostgreSQL ni
+ * Pruebas E2E (ECO-27, Sprint 5). Levantan la API real (FastAPI, memoria + archivos temporales, sin PostgreSQL ni
  * Docker) y la interfaz, y recorren los flujos de punta a punta en un navegador real.
- * Localmente usan Google Chrome instalado; en CI, el Chromium que instala Playwright.
+ *
+ * Navegadores (Sprint 5): Chromium ejecuta TODA la suite; Firefox y WebKit ejecutan los flujos críticos
+ * (`criticos.spec.ts`, `sprint4-conduccion.spec.ts`) y la disponibilidad/resiliencia (`disponibilidad.spec.ts`). El monitoreo de rendimiento
+ * (`rendimiento.spec.ts`) usa las API de Chromium y solo corre allí. Localmente Chromium usa el Chrome instalado;
+ * en CI, el Chromium que instala Playwright.
+ *
+ * Contra un entorno ya desplegado (humo posterior al despliegue): ECO_BASE_URL=https://… ECO_API_URL=https://…
+ * no se levanta ningún servidor local.
  */
 // Una sola carpeta por ejecución, compartida con los procesos de prueba (que reevalúan este archivo).
 const datos = (process.env.ECO_E2E_DIR ??= join(tmpdir(), `eco-e2e-${Date.now()}`))
 const CLAVE_DEMO = 'Clave-E2E-solo-pruebas-1'
+const BASE_URL = process.env.ECO_BASE_URL ?? 'http://localhost:3000'
+const REMOTO = Boolean(process.env.ECO_BASE_URL)
+const SOLO_CRITICOS = ['**/criticos.spec.ts', '**/disponibilidad.spec.ts', '**/sprint4-conduccion.spec.ts']
 
 export default defineConfig({
   testDir: './e2e',
@@ -18,16 +28,21 @@ export default defineConfig({
   fullyParallel: false,
   workers: 1,
   retries: process.env.CI ? 1 : 0,
-  reporter: [['list'], ['html', { open: 'never', outputFolder: 'playwright-report' }]],
+  // En CI, el reporter «github» deja cada fallo como anotación del trabajo (título y mensaje), visible sin descargar el informe.
+  reporter: [['list'], ...(process.env.CI ? [['github'] as const] : []), ['html', { open: 'never', outputFolder: 'playwright-report' }]],
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: BASE_URL,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     locale: 'es-PE',
     timezoneId: 'America/Lima',
   },
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'], channel: process.env.CI ? undefined : 'chrome' } }],
-  webServer: [
+  projects: [
+    { name: 'chromium', use: { ...devices['Desktop Chrome'], channel: process.env.CI ? undefined : 'chrome' } },
+    { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testMatch: SOLO_CRITICOS },
+    { name: 'webkit', use: { ...devices['Desktop Safari'] }, testMatch: SOLO_CRITICOS },
+  ],
+  webServer: REMOTO ? undefined : [
     {
       command: 'python -m uvicorn app.main:app --app-dir src --port 8000',
       cwd: '../backend',

@@ -7,11 +7,13 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from brotli_asgi import BrotliMiddleware
+from sqlalchemy import text
 
 from app.cache_http import EtagMiddleware
 from app.auth.dependencias import get_repositorio_usuarios
 from app.auth.router import router as auth_router
 from app.config import get_settings
+from app.database import get_engine
 from app.database_health import verificar_base_de_datos
 from app.errors import registrar_manejadores
 from app.flota.router import get_repositorio_flota
@@ -101,6 +103,19 @@ def create_app() -> FastAPI:
     # Compresión Brotli (con respaldo Gzip) de las respuestas JSON mayores a 1 KB: es la capa más externa.
     app.add_middleware(BrotliMiddleware, quality=4, minimum_size=1024, gzip_fallback=True)
     registrar_manejadores(app)
+
+    @app.get("/health", include_in_schema=False)
+    def salud() -> JSONResponse:
+        """Sonda de disponibilidad para el despliegue y el monitoreo (sin autenticación ni datos de negocio)."""
+        if settings.database_url:
+            try:
+                with get_engine().connect() as conexion:
+                    conexion.execute(text("SELECT 1"))
+            except Exception:  # noqa: BLE001 - cualquier fallo de la base significa «no disponible»
+                return JSONResponse(status_code=503, content={"status": "degradado", "base_de_datos": "no disponible"})
+            return JSONResponse(content={"status": "ok", "base_de_datos": "disponible"})
+        return JSONResponse(content={"status": "ok", "base_de_datos": "no configurada"})
+
     for router in (auth_router, pedidos_router, flota_router, rutas_router, indicadores_router, conduccion_router):
         app.include_router(router, prefix=PREFIJO_API)
     return app

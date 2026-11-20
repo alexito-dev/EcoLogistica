@@ -5,7 +5,10 @@
 # EcoLogística Huancayo
 ### Plataforma de Optimización de Rutas Sostenibles de Última Milla
 
-[![Estado](https://img.shields.io/badge/Estado-Implementaci%C3%B3n%20%C2%B7%20Sprint%204-2ea44f?style=flat-square)](docs/03%20Implementaci%C3%B3n/Sprint%2003)
+[![CI](https://github.com/alexito-dev/EcoLogistica/actions/workflows/ci.yml/badge.svg)](https://github.com/alexito-dev/EcoLogistica/actions/workflows/ci.yml)
+[![Tests](https://github.com/alexito-dev/EcoLogistica/actions/workflows/tests.yml/badge.svg)](https://github.com/alexito-dev/EcoLogistica/actions/workflows/tests.yml)
+[![Deploy production](https://github.com/alexito-dev/EcoLogistica/actions/workflows/deploy-production.yml/badge.svg)](https://github.com/alexito-dev/EcoLogistica/actions/workflows/deploy-production.yml)
+[![Estado](https://img.shields.io/badge/Estado-Implementaci%C3%B3n%20%C2%B7%20Sprint%205-2ea44f?style=flat-square)](docs/03%20Implementaci%C3%B3n/Sprint%2005)
 [![SonarQube (análisis histórico 9b31dd0)](https://img.shields.io/badge/SonarQube%209b31dd0-PASSED%20hist%C3%B3rico-4c9a2a?style=flat-square)](docs/03%20Implementaci%C3%B3n/Sprint%2003/03%20Calidad%20de%20c%C3%B3digo%20V_1_0_0.md)
 [![Versión](https://img.shields.io/badge/Versión-En%20desarrollo-blue?style=flat-square)](README.md)
 [![Stack](https://img.shields.io/badge/Stack-React%20%2B%20FastAPI-025B29?style=flat-square)](docs/01%20Inicio/10.%20Stack%20tecnol%C3%B3gico%20V_1_0_0.md)
@@ -174,7 +177,7 @@ graph TD
 
 ```text
 EcoLogistica/
-├── .github/                       # Plantillas de incidencias/PR y CI (workflows/ci.yml)
+├── .github/                       # Plantillas de incidencias/PR y flujos: ci.yml, tests.yml, deploy-production.yml, green-audit.yml
 ├── assets/                        # Logotipo y evidencias de Jira
 ├── backend/
 │   ├── src/app/auth/              # Autenticación, MFA, roles y auditoría
@@ -190,12 +193,15 @@ EcoLogistica/
 │   ├── 03 Implementación/         # Informes, revisión, retrospectiva e impedimentos
 │   │   ├── Sprint 01/             # Artefactos del primer sprint
 │   │   ├── Sprint 02/             # Artefactos del segundo sprint
-│   │   └── Sprint 03/             # Revisión, retrospectiva, SonarQube, OWASP, WCAG, informe, impedimentos, minuta, plan, GitFlow y pruebas
+│   │   ├── Sprint 03/             # Revisión, retrospectiva, SonarQube, OWASP, WCAG, informe, impedimentos, minuta, plan, GitFlow y pruebas
+│   │   ├── Sprint 04/             # Revisión, WCAG, E2E y calidad, usabilidad y evaluación heurística
+│   │   └── Sprint 05/             # Revisión, retrospectiva, análisis Playwright (3 navegadores) y usabilidad SUS
 │   ├── 04 Seguimiento y Control/  # Carpeta reservada; aún sin entregables
 │   ├── 05 Cierre/                 # Carpeta reservada; aún sin entregables
 │   └── otros/                     # Reservado para soporte técnico
 ├── frontend/
 │   ├── src/                       # Interfaz React, autenticación y cliente API
+│   ├── e2e/                       # Pruebas E2E con Playwright (Chromium, Firefox y WebKit)
 │   ├── tests/                     # Pruebas con Vitest y Testing Library
 │   └── public/                    # Logotipo y guía de fuentes
 ├── openspec/
@@ -323,8 +329,19 @@ python scripts\calcular_swdm.py lighthouse-reports\<antes>.report.json lighthous
 ```powershell
 Push-Location frontend
 npm.cmd ci
-npx.cmd playwright test        # levanta API (8000) y UI (3000) con datos temporales; usa el Chrome instalado
+npx.cmd playwright install chromium firefox webkit   # una sola vez
+npx.cmd playwright test        # levanta API (8000) y UI (3000) con datos temporales; Chromium usa el Chrome instalado
+npx.cmd playwright test --project=webkit    # un solo navegador: chromium, firefox o webkit
+npx.cmd playwright show-report              # informe HTML de la última ejecución
 Pop-Location
+```
+
+Chromium ejecuta toda la suite; Firefox y WebKit ejecutan los flujos críticos y la disponibilidad/resiliencia. Contra un entorno ya desplegado (prueba de humo): `$env:ECO_BASE_URL='https://…'; $env:ECO_API_URL='https://…'; npx.cmd playwright test e2e/disponibilidad.spec.ts --project=chromium`. Análisis completo en [03 Análisis Playwright](docs/03%20Implementaci%C3%B3n/Sprint%2005/03%20Analisis%20PlayWrigth%20V_1_0_0.md).
+
+### 8.4.3. Usabilidad SUS (Sprint 5)
+
+```powershell
+python scripts\usabilidad\procesar_sus.py respuestas_sus.csv --markdown   # tablas, cálculo paso a paso y grado A–F
 ```
 
 ### 8.5. Análisis de calidad con SonarQube
@@ -411,6 +428,14 @@ Artefactos de la semana 4: transformación ágil, configuración y evidencias Ji
 - [05. Plan funcional de sprints](docs/02%20Planificaci%C3%B3n/05%20Plan%20funcional%20de%20sprints.md)
 
 ### 9.3. Fase 03: Implementación
+
+Entregables del **Sprint 05** (corte del 20/11/2026 — CI/CD, Playwright en tres navegadores, rendimiento, disponibilidad y usabilidad SUS):
+
+- [01. Revisión del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%2005/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md)
+- [02. Retrospectiva del Sprint](docs/03%20Implementaci%C3%B3n/Sprint%2005/02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md)
+- [03. Análisis Playwright (E2E, rendimiento y disponibilidad)](docs/03%20Implementaci%C3%B3n/Sprint%2005/03%20Analisis%20PlayWrigth%20V_1_0_0.md)
+- [04. Usabilidad (SUS)](docs/03%20Implementaci%C3%B3n/Sprint%2005/04%20Usabilidad%20V_1_0_0.md)
+- Flujos de GitHub Actions: [`ci.yml`](.github/workflows/ci.yml) · [`tests.yml`](.github/workflows/tests.yml) · [`deploy-production.yml`](.github/workflows/deploy-production.yml)
 
 Entregables del **Sprint 1** (ECO Sprint 1, 14/09/2026 – 28/09/2026):
 
