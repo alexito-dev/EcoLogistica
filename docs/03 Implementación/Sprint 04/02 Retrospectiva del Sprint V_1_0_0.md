@@ -40,7 +40,7 @@
 
 ### Procesos
 
-- La decisión sobre el destino del despliegue (qué alojamiento y qué base PostGIS administrada) sigue sin tomarse; el flujo está listo, pero sin esa decisión no hay entorno que verificar.
+- El destino del despliegue se decidió durante el sprint (VPS propio con Docker y PostGIS en contenedor); queda dejar constancia de que `deploy-production.yml` lo publica sin intervención manual (acción 2).
 - La protección de `main` y la revisión por pares siguen pendientes ([README 7.1](../../../README.md#71-ramas-y-revisión)).
 - Las tarjetas de Jira de parte del alcance no están creadas; sin ellas no se mide la velocidad del sprint.
 - Las estimaciones de las tareas de integración (E2E con TOTP, despliegue) fueron optimistas; conviene hacer pruebas de concepto antes de comprometerlas.

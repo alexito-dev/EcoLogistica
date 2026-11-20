@@ -38,7 +38,7 @@ Alcance del Sprint 4 (Inspección 5): que Conducción consulte su ruta, marque e
 
 | Pendiente | Estado y justificación | Tratamiento posterior |
 |---|---|---|
-| Despliegue automático desde GitHub | La aplicación **ya está en producción** (`https://ecologistica.arno.services`, `/health` en verde, disponibilidad 8 de 8 y 30 de 30 sondas). Falta que `deploy-production.yml` la publique sola: cargar en el repositorio el secreto `DEPLOY_SSH_KEY` y la variable `PRODUCTION_URL` | Acción 2 de la [Retrospectiva](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md#acciones-a-realizar); luego medir disponibilidad en el entorno desplegado |
+| Despliegue automático desde GitHub | La aplicación **ya está en producción** (`https://ecologistica.arno.services`, `/health` en verde, disponibilidad 8 de 8 y 30 de 30 sondas). El secreto `DEPLOY_SSH_KEY` y la variable `PRODUCTION_URL` ya están cargados; falta dejar constancia de una ejecución de `deploy-production.yml` con «Desplegar a producción» en verde | Acción 2 de la [Retrospectiva](02%20Retrospectiva%20del%20Sprint%20V_1_0_0.md#acciones-a-realizar); luego medir disponibilidad en el entorno desplegado |
 | SUS con personas usuarias reales | Se aplicó a 5 estudiantes y egresados (77,5, B+); **no** a personal de DistriRápido S.A.C., y no se registraron finalización, tiempo ni errores por tarea | Acción 3: repetirlo con personal de Planificación y Conducción y registrar esas métricas |
 | Firefox en la máquina de desarrollo | No arranca localmente (falta el runtime de Visual C++); se verifica en GitHub Actions | Opcional: instalar el runtime para reproducirlo localmente |
 | SonarQube en CI | Se activa solo con `SONAR_TOKEN` y `SONAR_HOST_URL` | Acción 4 |

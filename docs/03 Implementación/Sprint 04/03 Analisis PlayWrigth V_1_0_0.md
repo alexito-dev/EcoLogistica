@@ -11,7 +11,7 @@
 | Entorno de medición | Máquina de desarrollo (Windows 10), API FastAPI y build de producción de la interfaz servidos en local con datos temporales |
 | Documentos relacionados | [Pruebas E2E y calidad del Sprint 4](../Sprint%2004/07%20Calidad%20inicial%20E2E%20y%20SonarQube%20V_1_0_0.md) · [`tests.yml`](../../../.github/workflows/tests.yml) |
 
-> **Alcance de las mediciones.** Las cifras de este informe se midieron en una máquina de desarrollo con la API y la interfaz en `localhost`: describen el comportamiento del código, no el de una red real ni el de un servidor productivo, que **todavía no existe** (ver [sección 6](#6-lo-que-este-informe-no-demuestra)). Firefox no pudo ejecutarse en esa máquina; su resultado se toma de GitHub Actions (sección 2.3).
+> **Alcance de las mediciones.** Las cifras de este informe se midieron en una máquina de desarrollo con la API y la interfaz en `localhost`: describen el comportamiento del código, no el de una red real; la excepción es la sección 4.3, que también se midió contra el servidor publicado (ver los límites en la [sección 6](#6-lo-que-este-informe-no-demuestra)). Firefox no pudo ejecutarse en esa máquina; su resultado se toma de GitHub Actions (sección 2.3).
 
 ## Historial de cambios
 
@@ -203,7 +203,7 @@ La prueba sondea `/health` 30 veces consecutivas y exige una disponibilidad ≥ 
 
 ## 6. Lo que este informe no demuestra
 
-- Solo la suite de disponibilidad y los Web Vitals se ejecutaron contra el entorno desplegado; las pruebas con sesión (MFA) no se corren contra producción. El despliegue desde GitHub Actions (`deploy-production.yml`) requiere cargar el secreto `DEPLOY_SSH_KEY` y la variable `PRODUCTION_URL` en el repositorio; el despliegue de esta fecha se hizo ejecutando el mismo script desde la máquina del equipo.
+- Solo la suite de disponibilidad y los Web Vitals se ejecutaron contra el entorno desplegado; las pruebas con sesión (MFA) no se corren contra producción. El secreto `DEPLOY_SSH_KEY` y la variable `PRODUCTION_URL` ya están cargados en el repositorio; el primer despliegue de esta fecha se hizo ejecutando `deploy/vps/desplegar.sh` desde la máquina del equipo.
 - No incluye pruebas contra PostgreSQL en E2E (las usa solo la integración de `tests.yml`, con PostGIS aislado).
 - Las métricas de rendimiento son de una máquina de desarrollo y de una sola carga; no reemplazan una prueba de carga.
 - Firefox solo se ha ejecutado en GitHub Actions, no en la máquina de desarrollo.
