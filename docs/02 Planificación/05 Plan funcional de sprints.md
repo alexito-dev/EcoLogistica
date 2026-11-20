@@ -7,8 +7,8 @@
 | Campo | Valor |
 |---|---|
 | Proyecto | EcoLogística Huancayo |
-| Versión | 1.15.0 |
-| Fecha | 30/10/2026 |
+| Versión | 1.16.0 |
+| Fecha | 20/11/2026 |
 | Enfoque | Cada sprint debe dejar una tarea real que una persona pueda completar en el sistema. |
 
 ## Estado final de los tres primeros incrementos — 30/10/2026
@@ -67,6 +67,7 @@ La distribución funcional vigente queda así: Sprint 1 reúne acceso MFA y role
 | **Sprint 2** · 29/09–13/10, alcance reordenado | Que Administración mantenga vehículos y que Planificación configure disponibilidad y turno por fecha para determinar unidades elegibles. | **Criterios E2E de flota aprobados el 09/10/2026** en navegador con MFA, API y PostGIS temporales: alta/edición y unicidad, validaciones, disponibilidad con motivo, exclusión de mantenimiento/inactivos y persistencia tras reiniciar. Jira ya refleja ECO-12 y ECO-19 en `Listo` (2/2 historias, 10 puntos). El usuario confirmó el 09/10 la aprobación del incremento; Jira mantiene el sprint activo hasta su cierre administrativo. |
 | **Sprint 3** · en revisión (Inspección 03, semana 11) | Que Planificación genere una ruta guardada a partir de pedidos pendientes y vehículos elegibles, y vuelva a consultar el orden de paradas, cargas y ventanas horarias. | **Al 30/10/2026:** rutas por fecha con mapa, guardado y reapertura, indicadores y CI implementados; cumplen los 5 criterios. Las rutas se guardan en un archivo local; su paso a PostgreSQL (EN-005) queda para el Sprint 4. Detalle en la [Revisión del Sprint 03](../03%20Implementaci%C3%B3n/Sprint%2003/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md). |
 | **Sprint 4** · propósito conservado | Que una persona conductora consulte su ruta, marque el avance de las entregas y reporte incidencias para que Planificación pueda actuar. | Se mantiene el propósito anterior: ejecución de ruta por Conducción y visibilidad de estados/incidencias para Planificación. Mapa y re-enrutamiento se incorporan según el alcance acordado para completar el recorrido. |
+| **Sprint 5** · corte 20/11/2026 | Que el equipo pueda comprobar y publicar cada cambio de forma automática —estilo, compilación, pruebas en tres navegadores, rendimiento, disponibilidad y despliegue— y medir la usabilidad con la escala SUS. | Flujos `ci.yml`, `tests.yml` y `deploy-production.yml`; Playwright en Chromium, Firefox y WebKit con Web Vitals, tiempos de API y disponibilidad; sonda `/health`; cálculo SUS con grado A–F. El despliegue y la puntuación SUS dependen de decisiones y datos del equipo (hosting y participantes). Detalle en la [Revisión del Sprint 05](../03%20Implementaci%C3%B3n/Sprint%2005/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md). |
 
 ## Qué debe poder hacerse al terminar Sprint 2: gestión de flota
 
@@ -148,6 +149,20 @@ La consulta de Jira del 09/10 tampoco encontró trabajo en un sprint futuro para
 
 El recorrido central de mapa, avance y re-enrutamiento suma **13 puntos candidatos**, de los cuales 5 corresponden a una historia sin tarjeta ni estimación aprobada. Comparar resultados (HU-011) añadiría otros 5 puntos propuestos. Son cifras para revisar, no compromiso ni capacidad confirmada. El Planning debe acordar qué parte completa el recorrido de Conducción y qué puede esperar; los indicadores se mostrarán solo cuando existan datos y reglas de cálculo acordados.
 
+## Qué tendría que poder hacerse al terminar Sprint 5
+
+> **Resultado al 20/11/2026.** Ver la [Revisión del Sprint 05](../03%20Implementaci%C3%B3n/Sprint%2005/01%20Revisi%C3%B3n%20del%20Sprint%20V_1_0_0.md), el [análisis de Playwright](../03%20Implementaci%C3%B3n/Sprint%2005/03%20Analisis%20PlayWrigth%20V_1_0_0.md) y el [informe de usabilidad](../03%20Implementaci%C3%B3n/Sprint%2005/04%20Usabilidad%20V_1_0_0.md). Los criterios 1 a 3 se cumplen y están medidos (`ci.yml`, `tests.yml` y Green IT en verde en GitHub Actions); el 4 está implementado pero sin ejecutarse contra un hosting real; el 5 espera respuestas de personas usuarias.
+
+**Meta:** cada cambio que llega a `main` se valida solo y, cuando el equipo configure el hosting, se publica sin pasos manuales; la calidad y la usabilidad se miden con datos reales.
+
+**Criterios de revisión:**
+
+1. Cada `push` y cada *Pull Request* ejecutan `ci.yml` (estilo, análisis estático, compilación, dependencias e higiene del repositorio) y `tests.yml` (unitarias, integración con PostGIS y E2E), y guardan los informes como artefactos.
+2. Los flujos críticos —acceso con MFA, control por rol, validación del formulario de pedidos y el recorrido Planificación → Conducción— se comprueban en Chromium, Firefox y WebKit.
+3. El rendimiento (TTFB, FCP, LCP, CLS y tiempos de la API) y la disponibilidad (códigos HTTP, fallos de red y de servidor, sonda `/health`) se miden con umbrales explícitos.
+4. El código validado se despliega a producción con `deploy-production.yml` usando GitHub Secrets; si faltan, el flujo declara que no desplegó.
+5. La usabilidad se mide con SUS sobre al menos cinco personas, con umbral de aceptación ≥ 68 y el cálculo documentado paso a paso.
+
 ## Qué incluye hoy el incremento vigente de Sprint 1
 
 Una persona de Planificación puede abrir la aplicación, autenticarse con contraseña y TOTP, registrar un pedido con dirección, carga y ventana horaria, y después localizarlo en la lista o abrir su detalle. Administración puede consultar pedidos, pero no registrarlos. El pedido queda guardado en PostgreSQL/PostGIS y sigue disponible tras reiniciar la API.
@@ -203,3 +218,4 @@ Esta definición sirve para juzgar el incremento de un sprint. No significa que 
 | 1.13.0 | 09/10/2026 | Anco Porras, Jhean Pier Julio | Se registra la aprobación confirmada del incremento y se mantiene Sprint 2 activo hasta el cierre administrativo. |
 | 1.14.0 | 30/10/2026 | Hilario Talavera, Alexander Daniel | Se registra el resultado del Sprint 3 frente a sus cinco criterios (3/5), se enlazan los documentos del Sprint 03 y se agregan SonarQube, OWASP y WCAG a la definición de sprint útil. |
 | 1.15.0 | 30/10/2026 | Hilario Talavera, Alexander Daniel | Se registra que el Sprint 3 cumple sus cinco criterios tras guardar las rutas y medir el motor. |
+| 1.16.0 | 20/11/2026 | Hilario Talavera, Alexander Daniel | Se añade el Sprint 5 (CI/CD, Playwright en tres navegadores, rendimiento, disponibilidad y usabilidad SUS) con sus criterios y su resultado verificable. |
