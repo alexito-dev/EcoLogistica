@@ -28,7 +28,8 @@ export default defineConfig({
   fullyParallel: false,
   workers: 1,
   retries: process.env.CI ? 1 : 0,
-  reporter: [['list'], ['html', { open: 'never', outputFolder: 'playwright-report' }]],
+  // En CI, el reporter «github» deja cada fallo como anotación del trabajo (título y mensaje), visible sin descargar el informe.
+  reporter: [['list'], ...(process.env.CI ? [['github'] as const] : []), ['html', { open: 'never', outputFolder: 'playwright-report' }]],
   use: {
     baseURL: BASE_URL,
     trace: 'retain-on-failure',
